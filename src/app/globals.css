@@ -1,26 +1,255 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+  Elyst AI — brand tokens wired from DESIGN.md (the locked constitution).
+  Light by default. Emerald only. No dark mode toggle — dark is a deliberate
+  per-section surface (--surface-dark), never a global theme.
+*/
 
 @theme inline {
+  /* shadcn semantic colours (re-skinned to brand) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* brand raw colours (utilities: bg-emerald, text-green, etc.) */
+  --color-emerald: var(--elyst-emerald);
+  --color-emerald-light: var(--elyst-emerald-light);
+  --color-green: var(--elyst-green);
+  --color-green-mid: var(--elyst-green-mid);
+  --color-ink: var(--elyst-ink);
+  --color-bg: var(--bg);
+  --color-surface-muted: var(--surface-muted);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-on-dark: var(--fg-on-dark);
+  --color-fg-muted-dark: var(--fg-muted-dark);
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-dark-2: var(--surface-dark-2);
+  --color-surface-dark-hover: var(--surface-dark-hover);
+
+  /* fonts */
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-nohemi), system-ui, sans-serif;
+
+  /* type scale (utilities: text-hero, text-h1, …) */
+  --text-hero: clamp(2.8rem, 6vw, 5.5rem);
+  --text-h1: clamp(2.2rem, 4.5vw, 3.8rem);
+  --text-h2: clamp(1.6rem, 3vw, 2.4rem);
+  --text-h3: clamp(1.1rem, 2vw, 1.4rem);
+  --text-body: clamp(0.95rem, 1.2vw, 1.05rem);
+  --text-small: 0.875rem;
+  --text-eyebrow: 0.72rem;
+
+  /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
+  --tracking-display: -0.075em;
+  --tracking-body: -0.05em;
+  --tracking-wide: 0.12em;
+
+  /* radii (utilities: rounded-card, rounded-pill) */
+  --radius-card: 20px;
+  --radius-pill: 999px;
+
+  /* shadows (utilities: shadow-card, shadow-card-hover, shadow-glow) */
+  --shadow-card: 0 4px 24px rgba(3, 98, 76, 0.08);
+  --shadow-card-hover: 0 12px 40px rgba(3, 98, 76, 0.16);
+  --shadow-glow: 0 0 40px rgba(0, 223, 130, 0.2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Brand (LOCKED — DESIGN.md §2) */
+  --elyst-emerald: #03624c;
+  --elyst-emerald-light: #04855f;
+  --elyst-green: #00df82;
+  --elyst-green-mid: #2ec866;
+  --elyst-ink: #060d09;
+  --elyst-carbon: #1a1a1a;
+
+  /* Surfaces — light is default */
+  --bg: hsl(140 18% 97%);
+  --surface-muted: hsl(145 14% 95%);
+
+  /* Text */
+  --fg: hsl(150 25% 5%);
+  --fg-2: hsl(155 17% 27%);
+  --fg-3: hsl(155 10% 52%);
+  --fg-on-dark: hsl(150 50% 96%);
+  --fg-muted-dark: hsl(155 24% 62%);
+
+  /* Lines & tints */
+  --green-tint-07: rgba(0, 223, 130, 0.07);
+  --green-tint-15: rgba(0, 223, 130, 0.15);
+  --emerald-tint-10: rgba(3, 98, 76, 0.1);
+
+  /* Legacy dark — deliberate single sections only */
+  --surface-dark: hsl(160 38% 9%);
+  --surface-dark-2: hsl(157 32% 13%);
+  --surface-dark-hover: hsl(155 32% 17%);
+
+  /* Spacing rhythm */
+  --section-py: clamp(80px, 10vw, 140px);
+  --section-px: clamp(20px, 6vw, 100px);
+
+  /* shadcn semantic tokens → brand values */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card: #ffffff;
+  --card-foreground: var(--fg);
+  --popover: #ffffff;
+  --popover-foreground: var(--fg);
+  --primary: var(--elyst-emerald);
+  --primary-foreground: var(--fg-on-dark);
+  --secondary: var(--surface-muted);
+  --secondary-foreground: var(--fg);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--fg-3);
+  --accent: var(--surface-muted);
+  --accent-foreground: var(--fg);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: hsl(155 18% 88%);
+  --input: hsl(155 18% 88%);
+  --ring: var(--elyst-emerald);
+  --radius: 0.75rem; /* 12px — button radius */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    letter-spacing: var(--tracking-body);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-nohemi), system-ui, sans-serif;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.08;
+    font-weight: 700;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Component primitives (DESIGN.md §5) — build once, reuse everywhere */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-weight: 700;
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-body);
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      background-color 0.18s ease,
+      color 0.18s ease,
+      opacity 0.18s ease;
+    white-space: nowrap;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    background: var(--elyst-emerald);
+    color: var(--fg-on-dark);
+  }
+  .btn-primary:hover {
+    background: var(--elyst-emerald-light);
+  }
+  .btn-onlight {
+    background: #ffffff;
+    color: var(--elyst-emerald);
+  }
+  .btn-onlight:hover {
+    box-shadow: var(--shadow-card);
+  }
+  .btn-accent {
+    background: var(--elyst-green-mid);
+    color: var(--elyst-ink);
+  }
+  .btn-accent:hover {
+    filter: brightness(1.05);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--elyst-emerald);
+  }
+  .btn-ghost:hover {
+    background: var(--emerald-tint-10);
+  }
+  .btn-pill {
+    border-radius: var(--radius-pill);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--emerald-tint-10);
+    color: var(--elyst-emerald);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    font-size: var(--text-eyebrow);
+    color: var(--fg-2);
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .card-tint {
+    background: var(--green-tint-07);
+    border: 1px solid var(--green-tint-15);
+    border-radius: var(--radius-card);
+  }
 }
