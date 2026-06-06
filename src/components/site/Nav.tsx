@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEventHandler } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Wordmark from "@/components/site/Wordmark";
+import { CosmicButton } from "@/components/ui/cosmic-button";
 
 const leftLinks = [
   { label: "AIOS for Business", href: "/aios" },
@@ -31,7 +32,7 @@ function ctaForPath(pathname: string) {
     : { label: "Book a call", href: "/contact" };
 }
 
-function GradientCta({
+function NavCta({
   label,
   href,
   full = false,
@@ -43,24 +44,15 @@ function GradientCta({
   onClick?: () => void;
 }) {
   return (
-    <Link
+    <CosmicButton
       href={href}
-      onClick={onClick}
-      className={`group relative inline-flex items-center justify-center rounded-pill px-6 py-2.5 text-small font-bold text-fg-on-dark transition-[box-shadow] duration-200 ${
-        full ? "w-full" : ""
-      }`}
-      style={{
-        background:
-          "linear-gradient(var(--surface-dark), var(--surface-dark)) padding-box, linear-gradient(to right, var(--elyst-emerald), var(--elyst-green)) border-box",
-        border: "1.5px solid transparent",
-      }}
+      target="_self"
+      rel=""
+      onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
+      className={full ? "w-full justify-center" : ""}
     >
-      <span className="relative z-10">{label}</span>
-      <span
-        className="pointer-events-none absolute inset-0 rounded-pill opacity-0 transition-opacity duration-200 group-hover:opacity-40"
-        style={{ boxShadow: "var(--shadow-glow)" }}
-      />
-    </Link>
+      {label}
+    </CosmicButton>
   );
 }
 
@@ -123,12 +115,17 @@ export default function Nav() {
         style={{ width: "min(900px, calc(100vw - 48px))" }}
       >
         <div
-          className="relative flex h-14 items-center rounded-pill px-3 shadow-card transition-colors duration-300"
+          className="relative flex h-14 items-center rounded-pill px-3 transition-all duration-300"
           style={{
             background: scrolled
-              ? "var(--surface-dark)"
+              ? "linear-gradient(180deg, hsl(160 38% 12%) 0%, hsl(160 38% 8%) 55%, hsl(160 38% 11%) 100%)"
               : "color-mix(in srgb, var(--surface-dark) 95%, transparent)",
-            backdropFilter: scrolled ? "blur(12px)" : "none",
+            backdropFilter: scrolled ? "blur(16px)" : "none",
+            borderTop: "1px solid rgba(255,255,255,0.09)",
+            borderBottom: "1px solid rgba(0,0,0,0.35)",
+            boxShadow: scrolled
+              ? "inset 0 1px 0 rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)"
+              : "0 4px 24px rgba(3,98,76,0.12)",
           }}
         >
           {/* Desktop: left links */}
@@ -206,7 +203,7 @@ export default function Nav() {
               </Link>
             ))}
 
-            <GradientCta label={cta.label} href={cta.href} />
+            <NavCta label={cta.label} href={cta.href} />
           </div>
 
           {/* Mobile: hamburger */}
@@ -315,7 +312,7 @@ export default function Nav() {
             </div>
 
             <div className="px-6 pb-10">
-              <GradientCta
+              <NavCta
                 label={cta.label}
                 href={cta.href}
                 full

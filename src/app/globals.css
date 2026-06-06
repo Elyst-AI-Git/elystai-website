@@ -282,4 +282,30 @@
       animation: none;
     }
   }
+
+  /* CosmicButton border animations (from @cult-ui/cosmic-button) */
+  @keyframes cosmic-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes cosmic-spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+  }
+
+  /* GradientButtonGroup active-ring animation */
+  @keyframes gold-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+}
+
+@utility animate-cosmic-spin {
+  animation: cosmic-spin 3s linear infinite;
+}
+@utility animate-cosmic-spin-slow {
+  animation: cosmic-spin-slow 5s linear infinite;
+}
+@utility animate-gold-spin {
+  animation: gold-spin 4s linear infinite;
 }

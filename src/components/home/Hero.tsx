@@ -1,65 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import MarkDither from "@/components/site/MarkDither";
-
-const forks = [
-  {
-    label: "For business owners",
-    benefit: "AI that handles your team's daily operations — inside WhatsApp.",
-    cta: "See AIOS",
-    href: "/aios",
-  },
-  {
-    label: "For professionals & students",
-    benefit: "Live programs that make you genuinely capable with AI.",
-    cta: "Explore programs",
-    href: "/learn",
-  },
-];
-
-function ForkCard({
-  label,
-  benefit,
-  cta,
-  href,
-}: {
-  label: string;
-  benefit: string;
-  cta: string;
-  href: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="card card-hover group relative flex flex-1 flex-col gap-2 overflow-hidden p-5"
-    >
-      <span className="absolute inset-y-0 left-0 w-0.5 origin-top scale-y-0 bg-emerald transition-transform duration-200 group-hover:scale-y-100" />
-      <span className="text-small font-bold text-fg">{label}</span>
-      <span className="text-small text-fg-2">{benefit}</span>
-      <span className="mt-2 inline-flex items-center gap-1.5 text-small font-bold text-emerald">
-        {cta}
-        <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-      </span>
-    </Link>
-  );
-}
+import { EncryptedText } from "@/components/ui/encrypted-text";
 
 export default function Hero() {
   return (
     <section
-      className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2"
+      className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      {/* Left — copy + fork */}
-      <div>
+      {/* Left — copy */}
+      <div className="flex flex-col justify-center">
         <span className="chip">Kozhikode · Kerala · India &amp; GCC</span>
         <h1
           className="mt-6 text-fg"
           style={{ fontSize: "var(--text-hero)" }}
         >
-          AI that runs your business.
+          <EncryptedText text="AI that runs your business." />
           <br />
-          Programs that grow your people.
+          <EncryptedText
+            text="Programs that grow your people."
+            revealDelayMs={40}
+          />
         </h1>
         <p
           className="mt-5 max-w-prose text-fg-2"
@@ -68,10 +32,14 @@ export default function Hero() {
           We deploy AI into how businesses run — and teach people to use it.
         </p>
 
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-          {forks.map((f) => (
-            <ForkCard key={f.href} {...f} />
-          ))}
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href="/aios" className="btn btn-primary btn-pill">
+            See AIOS
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link href="/learn" className="btn btn-ghost btn-pill">
+            Explore programs
+          </Link>
         </div>
 
         <p className="mt-5 text-small text-fg-3">
@@ -79,9 +47,9 @@ export default function Hero() {
         </p>
       </div>
 
-      {/* Right — mark-forming dither (desktop) */}
+      {/* Right — mark-forming dither (desktop) — pulled up */}
       <div
-        className="hidden h-[480px] overflow-hidden rounded-card md:block"
+        className="hidden overflow-hidden rounded-card md:block md:-mt-16 md:h-[560px]"
         style={{ background: "#F5F8F6" }}
       >
         <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
