@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
+import Wordmark from "@/components/site/Wordmark";
 
 const leftLinks = [
   { label: "AIOS for Business", href: "/aios" },
@@ -65,12 +66,8 @@ function GradientCta({
 
 function Logo({ onClick }: { onClick?: () => void }) {
   return (
-    <Link
-      href="/"
-      onClick={onClick}
-      className="font-display text-lg font-bold tracking-display text-fg-on-dark"
-    >
-      Elyst<span className="text-green"> AI</span>
+    <Link href="/" onClick={onClick} aria-label="Elyst AI — home">
+      <Wordmark className="h-5 w-auto text-fg-on-dark" />
     </Link>
   );
 }

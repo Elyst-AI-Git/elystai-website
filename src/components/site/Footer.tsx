@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SVGProps } from "react";
+import Wordmark from "@/components/site/Wordmark";
 
 function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -90,7 +91,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {/* Col 1 — Contact & entity (full width on mobile) */}
             <div className="col-span-2 md:col-span-1">
-              <h2 className="eyebrow mb-4">Elyst AI</h2>
+              <Wordmark className="mb-5 h-6 w-auto text-emerald" title="Elyst AI" />
               <address className="not-italic text-small leading-relaxed text-fg-2">
                 Kozhikode, Kerala, India
                 <br />
