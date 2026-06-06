@@ -1,6 +1,7 @@
 import Hero from "@/components/home/Hero";
 import ProofBar from "@/components/home/ProofBar";
 import AiosTeaser from "@/components/home/AiosTeaser";
+import AcceleratorTeaser from "@/components/home/AcceleratorTeaser";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <ProofBar />
       <AiosTeaser />
+      <AcceleratorTeaser />
     </main>
   );
 }
