@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type MouseEventHandler } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Wordmark from "@/components/site/Wordmark";
-import { CosmicButton } from "@/components/ui/cosmic-button";
 
 const leftLinks = [
   { label: "AIOS for Business", href: "/aios" },
@@ -44,15 +43,28 @@ function NavCta({
   onClick?: () => void;
 }) {
   return (
-    <CosmicButton
+    <a
       href={href}
-      target="_self"
-      rel=""
-      onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
-      className={full ? "w-full justify-center" : ""}
+      onClick={onClick}
+      style={{
+        background:
+          "linear-gradient(var(--surface-dark), var(--surface-dark)) padding-box, linear-gradient(90deg, #03624c, #00df82) border-box",
+        border: "1.5px solid transparent",
+        borderRadius: "999px",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "7px 20px",
+        fontSize: "var(--text-small)",
+        fontWeight: 700,
+        color: "var(--fg-on-dark)",
+        whiteSpace: "nowrap",
+        transition: "opacity 0.15s",
+        ...(full ? { width: "100%" } : {}),
+      }}
     >
       {label}
-    </CosmicButton>
+    </a>
   );
 }
 

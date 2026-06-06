@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, FileText } from "lucide-react";
 import { CardBody, CardContainer } from "@/components/ui/3d-card";
 
 const benefits = [
@@ -11,8 +11,19 @@ const benefits = [
   "Nobody knowing what to do → automatic daily task briefings",
 ];
 
-const REPLY =
-  "Done — June invoice for Al Noor Trading is ready. I've totalled 14 line items and generated the PDF.";
+const REPLY_LINE1 = "Done!";
+const REPLY_LINE2 = "June invoice for Al Noor Trading is ready.";
+const REPLY_LINE3 = "I have totalled 14 line items and generated the PDF.";
+const FULL_REPLY = `${REPLY_LINE1}\n${REPLY_LINE2}\n\n${REPLY_LINE3}`;
+
+function renderTyped(text: string) {
+  return text.split("\n").map((line, i, arr) => (
+    <span key={i}>
+      {i === 0 ? <strong>{line}</strong> : line}
+      {i < arr.length - 1 && <br />}
+    </span>
+  ));
+}
 
 function ChatMockup() {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,21 +38,21 @@ function ChatMockup() {
         if (!entry.isIntersecting) return;
         obs.disconnect();
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          setTyped(REPLY);
+          setTyped(FULL_REPLY);
           setDone(true);
           return;
         }
         let i = 0;
         const id = setInterval(() => {
           i += 1;
-          setTyped(REPLY.slice(0, i));
-          if (i >= REPLY.length) {
+          setTyped(FULL_REPLY.slice(0, i));
+          if (i >= FULL_REPLY.length) {
             clearInterval(id);
             setDone(true);
           }
-        }, 22);
+        }, 18);
       },
-      { threshold: 0.5 },
+      { threshold: 0.4 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -49,40 +60,110 @@ function ChatMockup() {
 
   return (
     <CardContainer className="w-full" containerClassName="py-0">
-      <CardBody className="mx-auto w-full max-w-sm">
-    <div
-      ref={ref}
-      className="overflow-hidden rounded-card border border-border bg-white shadow-card"
-    >
-      <div className="flex items-center gap-3 bg-emerald px-4 py-3 text-fg-on-dark">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 font-display text-small font-bold">
-          A
-        </div>
-        <div className="leading-tight">
-          <p className="text-small font-bold">AIOS</p>
-          <p className="text-[0.7rem] text-fg-on-dark/70">online</p>
-        </div>
-      </div>
+      <CardBody className="mx-auto !w-full !max-w-[460px]">
+        <div
+          ref={ref}
+          className="overflow-hidden border border-border bg-white shadow-card"
+          style={{ borderRadius: "14px" }}
+        >
+          {/* WhatsApp-style header */}
+          <div
+            className="flex items-center gap-3 px-4 py-3 text-fg-on-dark"
+            style={{ background: "#075E54" }}
+          >
+            <div
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full font-display text-base font-bold"
+              style={{ background: "rgba(255,255,255,0.18)" }}
+            >
+              A
+            </div>
+            <div className="leading-tight">
+              <p className="font-bold" style={{ fontSize: "var(--text-small)" }}>
+                AIOS
+              </p>
+              <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.75)" }}>
+                online
+              </p>
+            </div>
+            {/* WhatsApp-style header icons */}
+            <div className="ml-auto flex items-center gap-4 opacity-80">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 10l5-5M20 10V5h-5M9 14l-5 5M4 14v5h5"/>
+              </svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>
+              </svg>
+            </div>
+          </div>
 
-      <div className="flex flex-col gap-3 bg-surface-muted px-4 py-5">
-        {/* User message — sent from the right */}
-        <div className="max-w-[80%] self-end rounded-2xl rounded-tr-sm bg-white px-3 py-2 text-small text-fg shadow-sm">
-          Make the June invoice for Al Noor Trading.
-        </div>
+          {/* Chat body — WhatsApp beige */}
+          <div
+            className="flex flex-col gap-3 px-4 py-5"
+            style={{ background: "#ECE5DD", minHeight: "260px" }}
+          >
+            {/* User message — right */}
+            <div className="flex justify-end">
+              <div
+                className="max-w-[82%] px-3 py-2 shadow-sm"
+                style={{
+                  background: "#DCF8C6",
+                  borderRadius: "12px 12px 4px 12px",
+                  fontSize: "var(--text-small)",
+                  color: "#111",
+                }}
+              >
+                <p>Make the June invoice for Al Noor Trading.</p>
+                <p
+                  className="mt-1 text-right"
+                  style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.4)" }}
+                >
+                  09:41 ✓✓
+                </p>
+              </div>
+            </div>
 
-        {/* AIOS reply — received from the left */}
-        <div className="max-w-[85%] self-start rounded-2xl rounded-tl-sm bg-emerald px-3 py-2 text-small text-fg-on-dark shadow-sm">
-          {typed}
-          {!done && <span className="ml-0.5 animate-pulse">▍</span>}
-          {done && (
-            <span className="mt-2 flex items-center gap-1.5 rounded-md bg-white/15 px-2 py-1 text-[0.72rem] font-semibold">
-              <Check className="h-3.5 w-3.5" />
-              invoice-al-noor-june.pdf generated
-            </span>
-          )}
+            {/* AIOS reply — left */}
+            <div className="flex justify-start">
+              <div
+                className="max-w-[85%] px-3 py-2 shadow-sm"
+                style={{
+                  background: "#ffffff",
+                  borderRadius: "12px 12px 12px 4px",
+                  fontSize: "var(--text-small)",
+                  color: "#111",
+                }}
+              >
+                <p style={{ lineHeight: 1.55 }}>
+                  {renderTyped(typed)}
+                  {!done && <span className="ml-0.5 animate-pulse">▍</span>}
+                </p>
+                {done && (
+                  <>
+                    <div
+                      className="mt-2 flex items-center gap-2 rounded-lg px-3 py-2"
+                      style={{ background: "#f0f9f4", border: "1px solid rgba(3,98,76,0.15)" }}
+                    >
+                      <FileText className="h-4 w-4 flex-shrink-0 text-emerald" />
+                      <span
+                        className="font-semibold text-emerald"
+                        style={{ fontSize: "0.8rem" }}
+                      >
+                        invoice-al-noor-june.pdf
+                      </span>
+                      <Check className="ml-auto h-3.5 w-3.5 text-emerald" />
+                    </div>
+                    <p
+                      className="mt-1 text-right"
+                      style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.4)" }}
+                    >
+                      09:41
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
       </CardBody>
     </CardContainer>
   );
@@ -114,7 +195,7 @@ export default function AiosTeaser() {
 
           <ul className="mt-6 flex flex-col gap-3">
             {benefits.map((b) => (
-              <li key={b} className="flex gap-3 text-small font-medium text-fg-2">
+              <li key={b} className="flex gap-3 font-medium text-fg-2" style={{ fontSize: "var(--text-small)" }}>
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
                 {b}
               </li>
@@ -127,7 +208,7 @@ export default function AiosTeaser() {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <p className="mt-4 text-small text-fg-3">
+          <p className="mt-4 text-fg-3" style={{ fontSize: "var(--text-small)" }}>
             Configured and deployed for you. Nothing to install.
           </p>
         </div>

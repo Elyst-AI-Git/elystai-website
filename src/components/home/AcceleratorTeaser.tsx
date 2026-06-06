@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import {
@@ -28,6 +29,7 @@ type Program = {
   status: string;
   href: string;
   surface: string;
+  image?: string;
 };
 
 const programs: Program[] = [
@@ -37,7 +39,8 @@ const programs: Program[] = [
     who: "For professionals who want to stay ahead of AI",
     status: "Open",
     href: "/circle",
-    surface: "hsl(168 24% 89%)",
+    surface: "hsl(168 28% 70%)",
+    image: "/images/programs/circle.png",
   },
   {
     mark: Sparkles,
@@ -45,7 +48,8 @@ const programs: Program[] = [
     who: "For school students, Classes 5–10",
     status: "Enrolling",
     href: "/ai-junior",
-    surface: "hsl(160 32% 85%)",
+    surface: "hsl(160 36% 65%)",
+    image: "/images/programs/ai-junior.png",
   },
   {
     mark: Rocket,
@@ -53,7 +57,8 @@ const programs: Program[] = [
     who: "For working professionals and career switchers",
     status: "Next cohort",
     href: "/ai-yathra",
-    surface: "hsl(150 44% 82%)",
+    surface: "hsl(150 48% 60%)",
+    image: "/images/programs/ai-yathra.png",
   },
   {
     mark: GraduationCap,
@@ -61,19 +66,19 @@ const programs: Program[] = [
     who: "The deep-dive program for professionals",
     status: "Coming soon",
     href: "/flagship",
-    surface: "hsl(156 38% 79%)",
+    surface: "hsl(156 42% 57%)",
   },
 ];
 
-// Fanned-out resting positions (desktop) once the section scrolls into view.
+// Fanned-out resting positions (desktop) — reduced rotation for subtler curve
 const fan = [
-  { x: -258, y: 30, rotate: -15 },
-  { x: -90, y: -8, rotate: -6 },
-  { x: 90, y: -8, rotate: 6 },
-  { x: 258, y: 30, rotate: 15 },
+  { x: -258, y: 30, rotate: -10 },
+  { x: -90, y: -8, rotate: -4 },
+  { x: 90, y: -8, rotate: 4 },
+  { x: 258, y: 30, rotate: 10 },
 ];
 
-// Tidy stacked pile before the section is reached.
+// Tidy stacked pile before the section is reached
 const stacked = programs.map((_, i) => ({
   x: (i - 1.5) * 5,
   y: i * 5,
@@ -91,47 +96,61 @@ function ProgramFace({ p }: { p: Program }) {
     >
       <CutoutCard>
         {/* Status pin, cut into the top-right corner */}
-        <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] bg-black px-3 py-1.5 text-[0.68rem] font-semibold text-fg-on-dark">
+        <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] bg-emerald px-3 py-1.5 text-[0.68rem] font-semibold text-fg-on-dark">
           {p.status}
           <CutoutCorner
             size={16}
-            className="top-0 -left-[15px] text-black"
+            className="top-0 -left-[15px] text-emerald"
           />
           <CutoutCorner
             size={16}
-            className="-bottom-[15px] right-0 text-black"
+            className="-bottom-[15px] right-0 text-emerald"
           />
         </CutoutCardPin>
 
-        <CutoutCardContent className="flex h-[330px] flex-col p-6">
-          <div
-            className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-white/55 text-emerald shadow-sm ring-1 ring-white/60"
-          >
-            <Icon className="h-5 w-5" />
-          </div>
+        <CutoutCardContent className="flex flex-col p-0 overflow-hidden">
+          {/* Program cover image — 1:1 */}
+          {p.image ? (
+            <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+              <Image
+                src={p.image}
+                alt={p.name}
+                fill
+                className="object-cover"
+                sizes="230px"
+              />
+            </div>
+          ) : (
+            <div
+              className="flex w-full items-center justify-center"
+              style={{ aspectRatio: "1 / 1", background: "rgba(3,98,76,0.08)" }}
+            >
+              <Icon className="h-12 w-12 text-emerald/50" />
+            </div>
+          )}
 
           <MotionDiv
-            className="mt-auto contents"
+            className="flex flex-col p-5 gap-2"
             initial="hidden"
             animate="show"
             variants={stagger.container}
           >
             <motion.h3
               variants={stagger.item}
-              className="mt-6 font-display text-h3 font-semibold leading-tight"
-              style={{ color: "var(--elyst-ink)" }}
+              className="font-display font-semibold leading-tight"
+              style={{ color: "var(--elyst-ink)", fontSize: "var(--text-h3)" }}
             >
               {p.name}
             </motion.h3>
             <motion.div
               variants={stagger.item}
-              className="my-4 h-px w-full"
+              className="h-px w-full"
               style={{ background: "rgba(3,98,76,0.18)" }}
             />
             <motion.p
               variants={stagger.item}
-              className="text-small leading-relaxed"
-              style={{ color: "rgba(7,24,20,0.72)" }}
+              className="leading-relaxed"
+              style={{ color: "rgba(7,24,20,0.72)", fontSize: "var(--text-small)" }}
             >
               {p.who}
             </motion.p>
@@ -150,7 +169,7 @@ function FanStage() {
   return (
     <div
       ref={ref}
-      className="relative mx-auto hidden h-[460px] w-full max-w-4xl sm:block"
+      className="relative mx-auto hidden h-[580px] w-full max-w-4xl sm:block"
     >
       {programs.map((p, i) => {
         const rest = inView ? fan[i] : stacked[i];

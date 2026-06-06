@@ -69,11 +69,11 @@
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);
   --text-h1: clamp(2.2rem, 4.5vw, 3.8rem);
-  --text-h2: clamp(1.6rem, 3vw, 2.4rem);
-  --text-h3: clamp(1.1rem, 2vw, 1.4rem);
-  --text-body: clamp(0.95rem, 1.2vw, 1.05rem);
-  --text-small: 0.875rem;
-  --text-eyebrow: 0.72rem;
+  --text-h2: clamp(1.725rem, 3.2vw, 2.525rem);
+  --text-h3: clamp(1.225rem, 2.1vw, 1.525rem);
+  --text-body: clamp(1.075rem, 1.35vw, 1.175rem);
+  --text-small: 1rem;
+  --text-eyebrow: 0.845rem;
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.042em;
