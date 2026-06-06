@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import DitheringShader from "@/components/site/DitheringShader";
+import MarkDither from "@/components/site/MarkDither";
 
 const forks = [
   {
@@ -79,14 +79,20 @@ export default function Hero() {
         </p>
       </div>
 
-      {/* Right — dithering shader (desktop) */}
-      <div className="hidden h-[480px] overflow-hidden rounded-card md:block">
-        <DitheringShader colorFront="#03624C" colorBack="#F5F8F6" speed={0.6} scale={0.8} />
+      {/* Right — mark-forming dither (desktop) */}
+      <div
+        className="hidden h-[480px] overflow-hidden rounded-card md:block"
+        style={{ background: "#F5F8F6" }}
+      >
+        <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
       </div>
 
-      {/* Mobile shader band */}
-      <div className="h-40 overflow-hidden rounded-card md:hidden">
-        <DitheringShader colorFront="#03624C" colorBack="#F5F8F6" speed={0.5} scale={0.8} />
+      {/* Mobile band */}
+      <div
+        className="h-44 overflow-hidden rounded-card md:hidden"
+        style={{ background: "#F5F8F6" }}
+      >
+        <MarkDither colorFront="#03624C" colorBack="#F5F8F6" pixelSize={4} />
       </div>
     </section>
   );
