@@ -29,6 +29,8 @@ type Program = {
   status: string;
   href: string;
   surface: string;
+  /** true = surface is dark enough to need light text */
+  dark?: boolean;
   image?: string;
 };
 
@@ -58,6 +60,7 @@ const programs: Program[] = [
     status: "Open",
     href: "/circle",
     surface: "#428979",
+    dark: true,
     image: "/images/programs/circle.png",
   },
   {
@@ -67,6 +70,7 @@ const programs: Program[] = [
     status: "Coming soon",
     href: "/flagship",
     surface: "#1c725e",
+    dark: true,
   },
 ];
 
@@ -88,6 +92,10 @@ const stacked = programs.map((_, i) => ({
 function ProgramFace({ p }: { p: Program }) {
   const stagger = useCutoutContentStaggerVariants();
   const Icon = p.mark;
+  // Adaptive text/divider colours based on surface brightness
+  const headingColor = p.dark ? "var(--fg-on-dark)" : "var(--elyst-ink)";
+  const bodyColor    = p.dark ? "rgba(240,250,248,0.8)" : "rgba(7,24,20,0.72)";
+  const dividerColor = p.dark ? "rgba(255,255,255,0.2)" : "rgba(3,98,76,0.18)";
 
   return (
     <div
@@ -131,7 +139,6 @@ function ProgramFace({ p }: { p: Program }) {
 
           <MotionDiv
             className="flex flex-col p-5 gap-2"
-            style={{ background: "#ffffff" }}
             initial="hidden"
             animate="show"
             variants={stagger.container}
@@ -139,19 +146,19 @@ function ProgramFace({ p }: { p: Program }) {
             <motion.h3
               variants={stagger.item}
               className="font-display leading-tight"
-              style={{ color: "var(--elyst-ink)", fontSize: "var(--text-h3)", fontWeight: 600 }}
+              style={{ color: headingColor, fontSize: "var(--text-h3)", fontWeight: 600 }}
             >
               {p.name}
             </motion.h3>
             <motion.div
               variants={stagger.item}
               className="h-px w-full"
-              style={{ background: "rgba(3,98,76,0.18)" }}
+              style={{ background: dividerColor }}
             />
             <motion.p
               variants={stagger.item}
               className="leading-relaxed"
-              style={{ color: "rgba(7,24,20,0.72)", fontSize: "var(--text-small)" }}
+              style={{ color: bodyColor, fontSize: "var(--text-small)" }}
             >
               {p.who}
             </motion.p>
