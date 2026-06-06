@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import { CardBody, CardContainer } from "@/components/ui/3d-card";
 
 const benefits = [
   "Knowledge trapped in a few heads → instant answers for the whole team",
@@ -47,9 +48,11 @@ function ChatMockup() {
   }, []);
 
   return (
+    <CardContainer className="w-full" containerClassName="py-0">
+      <CardBody className="mx-auto w-full max-w-sm">
     <div
       ref={ref}
-      className="mx-auto w-full max-w-sm overflow-hidden rounded-card border border-border bg-white shadow-card"
+      className="overflow-hidden rounded-card border border-border bg-white shadow-card"
     >
       <div className="flex items-center gap-3 bg-emerald px-4 py-3 text-fg-on-dark">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 font-display text-small font-bold">
@@ -62,11 +65,13 @@ function ChatMockup() {
       </div>
 
       <div className="flex flex-col gap-3 bg-surface-muted px-4 py-5">
-        <div className="max-w-[80%] self-start rounded-2xl rounded-tl-sm bg-white px-3 py-2 text-small text-fg shadow-sm">
+        {/* User message — sent from the right */}
+        <div className="max-w-[80%] self-end rounded-2xl rounded-tr-sm bg-white px-3 py-2 text-small text-fg shadow-sm">
           Make the June invoice for Al Noor Trading.
         </div>
 
-        <div className="max-w-[85%] self-end rounded-2xl rounded-tr-sm bg-emerald px-3 py-2 text-small text-fg-on-dark shadow-sm">
+        {/* AIOS reply — received from the left */}
+        <div className="max-w-[85%] self-start rounded-2xl rounded-tl-sm bg-emerald px-3 py-2 text-small text-fg-on-dark shadow-sm">
           {typed}
           {!done && <span className="ml-0.5 animate-pulse">▍</span>}
           {done && (
@@ -78,6 +83,8 @@ function ChatMockup() {
         </div>
       </div>
     </div>
+      </CardBody>
+    </CardContainer>
   );
 }
 
