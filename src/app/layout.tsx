@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({
         </a>
         <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );
