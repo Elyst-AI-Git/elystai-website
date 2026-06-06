@@ -1,41 +1,197 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+"use client";
 
-const programs = [
+import Link from "next/link";
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import {
+  ArrowRight,
+  GraduationCap,
+  MessageCircle,
+  Rocket,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
+import {
+  CutoutCard,
+  CutoutCardContent,
+  CutoutCardPin,
+  CutoutCorner,
+  cutoutCardSurfaceClassName,
+  MotionDiv,
+  useCutoutContentStaggerVariants,
+} from "@/components/ui/cutout-card";
+
+type Program = {
+  mark: LucideIcon;
+  name: string;
+  who: string;
+  status: string;
+  href: string;
+  surface: string;
+};
+
+const programs: Program[] = [
   {
-    mark: "C",
+    mark: MessageCircle,
     name: "Elyst AI Circle",
     who: "For professionals who want to stay ahead of AI",
     status: "Open",
     href: "/circle",
+    surface: "hsl(168 24% 89%)",
   },
   {
-    mark: "J",
+    mark: Sparkles,
     name: "AI Junior",
     who: "For school students, Classes 5–10",
     status: "Enrolling",
     href: "/ai-junior",
+    surface: "hsl(160 32% 85%)",
   },
   {
-    mark: "Y",
+    mark: Rocket,
     name: "AI Yathra",
     who: "For working professionals and career switchers",
-    status: "Next cohort forming",
+    status: "Next cohort",
     href: "/ai-yathra",
+    surface: "hsl(150 44% 82%)",
   },
   {
-    mark: "F",
+    mark: GraduationCap,
     name: "Flagship Course",
     who: "The deep-dive program for professionals",
     status: "Coming soon",
     href: "/flagship",
+    surface: "hsl(156 38% 79%)",
   },
 ];
+
+// Fanned-out resting positions (desktop) once the section scrolls into view.
+const fan = [
+  { x: -258, y: 30, rotate: -15 },
+  { x: -90, y: -8, rotate: -6 },
+  { x: 90, y: -8, rotate: 6 },
+  { x: 258, y: 30, rotate: 15 },
+];
+
+// Tidy stacked pile before the section is reached.
+const stacked = programs.map((_, i) => ({
+  x: (i - 1.5) * 5,
+  y: i * 5,
+  rotate: (i - 1.5) * 3,
+}));
+
+function ProgramFace({ p }: { p: Program }) {
+  const stagger = useCutoutContentStaggerVariants();
+  const Icon = p.mark;
+
+  return (
+    <div
+      className={cutoutCardSurfaceClassName}
+      style={{ background: p.surface }}
+    >
+      <CutoutCard>
+        {/* Status pin, cut into the top-right corner */}
+        <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] bg-emerald px-3 py-1.5 text-[0.68rem] font-semibold text-fg-on-dark">
+          {p.status}
+          <CutoutCorner
+            size={16}
+            className="top-0 -left-[15px] text-emerald"
+          />
+          <CutoutCorner
+            size={16}
+            className="-bottom-[15px] right-0 text-emerald"
+          />
+        </CutoutCardPin>
+
+        <CutoutCardContent className="flex h-[330px] flex-col p-6">
+          <div
+            className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-white/55 text-emerald shadow-sm ring-1 ring-white/60"
+          >
+            <Icon className="h-5 w-5" />
+          </div>
+
+          <MotionDiv
+            className="mt-auto contents"
+            initial="hidden"
+            animate="show"
+            variants={stagger.container}
+          >
+            <motion.h3
+              variants={stagger.item}
+              className="mt-6 font-display text-h3 font-semibold leading-tight"
+              style={{ color: "var(--elyst-ink)" }}
+            >
+              {p.name}
+            </motion.h3>
+            <motion.div
+              variants={stagger.item}
+              className="my-4 h-px w-full"
+              style={{ background: "rgba(3,98,76,0.18)" }}
+            />
+            <motion.p
+              variants={stagger.item}
+              className="text-small leading-relaxed"
+              style={{ color: "rgba(7,24,20,0.72)" }}
+            >
+              {p.who}
+            </motion.p>
+          </MotionDiv>
+        </CutoutCardContent>
+      </CutoutCard>
+    </div>
+  );
+}
+
+function FanStage() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  return (
+    <div
+      ref={ref}
+      className="relative mx-auto hidden h-[460px] w-full max-w-4xl sm:block"
+    >
+      {programs.map((p, i) => {
+        const rest = inView ? fan[i] : stacked[i];
+        const isHover = hovered === i;
+        const target = isHover
+          ? { x: rest.x * 0.4, y: -54, rotate: 0, scale: 1.09 }
+          : { ...rest, scale: 1 };
+
+        return (
+          <motion.div
+            key={p.href}
+            className="absolute top-1/2 left-1/2 -ml-[115px] -mt-[165px]"
+            style={{ zIndex: isHover ? 60 : i }}
+            initial={false}
+            animate={{
+              ...target,
+              opacity: hovered !== null && !isHover ? 0.55 : 1,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 220,
+              damping: 24,
+              mass: 0.9,
+            }}
+            onHoverStart={() => setHovered(i)}
+            onHoverEnd={() => setHovered(null)}
+          >
+            <Link href={p.href} className="block w-[230px]">
+              <ProgramFace p={p} />
+            </Link>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function AcceleratorTeaser() {
   return (
     <section
-      className="bg-surface-muted"
+      className="overflow-hidden bg-surface-muted"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
       <div className="mx-auto max-w-[1100px]">
@@ -53,33 +209,17 @@ export default function AcceleratorTeaser() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {programs.map((p) => (
-            <Link
-              key={p.href}
-              href={p.href}
-              className="group flex flex-col rounded-[24px] bg-white p-6 transition-transform duration-200 hover:-translate-y-1"
-              style={{ boxShadow: "0 4px 32px rgba(3, 98, 76, 0.05)" }}
-            >
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-md font-display text-h3 font-semibold text-emerald"
-                style={{ background: "var(--emerald-tint-10)" }}
-              >
-                {p.mark}
-              </div>
-              <h3
-                className="mt-5 text-fg"
-                style={{ fontSize: "var(--text-h3)", fontWeight: 600 }}
-              >
-                {p.name}
-              </h3>
-              <p className="mt-2 flex-1 text-small text-fg-2">{p.who}</p>
-              <div className="mt-5 flex items-center justify-between">
-                <span className="chip">{p.status}</span>
-                <ArrowRight className="h-5 w-5 text-emerald opacity-0 transition-opacity duration-200 group-hover:opacity-100 max-sm:opacity-100" />
-              </div>
-            </Link>
-          ))}
+        <div className="mt-14">
+          <FanStage />
+
+          {/* Mobile: plain stacked cards (no fan) */}
+          <div className="grid gap-5 sm:hidden">
+            {programs.map((p) => (
+              <Link key={p.href} href={p.href} className="block">
+                <ProgramFace p={p} />
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="mt-12 text-center">
