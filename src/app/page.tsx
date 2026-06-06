@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main id="main" className="flex-1">
+    <main id="main" className="flex-1 pt-24">
       <section
         className="mx-auto max-w-3xl"
         style={{ padding: "var(--section-py) var(--section-px)" }}

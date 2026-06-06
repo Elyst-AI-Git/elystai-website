@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import Nav from "@/components/site/Nav";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -52,6 +53,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <Nav />
         {children}
       </body>
     </html>
