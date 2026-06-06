@@ -39,7 +39,7 @@ const programs: Program[] = [
     who: "For professionals who want to stay ahead of AI",
     status: "Open",
     href: "/circle",
-    surface: "hsl(168 28% 70%)",
+    surface: "#428979",
     image: "/images/programs/circle.png",
   },
   {
@@ -48,7 +48,7 @@ const programs: Program[] = [
     who: "For school students, Classes 5–10",
     status: "Enrolling",
     href: "/ai-junior",
-    surface: "hsl(160 36% 65%)",
+    surface: "#81b1a6",
     image: "/images/programs/ai-junior.png",
   },
   {
@@ -57,7 +57,7 @@ const programs: Program[] = [
     who: "For working professionals and career switchers",
     status: "Next cohort",
     href: "/ai-yathra",
-    surface: "hsl(150 48% 60%)",
+    surface: "#c0d8d3",
     image: "/images/programs/ai-yathra.png",
   },
   {
@@ -66,7 +66,7 @@ const programs: Program[] = [
     who: "The deep-dive program for professionals",
     status: "Coming soon",
     href: "/flagship",
-    surface: "hsl(156 42% 57%)",
+    surface: "#1c725e",
   },
 ];
 
@@ -123,14 +123,15 @@ function ProgramFace({ p }: { p: Program }) {
           ) : (
             <div
               className="flex w-full items-center justify-center"
-              style={{ aspectRatio: "1 / 1", background: "rgba(3,98,76,0.08)" }}
+              style={{ aspectRatio: "1 / 1", background: p.surface }}
             >
-              <Icon className="h-12 w-12 text-emerald/50" />
+              <Icon className="h-16 w-16 opacity-30" style={{ color: "#ffffff" }} />
             </div>
           )}
 
           <MotionDiv
             className="flex flex-col p-5 gap-2"
+            style={{ background: "#ffffff" }}
             initial="hidden"
             animate="show"
             variants={stagger.container}
