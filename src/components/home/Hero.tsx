@@ -8,28 +8,31 @@ import { EncryptedText } from "@/components/ui/encrypted-text";
 export default function Hero() {
   return (
     <section
-      className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2"
-      style={{ padding: "var(--section-py) var(--section-px)" }}
+      className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[3fr_2fr]"
+      style={{
+        padding: "clamp(40px, 5vw, 72px) var(--section-px)",
+      }}
     >
       {/* Left — copy */}
-      <div className="flex flex-col justify-center">
-        <span className="chip">Kozhikode · Kerala · India &amp; GCC</span>
+      <div>
         <h1
-          className="mt-6 text-fg"
+          className="text-fg"
           style={{ fontSize: "var(--text-hero)" }}
         >
-          <EncryptedText text="AI that runs your business." />
+          <EncryptedText text="AI that runs" />
           <br />
-          <EncryptedText
-            text="Programs that grow your people."
-            revealDelayMs={40}
-          />
+          <EncryptedText text="your business" revealDelayMs={42} />
+          <br />
+          <EncryptedText text="Programs that" revealDelayMs={38} />
+          <br />
+          <EncryptedText text="make you grow" revealDelayMs={44} />
         </h1>
+
         <p
-          className="mt-5 max-w-prose text-fg-2"
+          className="mt-5 max-w-md text-fg-2"
           style={{ fontSize: "var(--text-body)" }}
         >
-          We deploy AI into how businesses run — and teach people to use it.
+          We setup AI into your businesses and teach you how to use it.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -41,16 +44,12 @@ export default function Hero() {
             Explore programs
           </Link>
         </div>
-
-        <p className="mt-5 text-small text-fg-3">
-          Configured and deployed for your business. Nothing to install.
-        </p>
       </div>
 
-      {/* Right — mark-forming dither (desktop) — pulled up */}
+      {/* Right — mark-forming dither (desktop) */}
       <div
-        className="hidden overflow-hidden rounded-card md:block md:-mt-16 md:h-[560px]"
-        style={{ background: "#F5F8F6" }}
+        className="hidden self-stretch overflow-hidden rounded-card md:block"
+        style={{ background: "#F5F8F6", minHeight: "400px" }}
       >
         <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
       </div>

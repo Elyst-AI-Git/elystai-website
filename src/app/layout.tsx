@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Raleway } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -11,12 +11,6 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const raleway = Raleway({
-  variable: "--font-raleway",
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://elyst.ai"),
@@ -34,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${raleway.variable} h-full`}>
+    <html lang="en" className={`${dmSans.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <a
           href="#main"

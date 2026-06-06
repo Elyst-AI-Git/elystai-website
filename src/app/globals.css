@@ -2,6 +2,22 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Manrope — self-hosted from public/fonts/manrope/ */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/manrope/Manrope-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/manrope/Manrope-SemiBold.ttf') format('truetype');
+}
+
 /*
   Elyst AI — brand tokens wired from DESIGN.md (the locked constitution).
   Light by default. Emerald only. No dark mode toggle — dark is a deliberate
@@ -48,7 +64,7 @@
 
   /* fonts */
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-  --font-display: var(--font-raleway), system-ui, sans-serif;
+  --font-display: 'Manrope', system-ui, sans-serif;
 
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);
