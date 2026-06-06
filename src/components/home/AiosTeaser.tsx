@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, FileText } from "lucide-react";
 import { CardBody, CardContainer } from "@/components/ui/3d-card";
+import { BrandButton } from "@/components/ui/brand-button";
 
 const benefits = [
   "Knowledge trapped in a few heads → instant answers for the whole team",
@@ -203,10 +203,10 @@ export default function AiosTeaser() {
           </ul>
 
           <div className="mt-8">
-            <Link href="/aios" className="btn btn-primary">
+            <BrandButton href="/aios">
               See how AIOS works
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </BrandButton>
           </div>
           <p className="mt-4 text-fg-3" style={{ fontSize: "var(--text-small)" }}>
             Configured and deployed for you. Nothing to install.

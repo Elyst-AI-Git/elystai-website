@@ -21,6 +21,8 @@ import {
   MotionDiv,
   useCutoutContentStaggerVariants,
 } from "@/components/ui/cutout-card";
+import { BrandButton } from "@/components/ui/brand-button";
+import SquigglyArrow from "@/components/ui/squiggle-arrow";
 
 type Program = {
   mark: LucideIcon;
@@ -249,11 +251,18 @@ export default function AcceleratorTeaser() {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <Link href="/learn" className="btn btn-ghost btn-pill">
+        <div className="mt-12 flex items-center justify-center gap-1">
+          <SquigglyArrow
+            direction="right"
+            variant="bouncy"
+            width={120}
+            height={64}
+            className="hidden text-emerald sm:block"
+          />
+          <BrandButton href="/learn">
             Explore all programs
             <ArrowRight className="h-4 w-4" />
-          </Link>
+          </BrandButton>
         </div>
       </div>
     </section>

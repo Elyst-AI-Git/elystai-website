@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import DitherShader from "@/components/ui/dither-shader";
 
@@ -25,13 +26,34 @@ const founders = [
   },
 ];
 
+const REVEAL_RADIUS = 110;
+
 function FounderCard({ f }: { f: (typeof founders)[number] }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+
+  function handleMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = wrapRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }
+
+  // Radial mask: real photo only visible inside the cursor circle.
+  const mask = pos
+    ? `radial-gradient(circle ${REVEAL_RADIUS}px at ${pos.x}px ${pos.y}px, #000 0%, #000 55%, transparent 78%)`
+    : undefined;
+
   return (
-    <div className="group flex overflow-hidden rounded-[28px] bg-bg shadow-card ring-1 ring-black/5">
-      {/* Left: dithered portrait at rest → real photo on hover */}
-      <div className="relative h-auto w-64 flex-shrink-0 md:w-80">
-        {/* Dithered at rest */}
-        <div className="absolute inset-0 transition-opacity duration-500 ease-out group-hover:opacity-0">
+    <div className="group flex flex-col overflow-hidden rounded-[28px] bg-bg shadow-card ring-1 ring-black/5">
+      {/* Portrait — dithered base, real photo revealed under the cursor */}
+      <div
+        ref={wrapRef}
+        onMouseMove={handleMove}
+        onMouseLeave={() => setPos(null)}
+        className="relative aspect-[4/3] w-full overflow-hidden"
+      >
+        {/* Dithered base — always visible */}
+        <div className="absolute inset-0">
           <DitherShader
             src={f.photo}
             ditherMode="bayer"
@@ -45,17 +67,30 @@ function FounderCard({ f }: { f: (typeof founders)[number] }) {
             className="h-full w-full"
           />
         </div>
-        {/* Real photo on hover */}
+        {/* Real photo revealed dynamically under the pointer (desktop only) */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={f.photo}
           alt={f.name}
-          className="absolute inset-0 h-full w-full object-cover object-top opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 max-md:opacity-100"
+          className="absolute inset-0 hidden h-full w-full object-cover object-top transition-opacity duration-200 md:block"
+          style={{
+            opacity: pos ? 1 : 0,
+            WebkitMaskImage: mask,
+            maskImage: mask,
+          }}
+        />
+        {/* Mobile: show the real photo plainly (no hover available) */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={f.photo}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover object-top md:hidden"
         />
       </div>
 
-      {/* Right: text content */}
-      <div className="flex flex-1 flex-col justify-center gap-2 p-8 md:p-10">
+      {/* Text content */}
+      <div className="flex flex-1 flex-col justify-center gap-2 p-8">
         <h3 className="text-fg" style={{ fontSize: "var(--text-h3)" }}>
           {f.name}
         </h3>
@@ -104,7 +139,7 @@ export default function Founders() {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-col gap-6">
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
           {founders.map((f) => (
             <FounderCard key={f.name} f={f} />
           ))}

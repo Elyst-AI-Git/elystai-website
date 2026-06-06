@@ -143,8 +143,8 @@ export default function Footer() {
       >
         <div className="bg-surface-dark px-[var(--section-px)] pb-8 pt-10">
           <span
-            className="wordmark-fill block whitespace-nowrap font-display font-bold leading-none tracking-display"
-            style={{ fontSize: "clamp(4rem, 15vw, 18rem)" }}
+            className="wordmark-mega block w-full whitespace-nowrap text-center font-display font-bold leading-[0.85]"
+            style={{ fontSize: "clamp(5rem, 19vw, 23rem)" }}
           >
             Elyst AI
           </span>

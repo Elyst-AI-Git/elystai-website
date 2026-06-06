@@ -1,12 +1,15 @@
+import type { CSSProperties } from "react";
+
 type Props = {
   className?: string;
   title?: string;
+  style?: CSSProperties;
 };
 
 // Elyst AI wordmark — vector paths from the brand SVG, recolored via
 // currentColor so one asset serves both light (emerald) and dark (white)
 // surfaces. viewBox tightened to the glyph bounds.
-export default function Wordmark({ className, title = "Elyst AI" }: Props) {
+export default function Wordmark({ className, title = "Elyst AI", style }: Props) {
   return (
     <svg
       viewBox="145 375 603 187"
@@ -14,6 +17,7 @@ export default function Wordmark({ className, title = "Elyst AI" }: Props) {
       aria-label={title}
       fill="currentColor"
       className={className}
+      style={style}
     >
       <g transform="translate(143.402336, 518.62631)">
         <path d="M 59.203125 2.796875 C 49.335938 2.796875 40.632812 0.695312 33.09375 -3.5 C 25.5625 -7.695312 19.695312 -13.628906 15.5 -21.296875 C 11.300781 -28.960938 9.203125 -38 9.203125 -48.40625 L 9.203125 -50.796875 C 9.203125 -61.203125 11.265625 -70.238281 15.390625 -77.90625 C 19.523438 -85.570312 25.328125 -91.503906 32.796875 -95.703125 C 40.265625 -99.898438 48.929688 -102 58.796875 -102 C 68.535156 -102 77.003906 -99.832031 84.203125 -95.5 C 91.398438 -91.164062 97 -85.164062 101 -77.5 C 105 -69.832031 107 -60.929688 107 -50.796875 L 107 -42.203125 L 34.796875 -42.203125 C 35.066406 -35.398438 37.597656 -29.863281 42.390625 -25.59375 C 47.191406 -21.332031 53.0625 -19.203125 60 -19.203125 C 67.0625 -19.203125 72.257812 -20.734375 75.59375 -23.796875 C 78.925781 -26.867188 81.460938 -30.269531 83.203125 -34 L 103.796875 -23.203125 C 101.929688 -19.734375 99.234375 -15.960938 95.703125 -11.890625 C 92.171875 -7.828125 87.46875 -4.363281 81.59375 -1.5 C 75.726562 1.363281 68.265625 2.796875 59.203125 2.796875 Z M 35 -61 L 81.40625 -61 C 80.863281 -66.726562 78.5625 -71.328125 74.5 -74.796875 C 70.4375 -78.265625 65.132812 -80 58.59375 -80 C 51.800781 -80 46.40625 -78.265625 42.40625 -74.796875 C 38.40625 -71.328125 35.9375 -66.726562 35 -61 Z M 35 -61 " />

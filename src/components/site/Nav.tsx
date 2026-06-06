@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Wordmark from "@/components/site/Wordmark";
+import { BrandButton } from "@/components/ui/brand-button";
 
 const leftLinks = [
   { label: "AIOS for Business", href: "/aios" },
@@ -43,35 +44,28 @@ function NavCta({
   onClick?: () => void;
 }) {
   return (
-    <a
+    <BrandButton
       href={href}
       onClick={onClick}
-      style={{
-        background:
-          "linear-gradient(var(--surface-dark), var(--surface-dark)) padding-box, linear-gradient(90deg, #03624c, #00df82) border-box",
-        border: "1.5px solid transparent",
-        borderRadius: "999px",
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "7px 20px",
-        fontSize: "var(--text-small)",
-        fontWeight: 700,
-        color: "var(--fg-on-dark)",
-        whiteSpace: "nowrap",
-        transition: "opacity 0.15s",
-        ...(full ? { width: "100%" } : {}),
-      }}
+      full={full}
+      preset="silver"
+      className="min-h-[40px]! px-5! text-[length:var(--text-small)]"
     >
       {label}
-    </a>
+    </BrandButton>
   );
 }
 
 function Logo({ onClick }: { onClick?: () => void }) {
   return (
     <Link href="/" onClick={onClick} aria-label="Elyst AI — home">
-      <Wordmark className="h-5 w-auto text-fg-on-dark" />
+      <Wordmark
+        className="h-5 w-auto text-fg-on-dark"
+        style={{
+          filter:
+            "drop-shadow(0 0 1px rgba(255,255,255,0.65)) drop-shadow(0 1px 2px rgba(180,210,200,0.45)) drop-shadow(0 0 8px rgba(0,223,130,0.25))",
+        }}
+      />
     </Link>
   );
 }
