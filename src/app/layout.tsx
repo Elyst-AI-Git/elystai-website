@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
-import localFont from "next/font/local";
+import { DM_Sans, Raleway } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -12,22 +11,11 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const nohemi = localFont({
-  variable: "--font-nohemi",
+const raleway = Raleway({
+  variable: "--font-raleway",
+  subsets: ["latin"],
+  weight: ["600", "700"],
   display: "swap",
-  preload: true,
-  src: [
-    {
-      path: "../../public/fonts/nohemi/Nohemi-SemiBold.woff2",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/nohemi/Nohemi-Bold.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
 });
 
 export const metadata: Metadata = {
@@ -46,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${nohemi.variable} h-full`}>
+    <html lang="en" className={`${dmSans.variable} ${raleway.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <a
           href="#main"

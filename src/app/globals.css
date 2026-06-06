@@ -48,7 +48,7 @@
 
   /* fonts */
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-  --font-display: var(--font-nohemi), system-ui, sans-serif;
+  --font-display: var(--font-raleway), system-ui, sans-serif;
 
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);
@@ -60,7 +60,7 @@
   --text-eyebrow: 0.72rem;
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
-  --tracking-display: -0.075em;
+  --tracking-display: -0.035em;
   --tracking-body: -0.05em;
   --tracking-wide: 0.12em;
 
@@ -146,7 +146,7 @@
     line-height: 1.6;
   }
   h1, h2, h3, h4 {
-    font-family: var(--font-nohemi), system-ui, sans-serif;
+    @apply font-display;
     letter-spacing: var(--tracking-display);
     line-height: 1.08;
     font-weight: 700;
