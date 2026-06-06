@@ -91,15 +91,15 @@ function ProgramFace({ p }: { p: Program }) {
     >
       <CutoutCard>
         {/* Status pin, cut into the top-right corner */}
-        <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] bg-emerald px-3 py-1.5 text-[0.68rem] font-semibold text-fg-on-dark">
+        <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] bg-black px-3 py-1.5 text-[0.68rem] font-semibold text-fg-on-dark">
           {p.status}
           <CutoutCorner
             size={16}
-            className="top-0 -left-[15px] text-emerald"
+            className="top-0 -left-[15px] text-black"
           />
           <CutoutCorner
             size={16}
-            className="-bottom-[15px] right-0 text-emerald"
+            className="-bottom-[15px] right-0 text-black"
           />
         </CutoutCardPin>
 
