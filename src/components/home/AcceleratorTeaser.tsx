@@ -34,13 +34,13 @@ type Program = {
 
 const programs: Program[] = [
   {
-    mark: MessageCircle,
-    name: "Elyst AI Circle",
-    who: "For professionals who want to stay ahead of AI",
-    status: "Open",
-    href: "/circle",
-    surface: "#428979",
-    image: "/images/programs/circle.png",
+    mark: Rocket,
+    name: "AI Yathra",
+    who: "For working professionals and career switchers",
+    status: "Next cohort",
+    href: "/ai-yathra",
+    surface: "#c0d8d3",
+    image: "/images/programs/ai-yathra.png",
   },
   {
     mark: Sparkles,
@@ -52,13 +52,13 @@ const programs: Program[] = [
     image: "/images/programs/ai-junior.png",
   },
   {
-    mark: Rocket,
-    name: "AI Yathra",
-    who: "For working professionals and career switchers",
-    status: "Next cohort",
-    href: "/ai-yathra",
-    surface: "#c0d8d3",
-    image: "/images/programs/ai-yathra.png",
+    mark: MessageCircle,
+    name: "Elyst AI Circle",
+    who: "For professionals who want to stay ahead of AI",
+    status: "Open",
+    href: "/circle",
+    surface: "#428979",
+    image: "/images/programs/circle.png",
   },
   {
     mark: GraduationCap,
@@ -138,8 +138,8 @@ function ProgramFace({ p }: { p: Program }) {
           >
             <motion.h3
               variants={stagger.item}
-              className="font-display font-semibold leading-tight"
-              style={{ color: "var(--elyst-ink)", fontSize: "var(--text-h3)" }}
+              className="font-display leading-tight"
+              style={{ color: "var(--elyst-ink)", fontSize: "var(--text-h3)", fontWeight: 600 }}
             >
               {p.name}
             </motion.h3>
