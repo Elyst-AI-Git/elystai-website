@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AiosHero from "@/components/aios/AiosHero";
+import AiosProblem from "@/components/aios/AiosProblem";
 
 export const metadata: Metadata = {
   title: "AIOS for Business — Elyst AI",
@@ -11,6 +12,7 @@ export default function AiosPage() {
   return (
     <main id="main" className="flex-1 pt-24">
       <AiosHero />
+      <AiosProblem />
     </main>
   );
 }
