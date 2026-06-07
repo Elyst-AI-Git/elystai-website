@@ -36,10 +36,14 @@ export const BackgroundGradientAnimation = ({
   const interactiveRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [curX, setCurX] = useState(0);
-  const [curY, setCurY] = useState(0);
   const [tgX, setTgX] = useState(0);
   const [tgY, setTgY] = useState(0);
+  // Refs (not state) for the eased position + latest target — read every
+  // animation frame so the glow eases continuously toward the cursor instead
+  // of advancing one step per mousemove event (which read as "sluggish").
+  const curPos = useRef({ x: 0, y: 0 });
+  const targetPos = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
     document.body.style.setProperty(
       "--gradient-background-start",
@@ -59,20 +63,31 @@ export const BackgroundGradientAnimation = ({
     document.body.style.setProperty("--blending-value", blendingValue);
   }, []);
 
+  // Keep the ref-based target in sync with the latest mouse position.
   useEffect(() => {
-    function move() {
-      if (!interactiveRef.current) {
-        return;
-      }
-      setCurX(curX + (tgX - curX) / 8);
-      setCurY(curY + (tgY - curY) / 8);
-      interactiveRef.current.style.transform = `translate(${Math.round(
-        curX
-      )}px, ${Math.round(curY)}px)`;
-    }
-
-    move();
+    targetPos.current = { x: tgX, y: tgY };
   }, [tgX, tgY]);
+
+  // Continuous easing loop — runs every frame regardless of whether the
+  // mouse is currently moving, so the glow glides smoothly toward wherever
+  // the cursor last was instead of jumping in discrete per-event steps.
+  useEffect(() => {
+    let raf = 0;
+    const animate = () => {
+      const cur = curPos.current;
+      const tgt = targetPos.current;
+      cur.x += (tgt.x - cur.x) / 8;
+      cur.y += (tgt.y - cur.y) / 8;
+      if (interactiveRef.current) {
+        interactiveRef.current.style.transform = `translate(${Math.round(
+          cur.x
+        )}px, ${Math.round(cur.y)}px)`;
+      }
+      raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     // Track against the stable outer container — not the moving interactive

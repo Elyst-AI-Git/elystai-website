@@ -34,52 +34,15 @@ const socials = [
   { label: "WhatsApp community", href: "#", Icon: WhatsappIcon },
 ];
 
-const aiosLinks = [
-  { label: "AIOS overview", href: "/aios" },
-  { label: "Book a call", href: "/contact" },
-  { label: "Contact", href: "/contact" },
-];
-
-const learnLinks = [
-  { label: "Accelerator overview", href: "/learn" },
-  { label: "Circle", href: "/circle" },
-  { label: "AI Junior", href: "/ai-junior" },
-  { label: "AI Yathra", href: "/ai-yathra" },
-  { label: "Flagship Course", href: "/flagship" },
-];
-
-const companyLinks = [
+// Trimmed to the three destinations that matter — everything else (Book a
+// call, Circle, AI Junior, AI Yathra, Flagship, Blog, Privacy, Terms) is
+// reachable from those pages or the nav; keeping the footer lean leaves room
+// for the "Follow us" block.
+const footerNav = [
+  { label: "AIOS for Business", href: "/aios" },
+  { label: "AI Accelerator", href: "/learn" },
   { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
 ];
-
-function FooterCol({
-  title,
-  links,
-}: {
-  title: string;
-  links: { label: string; href: string }[];
-}) {
-  return (
-    <div>
-      <h2 className="eyebrow mb-4 text-fg-muted-dark">{title}</h2>
-      <ul className="flex flex-col gap-3">
-        {links.map((l) => (
-          <li key={l.label}>
-            <Link
-              href={l.href}
-              className="text-small text-fg-on-dark/80 transition-colors hover:text-green"
-            >
-              {l.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 export default function Footer() {
   return (
@@ -117,9 +80,11 @@ export default function Footer() {
           />
 
           <div className="relative z-10 mx-auto max-w-6xl">
-            {/* Utility grid — entity/contact + the three nav-link columns */}
-            <div className="grid grid-cols-2 gap-10 pb-10 md:grid-cols-4">
-              <div className="col-span-2 md:col-span-1">
+            {/* Three-up utility row — brand/contact (left), core nav (middle),
+                follow-us (right). Kept deliberately lean. */}
+            <div className="flex flex-col gap-10 pb-10 sm:flex-row sm:items-start sm:justify-between">
+              {/* Left — brand + contact, left-aligned */}
+              <div className="text-left">
                 <Wordmark
                   className="mb-5 h-6 w-auto text-fg-on-dark"
                   title="Elyst AI"
@@ -141,10 +106,28 @@ export default function Footer() {
                     +91 96332 88931
                   </a>
                 </address>
+              </div>
 
-                <h2 className="eyebrow mt-6 mb-3 text-fg-muted-dark">
-                  Follow us
-                </h2>
+              {/* Middle — the three links that matter */}
+              <nav aria-label="Footer">
+                <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
+                <ul className="flex flex-col gap-3">
+                  {footerNav.map((l) => (
+                    <li key={l.label}>
+                      <Link
+                        href={l.href}
+                        className="text-small text-fg-on-dark/80 transition-colors hover:text-green"
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              {/* Right — follow us */}
+              <div>
+                <h2 className="eyebrow mb-4 text-fg-muted-dark">Follow us</h2>
                 <div className="flex gap-3">
                   {socials.map(({ label, href, Icon }) => (
                     <a
@@ -157,27 +140,13 @@ export default function Footer() {
                     </a>
                   ))}
                 </div>
-
-                <p className="mt-5 text-small text-fg-muted-dark/70">
-                  Elyst AI LLP · LLPIN: [pending]
-                </p>
               </div>
-
-              <FooterCol title="AIOS for Business" links={aiosLinks} />
-              <FooterCol title="Learn AI" links={learnLinks} />
-              <FooterCol title="Company" links={companyLinks} />
             </div>
 
             <hr className="border-white/10" />
 
-            <div className="flex flex-col items-center justify-between gap-3 py-6 text-small text-fg-muted-dark sm:flex-row">
+            <div className="py-6 text-small text-fg-muted-dark">
               <p>© 2026 Elyst AI LLP · Kozhikode, Kerala · All rights reserved.</p>
-              <Link
-                href="/terms"
-                className="transition-colors hover:text-green"
-              >
-                Terms &amp; Conditions
-              </Link>
             </div>
           </div>
 

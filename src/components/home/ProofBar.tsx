@@ -78,7 +78,7 @@ export default function ProofBar() {
   }, []);
 
   return (
-    <section className="bg-surface-muted">
+    <section className="bg-surface-muted mt-10 md:mt-16">
       <div
         ref={ref}
         className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-8 px-[var(--section-px)] py-10 md:grid-cols-5 md:gap-0"

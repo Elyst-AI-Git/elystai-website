@@ -233,7 +233,7 @@ export default function AcceleratorTeaser() {
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
       <BackgroundGradientAnimation
-        containerClassName="absolute top-0 left-0 h-[135%] w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_14%,black_78%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_14%,black_78%,transparent_100%)]"
+        containerClassName="absolute top-0 left-0 h-[135%] w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_60%,transparent_74%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_60%,transparent_74%)]"
         gradientBackgroundStart="rgb(229, 243, 237)"
         gradientBackgroundEnd="rgb(186, 224, 208)"
         firstColor="3, 98, 76"
