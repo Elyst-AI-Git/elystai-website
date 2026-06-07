@@ -15,18 +15,20 @@ export default function Hero() {
             <span className="block">
               AI that <span className="runs-word">runs</span>
             </span>
-            <span className="block">your business</span>
+            <span className="block" style={{ marginTop: "calc(var(--text-hero) * -0.27)" }}>
+              your business
+            </span>
             {/* Extra breathing room between the two phrases */}
             <span className="block" style={{ height: "clamp(8px, 1.2vw, 18px)" }} />
             <span className="block">Programs that</span>
-            <span className="block">
+            <span className="block" style={{ marginTop: "calc(var(--text-hero) * -0.27)" }}>
               make you{" "}
               <PointerHighlight
                 containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[2.625px] !border-[#00df82]"
+                rectangleClassName="border-[3px] !border-[#00df82]"
                 pointerClassName="text-[#00df82]"
               >
-                <span className="relative z-10 px-1">grow</span>
+                <span className="relative z-10 py-1 pl-1 pr-2.5">grow</span>
               </PointerHighlight>
             </span>
           </h1>
