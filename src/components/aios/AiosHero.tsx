@@ -5,16 +5,11 @@ import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 import { CanvasText } from "@/components/ui/canvas-text";
 
-/** Shimmering green-on-emerald scribble palette for the "AI way" canvas-text accent. */
+/** Three dark-green shades for the "AI way" canvas-text accent — calm, on-brand, no shimmer. */
 const AI_WAY_COLORS = [
-  "rgba(0, 223, 130, 1)",
-  "rgba(0, 223, 130, 0.85)",
-  "rgba(245, 248, 246, 0.9)",
-  "rgba(46, 200, 102, 0.8)",
-  "rgba(0, 223, 130, 0.6)",
-  "rgba(245, 248, 246, 0.5)",
-  "rgba(46, 200, 102, 0.45)",
-  "rgba(0, 223, 130, 0.3)",
+  "rgba(3, 98, 76, 1)",
+  "rgba(2, 74, 57, 1)",
+  "rgba(4, 56, 43, 1)",
 ];
 
 /**
@@ -134,6 +129,7 @@ export default function AiosHero() {
               colors={AI_WAY_COLORS}
               lineGap={4}
               animationDuration={16}
+              curveIntensity={6}
             />
           </h1>
           <p
