@@ -207,7 +207,7 @@ export default function AiosTeaser() {
           </ul>
 
           <div className="mt-8">
-            <BrandButton href="/aios">
+            <BrandButton href="/aios" greenRing>
               See how AIOS works
               <ArrowRight className="h-4 w-4" />
             </BrandButton>

@@ -30,6 +30,10 @@ type BrandButtonProps = {
   onClick?: () => void;
   full?: boolean;
   preset?: "chromatic" | "silver" | "gold";
+  /** Recolour the MetalFx ring/edge from its default chromatic-grey to brand
+      light-green (#00df82) — used where the default ring reads as a flat
+      black edge against our surfaces. */
+  greenRing?: boolean;
 };
 
 const BASE =
@@ -78,6 +82,7 @@ export function BrandButton({
   onClick,
   full,
   preset = "silver",
+  greenRing = false,
 }: BrandButtonProps) {
   const width = full ? "w-full" : "w-fit";
 
@@ -107,12 +112,16 @@ export function BrandButton({
   }
 
   // metal variant — emerald (default) / light-grey (Nav) / bright-green (See AIOS) fill
+  const ringOverride = greenRing
+    ? "before:ring-[#00df82]/70! before:ring-[1.5px]!"
+    : "";
+
   return (
     <MetalButton
       preset={isGreen ? "silver" : preset}
       theme={isGreen ? "dark" : isLight ? "light" : "auto"}
       borderRadius={RADIUS_PX}
-      metalFxClassName={`${full ? "w-full" : ""} ${fxFill}`}
+      metalFxClassName={`${full ? "w-full" : ""} ${fxFill} ${ringOverride}`}
       className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""}`}
       render={
         href ? (

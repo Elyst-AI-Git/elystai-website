@@ -50,6 +50,7 @@ function NavCta({
       full={full}
       tone="light"
       preset="silver"
+      greenRing
       className="min-h-[40px]! px-5! text-[length:var(--text-small)]"
     >
       {label}

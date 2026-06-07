@@ -146,7 +146,7 @@ export default function MarkDither({
 
           const field = inside
             ? (0.74 + 0.2 * shimmer) * reveal + 0.3 * halo
-            : 0.04 + 0.04 * shimmer + 0.5 * halo;
+            : (0.2 + 0.13 * shimmer) * reveal + 0.5 * halo;
 
           const threshold = (BAYER[(cy & 7) * 8 + (cx & 7)] + 0.5) / 64;
           const on = field > threshold;

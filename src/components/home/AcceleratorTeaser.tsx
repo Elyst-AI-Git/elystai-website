@@ -50,7 +50,7 @@ const programs: Program[] = [
   },
   {
     mark: Sparkles,
-    name: "AI Junior",
+    name: "AI for Juniors",
     who: "For school students, Classes 5–10",
     status: "Enrolling",
     href: "/ai-junior",
@@ -156,7 +156,7 @@ function ProgramFace({ p }: { p: Program }) {
             <motion.h3
               variants={stagger.item}
               className="font-display leading-tight"
-              style={{ color: headingColor, fontSize: "var(--text-h3)", fontWeight: 600 }}
+              style={{ color: headingColor, fontSize: "var(--text-h3)", fontWeight: 800 }}
             >
               {p.name}
             </motion.h3>
@@ -243,8 +243,8 @@ export default function AcceleratorTeaser() {
         fifthColor="0, 223, 130"
         pointerColor="0, 223, 130"
         blendingValue="soft-light"
-        size="55%"
-        interactive={false}
+        size="75%"
+        interactive
       />
       <div className="relative z-10 mx-auto max-w-[1100px]">
         <div className="mx-auto max-w-2xl text-center">
@@ -261,7 +261,7 @@ export default function AcceleratorTeaser() {
           </p>
         </div>
 
-        <div className="mt-14">
+        <div className="mt-8">
           <FanStage />
 
           {/* Mobile: plain stacked cards (no fan) */}
@@ -274,7 +274,7 @@ export default function AcceleratorTeaser() {
           </div>
         </div>
 
-        <div className="mt-12 flex items-center justify-center gap-1">
+        <div className="mt-7 flex items-center justify-center gap-1">
           <SquigglyArrow
             direction="right"
             variant="bouncy"

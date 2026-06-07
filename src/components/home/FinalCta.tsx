@@ -109,10 +109,6 @@ export default function FinalCta() {
           />
         ))}
       </div>
-
-      <p className="px-[var(--section-px)] py-8 text-center text-small text-fg-3">
-        Not sure which fits? Start with the Circle — open now, ₹299/month.
-      </p>
     </section>
   );
 }

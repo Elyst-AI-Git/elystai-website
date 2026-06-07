@@ -87,7 +87,7 @@ export default function Footer() {
       {/* Zone 1 — utility footer on light surface */}
       <div
         className="bg-bg"
-        style={{ padding: "var(--section-py) var(--section-px) 64px" }}
+        style={{ padding: "48px var(--section-px) 64px" }}
       >
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
@@ -98,10 +98,17 @@ export default function Footer() {
                 Kozhikode, Kerala, India
                 <br />
                 <a
-                  href="mailto:mailofelystai@gmail.com"
+                  href="mailto:info@elystai.com"
                   className="transition-colors hover:text-emerald"
                 >
-                  mailofelystai@gmail.com
+                  info@elystai.com
+                </a>
+                <br />
+                <a
+                  href="tel:+919633288931"
+                  className="transition-colors hover:text-emerald"
+                >
+                  +91 96332 88931
                 </a>
               </address>
               <div className="mt-5 flex gap-3">
@@ -138,35 +145,40 @@ export default function Footer() {
       <div
         className="overflow-hidden"
         style={{
-          paddingTop: "40px",
+          paddingTop: "160px",
           background:
-            "linear-gradient(to bottom, var(--bg) 0, var(--surface-dark) 40px)",
+            "linear-gradient(to bottom, var(--bg) 0%, color-mix(in srgb, var(--bg) 65%, var(--surface-dark) 35%) 35%, color-mix(in srgb, var(--bg) 22%, var(--surface-dark) 78%) 70%, var(--surface-dark) 160px)",
         }}
       >
         <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pb-8 pt-10">
           <StarsBackground
             className="absolute inset-0"
-            starDensity={0.00018}
+            starDensity={0.00055}
+            allStarsTwinkle
+            twinkleProbability={0.85}
+            minTwinkleSpeed={0.4}
+            maxTwinkleSpeed={1.2}
           />
           <ShootingStars
             className="absolute inset-0"
             starColor="#00df82"
             trailColor="#03624c"
-            minSpeed={12}
-            maxSpeed={28}
-            minDelay={900}
-            maxDelay={3800}
+            starWidth={28}
+            starHeight={2.5}
+            minSpeed={18}
+            maxSpeed={42}
+            minDelay={500}
+            maxDelay={2200}
           />
           <div className="relative z-10">
-            <span
-              className="wordmark-mega block w-full whitespace-nowrap text-center font-display font-bold leading-[0.85]"
-              style={{ fontSize: "clamp(5rem, 19vw, 23rem)" }}
-            >
-              Elyst AI
-            </span>
-            <p className="mt-4 text-small text-fg-muted-dark">
-              Kozhikode · Kerala · 2026
-            </p>
+            <Wordmark
+              title="Elyst AI"
+              className="mx-auto block h-auto w-full max-w-[1300px] text-green"
+              style={{
+                filter:
+                  "drop-shadow(0 0 2px rgba(255,255,255,0.55)) drop-shadow(0 2px 10px rgba(0,223,130,0.4)) drop-shadow(0 0 60px rgba(0,223,130,0.3))",
+              }}
+            />
           </div>
         </div>
       </div>

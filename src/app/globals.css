@@ -69,16 +69,16 @@
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);
   --text-h1: clamp(2.2rem, 4.5vw, 3.8rem);
-  --text-h2: clamp(1.725rem, 3.2vw, 2.525rem);
+  --text-h2: clamp(1.85rem, 3.4vw, 2.7rem);
   --text-h3: clamp(1.225rem, 2.1vw, 1.525rem);
-  --text-body: clamp(1.075rem, 1.35vw, 1.175rem);
+  --text-body: clamp(1.15rem, 1.45vw, 1.25rem);
   --text-small: 1rem;
-  --text-eyebrow: 0.845rem;
+  --text-eyebrow: 0.95rem;
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.042em;
   --tracking-body: -0.05em;
-  --tracking-wide: 0.12em;
+  --tracking-wide: 0.084em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: 20px;
@@ -319,54 +319,6 @@
     }
   }
 
-  /* Footer mega wordmark (Awesomic-style) — huge, edge-to-edge, textured fill.
-     Layers a fine brushed-metal stripe texture + a moving diagonal sheen over
-     the emerald→green gradient, all clipped to the glyphs. */
-  .wordmark-mega {
-    background-image:
-      repeating-linear-gradient(
-        92deg,
-        rgba(255, 255, 255, 0.16) 0px,
-        rgba(255, 255, 255, 0.16) 1px,
-        rgba(255, 255, 255, 0) 1px,
-        rgba(255, 255, 255, 0) 5px
-      ),
-      linear-gradient(
-        115deg,
-        rgba(255, 255, 255, 0) 38%,
-        rgba(220, 255, 240, 0.55) 50%,
-        rgba(255, 255, 255, 0) 62%
-      ),
-      linear-gradient(
-        100deg,
-        var(--elyst-emerald) 0%,
-        var(--elyst-green-mid) 32%,
-        var(--elyst-green) 50%,
-        var(--elyst-green-mid) 68%,
-        var(--elyst-emerald) 100%
-      );
-    background-size: 100% 100%, 220% 100%, 220% 100%;
-    background-position: 0 0, 0 50%, 0 50%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: -0.03em;
-    animation: wordmark-sheen 7s ease-in-out infinite;
-  }
-  @keyframes wordmark-sheen {
-    0%,
-    100% {
-      background-position: 0 0, 0% 50%, 0% 50%;
-    }
-    50% {
-      background-position: 0 0, 100% 50%, 100% 50%;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .wordmark-mega {
-      animation: none;
-    }
-  }
   @media (prefers-reduced-motion: reduce) {
     .wordmark-fill {
       animation: none;

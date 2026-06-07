@@ -26,7 +26,7 @@ export default function Hero() {
               make you{" "}
               <PointerHighlight
                 containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[4px] !border-[#00df82] translate-y-[18px]"
+                rectangleClassName="border-[4px] !border-[#00df82] translate-y-[20px]"
                 pointerClassName="text-[#00df82]"
               >
                 <span className="relative z-10 block py-0 pl-1 pr-2.5 leading-[1.15]">grow</span>
@@ -56,7 +56,7 @@ export default function Hero() {
         <CometCard className="hidden self-stretch md:block">
           <div
             className="overflow-hidden rounded-card"
-            style={{ background: "#F5F8F6", minHeight: "480px" }}
+            style={{ background: "#F5F8F6", height: "480px" }}
           >
             <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
           </div>
