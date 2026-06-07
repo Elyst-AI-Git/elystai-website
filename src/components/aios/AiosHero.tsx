@@ -5,11 +5,16 @@ import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 import { CanvasText } from "@/components/ui/canvas-text";
 
-/** Three dark-green shades for the "AI way" canvas-text accent — calm, on-brand, no shimmer. */
+/**
+ * "AI way" canvas-text accent — fill reads as the brand bright-green
+ * (#00DF82, via `bg-green`); these darker emerald shades sit *inside* the
+ * glyphs as a subtle scribble texture so the letterforms keep depth without
+ * losing their #00DF82 identity at a glance.
+ */
 const AI_WAY_COLORS = [
-  "rgba(3, 98, 76, 1)",
-  "rgba(2, 74, 57, 1)",
-  "rgba(4, 56, 43, 1)",
+  "rgba(0, 223, 130, 1)",
+  "rgba(3, 98, 76, 0.85)",
+  "rgba(2, 74, 57, 0.7)",
 ];
 
 /**
@@ -125,7 +130,7 @@ export default function AiosHero() {
             the{" "}
             <CanvasText
               text="AI way"
-              backgroundClassName="bg-emerald"
+              backgroundClassName="bg-green"
               colors={AI_WAY_COLORS}
               lineGap={4}
               animationDuration={16}
