@@ -23,7 +23,7 @@ export default function Hero() {
               make you{" "}
               <PointerHighlight
                 containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[1.5px] !border-[#00df82]"
+                rectangleClassName="border-[2.625px] !border-[#00df82]"
                 pointerClassName="text-[#00df82]"
               >
                 <span className="relative z-10 px-1">grow</span>
@@ -32,7 +32,7 @@ export default function Hero() {
           </h1>
 
           <p
-            className="mt-5 max-w-md text-fg-2"
+            className="mt-5 max-w-md text-fg-2 md:max-w-none md:whitespace-nowrap"
             style={{ fontSize: "var(--text-body)" }}
           >
             We setup AI into your businesses and teach you how to use it.
