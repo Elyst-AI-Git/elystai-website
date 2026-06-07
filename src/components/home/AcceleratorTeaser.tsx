@@ -24,6 +24,7 @@ import {
 import { BrandButton } from "@/components/ui/brand-button";
 import SquigglyArrow from "@/components/ui/squiggle-arrow";
 import { NoiseBackground } from "@/components/ui/noise-background";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 type Program = {
   mark: LucideIcon;
@@ -228,10 +229,24 @@ function FanStage() {
 export default function AcceleratorTeaser() {
   return (
     <section
-      className="overflow-hidden bg-surface-muted"
+      className="relative overflow-hidden bg-surface-muted"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <div className="mx-auto max-w-[1100px]">
+      <BackgroundGradientAnimation
+        containerClassName="absolute top-0 left-0 h-full w-full"
+        gradientBackgroundStart="rgb(238, 245, 241)"
+        gradientBackgroundEnd="rgb(208, 232, 222)"
+        firstColor="3, 98, 76"
+        secondColor="0, 223, 130"
+        thirdColor="4, 133, 95"
+        fourthColor="46, 200, 102"
+        fifthColor="0, 223, 130"
+        pointerColor="0, 223, 130"
+        blendingValue="soft-light"
+        size="55%"
+        interactive={false}
+      />
+      <div className="relative z-10 mx-auto max-w-[1100px]">
         <div className="mx-auto max-w-2xl text-center">
           <span className="chip">Learn AI · Accelerator</span>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>

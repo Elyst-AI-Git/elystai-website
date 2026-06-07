@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { SVGProps } from "react";
 import Wordmark from "@/components/site/Wordmark";
+import { ShootingStars } from "@/components/ui/shooting-stars";
+import { StarsBackground } from "@/components/ui/stars-background";
 
 function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -132,25 +134,40 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Zone 2 — giant brand wordmark on dark surface */}
+      {/* Zone 2 — giant brand wordmark on a starfield over the dark surface */}
       <div
-        className="overflow-hidden bg-surface-dark"
+        className="overflow-hidden"
         style={{
           paddingTop: "40px",
           background:
             "linear-gradient(to bottom, var(--bg) 0, var(--surface-dark) 40px)",
         }}
       >
-        <div className="bg-surface-dark px-[var(--section-px)] pb-8 pt-10">
-          <span
-            className="wordmark-mega block w-full whitespace-nowrap text-center font-display font-bold leading-[0.85]"
-            style={{ fontSize: "clamp(5rem, 19vw, 23rem)" }}
-          >
-            Elyst AI
-          </span>
-          <p className="mt-4 text-small text-fg-muted-dark">
-            Kozhikode · Kerala · 2026
-          </p>
+        <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pb-8 pt-10">
+          <StarsBackground
+            className="absolute inset-0"
+            starDensity={0.00018}
+          />
+          <ShootingStars
+            className="absolute inset-0"
+            starColor="#00df82"
+            trailColor="#03624c"
+            minSpeed={12}
+            maxSpeed={28}
+            minDelay={900}
+            maxDelay={3800}
+          />
+          <div className="relative z-10">
+            <span
+              className="wordmark-mega block w-full whitespace-nowrap text-center font-display font-bold leading-[0.85]"
+              style={{ fontSize: "clamp(5rem, 19vw, 23rem)" }}
+            >
+              Elyst AI
+            </span>
+            <p className="mt-4 text-small text-fg-muted-dark">
+              Kozhikode · Kerala · 2026
+            </p>
+          </div>
         </div>
       </div>
     </footer>
