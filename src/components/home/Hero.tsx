@@ -12,9 +12,9 @@ export default function Hero() {
         {/* Left — copy */}
         <div>
           <h1 className="text-fg" style={{ fontSize: "var(--text-hero)", lineHeight: 1.08 }}>
-            <span className="block">AI that</span>
-            {/* "runs" — heavy animated emerald→green gradient word, in flow */}
-            <span className="runs-word block">runs</span>
+            <span className="block">
+              AI that <span className="runs-word">runs</span>
+            </span>
             <span className="block">your business</span>
             {/* Extra breathing room between the two phrases */}
             <span className="block" style={{ height: "clamp(8px, 1.2vw, 18px)" }} />
