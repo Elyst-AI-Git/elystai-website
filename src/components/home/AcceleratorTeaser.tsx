@@ -24,7 +24,6 @@ import {
 import { BrandButton } from "@/components/ui/brand-button";
 import SquigglyArrow from "@/components/ui/squiggle-arrow";
 import { NoiseBackground } from "@/components/ui/noise-background";
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 type Program = {
   mark: LucideIcon;
@@ -232,19 +231,20 @@ export default function AcceleratorTeaser() {
       className="relative overflow-hidden bg-bg"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <BackgroundGradientAnimation
-        containerClassName="absolute top-0 left-0 h-[135%] w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_60%,transparent_74%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_60%,transparent_74%)]"
-        gradientBackgroundStart="rgb(229, 243, 237)"
-        gradientBackgroundEnd="rgb(186, 224, 208)"
-        firstColor="3, 98, 76"
-        secondColor="0, 223, 130"
-        thirdColor="4, 133, 95"
-        fourthColor="46, 200, 102"
-        fifthColor="0, 223, 130"
-        pointerColor="0, 223, 130"
-        blendingValue="overlay"
-        size="85%"
-        interactive
+      {/* Static brand-green glow behind the cards — replaced the interactive
+          gradient component (felt sluggish/unreliable) with a plain layered
+          radial-gradient. No JS, no pointer-tracking, just a soft backdrop
+          that fades smoothly into the sections above and below. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-0 left-0 h-[135%] w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_60%,transparent_74%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_60%,transparent_74%)]"
+        style={{
+          background:
+            "radial-gradient(48% 38% at 50% 36%, rgba(0, 223, 130, 0.32), transparent 70%), " +
+            "radial-gradient(40% 34% at 28% 58%, rgba(3, 98, 76, 0.24), transparent 70%), " +
+            "radial-gradient(40% 34% at 72% 58%, rgba(46, 200, 102, 0.24), transparent 70%)",
+          filter: "blur(64px)",
+        }}
       />
       <div className="relative z-10 mx-auto max-w-[1100px]">
         <div className="mx-auto max-w-2xl text-center">

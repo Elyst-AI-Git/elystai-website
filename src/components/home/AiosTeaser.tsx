@@ -182,7 +182,7 @@ export default function AiosTeaser() {
             className="mt-6 text-fg"
             style={{ fontSize: "var(--text-h2)" }}
           >
-            <span className="block whitespace-nowrap">
+            <span className="block whitespace-normal sm:whitespace-nowrap">
               Your team already uses{" "}
               <span style={{ color: "#25D366" }}>WhatsApp</span>.
             </span>
