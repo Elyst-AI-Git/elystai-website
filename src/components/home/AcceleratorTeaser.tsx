@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/cutout-card";
 import { BrandButton } from "@/components/ui/brand-button";
 import SquigglyArrow from "@/components/ui/squiggle-arrow";
+import { NoiseBackground } from "@/components/ui/noise-background";
 
 type Program = {
   mark: LucideIcon;
@@ -100,6 +101,12 @@ function ProgramFace({ p }: { p: Program }) {
   const dividerColor = p.dark ? "rgba(255,255,255,0.2)" : "rgba(3,98,76,0.18)";
 
   return (
+    <NoiseBackground
+      containerClassName="rounded-[33px] bg-transparent p-[5px] shadow-none ring-0 dark:bg-transparent"
+      className="overflow-hidden rounded-[28px]"
+      gradientColors={["#03624c", "#00df82", "#04855f"]}
+      noiseIntensity={0.12}
+    >
     <div
       className={cutoutCardSurfaceClassName}
       style={{ background: p.surface }}
@@ -168,6 +175,7 @@ function ProgramFace({ p }: { p: Program }) {
         </CutoutCardContent>
       </CutoutCard>
     </div>
+    </NoiseBackground>
   );
 }
 
@@ -255,11 +263,11 @@ export default function AcceleratorTeaser() {
           <SquigglyArrow
             direction="right"
             variant="bouncy"
-            width={120}
-            height={64}
-            className="hidden text-emerald sm:block"
+            width={160}
+            height={88}
+            className="block self-center text-emerald"
           />
-          <BrandButton href="/learn">
+          <BrandButton href="/learn" className="self-center">
             Explore all programs
             <ArrowRight className="h-4 w-4" />
           </BrandButton>

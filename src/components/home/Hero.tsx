@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import MarkDither from "@/components/site/MarkDither";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { BrandButton } from "@/components/ui/brand-button";
+import { CometCard } from "@/components/ui/comet-card";
 
 export default function Hero() {
   return (
@@ -24,8 +25,8 @@ export default function Hero() {
             <span className="block" style={{ marginTop: "calc(var(--text-hero) * -0.27)" }}>
               make you{" "}
               <PointerHighlight
-                containerClassName="inline-block align-baseline translate-y-[11px]"
-                rectangleClassName="border-[4px] !border-[#00df82]"
+                containerClassName="inline-block align-baseline"
+                rectangleClassName="border-[4px] !border-[#00df82] translate-y-[18px]"
                 pointerClassName="text-[#00df82]"
               >
                 <span className="relative z-10 block py-0 pl-1 pr-2.5 leading-[1.15]">grow</span>
@@ -52,20 +53,24 @@ export default function Hero() {
         </div>
 
         {/* Right — mark-forming dither (desktop) */}
-        <div
-          className="hidden self-stretch overflow-hidden rounded-card md:block"
-          style={{ background: "#F5F8F6", minHeight: "400px" }}
-        >
-          <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
-        </div>
+        <CometCard className="hidden self-stretch md:block">
+          <div
+            className="overflow-hidden rounded-card"
+            style={{ background: "#F5F8F6", minHeight: "480px" }}
+          >
+            <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
+          </div>
+        </CometCard>
 
         {/* Mobile band */}
-        <div
-          className="h-44 overflow-hidden rounded-card md:hidden"
-          style={{ background: "#F5F8F6" }}
-        >
-          <MarkDither colorFront="#03624C" colorBack="#F5F8F6" pixelSize={4} />
-        </div>
+        <CometCard className="md:hidden">
+          <div
+            className="h-[211px] overflow-hidden rounded-card"
+            style={{ background: "#F5F8F6" }}
+          >
+            <MarkDither colorFront="#03624C" colorBack="#F5F8F6" pixelSize={4} />
+          </div>
+        </CometCard>
       </div>
     </section>
   );
