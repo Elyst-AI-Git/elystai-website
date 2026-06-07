@@ -5,6 +5,7 @@ import AiosHowItWorks from "@/components/aios/AiosHowItWorks";
 import AiosCapabilities from "@/components/aios/AiosCapabilities";
 import AiosUseCases from "@/components/aios/AiosUseCases";
 import AiosModel from "@/components/aios/AiosModel";
+import AiosPricing from "@/components/aios/AiosPricing";
 
 export const metadata: Metadata = {
   title: "AIOS for Business — Elyst AI",
@@ -21,6 +22,7 @@ export default function AiosPage() {
       <AiosCapabilities />
       <AiosUseCases />
       <AiosModel />
+      <AiosPricing />
     </main>
   );
 }
