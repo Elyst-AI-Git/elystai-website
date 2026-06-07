@@ -60,7 +60,7 @@ function ChatMockup() {
 
   return (
     <CardContainer className="w-full" containerClassName="py-0">
-      <CardBody className="mx-auto !w-full !max-w-[460px]">
+      <CardBody className="ml-auto !w-full !max-w-[460px]">
         <div
           ref={ref}
           className="overflow-hidden border border-border bg-white shadow-card"
@@ -182,7 +182,11 @@ export default function AiosTeaser() {
             className="mt-6 text-fg"
             style={{ fontSize: "var(--text-h2)" }}
           >
-            Your team already uses WhatsApp. Now it works for you.
+            <span className="block whitespace-nowrap">
+              Your team already uses{" "}
+              <span style={{ color: "#25D366" }}>WhatsApp</span>.
+            </span>
+            <span className="block">What if it worked for you?</span>
           </h2>
           <p
             className="mt-4 max-w-prose text-fg-2"

@@ -14,10 +14,17 @@ import Link from "next/link";
 import { MetalButton } from "@/components/ui/metal-button";
 
 type BrandVariant = "metal" | "outline";
+/**
+ * "emerald" = brand emerald fill (default).
+ * "light"   = premium light-grey fill, black text (Nav CTA).
+ * "green"   = brand bright-green (#00df82) fill, black text, blackish metal ring.
+ */
+type BrandTone = "emerald" | "light" | "green";
 
 type BrandButtonProps = {
   href?: string;
   variant?: BrandVariant;
+  tone?: BrandTone;
   className?: string;
   children: React.ReactNode;
   onClick?: () => void;
@@ -28,6 +35,11 @@ type BrandButtonProps = {
 const BASE =
   "inline-flex items-center justify-center gap-2 font-bold whitespace-nowrap " +
   "min-h-[48px] px-6 text-[length:var(--text-small)] leading-none";
+
+/* Shared corner radius — matches the small arrow-icon button in the FinalCta
+   panels (rounded-md, ~6px), the site's reference "curve" for every button. */
+const RADIUS_CLASS = "rounded-md";
+const RADIUS_PX = 6;
 
 function Inner({ href, onClick, className, children }: {
   href?: string;
@@ -60,6 +72,7 @@ function Inner({ href, onClick, className, children }: {
 export function BrandButton({
   href,
   variant = "metal",
+  tone = "emerald",
   className,
   children,
   onClick,
@@ -73,20 +86,34 @@ export function BrandButton({
       <Inner
         href={href}
         onClick={onClick}
-        className={`${BASE} ${width} rounded-[14px] border-[1.5px] border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
+        className={`${BASE} ${width} ${RADIUS_CLASS} border-[1.5px] border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
       >
         {children}
       </Inner>
     );
   }
 
-  // metal variant — emerald fill + liquid-metal ring
+  const isLight = tone === "light";
+  const isGreen = tone === "green";
+  const onDark = !isLight && !isGreen;
+
+  let fxFill: string;
+  if (isLight) {
+    fxFill = "bg-[#eef0ee]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
+  } else if (isGreen) {
+    fxFill = "bg-[#00df82]! text-[#0a0a0a]! hover:bg-[#00c973]!";
+  } else {
+    fxFill = "bg-emerald! text-fg-on-dark! hover:bg-emerald-light!";
+  }
+
+  // metal variant — emerald (default) / light-grey (Nav) / bright-green (See AIOS) fill
   return (
     <MetalButton
-      preset={preset}
-      borderRadius={14}
-      metalFxClassName={`${full ? "w-full" : ""} bg-emerald! text-fg-on-dark! hover:bg-emerald-light!`}
-      className={`${BASE} ${width} rounded-[14px] text-fg-on-dark ${className ?? ""}`}
+      preset={isGreen ? "silver" : preset}
+      theme={isGreen ? "dark" : isLight ? "light" : "auto"}
+      borderRadius={RADIUS_PX}
+      metalFxClassName={`${full ? "w-full" : ""} ${fxFill}`}
+      className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""}`}
       render={
         href ? (
           href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:") ? (

@@ -20,15 +20,15 @@ export default function Hero() {
             </span>
             {/* Extra breathing room between the two phrases */}
             <span className="block" style={{ height: "clamp(8px, 1.2vw, 18px)" }} />
-            <span className="block">Programs that</span>
+            <span className="block">AI programs that</span>
             <span className="block" style={{ marginTop: "calc(var(--text-hero) * -0.27)" }}>
               make you{" "}
               <PointerHighlight
-                containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[3px] !border-[#00df82]"
+                containerClassName="inline-block align-baseline translate-y-[11px]"
+                rectangleClassName="border-[4px] !border-[#00df82]"
                 pointerClassName="text-[#00df82]"
               >
-                <span className="relative z-10 py-1 pl-1 pr-2.5">grow</span>
+                <span className="relative z-10 block py-0 pl-1 pr-2.5 leading-[1.15]">grow</span>
               </PointerHighlight>
             </span>
           </h1>
@@ -41,7 +41,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BrandButton href="/aios">
+            <BrandButton href="/aios" tone="green">
               See AIOS
               <ArrowRight className="h-4 w-4" />
             </BrandButton>

@@ -48,6 +48,7 @@ function NavCta({
       href={href}
       onClick={onClick}
       full={full}
+      tone="light"
       preset="silver"
       className="min-h-[40px]! px-5! text-[length:var(--text-small)]"
     >
@@ -121,7 +122,7 @@ export default function Nav() {
         style={{ width: "min(900px, calc(100vw - 48px))" }}
       >
         <div
-          className="relative flex h-14 items-center rounded-pill px-3 transition-all duration-300"
+          className="relative flex h-14 items-center rounded-md px-3 transition-all duration-300"
           style={{
             background: scrolled
               ? "linear-gradient(180deg, hsl(160 38% 12%) 0%, hsl(160 38% 8%) 55%, hsl(160 38% 11%) 100%)"
