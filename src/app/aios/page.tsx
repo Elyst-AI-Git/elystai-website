@@ -6,7 +6,6 @@ import AiosCapabilities from "@/components/aios/AiosCapabilities";
 import AiosUseCases from "@/components/aios/AiosUseCases";
 import AiosModel from "@/components/aios/AiosModel";
 import AiosPricing from "@/components/aios/AiosPricing";
-import AiosProof from "@/components/aios/AiosProof";
 import AiosFaq from "@/components/aios/AiosFaq";
 import AiosCta from "@/components/aios/AiosCta";
 
@@ -26,7 +25,6 @@ export default function AiosPage() {
       <AiosUseCases />
       <AiosModel />
       <AiosPricing />
-      <AiosProof />
       <AiosFaq />
       <AiosCta />
     </main>

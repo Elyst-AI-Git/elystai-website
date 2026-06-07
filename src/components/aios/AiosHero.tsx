@@ -3,6 +3,19 @@
 import { ArrowRight, FileCheck2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
+import { CanvasText } from "@/components/ui/canvas-text";
+
+/** Shimmering green-on-emerald scribble palette for the "AI way" canvas-text accent. */
+const AI_WAY_COLORS = [
+  "rgba(0, 223, 130, 1)",
+  "rgba(0, 223, 130, 0.85)",
+  "rgba(245, 248, 246, 0.9)",
+  "rgba(46, 200, 102, 0.8)",
+  "rgba(0, 223, 130, 0.6)",
+  "rgba(245, 248, 246, 0.5)",
+  "rgba(46, 200, 102, 0.45)",
+  "rgba(0, 223, 130, 0.3)",
+];
 
 /**
  * "One message → finished artifact" proof visual.
@@ -109,11 +122,19 @@ export default function AiosHero() {
         <div>
           <span className="chip">AIOS for Business</span>
           <h1
-            className="mt-6 max-w-md text-fg"
+            className="mt-6 text-fg"
             style={{ fontSize: "var(--text-h1)", lineHeight: 1.12 }}
           >
-            The AI that runs your operations — inside{" "}
-            <span style={{ color: "#25D366" }}>WhatsApp</span>.
+            It&rsquo;s time to work
+            <br />
+            the{" "}
+            <CanvasText
+              text="AI way"
+              backgroundClassName="bg-emerald"
+              colors={AI_WAY_COLORS}
+              lineGap={4}
+              animationDuration={16}
+            />
           </h1>
           <p
             className="mt-5 max-w-md text-fg-2"

@@ -9,6 +9,7 @@ import {
   Plug,
   Sparkles,
 } from "lucide-react";
+import { WobbleCard } from "@/components/ui/wobble-card";
 
 /**
  * Mockup visuals below are faithful placeholders in the established product
@@ -118,20 +119,23 @@ function ProductTile({ tile, index }: { tile: Tile; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.45, delay: index * 0.06, ease: "easeOut" }}
-      className={`card card-hover flex flex-col overflow-hidden ${
-        span === "lg" ? "sm:col-span-2 sm:row-span-2" : ""
-      }`}
+      className={span === "lg" ? "sm:col-span-2 sm:row-span-2" : ""}
     >
-      {Visual && <Visual />}
-      <div className={`flex flex-col gap-2 p-6 ${Visual ? "pt-2" : ""} ${span === "lg" ? "mt-auto" : ""}`}>
-        <Icon className="h-5 w-5 text-emerald" />
-        <h3 className="font-semibold text-fg" style={{ fontSize: span === "lg" ? "var(--text-h3)" : "1.05rem" }}>
-          {heading}
-        </h3>
-        <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
-          {sub}
-        </p>
-      </div>
+      <WobbleCard
+        containerClassName="h-full bg-card border border-border"
+        className="flex h-full flex-col p-0 sm:p-0"
+      >
+        {Visual && <Visual />}
+        <div className={`flex flex-col gap-2 p-6 ${Visual ? "pt-2" : ""} ${span === "lg" ? "mt-auto" : ""}`}>
+          <Icon className="h-5 w-5 text-emerald" />
+          <h3 className="font-semibold text-fg" style={{ fontSize: span === "lg" ? "var(--text-h3)" : "1.05rem" }}>
+            {heading}
+          </h3>
+          <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
+            {sub}
+          </p>
+        </div>
+      </WobbleCard>
     </motion.div>
   );
 }
@@ -143,15 +147,19 @@ function OpenCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.45, delay: tiles.length * 0.06, ease: "easeOut" }}
-      className="card-tint flex flex-col justify-center gap-2 p-6"
     >
-      <Sparkles className="h-5 w-5 text-emerald" />
-      <h3 className="font-semibold text-fg" style={{ fontSize: "1.05rem" }}>
-        …and whatever else your workflows need.
-      </h3>
-      <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
-        AIOS is configured to your business — not picked off a shelf.
-      </p>
+      <WobbleCard
+        containerClassName="h-full bg-emerald"
+        className="flex h-full flex-col justify-center gap-2 p-6 sm:p-6"
+      >
+        <Sparkles className="h-5 w-5 text-green" />
+        <h3 className="font-semibold text-fg-on-dark" style={{ fontSize: "1.05rem" }}>
+          …and whatever else your workflows need.
+        </h3>
+        <p className="text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
+          AIOS is configured to your business — not picked off a shelf.
+        </p>
+      </WobbleCard>
     </motion.div>
   );
 }
