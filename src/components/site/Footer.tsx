@@ -64,13 +64,13 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h2 className="eyebrow mb-4">{title}</h2>
+      <h2 className="eyebrow mb-4 text-fg-muted-dark">{title}</h2>
       <ul className="flex flex-col gap-3">
         {links.map((l) => (
           <li key={l.label}>
             <Link
               href={l.href}
-              className="text-small text-fg-2 transition-colors hover:text-emerald"
+              className="text-small text-fg-on-dark/80 transition-colors hover:text-green"
             >
               {l.label}
             </Link>
@@ -84,65 +84,9 @@ function FooterCol({
 export default function Footer() {
   return (
     <footer className="mt-auto">
-      {/* Zone 1 — utility footer on light surface */}
-      <div
-        className="bg-bg"
-        style={{ padding: "48px var(--section-px) 64px" }}
-      >
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-            {/* Col 1 — Contact & entity (full width on mobile) */}
-            <div className="col-span-2 md:col-span-1">
-              <Wordmark className="mb-5 h-6 w-auto text-emerald" title="Elyst AI" />
-              <address className="not-italic text-small leading-relaxed text-fg-2">
-                Kozhikode, Kerala, India
-                <br />
-                <a
-                  href="mailto:info@elystai.com"
-                  className="transition-colors hover:text-emerald"
-                >
-                  info@elystai.com
-                </a>
-                <br />
-                <a
-                  href="tel:+919633288931"
-                  className="transition-colors hover:text-emerald"
-                >
-                  +91 96332 88931
-                </a>
-              </address>
-              <div className="mt-5 flex gap-3">
-                {socials.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface-muted text-fg-2 transition-colors hover:bg-emerald hover:text-fg-on-dark"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
-              <p className="mt-5 text-small text-fg-3">
-                Elyst AI LLP · LLPIN: [pending]
-              </p>
-            </div>
-
-            <FooterCol title="AIOS for Business" links={aiosLinks} />
-            <FooterCol title="Learn AI" links={learnLinks} />
-            <FooterCol title="Company" links={companyLinks} />
-          </div>
-
-          <hr className="my-10 border-border" />
-
-          <p className="text-small text-fg-3">
-            © 2026 Elyst AI LLP · Kozhikode, Kerala · All rights reserved.
-          </p>
-        </div>
-      </div>
-
-      {/* Zone 2 — contact/social details + giant brand wordmark on a starfield
-          over the dark surface (mirrors the "FOLLOW US" reference layout) */}
+      {/* A single unified footer — utility links, contact/social details, and
+          the giant brand wordmark all live together on the starfield over the
+          dark surface (no separate light "utility footer" zone). */}
       <div
         className="overflow-hidden"
         style={{
@@ -172,12 +116,36 @@ export default function Footer() {
             maxDelay={2200}
           />
 
-          {/* Details block — FOLLOW US, contact, socials, copyright + terms */}
           <div className="relative z-10 mx-auto max-w-6xl">
-            <div className="flex flex-col items-center gap-8 pb-10 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
-              <div>
-                <h2 className="eyebrow text-fg-on-dark">Follow us</h2>
-                <div className="mt-4 flex justify-center gap-3 sm:justify-start">
+            {/* Utility grid — entity/contact + the three nav-link columns */}
+            <div className="grid grid-cols-2 gap-10 pb-10 md:grid-cols-4">
+              <div className="col-span-2 md:col-span-1">
+                <Wordmark
+                  className="mb-5 h-6 w-auto text-fg-on-dark"
+                  title="Elyst AI"
+                />
+                <address className="not-italic text-small leading-relaxed text-fg-muted-dark">
+                  Kozhikode, Kerala, India
+                  <br />
+                  <a
+                    href="mailto:info@elystai.com"
+                    className="transition-colors hover:text-green"
+                  >
+                    info@elystai.com
+                  </a>
+                  <br />
+                  <a
+                    href="tel:+919633288931"
+                    className="font-semibold text-green transition-colors hover:text-fg-on-dark"
+                  >
+                    +91 96332 88931
+                  </a>
+                </address>
+
+                <h2 className="eyebrow mt-6 mb-3 text-fg-muted-dark">
+                  Follow us
+                </h2>
+                <div className="flex gap-3">
                   {socials.map(({ label, href, Icon }) => (
                     <a
                       key={label}
@@ -189,25 +157,15 @@ export default function Footer() {
                     </a>
                   ))}
                 </div>
+
+                <p className="mt-5 text-small text-fg-muted-dark/70">
+                  Elyst AI LLP · LLPIN: [pending]
+                </p>
               </div>
 
-              <address className="not-italic text-small leading-relaxed text-fg-muted-dark">
-                <a
-                  href="mailto:info@elystai.com"
-                  className="transition-colors hover:text-green"
-                >
-                  info@elystai.com
-                </a>
-                <br />
-                <a
-                  href="tel:+919633288931"
-                  className="font-semibold text-green transition-colors hover:text-fg-on-dark"
-                >
-                  +91 96332 88931
-                </a>
-                <br />
-                Kozhikode, Kerala, India
-              </address>
+              <FooterCol title="AIOS for Business" links={aiosLinks} />
+              <FooterCol title="Learn AI" links={learnLinks} />
+              <FooterCol title="Company" links={companyLinks} />
             </div>
 
             <hr className="border-white/10" />

@@ -103,9 +103,9 @@ function ProgramFace({ p }: { p: Program }) {
 
   return (
     <NoiseBackground
-      containerClassName="rounded-[33px] bg-transparent p-[5px] shadow-none ring-0 dark:bg-transparent"
+      containerClassName="rounded-[33px] bg-transparent p-[5px] shadow-none ring-1 ring-black/25 dark:bg-transparent"
       className="overflow-hidden rounded-[28px]"
-      gradientColors={["#03624c", "#00df82", "#04855f"]}
+      gradientColors={["#060d09", "#1a1a1a", "#03624c"]}
       noiseIntensity={0.12}
     >
     <div
@@ -229,13 +229,13 @@ function FanStage() {
 export default function AcceleratorTeaser() {
   return (
     <section
-      className="relative overflow-hidden bg-surface-muted"
+      className="relative overflow-hidden bg-bg"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
       <BackgroundGradientAnimation
-        containerClassName="absolute top-[10%] left-0 h-full w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]"
-        gradientBackgroundStart="rgb(226, 241, 234)"
-        gradientBackgroundEnd="rgb(180, 221, 203)"
+        containerClassName="absolute top-0 left-0 h-[135%] w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_14%,black_78%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_14%,black_78%,transparent_100%)]"
+        gradientBackgroundStart="rgb(229, 243, 237)"
+        gradientBackgroundEnd="rgb(186, 224, 208)"
         firstColor="3, 98, 76"
         secondColor="0, 223, 130"
         thirdColor="4, 133, 95"
