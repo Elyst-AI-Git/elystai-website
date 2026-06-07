@@ -141,7 +141,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Zone 2 — giant brand wordmark on a starfield over the dark surface */}
+      {/* Zone 2 — contact/social details + giant brand wordmark on a starfield
+          over the dark surface (mirrors the "FOLLOW US" reference layout) */}
       <div
         className="overflow-hidden"
         style={{
@@ -150,7 +151,7 @@ export default function Footer() {
             "linear-gradient(to bottom, var(--bg) 0%, color-mix(in srgb, var(--bg) 65%, var(--surface-dark) 35%) 35%, color-mix(in srgb, var(--bg) 22%, var(--surface-dark) 78%) 70%, var(--surface-dark) 160px)",
         }}
       >
-        <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pb-8 pt-10">
+        <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pt-14 pb-0">
           <StarsBackground
             className="absolute inset-0"
             starDensity={0.00055}
@@ -170,14 +171,63 @@ export default function Footer() {
             minDelay={500}
             maxDelay={2200}
           />
-          <div className="relative z-10">
+
+          {/* Details block — FOLLOW US, contact, socials, copyright + terms */}
+          <div className="relative z-10 mx-auto max-w-6xl">
+            <div className="flex flex-col items-center gap-8 pb-10 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
+              <div>
+                <h2 className="eyebrow text-fg-on-dark">Follow us</h2>
+                <div className="mt-4 flex justify-center gap-3 sm:justify-start">
+                  {socials.map(({ label, href, Icon }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      aria-label={label}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-fg-on-dark transition-colors hover:bg-green hover:text-surface-dark"
+                    >
+                      <Icon className="h-4 w-4" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <address className="not-italic text-small leading-relaxed text-fg-muted-dark">
+                <a
+                  href="mailto:info@elystai.com"
+                  className="transition-colors hover:text-green"
+                >
+                  info@elystai.com
+                </a>
+                <br />
+                <a
+                  href="tel:+919633288931"
+                  className="font-semibold text-green transition-colors hover:text-fg-on-dark"
+                >
+                  +91 96332 88931
+                </a>
+                <br />
+                Kozhikode, Kerala, India
+              </address>
+            </div>
+
+            <hr className="border-white/10" />
+
+            <div className="flex flex-col items-center justify-between gap-3 py-6 text-small text-fg-muted-dark sm:flex-row">
+              <p>© 2026 Elyst AI LLP · Kozhikode, Kerala · All rights reserved.</p>
+              <Link
+                href="/terms"
+                className="transition-colors hover:text-green"
+              >
+                Terms &amp; Conditions
+              </Link>
+            </div>
+          </div>
+
+          {/* Giant wordmark — clean white, no glow, bottom-aligned */}
+          <div className="relative z-10 mt-2 flex justify-center">
             <Wordmark
               title="Elyst AI"
-              className="mx-auto block h-auto w-full max-w-[1300px] text-green"
-              style={{
-                filter:
-                  "drop-shadow(0 0 2px rgba(255,255,255,0.55)) drop-shadow(0 2px 10px rgba(0,223,130,0.4)) drop-shadow(0 0 60px rgba(0,223,130,0.3))",
-              }}
+              className="block h-auto w-full max-w-[975px] text-fg-on-dark"
             />
           </div>
         </div>

@@ -26,7 +26,7 @@ export default function Hero() {
               make you{" "}
               <PointerHighlight
                 containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[4px] !border-[#00df82] translate-y-[20px]"
+                rectangleClassName="border-[4px] !border-[#00df82] translate-y-[15px]"
                 pointerClassName="text-[#00df82]"
               >
                 <span className="relative z-10 block py-0 pl-1 pr-2.5 leading-[1.15]">grow</span>

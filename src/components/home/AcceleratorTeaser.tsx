@@ -233,17 +233,17 @@ export default function AcceleratorTeaser() {
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
       <BackgroundGradientAnimation
-        containerClassName="absolute top-0 left-0 h-full w-full"
-        gradientBackgroundStart="rgb(238, 245, 241)"
-        gradientBackgroundEnd="rgb(208, 232, 222)"
+        containerClassName="absolute top-[10%] left-0 h-full w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]"
+        gradientBackgroundStart="rgb(226, 241, 234)"
+        gradientBackgroundEnd="rgb(180, 221, 203)"
         firstColor="3, 98, 76"
         secondColor="0, 223, 130"
         thirdColor="4, 133, 95"
         fourthColor="46, 200, 102"
         fifthColor="0, 223, 130"
         pointerColor="0, 223, 130"
-        blendingValue="soft-light"
-        size="75%"
+        blendingValue="overlay"
+        size="85%"
         interactive
       />
       <div className="relative z-10 mx-auto max-w-[1100px]">
@@ -261,7 +261,7 @@ export default function AcceleratorTeaser() {
           </p>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-4">
           <FanStage />
 
           {/* Mobile: plain stacked cards (no fan) */}
