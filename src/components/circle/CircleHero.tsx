@@ -15,8 +15,19 @@ export default function CircleHero() {
     <>
       <section
         className="relative flex flex-col items-center justify-center overflow-hidden bg-surface-dark text-center"
-        style={{ minHeight: "92vh", padding: "130px 24px 100px" }}
+        style={{ minHeight: "69vh", padding: "100px 24px 76px" }}
       >
+        {/* Grid-background effect (Aceternity), recoloured to the brand green-mid line + radial fade mask */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(46,200,102,0.14) 1px, transparent 1px), linear-gradient(to bottom, rgba(46,200,102,0.14) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+            maskImage: "radial-gradient(ellipse at center, black 20%, transparent 75%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, black 20%, transparent 75%)",
+          }}
+        />
         {/* Radial glow behind headline */}
         <div
           className="pointer-events-none absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2"
@@ -25,15 +36,6 @@ export default function CircleHero() {
             height: 400,
             background:
               "radial-gradient(ellipse, rgba(46,200,102,0.16) 0%, transparent 70%)",
-          }}
-        />
-        {/* Dot grid */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-50"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, rgba(46,200,102,0.18) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
           }}
         />
         <div
@@ -71,16 +73,9 @@ export default function CircleHero() {
               ahead of you.
             </span>
           </h1>
-          <p
-            className="mt-3 font-display font-semibold text-fg-muted-dark"
-            style={{ fontSize: "clamp(1.4rem, 3.5vw, 2.2rem)" }}
-          >
-            Join them.
-          </p>
-
           <div className="mt-8 flex flex-col items-center gap-3">
             <BrandButton href="https://nas.io/elystaicircle" tone="green" className="rounded-full!">
-              Join the Circle →
+              Join them →
             </BrandButton>
             <a
               href="#what-you-join"
