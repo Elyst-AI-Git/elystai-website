@@ -20,7 +20,6 @@ const items: BentoItem[] = [
     status: "Live",
     tags: ["Knowledge", "Search"],
     colSpan: 2,
-    hasPersistentHover: true,
   },
   {
     title: "Documents done from one message",

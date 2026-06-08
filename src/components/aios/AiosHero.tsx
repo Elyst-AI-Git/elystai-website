@@ -25,7 +25,7 @@ export default function AiosHero() {
   return (
     <section
       className="relative overflow-hidden bg-bg"
-      style={{ padding: "clamp(80px, 12vw, 150px) var(--section-px)" }}
+      style={{ padding: "clamp(20px, 3vw, 48px) var(--section-px)" }}
     >
       {/* Cursor-reactive flowing-line canvas — deep-emerald trail on white */}
       <canvas
@@ -33,7 +33,7 @@ export default function AiosHero() {
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      <div className="relative z-10 mx-auto flex w-fit max-w-2xl flex-col items-center px-14 py-8 text-center md:px-20 md:py-10">
+      <div className="relative z-10 mx-auto flex w-fit max-w-4xl flex-col items-center px-12 py-8 text-center md:px-16 md:py-10">
         {/* Corner brackets framed close to the centered content */}
         <Corner position="tl" />
         <Corner position="tr" />
@@ -44,11 +44,12 @@ export default function AiosHero() {
 
         <h1
           className="mt-6 text-fg"
-          style={{ fontSize: "clamp(3.3rem, 6.8vw, 5.7rem)", lineHeight: 1.08 }}
+          style={{ fontSize: "clamp(2.2rem, 6vw, 5.1rem)", lineHeight: 1.08 }}
         >
-          It&rsquo;s time to work,
-          <br />
-          the <span style={{ color: "var(--elyst-green)" }}>AI way</span>
+          <span className="block whitespace-nowrap">It&rsquo;s time to work,</span>
+          <span className="block whitespace-nowrap">
+            the <span style={{ color: "var(--elyst-green)" }}>AI way</span>
+          </span>
         </h1>
 
         <div className="mt-10">

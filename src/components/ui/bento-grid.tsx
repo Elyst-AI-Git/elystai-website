@@ -78,7 +78,7 @@ function BentoGrid({ items = itemsSample }: BentoGridProps) {
                         // Larger (2-col) cards read black; the rest stay emerald green.
                         item.colSpan === 2
                             ? "bg-[var(--surface-dark)]"
-                            : "bg-[var(--elyst-emerald)]",
+                            : "bg-[var(--elyst-emerald-light)]",
                         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_10px_30px_rgba(3,98,76,0.28)] -translate-y-1":
