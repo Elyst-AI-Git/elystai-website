@@ -108,37 +108,42 @@ export default function Footer() {
                 </address>
               </div>
 
-              {/* Middle — the three links that matter */}
-              <nav aria-label="Footer">
-                <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
-                <ul className="flex flex-col gap-3">
-                  {footerNav.map((l) => (
-                    <li key={l.label}>
-                      <Link
-                        href={l.href}
-                        className="text-small text-fg-on-dark/80 transition-colors hover:text-green"
-                      >
-                        {l.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              {/* On mobile these two sit side by side (Explore left, Follow us
+                  right); on desktop the wrapper dissolves (sm:contents) so the
+                  3-up justify-between row is preserved. */}
+              <div className="flex justify-between gap-8 sm:contents">
+                {/* Middle — the three links that matter */}
+                <nav aria-label="Footer">
+                  <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
+                  <ul className="flex flex-col gap-3">
+                    {footerNav.map((l) => (
+                      <li key={l.label}>
+                        <Link
+                          href={l.href}
+                          className="text-small text-fg-on-dark/80 transition-colors hover:text-green"
+                        >
+                          {l.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
 
-              {/* Right — follow us */}
-              <div>
-                <h2 className="eyebrow mb-4 text-fg-muted-dark">Follow us</h2>
-                <div className="flex gap-3">
-                  {socials.map(({ label, href, Icon }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      aria-label={label}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-fg-on-dark transition-colors hover:bg-green hover:text-surface-dark"
-                    >
-                      <Icon className="h-4 w-4" />
-                    </a>
-                  ))}
+                {/* Right — follow us (right-aligned on mobile) */}
+                <div className="text-right sm:text-left">
+                  <h2 className="eyebrow mb-4 text-fg-muted-dark">Follow us</h2>
+                  <div className="flex justify-end gap-3 sm:justify-start">
+                    {socials.map(({ label, href, Icon }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        aria-label={label}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-fg-on-dark transition-colors hover:bg-green hover:text-surface-dark"
+                      >
+                        <Icon className="h-4 w-4" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

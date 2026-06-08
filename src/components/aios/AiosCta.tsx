@@ -25,9 +25,10 @@ export default function AiosCta() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: "var(--elyst-emerald)" }}
+      style={{ background: "var(--bg)" }}
     >
-      {/* Interactive boxes grid — same effect as the home Proof section */}
+      {/* Interactive boxes grid — same effect as the home Proof section, tuned
+          for a white surface: dark-green grid lines + dark-green hover fills. */}
       <div
         className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
         style={{
@@ -36,12 +37,16 @@ export default function AiosCta() {
         }}
       >
         <div className="relative h-[44rem] w-[72rem] shrink-0">
-          <Boxes />
+          <Boxes
+            lineColor="rgba(3,98,76,0.14)"
+            plusColor="rgba(3,98,76,0.18)"
+            colors={["#03624C", "#024A39", "#04855F", "#02402F", "#013A2C"]}
+          />
         </div>
       </div>
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
-        style={{ background: "radial-gradient(ellipse at center, transparent 30%, var(--elyst-emerald) 86%)" }}
+        style={{ background: "radial-gradient(ellipse at center, transparent 30%, var(--bg) 86%)" }}
       />
 
       <div
@@ -56,15 +61,14 @@ export default function AiosCta() {
           className="pointer-events-none mx-auto flex max-w-xl flex-col items-center gap-5 text-center"
         >
           <h2
-            style={{ fontSize: "var(--text-h2)", color: "var(--fg-on-dark)", lineHeight: 1.15 }}
+            style={{ fontSize: "var(--text-h2)", color: "var(--fg)", lineHeight: 1.15 }}
           >
             See AIOS running in your business.
           </h2>
           <p
             style={{
               fontSize: "var(--text-body)",
-              color: "var(--fg-on-dark)",
-              opacity: 0.8,
+              color: "var(--fg-2)",
               maxWidth: "32ch",
             }}
           >

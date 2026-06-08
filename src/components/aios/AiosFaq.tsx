@@ -73,7 +73,7 @@ export default function AiosFaq() {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
       {/* FAQPage schema — mirrors the visible Q&A copy exactly */}
       <script
         type="application/ld+json"
@@ -84,7 +84,7 @@ export default function AiosFaq() {
       <div className="mx-auto max-w-3xl">
         <div className="mx-auto max-w-2xl text-center">
           <span className="chip">FAQ</span>
-          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
+          <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
             Questions teams ask before they start.
           </h2>
         </div>
@@ -125,7 +125,7 @@ export default function AiosFaq() {
           })}
         </Accordion>
 
-        <p className="mt-12 text-center text-fg-3" style={{ fontSize: "var(--text-small)" }}>
+        <p className="mt-12 text-center text-fg-muted-dark" style={{ fontSize: "var(--text-small)" }}>
           Still have a question? Ask us on the call.
         </p>
       </div>

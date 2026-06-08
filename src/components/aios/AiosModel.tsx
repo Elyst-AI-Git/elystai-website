@@ -51,7 +51,7 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
-      className="relative flex gap-5 pb-12 last:pb-0"
+      className="relative flex gap-5 pb-16 last:pb-0"
     >
       <span
         className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
@@ -67,7 +67,7 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
         <span className="eyebrow text-emerald" style={{ fontSize: "0.7rem" }}>
           {String(index + 1).padStart(2, "0")} · {label}
         </span>
-        <p className="text-fg" style={{ fontSize: "var(--text-body)", fontWeight: 600, lineHeight: 1.45 }}>
+        <p className="text-fg" style={{ fontSize: "1.22rem", fontWeight: 600, lineHeight: 1.45 }}>
           {line}
         </p>
         {detail && (

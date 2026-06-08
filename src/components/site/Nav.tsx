@@ -9,11 +9,9 @@ import Wordmark from "@/components/site/Wordmark";
 import { BrandButton } from "@/components/ui/brand-button";
 
 const leftLinks = [
-  { label: "AIOS for Business", href: "/aios" },
   { label: "About", href: "/about" },
+  { label: "AIOS", href: "/aios" },
 ];
-
-const rightLinks = [{ label: "Blog", href: "/blog" }];
 
 const learnItems = [
   { label: "Accelerator overview", href: "/learn" },
@@ -166,7 +164,7 @@ export default function Nav() {
                 aria-expanded={learnOpen}
                 aria-haspopup="menu"
               >
-                Learn AI
+                Accelerator
                 <ChevronDown
                   className={`h-4 w-4 transition-transform duration-200 ${
                     learnOpen ? "rotate-180" : ""
@@ -204,12 +202,6 @@ export default function Nav() {
                 )}
               </AnimatePresence>
             </div>
-
-            {rightLinks.map((l) => (
-              <Link key={l.href} href={l.href} className={linkClass}>
-                {l.label}
-              </Link>
-            ))}
 
             <NavCta label={cta.label} href={cta.href} />
           </div>
@@ -270,7 +262,7 @@ export default function Nav() {
                 className="flex items-center justify-between font-display text-h3 font-semibold text-fg-on-dark"
                 aria-expanded={mobileLearnOpen}
               >
-                Learn AI
+                Accelerator
                 <ChevronDown
                   className={`h-6 w-6 transition-transform duration-200 ${
                     mobileLearnOpen ? "rotate-180" : ""
@@ -306,17 +298,6 @@ export default function Nav() {
                   </motion.div>
                 )}
               </AnimatePresence>
-
-              {rightLinks.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  onClick={closeMobile}
-                  className="font-display text-h3 font-semibold text-fg-on-dark"
-                >
-                  {l.label}
-                </Link>
-              ))}
             </div>
 
             <div className="px-6 pb-10">

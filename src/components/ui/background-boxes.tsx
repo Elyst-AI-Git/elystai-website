@@ -3,10 +3,24 @@ import React from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
-export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
+export const BoxesCore = ({
+  className,
+  colors: colorsProp,
+  lineColor = "rgba(255,255,255,0.14)",
+  plusColor = "rgba(255,255,255,0.12)",
+  ...rest
+}: {
+  className?: string;
+  /** Hover fill palette (defaults to the bright-green family). */
+  colors?: string[];
+  /** Grid line colour (defaults to translucent white for dark surfaces). */
+  lineColor?: string;
+  /** Plus-mark stroke colour. */
+  plusColor?: string;
+}) => {
   const rows = new Array(150).fill(1);
   const cols = new Array(100).fill(1);
-  let colors = [
+  const colors = colorsProp ?? [
     "#00DF82",
     "#2EC866",
     "#04855F",
@@ -33,7 +47,8 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
       {rows.map((_, i) => (
         <motion.div
           key={`row` + i}
-          className="relative h-8 w-16 border-l border-[rgba(255,255,255,0.14)]"
+          className="relative h-8 w-16 border-l"
+          style={{ borderColor: lineColor }}
         >
           {cols.map((_, j) => (
             <motion.div
@@ -45,7 +60,8 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                 transition: { duration: 2 },
               }}
               key={`col` + j}
-              className="relative h-8 w-16 border-t border-r border-[rgba(255,255,255,0.14)]"
+              className="relative h-8 w-16 border-t border-r"
+              style={{ borderColor: lineColor }}
             >
               {j % 2 === 0 && i % 2 === 0 ? (
                 <svg
@@ -54,7 +70,8 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="pointer-events-none absolute -top-[14px] -left-[22px] h-6 w-10 stroke-[1px] text-[rgba(255,255,255,0.12)]"
+                  style={{ color: plusColor }}
+                  className="pointer-events-none absolute -top-[14px] -left-[22px] h-6 w-10 stroke-[1px]"
                 >
                   <path
                     strokeLinecap="round"
