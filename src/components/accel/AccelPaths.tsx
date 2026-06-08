@@ -25,13 +25,28 @@ export default function AccelPaths() {
   return (
     <section
       id="paths"
-      className="scroll-mt-28"
+      className="relative scroll-mt-28 overflow-hidden"
       style={{
         padding: "var(--section-py) var(--section-px)",
-        background: "var(--surface-muted)",
+        // Light green base — a soft within-emerald tint.
+        background:
+          "linear-gradient(to bottom, color-mix(in srgb, var(--bg) 70%, var(--elyst-green) 30%), color-mix(in srgb, var(--bg) 82%, var(--elyst-green) 18%))",
       }}
     >
-      <div className="mx-auto max-w-5xl">
+      {/* Full-bleed film grain — fractal-noise SVG tiled over the green base */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundRepeat: "repeat",
+          opacity: 0.85,
+          mixBlendMode: "overlay",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
           <span className="chip" style={{ background: "var(--green-tint-15)" }}>
             The program + the community

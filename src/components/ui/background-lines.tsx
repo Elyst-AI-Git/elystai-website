@@ -28,11 +28,13 @@ export const BackgroundLines = ({
 };
 
 const pathVariants = {
-  initial: { strokeDashoffset: 800, strokeDasharray: "50 800" },
+  // Longer dash so each line reads as a bold streak rather than a faint
+  // dash, and it stays at full opacity for most of its travel.
+  initial: { strokeDashoffset: 800, strokeDasharray: "120 800" },
   animate: {
     strokeDashoffset: 0,
-    strokeDasharray: "20 800",
-    opacity: [0, 1, 1, 0],
+    strokeDasharray: "60 800",
+    opacity: [0, 1, 1, 1, 0],
   },
 };
 
@@ -106,7 +108,7 @@ const SVG = ({
         <motion.path
           d={path}
           stroke={colors[idx]}
-          strokeWidth="2.3"
+          strokeWidth="3.4"
           strokeLinecap="round"
           variants={pathVariants}
           initial="initial"
@@ -116,8 +118,8 @@ const SVG = ({
             ease: "linear",
             repeat: Infinity,
             repeatType: "loop",
-            delay: Math.floor(Math.random() * 10),
-            repeatDelay: Math.floor(Math.random() * 10 + 2),
+            delay: Math.floor(Math.random() * 5),
+            repeatDelay: Math.floor(Math.random() * 4 + 1),
           }}
           key={`path-first-${idx}`}
         />
@@ -128,7 +130,7 @@ const SVG = ({
         <motion.path
           d={path}
           stroke={colors[idx]}
-          strokeWidth="2.3"
+          strokeWidth="3.4"
           strokeLinecap="round"
           variants={pathVariants}
           initial="initial"
@@ -138,8 +140,8 @@ const SVG = ({
             ease: "linear",
             repeat: Infinity,
             repeatType: "loop",
-            delay: Math.floor(Math.random() * 10),
-            repeatDelay: Math.floor(Math.random() * 10 + 2),
+            delay: Math.floor(Math.random() * 5),
+            repeatDelay: Math.floor(Math.random() * 4 + 1),
           }}
           key={`path-second-${idx}`}
         />

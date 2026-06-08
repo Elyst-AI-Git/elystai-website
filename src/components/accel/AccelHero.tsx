@@ -83,12 +83,12 @@ export default function AccelHero() {
 
           <h1
             className="mt-7 text-fg"
-            style={{ fontSize: "clamp(2.4rem, 5.4vw, 4.6rem)", lineHeight: 1.1 }}
+            style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", lineHeight: 1.1 }}
           >
-            <span className="block">Stay genuinely</span>
             <span className="flex items-baseline justify-center gap-[0.28em] whitespace-nowrap">
-              <CyclingWord /> with AI.
+              Stay <CyclingWord />
             </span>
+            <span className="block">With AI.</span>
           </h1>
 
           <p
