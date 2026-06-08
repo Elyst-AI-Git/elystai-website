@@ -75,10 +75,11 @@ function BentoGrid({ items = itemsSample }: BentoGridProps) {
                         "border border-white/10",
                         "hover:shadow-[0_10px_30px_rgba(3,98,76,0.28)]",
                         "hover:-translate-y-1 will-change-transform",
-                        // Larger (2-col) cards read black; the rest stay emerald green.
+                        // Larger (2-col) cards are pure black; the rest are a
+                        // deep emerald green.
                         item.colSpan === 2
-                            ? "bg-[var(--surface-dark)]"
-                            : "bg-[var(--elyst-emerald-light)]",
+                            ? "bg-black"
+                            : "bg-[#04684A]",
                         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_10px_30px_rgba(3,98,76,0.28)] -translate-y-1":

@@ -52,9 +52,9 @@ export default function AiosCta() {
       <div
         className="pointer-events-none relative z-10 mx-auto max-w-5xl"
         style={{
-          // Reduce the gap down to the footer by ~20% (smaller bottom padding).
+          // Tighten the gap down to the footer (smaller bottom padding).
           paddingTop: "var(--section-py)",
-          paddingBottom: "calc(var(--section-py) * 0.8)",
+          paddingBottom: "calc(var(--section-py) * 0.64)",
           paddingLeft: "var(--section-px)",
           paddingRight: "var(--section-px)",
         }}

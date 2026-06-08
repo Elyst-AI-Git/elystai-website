@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { BrandButton } from "@/components/ui/brand-button";
 import { renderCanvas } from "@/components/ui/canvas";
-import { GradientText } from "@/components/ui/gradient-text";
 
 /** Decorative L-bracket that frames a corner of the centered content box. */
 function Corner({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
@@ -27,10 +26,10 @@ export default function AiosHero() {
     <section
       className="relative overflow-hidden bg-bg"
       style={{
-        // Taller hero (~+30%) with more weight up top so the whole content
-        // block sits noticeably lower in the section.
-        paddingTop: "clamp(56px, 8vw, 132px)",
-        paddingBottom: "clamp(28px, 4vw, 64px)",
+        // Taller hero with more weight up top so the whole content block sits
+        // lower in the section (~+20% more white area than before).
+        paddingTop: "clamp(67px, 9.6vw, 158px)",
+        paddingBottom: "clamp(34px, 4.8vw, 77px)",
         paddingLeft: "var(--section-px)",
         paddingRight: "var(--section-px)",
       }}
@@ -56,10 +55,7 @@ export default function AiosHero() {
         >
           <span className="block whitespace-nowrap">It&rsquo;s time to work,</span>
           <span className="block whitespace-nowrap">
-            the{" "}
-            <GradientText className="bg-bg! py-1 align-baseline text-[var(--elyst-emerald)]">
-              AI way
-            </GradientText>
+            the <span style={{ color: "#00df82" }}>AI way</span>
           </span>
         </h1>
 
