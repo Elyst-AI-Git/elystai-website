@@ -13,7 +13,6 @@ import { Typewriter } from "@/components/ui/typewriter";
 
 const PHRASES = [
   "genuinely useful.",
-  "part of how you work.",
   "worth your time.",
   "work for everyone.",
 ];
@@ -22,16 +21,13 @@ export default function PreFooter() {
   return (
     <section
       className="bg-bg"
-      style={{ padding: "clamp(72px, 11vw, 150px) var(--section-px)" }}
+      style={{ padding: "clamp(36px, 5.5vw, 75px) var(--section-px)" }}
     >
       <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-        <span aria-hidden className="mb-6 text-3xl md:text-4xl">
-          ✨
-        </span>
         <h2
           className="text-fg"
           style={{
-            fontSize: "clamp(2rem, 5vw, 4rem)",
+            fontSize: "clamp(1.5rem, 3.75vw, 3rem)",
             lineHeight: 1.12,
             fontWeight: 700,
           }}

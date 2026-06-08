@@ -30,18 +30,13 @@ function CyclingWord() {
     return () => clearInterval(id);
   }, []);
 
-  // Each word is centred within its own auto-sized cell, so the whole
-  // "Stay <word>" line stays optically centred for every word — short
-  // ("confident") or long ("irreplaceable").
   return (
     <span
-      className="relative inline-grid justify-items-center align-baseline"
+      className="relative inline-block whitespace-nowrap align-baseline"
       style={{ color: "var(--elyst-green)" }}
     >
       {reduce ? (
-        <span className="col-start-1 row-start-1 whitespace-nowrap">
-          {CYCLE[0]}
-        </span>
+        <span>{CYCLE[0]}</span>
       ) : (
         <AnimatePresence mode="popLayout">
           <motion.span
@@ -50,7 +45,7 @@ function CyclingWord() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-0.4em" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="col-start-1 row-start-1 whitespace-nowrap"
+            className="inline-block whitespace-nowrap"
           >
             {CYCLE[i]}
           </motion.span>
@@ -86,8 +81,21 @@ export default function AccelHero() {
             className="mt-7 text-fg"
             style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", lineHeight: 1.1 }}
           >
-            <span className="flex items-baseline justify-center gap-[0.28em] whitespace-nowrap">
-              Stay <CyclingWord />
+            <span className="relative inline-block whitespace-nowrap align-baseline">
+              {/* Invisible sizer: fixes the box to the width of "Stay confident"
+                  (our median reference word), so the line centres exactly as it
+                  would when showing "confident" — regardless of which word is
+                  currently live. */}
+              <span aria-hidden className="invisible">
+                Stay confident
+              </span>
+              {/* The real content overlays the box, anchored to its left edge —
+                  "Stay" never moves; only the word to its right grows/shrinks
+                  (and may overflow the box on longer words like "irreplaceable"). */}
+              <span className="absolute inset-y-0 left-0 flex items-baseline whitespace-nowrap">
+                <span>Stay&nbsp;</span>
+                <CyclingWord />
+              </span>
             </span>
             <span className="block">With AI.</span>
           </h1>
