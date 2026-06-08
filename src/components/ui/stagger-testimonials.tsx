@@ -68,9 +68,9 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
     <div
       onClick={() => handleMove(position)}
       className={cn(
-        "absolute left-1/2 top-1/2 cursor-pointer border-2 p-8 transition-all duration-500 ease-in-out",
-        isCenter 
-          ? "z-10 bg-primary text-primary-foreground border-primary" 
+        "absolute left-1/2 top-1/2 cursor-pointer border-[3px] p-8 transition-all duration-500 ease-in-out",
+        isCenter
+          ? "z-10 bg-primary text-primary-foreground border-primary"
           : "z-0 bg-card text-card-foreground border-border hover:border-primary/50"
       )}
       style={{
@@ -102,7 +102,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         "{testimonial.testimonial}"
       </h3>
       <p className={cn(
-        "absolute bottom-8 left-8 right-8 mt-2 text-sm italic",
+        "absolute bottom-8 left-8 right-8 mt-2 text-base font-semibold not-italic",
         isCenter ? "text-primary-foreground/80" : "text-muted-foreground"
       )}>
         - {testimonial.by}

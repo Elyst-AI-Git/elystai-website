@@ -1,15 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Languages, Radio, Users2, Hammer } from "lucide-react";
+import { Languages, Radio, Users2, FlaskConical } from "lucide-react";
 import { motion } from "framer-motion";
-import DitherShader from "@/components/ui/dither-shader";
+import { Card } from "@/components/ui/card";
 
 /**
- * Why learn with Elyst — the differentiator. Four warm value blocks, then the
- * founder-story block (the credibility engine): two builders who learned AI by
- * shipping it, and now run production AI in the agency (AIOS). The portraits
- * reuse the home-founders dither→reveal treatment for brand continuity.
+ * Why learn with Elyst — the differentiator. Four warm value blocks, all
+ * framed in the brand's gradient-edge card, closing on the agency-proof card:
+ * what AIOS (our Services arm) builds and experiments with daily, distilled
+ * into what's actually useful to know in this AI era. Replaces the prior
+ * founder-story block — same credibility, sharper and more concrete.
  */
 
 const reasons = [
@@ -28,86 +28,7 @@ const reasons = [
     title: "Community-backed",
     line: "Learning doesn't stop when the session ends — the Circle keeps you sharp between them.",
   },
-  {
-    Icon: Hammer,
-    title: "Taught by people who build AI",
-    line: "Our Services arm (AIOS) ships production AI for businesses every day. You learn from practitioners, not career educators reading slides.",
-  },
 ];
-
-const founders = [
-  {
-    name: "Nihal Anas",
-    role: "Builds AIOS",
-    photo: "/images/founders/nihal.jpg",
-  },
-  {
-    name: "Fathima Shirin P",
-    role: "Leads the Accelerator",
-    photo: "/images/founders/shirin.jpg",
-  },
-];
-
-const REVEAL_RADIUS = 90;
-
-function FounderPortrait({ f }: { f: (typeof founders)[number] }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
-
-  function handleMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = wrapRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }
-
-  const mask = pos
-    ? `radial-gradient(circle ${REVEAL_RADIUS}px at ${pos.x}px ${pos.y}px, #000 0%, #000 55%, transparent 78%)`
-    : undefined;
-
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <div
-        ref={wrapRef}
-        onMouseMove={handleMove}
-        onMouseLeave={() => setPos(null)}
-        className="relative aspect-square w-28 overflow-hidden rounded-2xl ring-1 ring-black/5 sm:w-32"
-      >
-        <div className="absolute inset-0">
-          <DitherShader
-            src={f.photo}
-            ditherMode="bayer"
-            colorMode="duotone"
-            primaryColor="#03624C"
-            secondaryColor="#F5F8F6"
-            gridSize={5}
-            brightness={0.05}
-            contrast={1.15}
-            objectFit="cover"
-            className="h-full w-full"
-          />
-        </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={f.photo}
-          alt={f.name}
-          className="absolute inset-0 hidden h-full w-full object-cover object-top transition-opacity duration-200 md:block"
-          style={{ opacity: pos ? 1 : 0, WebkitMaskImage: mask, maskImage: mask }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={f.photo}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover object-top md:hidden"
-        />
-      </div>
-      <div className="text-center">
-        <p className="text-small font-bold text-fg">{f.name}</p>
-        <p className="text-[0.85rem] text-emerald">{f.role}</p>
-      </div>
-    </div>
-  );
-}
 
 export default function AccelWhy() {
   return (
@@ -122,7 +43,7 @@ export default function AccelWhy() {
           </h2>
         </div>
 
-        {/* Four value blocks */}
+        {/* Three value blocks + the agency-proof card, all gradient-framed */}
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {reasons.map(({ Icon, title, line }, i) => (
             <motion.div
@@ -131,58 +52,67 @@ export default function AccelWhy() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.55, delay: i * 0.08, ease: "easeOut" }}
-              className="card-tint p-7"
+            >
+              <Card
+                variant="gradient"
+                className="h-full p-7"
+                style={{
+                  borderRadius: "var(--radius-card, 20px)",
+                  background: "var(--card)",
+                  border: "1px solid var(--green-tint-15)",
+                }}
+              >
+                <span
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl"
+                  style={{ background: "var(--green-tint-15)" }}
+                >
+                  <Icon className="h-5 w-5 text-emerald" />
+                </span>
+                <h3 className="mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                  {title}
+                </h3>
+                <p className="mt-2 text-small leading-relaxed text-fg-2">{line}</p>
+              </Card>
+            </motion.div>
+          ))}
+
+          {/* Agency-proof card — replaces the prior founder-story block.
+              What AIOS (our Services arm) builds and experiments with daily,
+              distilled into what's actually useful for you to know right now. */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.55, delay: reasons.length * 0.08, ease: "easeOut" }}
+          >
+            <Card
+              variant="gradient"
+              className="h-full p-7"
+              style={{
+                borderRadius: "var(--radius-card, 20px)",
+                background:
+                  "linear-gradient(135deg, var(--green-tint-15), var(--emerald-tint-10))",
+                border: "1px solid var(--green-tint-15)",
+              }}
             >
               <span
                 className="inline-flex h-11 w-11 items-center justify-center rounded-xl"
                 style={{ background: "var(--green-tint-15)" }}
               >
-                <Icon className="h-5 w-5 text-emerald" />
+                <FlaskConical className="h-5 w-5 text-emerald" />
               </span>
               <h3 className="mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
-                {title}
+                Built on what we ship
               </h3>
-              <p className="mt-2 text-small leading-relaxed text-fg-2">{line}</p>
-            </motion.div>
-          ))}
+              <p className="mt-2 text-small leading-relaxed text-fg-2">
+                AIOS — our agency arm — builds and ships production AI for
+                businesses every day. What we learn, test, and experiment with
+                there doesn&rsquo;t stay there: it gets distilled straight into
+                what you actually need to know to stay sharp in this AI era.
+              </p>
+            </Card>
+          </motion.div>
         </div>
-
-        {/* Founder-story block — the credibility centrepiece */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mt-6 grid items-center gap-8 p-8 sm:p-10 md:grid-cols-[auto_1fr]"
-          style={{
-            borderRadius: "var(--radius-xl, 24px)",
-            background: "var(--emerald-tint-10)",
-            border: "1px solid var(--green-tint-15)",
-          }}
-        >
-          <div className="flex justify-center gap-6">
-            {founders.map((f) => (
-              <FounderPortrait key={f.name} f={f} />
-            ))}
-          </div>
-
-          <div>
-            <p
-              className="text-fg"
-              style={{ fontSize: "var(--text-body)", lineHeight: 1.65, fontWeight: 500 }}
-            >
-              We learned AI in college, then learned it for real by building —
-              shipping projects, then production systems inside companies. Today
-              we build AI for businesses every day in the agency. So we teach
-              what&rsquo;s real, not theory: what we learned, plus what
-              professionals now actually need.
-            </p>
-            <p className="mt-4 text-small text-fg-3">
-              Nihal Anas builds AIOS · Fathima Shirin P leads the Accelerator —
-              the two of us.
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
