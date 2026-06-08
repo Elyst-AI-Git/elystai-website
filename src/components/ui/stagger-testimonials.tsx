@@ -56,55 +56,88 @@ interface TestimonialCardProps {
   cardSize: number;
 }
 
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ 
-  position, 
-  testimonial, 
-  handleMove, 
-  cardSize 
+// Warm, paper-note palette — deliberately NOT brand-emerald. A "note left
+// behind" should look and feel like paper with ink on it; the only brand
+// colour that survives is a thin emerald edge marking the centre note as
+// "currently being read," plus the emerald signature line (which already
+// carries the brand through the rest of the page).
+const PAPER = "#FBF6EC";
+const PAPER_MUTED = "#F4EFE2";
+const INK = "#2E2B26";
+const INK_MUTED = "#6B6457";
+const RULE_LINE = "rgba(120, 110, 95, 0.16)";
+
+/** Faint ruled-notebook lines + a soft paper-grain wash, layered as backgrounds. */
+function paperBackground(base: string) {
+  return [
+    `repeating-linear-gradient(to bottom, transparent 0px, transparent 30px, ${RULE_LINE} 31px, transparent 32px)`,
+    `radial-gradient(ellipse 140% 90% at 18% 8%, rgba(255,255,255,0.5), transparent 60%)`,
+    base,
+  ].join(", ");
+}
+
+const TestimonialCard: React.FC<TestimonialCardProps> = ({
+  position,
+  testimonial,
+  handleMove,
+  cardSize
 }) => {
   const isCenter = position === 0;
+  // A small, stable per-note tilt derived from its id — so each "note" rests
+  // at its own slightly-askew angle, like someone actually set it down,
+  // rather than a uniform mechanical stagger.
+  const restTilt = ((testimonial.tempId * 53) % 5) - 2;
 
   return (
     <div
       onClick={() => handleMove(position)}
-      className={cn(
-        "absolute left-1/2 top-1/2 cursor-pointer border-[3px] p-8 transition-all duration-500 ease-in-out",
-        isCenter
-          ? "z-10 bg-primary text-primary-foreground border-primary"
-          : "z-0 bg-card text-card-foreground border-border hover:border-primary/50"
-      )}
+      className="absolute left-1/2 top-1/2 cursor-pointer p-8 transition-all duration-500 ease-in-out"
       style={{
         width: cardSize,
         height: cardSize,
+        color: isCenter ? INK : INK_MUTED,
+        background: paperBackground(isCenter ? PAPER : PAPER_MUTED),
+        border: `3px solid ${isCenter ? "var(--elyst-emerald)" : "rgba(120,110,95,0.28)"}`,
         clipPath: `polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%, calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0)`,
         transform: `
-          translate(-50%, -50%) 
+          translate(-50%, -50%)
           translateX(${(cardSize / 1.5) * position}px)
           translateY(${isCenter ? -65 : position % 2 ? 15 : -15}px)
-          rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)
+          rotate(${(isCenter ? 0 : position % 2 ? 2.5 : -2.5) + restTilt}deg)
         `,
-        boxShadow: isCenter ? "0px 8px 0px 4px var(--border)" : "0px 0px 0px 0px transparent"
+        boxShadow: isCenter
+          ? "0 18px 38px -14px rgba(46,43,38,0.35)"
+          : "0 8px 22px -14px rgba(46,43,38,0.25)",
       }}
     >
+      {/* Folded-corner crease — reinforced with a soft shadow so it reads as
+          paper catching light, not a flat graphic cut. */}
       <span
-        className="absolute block origin-top-right rotate-45 bg-border"
+        className="absolute block origin-top-right rotate-45"
         style={{
           right: -2,
           top: 48,
           width: SQRT_5000,
-          height: 2
+          height: 2,
+          background: "rgba(120,110,95,0.3)",
+          boxShadow: "0 1px 3px rgba(46,43,38,0.18)",
         }}
       />
-      <h3 className={cn(
-        "text-base sm:text-xl font-medium",
-        isCenter ? "text-primary-foreground" : "text-foreground"
-      )}>
-        "{testimonial.testimonial}"
+      <h3
+        className="font-handwrite"
+        style={{
+          fontSize: "clamp(1.2rem, 1.6vw + 0.9rem, 1.65rem)",
+          lineHeight: 1.6,
+          fontWeight: 400,
+          color: "inherit",
+        }}
+      >
+        &ldquo;{testimonial.testimonial}&rdquo;
       </h3>
-      <p className={cn(
-        "absolute bottom-8 left-8 right-8 mt-2 text-base font-semibold not-italic",
-        isCenter ? "text-primary-foreground/80" : "text-muted-foreground"
-      )}>
+      <p
+        className="absolute bottom-8 left-8 right-8 mt-2 text-base font-semibold not-italic"
+        style={{ color: "var(--elyst-emerald)" }}
+      >
         - {testimonial.by}
       </p>
     </div>
