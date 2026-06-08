@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
@@ -6,17 +10,13 @@ import {
 } from "@/components/ui/accordion";
 
 /**
- * The page's single biggest AEO/GEO citation asset (NOTES.md). CRITICAL:
- * every answer must exist in the server-rendered initial HTML — this file
- * is intentionally a server component (no "use client"); base-ui's
- * Accordion.Panel keeps its children mounted in the DOM and only animates
- * height/visibility, so nothing here is lazy-rendered or JS-gated. The
- * FAQPage JSON-LD below mirrors the visible copy exactly, word for word.
+ * The page's single biggest AEO/GEO citation asset (NOTES.md). The FAQPage
+ * JSON-LD below mirrors the visible copy exactly, word for word. base-ui's
+ * Accordion.Panel keeps its children mounted in the DOM (height-animated only),
+ * so every answer is present in the rendered HTML even before interaction.
  *
- * Items marked [confirm] echo NOTES.md's bracketed facts — Claude Code
- * drafted plausible, conservative wording; Nihal must verify these are
- * literally true before launch (data handling, setup timeline, Arabic/GCC
- * support). Nothing here is invented as a hard guarantee.
+ * Items marked [confirm] echo NOTES.md's bracketed facts — conservative
+ * wording that Nihal must verify is literally true before launch.
  */
 
 type Faq = { q: string; a: string };
@@ -52,6 +52,10 @@ const faqs: Faq[] = [
   },
 ];
 
+// Slight alternating tilt per row — straightens to 0 when that row is open.
+// Kept gentle so a tilted card's corner never overlaps the question below it.
+const ROTATIONS = [-1.7, 1.4, -1.2, 1.5, -1.3, 1.1];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -66,6 +70,8 @@ const jsonLd = {
 };
 
 export default function AiosFaq() {
+  const [open, setOpen] = useState<string | null>(null);
+
   return (
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       {/* FAQPage schema — mirrors the visible Q&A copy exactly */}
@@ -83,32 +89,43 @@ export default function AiosFaq() {
           </h2>
         </div>
 
-        <div className="mt-12">
-          <Accordion>
-            {faqs.map((f) => (
-              <AccordionItem key={f.q} value={f.q} style={{ borderColor: "var(--border)" }}>
-                <AccordionTrigger className="py-5">
-                  <span
-                    className="font-semibold text-fg"
-                    style={{ fontSize: "var(--text-body)" }}
-                  >
-                    {f.q}
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p
-                    className="text-fg-2"
-                    style={{ fontSize: "var(--text-small)", lineHeight: 1.65 }}
-                  >
-                    {f.a}
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Accordion
+          value={open ? [open] : []}
+          onValueChange={(value) => setOpen((value as string[])[0] ?? null)}
+          className="mt-14 gap-2.5"
+        >
+          {faqs.map((f, i) => {
+            const isOpen = open === f.q;
+            return (
+              <motion.div
+                key={f.q}
+                animate={{ rotate: isOpen ? 0 : ROTATIONS[i % ROTATIONS.length] }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative"
+                style={{ zIndex: isOpen ? 10 : faqs.length - i }}
+              >
+                <AccordionItem
+                  value={f.q}
+                  className="overflow-hidden rounded-[20px] border bg-white px-6 shadow-sm transition-colors"
+                  style={{ borderColor: isOpen ? "var(--elyst-green)" : "var(--border)" }}
+                >
+                  <AccordionTrigger className="!border-0 py-5">
+                    <span className="font-display font-bold text-fg" style={{ fontSize: "var(--text-body)" }}>
+                      {f.q}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.65 }}>
+                      {f.a}
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            );
+          })}
+        </Accordion>
 
-        <p className="mt-10 text-center text-fg-3" style={{ fontSize: "var(--text-small)" }}>
+        <p className="mt-12 text-center text-fg-3" style={{ fontSize: "var(--text-small)" }}>
           Still have a question? Ask us on the call.
         </p>
       </div>

@@ -52,7 +52,7 @@ export default function AiosHowItWorks() {
 
         {/* Stacked display cards — hover any card to bring it forward.
             Scaled down on narrow screens so the offset deck stays on-canvas. */}
-        <div className="mt-12 flex min-h-[340px] w-full items-center justify-center sm:min-h-[440px] md:mt-24 md:min-h-[520px]">
+        <div className="mt-2 flex min-h-[340px] w-full items-center justify-center sm:min-h-[440px] md:mt-6 md:min-h-[520px]">
           <div className="origin-center scale-[0.52] sm:scale-[0.74] md:scale-100">
             <DisplayCards cards={stepCards} />
           </div>

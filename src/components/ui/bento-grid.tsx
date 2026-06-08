@@ -72,11 +72,14 @@ function BentoGrid({ items = itemsSample }: BentoGridProps) {
                     key={index}
                     className={cn(
                         "group relative p-5 rounded-2xl overflow-hidden transition-all duration-300",
-                        "border border-white/10 bg-[var(--elyst-emerald)]",
+                        "border border-white/10",
                         "hover:shadow-[0_10px_30px_rgba(3,98,76,0.28)]",
                         "hover:-translate-y-1 will-change-transform",
-                        item.colSpan || "col-span-1",
-                        item.colSpan === 2 ? "md:col-span-2" : "",
+                        // Larger (2-col) cards read black; the rest stay emerald green.
+                        item.colSpan === 2
+                            ? "bg-[var(--surface-dark)]"
+                            : "bg-[var(--elyst-emerald)]",
+                        item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_10px_30px_rgba(3,98,76,0.28)] -translate-y-1":
                                 item.hasPersistentHover,

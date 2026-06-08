@@ -33,7 +33,7 @@ export default function AiosHero() {
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      <div className="relative z-10 mx-auto flex w-fit max-w-2xl flex-col items-center px-10 py-8 text-center md:px-14 md:py-10">
+      <div className="relative z-10 mx-auto flex w-fit max-w-2xl flex-col items-center px-14 py-8 text-center md:px-20 md:py-10">
         {/* Corner brackets framed close to the centered content */}
         <Corner position="tl" />
         <Corner position="tr" />
@@ -46,27 +46,12 @@ export default function AiosHero() {
           className="mt-6 text-fg"
           style={{ fontSize: "clamp(3.3rem, 6.8vw, 5.7rem)", lineHeight: 1.08 }}
         >
-          It&rsquo;s time to work
+          It&rsquo;s time to work,
           <br />
-          the AI way
+          the <span style={{ color: "var(--elyst-green)" }}>AI way</span>
         </h1>
 
-        {/* Availability indicator */}
-        <div
-          className="mt-8 flex items-center gap-2 font-semibold"
-          style={{ fontSize: "var(--text-small)", color: "var(--elyst-emerald)" }}
-        >
-          <span
-            className="h-2.5 w-2.5 rounded-full"
-            style={{
-              background: "var(--elyst-green)",
-              boxShadow: "0 0 10px 1px var(--elyst-green)",
-            }}
-          />
-          Available Now
-        </div>
-
-        <div className="mt-8">
+        <div className="mt-10">
           <BrandButton href="/contact" tone="green">
             Book a call
             <ArrowRight className="h-4 w-4" />
