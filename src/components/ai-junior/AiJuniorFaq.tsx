@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
@@ -34,6 +38,9 @@ const faqs: Faq[] = [
   },
 ];
 
+// Slight alternating tilt per row — straightens to 0 when that row is open
+const ROTATIONS = [-3.2, 2.6, -2.2, 3, -2.6, 2.2];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -45,6 +52,8 @@ const jsonLd = {
 };
 
 export default function AiJuniorFaq() {
+  const [open, setOpen] = useState<string | null>(null);
+
   return (
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <script
@@ -64,24 +73,41 @@ export default function AiJuniorFaq() {
           </p>
         </div>
 
-        <div className="mt-12">
-          <Accordion>
-            {faqs.map((f) => (
-              <AccordionItem key={f.q} value={f.q} style={{ borderColor: "var(--border)" }}>
-                <AccordionTrigger className="py-5">
-                  <span className="font-semibold text-fg" style={{ fontSize: "var(--text-body)" }}>
-                    {f.q}
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.65 }}>
-                    {f.a}
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Accordion
+          value={open ? [open] : []}
+          onValueChange={(value) => setOpen((value as string[])[0] ?? null)}
+          className="mt-14 gap-0"
+        >
+          {faqs.map((f, i) => {
+            const isOpen = open === f.q;
+            return (
+              <motion.div
+                key={f.q}
+                animate={{ rotate: isOpen ? 0 : ROTATIONS[i % ROTATIONS.length] }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className={`relative ${i > 0 ? "-mt-2" : ""}`}
+                style={{ zIndex: isOpen ? 10 : faqs.length - i }}
+              >
+                <AccordionItem
+                  value={f.q}
+                  className="overflow-hidden rounded-[20px] border bg-white px-6 shadow-sm transition-colors"
+                  style={{ borderColor: isOpen ? "var(--elyst-green)" : "var(--border)" }}
+                >
+                  <AccordionTrigger className="!border-0 py-5">
+                    <span className="font-display font-bold text-fg" style={{ fontSize: "var(--text-body)" }}>
+                      {f.q}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.65 }}>
+                      {f.a}
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            );
+          })}
+        </Accordion>
 
         <p className="mt-12 text-center text-fg-2" style={{ fontSize: "var(--text-small)" }}>
           Still have a question?{" "}

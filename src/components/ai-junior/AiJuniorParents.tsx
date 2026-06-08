@@ -55,7 +55,13 @@ export default function AiJuniorParents() {
   };
 
   return (
-    <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)", overflow: "hidden" }}>
+    <section
+      style={{
+        padding: "var(--section-py) var(--section-px)",
+        overflow: "hidden",
+        background: "var(--green-tint-15)",
+      }}
+    >
       <div className="mx-auto max-w-3xl">
         <div className="mx-auto max-w-2xl text-center">
           <span className="chip">What Parents Say</span>

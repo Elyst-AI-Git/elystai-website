@@ -40,7 +40,7 @@ export default function AiJuniorCurriculum() {
           />
           <div className="relative aspect-square overflow-hidden rounded-xl shadow-2xl" style={{ background: "var(--green-tint-15)" }}>
             <Image
-              src="/images/ai-junior/junior-design.png"
+              src="/images/ai-junior/junior-happy.png"
               alt="Students learning with AI"
               fill
               sizes="(min-width: 768px) 40vw, 90vw"
