@@ -7,6 +7,8 @@ import { Pause, Play } from "lucide-react";
 const audios = [
   { name: "Farha", role: "Grade 9", src: "/media/ai-junior/student-audio-1.ogg", rotate: -1.5 },
   { name: "Anjana", role: "Grade 5", src: "/media/ai-junior/student-audio-2.ogg", rotate: 1.5 },
+  { name: "Fathima Akleema", role: "Grade 5", src: "/media/ai-junior/student-audio-3.mp3", rotate: -1.5 },
+  { name: "Aradhya", role: "Grade 6", src: "/media/ai-junior/student-audio-4.mp3", rotate: 1.5 },
 ];
 
 // Fixed waveform pattern — alternating bar heights for a static, balanced look

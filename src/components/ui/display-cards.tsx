@@ -25,18 +25,18 @@ function DisplayCard({
   return (
     <div
       className={cn(
-        "relative flex h-52 w-[26rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-card/90 backdrop-blur-sm px-6 py-5 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[24rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:bg-card [&>*]:flex [&>*]:items-center [&>*]:gap-2.5",
+        "relative flex h-64 w-[32rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-card/90 backdrop-blur-sm px-7 py-6 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[30rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:bg-card [&>*]:flex [&>*]:items-center [&>*]:gap-3",
         className
       )}
     >
       <div>
-        <span className={cn("relative inline-flex items-center justify-center rounded-full p-2", iconClassName)}>
+        <span className={cn("relative inline-flex items-center justify-center rounded-full p-2.5", iconClassName)}>
           {icon}
         </span>
-        <p className={cn("text-xl font-bold", titleClassName)}>{title}</p>
+        <p className={cn("text-2xl font-bold", titleClassName)}>{title}</p>
       </div>
-      <p className="text-base leading-snug text-fg-2">{description}</p>
-      <p className="text-sm font-semibold uppercase tracking-wide text-fg-3">{date}</p>
+      <p className="text-lg leading-snug text-fg-2">{description}</p>
+      <p className="text-base font-semibold uppercase tracking-wide text-fg-3">{date}</p>
     </div>
   );
 }

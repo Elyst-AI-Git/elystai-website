@@ -76,7 +76,7 @@ export default function AiJuniorParents() {
         <div
           onClick={handleClick}
           className="relative mx-auto mt-14 cursor-pointer"
-          style={{ width: "100%", maxWidth: 660, height: "clamp(400px, 68vw, 460px)" }}
+          style={{ width: "100%", maxWidth: 660, height: "clamp(330px, 56vw, 368px)" }}
         >
           {testimonials.map((t, i) => {
             const pos = (i - active + testimonials.length) % testimonials.length;
@@ -85,7 +85,7 @@ export default function AiJuniorParents() {
             return (
               <div
                 key={t.name}
-                className="absolute inset-0 flex select-none flex-col gap-5 overflow-hidden rounded-[20px] border border-border bg-white p-8 md:p-9"
+                className="absolute inset-0 flex select-none flex-col gap-3.5 overflow-hidden rounded-[20px] border border-border bg-white p-7 md:p-8"
                 style={{ ...style, transition: "transform 0.58s cubic-bezier(0.4,0,0.2,1), box-shadow 0.58s ease" }}
               >
                 <div
@@ -93,7 +93,7 @@ export default function AiJuniorParents() {
                   style={{ background: `rgba(255,255,255,${scrimOpacity})`, transition: "background 0.58s ease", zIndex: 1 }}
                 />
                 <Quote className="h-9 w-9" style={{ color: "var(--elyst-green)" }} />
-                <p className="flex-1 text-fg-2" style={{ fontSize: "1.08rem", lineHeight: 1.65 }}>
+                <p className="flex-1 text-fg-2" style={{ fontSize: "1.22rem", lineHeight: 1.6 }}>
                   &ldquo;{t.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-3 border-t border-border pt-4">

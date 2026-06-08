@@ -38,8 +38,9 @@ const faqs: Faq[] = [
   },
 ];
 
-// Slight alternating tilt per row — straightens to 0 when that row is open
-const ROTATIONS = [-3.2, 2.6, -2.2, 3, -2.6, 2.2];
+// Slight alternating tilt per row — straightens to 0 when that row is open.
+// Kept gentle so a tilted card's corner never overlaps the question below it.
+const ROTATIONS = [-1.7, 1.4, -1.2, 1.5, -1.3, 1.1];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -76,7 +77,7 @@ export default function AiJuniorFaq() {
         <Accordion
           value={open ? [open] : []}
           onValueChange={(value) => setOpen((value as string[])[0] ?? null)}
-          className="mt-14 gap-0"
+          className="mt-14 gap-2.5"
         >
           {faqs.map((f, i) => {
             const isOpen = open === f.q;
@@ -85,7 +86,7 @@ export default function AiJuniorFaq() {
                 key={f.q}
                 animate={{ rotate: isOpen ? 0 : ROTATIONS[i % ROTATIONS.length] }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className={`relative ${i > 0 ? "-mt-2" : ""}`}
+                className="relative"
                 style={{ zIndex: isOpen ? 10 : faqs.length - i }}
               >
                 <AccordionItem

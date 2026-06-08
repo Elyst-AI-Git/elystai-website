@@ -156,11 +156,13 @@ function render() {
     // @ts-ignore
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     // @ts-ignore
-    ctx.globalCompositeOperation = "lighter";
+    // source-over (not "lighter") so the trail is visible against a WHITE
+    // background — "lighter" would blow out to invisible on white.
+    ctx.globalCompositeOperation = "source-over";
     // @ts-ignore
-    // Brand-locked: hue kept in the emerald→green band (≈150–162°) instead of
-    // the original full-spectrum sweep, so the trail reads as #00DF82 family.
-    ctx.strokeStyle = "hsla(" + Math.round(f.update()) + ",95%,45%,0.03)";
+    // Brand-locked dark-emerald trail (#03624C family): hue in the green band,
+    // low lightness so it reads as deep green on the white hero.
+    ctx.strokeStyle = "hsla(" + Math.round(f.update()) + ",92%,21%,0.06)";
     // @ts-ignore
     ctx.lineWidth = 10;
     for (var e, t = 0; t < E.trails; t++) {
@@ -211,9 +213,9 @@ export const renderCanvas = function () {
   ctx.frame = 1;
   f = new n({
     phase: Math.random() * 2 * Math.PI,
-    amplitude: 8,
+    amplitude: 6,
     frequency: 0.0015,
-    offset: 155,
+    offset: 165,
   });
   document.addEventListener("mousemove", onMousemove);
   document.addEventListener("touchstart", onMousemove);

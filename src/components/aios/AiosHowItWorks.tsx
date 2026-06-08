@@ -5,34 +5,34 @@ import DisplayCards from "@/components/ui/display-cards";
 
 const stepCards = [
   {
-    icon: <MessageCircle className="size-5 text-emerald" />,
+    icon: <MessageCircle className="size-6 text-emerald" />,
     title: "Message",
     description: "Message it like a colleague — in the WhatsApp or Telegram your team already uses.",
     date: "Step 1",
     iconClassName: "bg-[var(--green-tint-15)]",
     titleClassName: "text-emerald",
     className:
-      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0 border-border",
+      "[grid-area:stack] hover:-translate-y-16 hover:scale-[1.08] hover:z-30 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0 border-border",
   },
   {
-    icon: <FolderSearch className="size-5 text-emerald" />,
+    icon: <FolderSearch className="size-6 text-emerald" />,
     title: "Understands",
     description: "It reads your own documents, data and tools — not the open internet.",
     date: "Step 2",
     iconClassName: "bg-[var(--green-tint-15)]",
     titleClassName: "text-emerald",
     className:
-      "[grid-area:stack] translate-x-12 translate-y-12 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0 border-border",
+      "[grid-area:stack] translate-x-14 translate-y-14 hover:-translate-y-2 hover:scale-[1.08] hover:z-30 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0 border-border",
   },
   {
-    icon: <FileText className="size-5 text-emerald" />,
+    icon: <FileText className="size-6 text-emerald" />,
     title: "Acts",
     description: "It answers, or delivers the finished document — straight to the right person.",
     date: "Step 3",
     iconClassName: "bg-[var(--green-tint-15)]",
     titleClassName: "text-emerald",
     className:
-      "[grid-area:stack] translate-x-24 translate-y-24 hover:translate-y-12 border-border shadow-[var(--shadow-card)]",
+      "[grid-area:stack] translate-x-28 translate-y-28 hover:translate-y-6 hover:scale-[1.08] hover:z-30 border-border shadow-[var(--shadow-card)]",
   },
 ];
 
@@ -52,8 +52,8 @@ export default function AiosHowItWorks() {
 
         {/* Stacked display cards — hover any card to bring it forward.
             Scaled down on narrow screens so the offset deck stays on-canvas. */}
-        <div className="mt-12 flex min-h-[300px] w-full items-center justify-center sm:min-h-[400px] md:mt-20 md:min-h-[440px]">
-          <div className="origin-center scale-[0.6] sm:scale-[0.82] md:scale-100">
+        <div className="mt-12 flex min-h-[340px] w-full items-center justify-center sm:min-h-[440px] md:mt-24 md:min-h-[520px]">
+          <div className="origin-center scale-[0.52] sm:scale-[0.74] md:scale-100">
             <DisplayCards cards={stepCards} />
           </div>
         </div>
@@ -62,7 +62,8 @@ export default function AiosHowItWorks() {
         <div className="mx-auto mt-12 max-w-2xl text-center">
           <p className="text-fg" style={{ fontSize: "var(--text-body)", fontWeight: 600 }}>
             A generic chatbot doesn&rsquo;t know your business and can&rsquo;t act
-            inside it.{" "}
+            inside it.
+            <br />
             <span style={{ color: "var(--elyst-emerald)" }}>AIOS does both.</span>
           </p>
         </div>
