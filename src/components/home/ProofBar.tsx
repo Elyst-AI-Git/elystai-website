@@ -80,17 +80,25 @@ export default function ProofBar() {
 
   return (
     <section className="relative mt-10 overflow-hidden bg-surface-dark md:mt-16">
-      <div className="absolute inset-0 z-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent_85%)]">
-        <Boxes />
+      <div
+        className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+        style={{
+          maskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
+        }}
+      >
+        <div className="relative h-[44rem] w-[72rem] shrink-0">
+          <Boxes />
+        </div>
       </div>
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
-        style={{ background: "radial-gradient(ellipse at center, transparent 30%, var(--surface-dark) 88%)" }}
+        style={{ background: "radial-gradient(ellipse at center, transparent 35%, var(--surface-dark) 88%)" }}
       />
 
       <div
         ref={ref}
-        className="relative z-10 mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-8 px-[var(--section-px)] py-12 md:grid-cols-5 md:gap-0"
+        className="pointer-events-none relative z-10 mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-8 px-[var(--section-px)] py-12 md:grid-cols-5 md:gap-0"
       >
         {items.map((item, i) => (
           <div
