@@ -8,11 +8,9 @@ type Item =
   | { kind: "text"; value: string; label: string };
 
 const items: Item[] = [
-  { kind: "count", value: 34, suffix: "+", label: "Circle members" },
-  { kind: "count", value: 2, label: "AI Junior batches run" },
-  { kind: "count", value: 80, suffix: "+", label: "AI Yathra community members" },
-  { kind: "text", value: "Kerala's first", label: "AI graduates" },
-  { kind: "text", value: "Registered LLP", label: "Kozhikode, Kerala" },
+  { kind: "count", value: 10, suffix: "+", label: "Businesses Worked With" },
+  { kind: "count", value: 50, suffix: "+", label: "Sessions Delivered" },
+  { kind: "count", value: 5, suffix: "+", label: "Cohorts Completed" },
 ];
 
 function CountUp({
@@ -98,7 +96,7 @@ export default function ProofBar() {
 
       <div
         ref={ref}
-        className="pointer-events-none relative z-10 mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-8 px-[var(--section-px)] py-12 md:grid-cols-5 md:gap-0"
+        className="pointer-events-none relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-x-4 gap-y-12 px-[var(--section-px)] py-16 md:grid-cols-3 md:gap-0"
       >
         {items.map((item, i) => (
           <div
@@ -108,8 +106,8 @@ export default function ProofBar() {
             } ${active ? "opacity-100" : "opacity-0"}`}
           >
             <span
-              className="font-display font-bold text-green"
-              style={{ fontSize: "var(--text-h3)" }}
+              className="font-display font-bold"
+              style={{ fontSize: "clamp(3.5rem, 7vw, 6.5rem)", color: "#00df82", lineHeight: 1.05 }}
             >
               {item.kind === "count" ? (
                 <CountUp
@@ -122,7 +120,12 @@ export default function ProofBar() {
                 item.value
               )}
             </span>
-            <span className="mt-1 text-small text-fg-muted-dark">{item.label}</span>
+            <span
+              className="mt-3 font-medium"
+              style={{ fontSize: "clamp(1.35rem, 2.4vw, 1.75rem)", color: "#ffffff" }}
+            >
+              {item.label}
+            </span>
           </div>
         ))}
       </div>

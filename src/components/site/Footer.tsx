@@ -150,8 +150,8 @@ export default function Footer() {
 
             <hr className="border-white/10" />
 
-            <div className="py-6 text-small text-fg-muted-dark">
-              <p>© 2026 Elyst AI LLP · Kozhikode, Kerala · All rights reserved.</p>
+            <div className="py-6 text-center text-small text-fg-muted-dark">
+              <p>© 2026 Elyst AI LLP · All rights reserved.</p>
             </div>
           </div>
 

@@ -79,7 +79,7 @@ function BentoGrid({ items = itemsSample }: BentoGridProps) {
                         // deep emerald green.
                         item.colSpan === 2
                             ? "bg-black"
-                            : "bg-[#04684A]",
+                            : "bg-[#03543B]",
                         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_10px_30px_rgba(3,98,76,0.28)] -translate-y-1":
