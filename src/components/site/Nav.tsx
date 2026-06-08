@@ -18,12 +18,12 @@ const rightLinks = [{ label: "Blog", href: "/blog" }];
 const learnItems = [
   { label: "Accelerator overview", href: "/learn" },
   { label: "Circle", href: "/circle" },
-  { label: "AI Junior", href: "/ai-junior" },
+  { label: "AI Junior", href: "/juniors" },
   { label: "AI Yathra", href: "/ai-yathra" },
   { label: "Flagship Course", href: "/flagship", soon: true },
 ];
 
-const joinPrefixes = ["/learn", "/circle", "/ai-junior", "/ai-yathra", "/flagship"];
+const joinPrefixes = ["/learn", "/circle", "/juniors", "/ai-yathra", "/flagship"];
 
 function ctaForPath(pathname: string) {
   const join = joinPrefixes.some((p) => pathname.startsWith(p));

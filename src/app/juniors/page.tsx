@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "AI for Juniors - Elyst AI",
   description:
     "A 5-day live AI program for students in Grades 5–10. Your child will learn to prompt, design, and build real things with AI — no technical background required.",
-  alternates: { canonical: "https://elystai.com/ai-junior" },
+  alternates: { canonical: "https://elystai.com/juniors" },
 };
 
 export default function AiJuniorPage() {

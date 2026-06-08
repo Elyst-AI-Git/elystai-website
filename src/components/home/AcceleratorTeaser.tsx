@@ -52,7 +52,7 @@ const programs: Program[] = [
     name: "AI for Juniors",
     who: "For school students, Classes 5–10",
     status: "Enrolling",
-    href: "/ai-junior",
+    href: "/juniors",
     surface: "#81b1a6",
     image: "/images/programs/ai-junior.png",
   },
