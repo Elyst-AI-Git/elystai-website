@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
 
@@ -12,13 +13,38 @@ const stats = [
   { value: "7–8.30 IST", label: "Evening Batch", rotate: 2, tone: "card" },
 ];
 
-const toneStyles: Record<string, { bg: string; valueColor: string; labelColor: string }> = {
+type Stat = (typeof stats)[number];
+type Tone = { bg: string; valueColor: string; labelColor: string };
+
+const toneStyles: Record<string, Tone> = {
   card: { bg: "#ffffff", valueColor: "var(--elyst-emerald)", labelColor: "var(--fg-2)" },
   green: { bg: "var(--elyst-green)", valueColor: "var(--elyst-emerald)", labelColor: "rgba(3,98,76,0.7)" },
   dark: { bg: "var(--elyst-emerald)", valueColor: "var(--elyst-green)", labelColor: "rgba(255,255,255,0.8)" },
   tint: { bg: "var(--green-tint-15)", valueColor: "var(--elyst-emerald)", labelColor: "var(--fg-2)" },
   darkAlt: { bg: "var(--elyst-emerald-light)", valueColor: "var(--elyst-green)", labelColor: "rgba(255,255,255,0.8)" },
 };
+
+function StatTile({ stat, tone }: { stat: Stat; tone: Tone }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      animate={{ rotate: hovered ? 0 : stat.rotate }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="cursor-default rounded-lg p-7 shadow-sm"
+      style={{ background: tone.bg }}
+    >
+      <h3 className="font-display font-bold" style={{ fontSize: "1.85rem", color: tone.valueColor }}>
+        {stat.value}
+      </h3>
+      <p className="font-medium" style={{ fontSize: "var(--text-small)", color: tone.labelColor }}>
+        {stat.label}
+      </p>
+    </motion.div>
+  );
+}
 
 export default function AiJuniorAbout() {
   return (
@@ -36,20 +62,7 @@ export default function AiJuniorAbout() {
             <div className="grid grid-cols-2 gap-4">
               {stats.map((s) => {
                 const t = toneStyles[s.tone];
-                return (
-                  <div
-                    key={s.value}
-                    className="cursor-default rounded-lg p-7 shadow-sm transition-transform hover:rotate-0"
-                    style={{ background: t.bg, transform: `rotate(${s.rotate}deg)` }}
-                  >
-                    <h3 className="font-display font-bold" style={{ fontSize: "1.85rem", color: t.valueColor }}>
-                      {s.value}
-                    </h3>
-                    <p className="font-medium" style={{ fontSize: "var(--text-small)", color: t.labelColor }}>
-                      {s.label}
-                    </p>
-                  </div>
-                );
+                return <StatTile key={s.value} stat={s} tone={t} />;
               })}
             </div>
           </motion.div>

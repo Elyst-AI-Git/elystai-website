@@ -70,7 +70,7 @@ export default function AiJuniorParents() {
         <div
           onClick={handleClick}
           className="relative mx-auto mt-14 cursor-pointer"
-          style={{ width: "100%", maxWidth: 620, height: "clamp(360px, 65vw, 420px)" }}
+          style={{ width: "100%", maxWidth: 660, height: "clamp(400px, 68vw, 460px)" }}
         >
           {testimonials.map((t, i) => {
             const pos = (i - active + testimonials.length) % testimonials.length;
@@ -79,31 +79,31 @@ export default function AiJuniorParents() {
             return (
               <div
                 key={t.name}
-                className="absolute inset-0 flex select-none flex-col gap-4 overflow-hidden rounded-[20px] border border-border bg-white p-7"
+                className="absolute inset-0 flex select-none flex-col gap-5 overflow-hidden rounded-[20px] border border-border bg-white p-8 md:p-9"
                 style={{ ...style, transition: "transform 0.58s cubic-bezier(0.4,0,0.2,1), box-shadow 0.58s ease" }}
               >
                 <div
                   className="pointer-events-none absolute inset-0 rounded-[20px]"
                   style={{ background: `rgba(255,255,255,${scrimOpacity})`, transition: "background 0.58s ease", zIndex: 1 }}
                 />
-                <Quote className="h-8 w-8" style={{ color: "var(--elyst-green)" }} />
-                <p className="flex-1 text-fg-2" style={{ fontSize: "0.92rem", lineHeight: 1.6 }}>
+                <Quote className="h-9 w-9" style={{ color: "var(--elyst-green)" }} />
+                <p className="flex-1 text-fg-2" style={{ fontSize: "1.08rem", lineHeight: 1.65 }}>
                   &ldquo;{t.text}&rdquo;
                 </p>
-                <div className="flex items-center gap-2.5 border-t border-border pt-3.5">
+                <div className="flex items-center gap-3 border-t border-border pt-4">
                   <span
-                    className="font-display flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-fg-on-dark"
-                    style={{ background: t.color, fontSize: "0.85rem" }}
+                    className="font-display flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-bold text-fg-on-dark"
+                    style={{ background: t.color, fontSize: "0.92rem" }}
                   >
                     {t.initials}
                   </span>
                   <div>
-                    <p className="font-display font-bold text-fg" style={{ fontSize: "0.95rem" }}>{t.name}</p>
-                    <p className="text-fg-3" style={{ fontSize: "0.8rem" }}>{t.role}</p>
+                    <p className="font-display font-bold text-fg" style={{ fontSize: "1.05rem" }}>{t.name}</p>
+                    <p className="text-fg-3" style={{ fontSize: "0.85rem" }}>{t.role}</p>
                   </div>
                   <div className="ml-auto flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, s) => (
-                      <Star key={s} className="h-3.5 w-3.5 fill-current" style={{ color: "var(--elyst-green)" }} />
+                      <Star key={s} className="h-4 w-4 fill-current" style={{ color: "var(--elyst-green)" }} />
                     ))}
                   </div>
                 </div>
