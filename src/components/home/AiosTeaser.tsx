@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, FileText } from "lucide-react";
+import { Check, FileText } from "lucide-react";
 import { CardBody, CardContainer } from "@/components/ui/3d-card";
 import { BrandButton } from "@/components/ui/brand-button";
 
@@ -209,7 +209,6 @@ export default function AiosTeaser() {
           <div className="mt-8">
             <BrandButton href="/aios">
               See how AIOS works
-              <ArrowRight className="h-4 w-4" />
             </BrandButton>
           </div>
           <p className="mt-4 text-fg-3" style={{ fontSize: "var(--text-small)" }}>

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
 import DitherShader from "@/components/ui/dither-shader";
 
 const founders = [
@@ -110,7 +109,6 @@ function FounderCard({ f }: { f: (typeof founders)[number] }) {
             className="inline-flex items-center gap-1.5 text-small font-bold text-emerald"
           >
             {f.cta}
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
       </div>

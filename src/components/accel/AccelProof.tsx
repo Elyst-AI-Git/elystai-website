@@ -1,6 +1,7 @@
 "use client";
 
 import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
+import { SectionMark } from "./SectionMark";
 
 /**
  * Accelerator proof — the receipts, now as a pure testimonial area (the
@@ -20,9 +21,7 @@ export default function AccelProof() {
       }}
     >
       <div className="mx-auto mb-4 max-w-2xl px-[var(--section-px)] text-center">
-        <span className="chip" style={{ background: "var(--green-tint-15)" }}>
-          Already delivered
-        </span>
+        <SectionMark>Already delivered</SectionMark>
         <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
           Real voices from the people we&rsquo;ve taught.
         </h2>

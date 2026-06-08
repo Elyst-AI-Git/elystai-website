@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import MarkDither from "@/components/site/MarkDither";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { BrandButton } from "@/components/ui/brand-button";
@@ -44,7 +43,6 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <BrandButton href="/aios" tone="green">
               See AIOS
-              <ArrowRight className="h-4 w-4" />
             </BrandButton>
             <BrandButton href="/learn" variant="outline">
               Explore programs

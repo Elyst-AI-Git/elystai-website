@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowRight, Sparkles, Users, Check } from "lucide-react";
+import { Sparkles, Users, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 import { Card } from "@/components/ui/card";
+import { SectionMark } from "./SectionMark";
 
 /**
  * Accelerator paths — the core section. One anchor offering (the Flagship,
@@ -57,12 +58,7 @@ export default function AccelPaths() {
 
       <div className="relative z-10 mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <span
-            className="chip"
-            style={{ background: "rgba(255,255,255,0.1)", color: "var(--elyst-green)" }}
-          >
-            The program + the community
-          </span>
+          <SectionMark tone="dark">The program + the community</SectionMark>
           <h2 className="mt-6" style={{ fontSize: "var(--text-h2)", color: "var(--fg-on-dark)" }}>
             The deep program for professionals — and the community around it.
           </h2>
@@ -184,7 +180,6 @@ export default function AccelPaths() {
               <div className="mt-8">
                 <BrandButton href="/circle" tone="green" full>
                   Join the community
-                  <ArrowRight className="h-4 w-4" />
                 </BrandButton>
               </div>
             </Card>

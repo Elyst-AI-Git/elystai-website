@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Boxes } from "@/components/ui/background-boxes";
 import { BrandButton } from "@/components/ui/brand-button";
@@ -84,7 +83,6 @@ export default function AccelCta() {
           <div className="pointer-events-auto mt-2">
             <BrandButton href="/circle" tone="green">
               Join the community
-              <ArrowRight className="h-4 w-4" />
             </BrandButton>
           </div>
 

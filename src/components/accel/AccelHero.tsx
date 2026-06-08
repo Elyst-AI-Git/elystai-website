@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowDown } from "lucide-react";
+import { SectionMark } from "./SectionMark";
 import { AnimatePresence, motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 import { BackgroundLines } from "@/components/ui/background-lines";
@@ -73,9 +74,7 @@ export default function AccelHero() {
         svgOptions={{ duration: 12 }}
       >
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
-          <span className="chip" style={{ background: "var(--green-tint-15)" }}>
-            Learn AI · The Accelerator
-          </span>
+          <SectionMark>Learn AI · The Accelerator</SectionMark>
 
           <h1
             className="mt-7 text-fg"
@@ -113,7 +112,6 @@ export default function AccelHero() {
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
             <BrandButton href="/circle" tone="green">
               Join the community
-              <ArrowRight className="h-4 w-4" />
             </BrandButton>
             <a
               href="#paths"

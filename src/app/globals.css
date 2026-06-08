@@ -67,12 +67,6 @@
   /* fonts */
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
   --font-display: 'Manrope', system-ui, sans-serif;
-  /* Restrained handwriting face — used sparingly for the testimonial "notes"
-     on the Accelerator page (stays legible at body-text size). The Next.js
-     font loader exposes the actual face via --font-handwriting on <html>;
-     this token (deliberately differently named to avoid a self-reference)
-     is what `font-handwrite` resolves to. */
-  --font-handwrite: var(--font-handwriting), 'Comic Sans MS', cursive;
 
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);

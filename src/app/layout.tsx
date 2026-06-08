@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Kalam } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import PreFooter from "@/components/site/PreFooter";
@@ -11,18 +11,6 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
   display: "swap",
 });
-
-// Kalam — a restrained, print-adjacent handwriting face (not a flowery
-// cursive script). Used sparingly for the testimonial "notes" on the
-// Accelerator page, where it needs to read as "someone wrote this carefully"
-// and stay legible at body-text size, not blur into decorative scrawl.
-const kalam = Kalam({
-  variable: "--font-handwriting",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-});
-
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://elyst.ai"),
@@ -40,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${kalam.variable} h-full`}>
+    <html lang="en" className={`${dmSans.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <a
           href="#main"

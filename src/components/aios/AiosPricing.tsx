@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Check, GraduationCap, Settings2, X, Zap } from "lucide-react";
+import { Check, GraduationCap, Settings2, X, Zap } from "lucide-react";
 import { BrandButton } from "@/components/ui/brand-button";
 
 /**
@@ -151,7 +151,6 @@ export default function AiosPricing() {
         <div className="mt-12 flex justify-center">
           <BrandButton href="/contact" tone="emerald">
             Get a tailored quote — Book a call
-            <ArrowRight className="h-4 w-4" />
           </BrandButton>
         </div>
       </div>

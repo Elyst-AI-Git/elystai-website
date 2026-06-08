@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowRight } from "lucide-react";
 import { BrandButton } from "@/components/ui/brand-button";
 import { renderCanvas } from "@/components/ui/canvas";
 
@@ -62,7 +61,6 @@ export default function AiosHero() {
         <div className="mt-10">
           <BrandButton href="/contact" tone="green">
             Book a call
-            <ArrowRight className="h-4 w-4" />
           </BrandButton>
         </div>
 

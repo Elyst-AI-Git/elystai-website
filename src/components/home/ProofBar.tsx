@@ -107,7 +107,14 @@ export default function ProofBar() {
           >
             <span
               className="font-display font-bold"
-              style={{ fontSize: "clamp(3.5rem, 7vw, 6.5rem)", color: "#00df82", lineHeight: 1.05 }}
+              style={{
+                fontSize: "clamp(3.5rem, 7vw, 6.5rem)",
+                color: "#00df82",
+                lineHeight: 1.05,
+                // Body tracking (-0.05em) reads too tight at this size — opened
+                // up by ~25% so the big numerals don't clamp into each other.
+                letterSpacing: "-0.0375em",
+              }}
             >
               {item.kind === "count" ? (
                 <CountUp

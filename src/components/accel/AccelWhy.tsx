@@ -4,6 +4,7 @@ import * as React from "react";
 import { Languages, Radio, Users2, FlaskConical } from "lucide-react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
+import { SectionMark } from "./SectionMark";
 
 /**
  * Why learn with Elyst — the differentiator. Four warm value blocks, all
@@ -90,9 +91,7 @@ export default function AccelWhy() {
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="chip" style={{ background: "var(--green-tint-15)" }}>
-            Why Elyst
-          </span>
+          <SectionMark>Why Elyst</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
             Learn AI from people who actually build it.
           </h2>

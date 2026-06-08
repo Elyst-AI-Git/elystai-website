@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Boxes } from "@/components/ui/background-boxes";
 import { BrandButton } from "@/components/ui/brand-button";
@@ -85,7 +84,6 @@ export default function AiosCta() {
           <div className="pointer-events-auto mt-2">
             <BrandButton href="/contact" tone="green">
               Book a call
-              <ArrowRight className="h-4 w-4" />
             </BrandButton>
           </div>
 

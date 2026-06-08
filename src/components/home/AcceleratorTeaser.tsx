@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  ArrowRight,
   GraduationCap,
   MessageCircle,
   Rocket,
@@ -284,7 +283,6 @@ export default function AcceleratorTeaser() {
           />
           <BrandButton href="/learn" className="self-center">
             Explore all programs
-            <ArrowRight className="h-4 w-4" />
           </BrandButton>
         </div>
       </div>
