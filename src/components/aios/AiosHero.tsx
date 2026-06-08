@@ -26,10 +26,10 @@ export default function AiosHero() {
     <section
       className="relative overflow-hidden bg-bg"
       style={{
-        // Taller hero with more weight up top so the whole content block sits
-        // lower in the section (~+20% more white area than before).
-        paddingTop: "clamp(67px, 9.6vw, 158px)",
-        paddingBottom: "clamp(34px, 4.8vw, 77px)",
+        // Tight to the navbar up top; the extra white space lives below the
+        // content instead, so the section stays tall without a big top gap.
+        paddingTop: "clamp(16px, 2.5vw, 40px)",
+        paddingBottom: "clamp(60px, 8.5vw, 150px)",
         paddingLeft: "var(--section-px)",
         paddingRight: "var(--section-px)",
       }}
