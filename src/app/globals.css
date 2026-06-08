@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
 /* Manrope — self-hosted from public/fonts/manrope/ */
 @font-face {
   font-family: 'Manrope';
@@ -88,6 +90,12 @@
   --shadow-card: 0 4px 24px rgba(3, 98, 76, 0.08);
   --shadow-card-hover: 0 12px 40px rgba(3, 98, 76, 0.16);
   --shadow-glow: 0 0 40px rgba(0, 223, 130, 0.2);
+  --color-brand: var(----brand);
+  --color-color-5: var(----color-5);
+  --color-color-4: var(----color-4);
+  --color-color-3: var(----color-3);
+  --color-color-2: var(----color-2);
+  --color-color-1: var(----color-1);
 }
 
 :root {
@@ -144,6 +152,8 @@
   --input: hsl(155 18% 88%);
   --ring: var(--elyst-emerald);
   --radius: 0.75rem; /* 12px — button radius */
+  /* GradientText animated-glow palette — brand greens (not the installer's rainbow). */
+  --color-1: hsl(157 100% 44%); --color-2: hsl(160 92% 27%); --color-3: hsl(142 62% 48%); --color-4: hsl(154 76% 71%); --color-5: hsl(165 94% 20%); --brand: hsl(157 100% 44%);
 }
 
 @layer base {
@@ -350,4 +360,13 @@
 }
 @utility animate-gold-spin {
   animation: gold-spin 4s linear infinite;
+}
+
+.dark {
+  --color-1: hsl(157 100% 44%);
+  --color-2: hsl(160 92% 27%);
+  --color-3: hsl(142 62% 48%);
+  --color-4: hsl(154 76% 71%);
+  --color-5: hsl(165 94% 20%);
+  --brand: hsl(157 100% 44%);
 }

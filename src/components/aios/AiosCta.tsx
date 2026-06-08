@@ -50,8 +50,14 @@ export default function AiosCta() {
       />
 
       <div
-        className="relative z-10 mx-auto max-w-5xl"
-        style={{ padding: "var(--section-py) var(--section-px)" }}
+        className="pointer-events-none relative z-10 mx-auto max-w-5xl"
+        style={{
+          // Reduce the gap down to the footer by ~20% (smaller bottom padding).
+          paddingTop: "var(--section-py)",
+          paddingBottom: "calc(var(--section-py) * 0.8)",
+          paddingLeft: "var(--section-px)",
+          paddingRight: "var(--section-px)",
+        }}
       >
         <motion.div
           initial={{ opacity: 0, y: 16 }}

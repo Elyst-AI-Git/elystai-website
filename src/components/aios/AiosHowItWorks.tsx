@@ -59,7 +59,7 @@ export default function AiosHowItWorks() {
         </div>
 
         {/* Contrast line — kills the "isn't this just ChatGPT?" doubt */}
-        <div className="mx-auto mt-12 max-w-2xl text-center">
+        <div className="mx-auto mt-20 max-w-2xl text-center md:mt-24">
           <p className="text-fg" style={{ fontSize: "var(--text-body)", fontWeight: 600 }}>
             A generic chatbot doesn&rsquo;t know your business and can&rsquo;t act
             inside it.

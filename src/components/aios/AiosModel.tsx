@@ -67,7 +67,7 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
         <span className="eyebrow text-emerald" style={{ fontSize: "0.7rem" }}>
           {String(index + 1).padStart(2, "0")} · {label}
         </span>
-        <p className="text-fg" style={{ fontSize: "1.22rem", fontWeight: 600, lineHeight: 1.45 }}>
+        <p className="text-fg" style={{ fontSize: "1.34rem", fontWeight: 600, lineHeight: 1.45 }}>
           {line}
         </p>
         {detail && (
