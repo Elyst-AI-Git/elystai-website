@@ -29,12 +29,15 @@ export default function AccelPaths() {
       className="relative scroll-mt-28 overflow-hidden"
       style={{
         padding: "var(--section-py) var(--section-px)",
-        // Light green base — a soft within-emerald tint.
+        // Deep, deliberate dark-green surface — a single per-section departure
+        // from the light base (DESIGN.md's "legacy dark, used sparingly"),
+        // tuned so the cards below can read as bright paper set on a dark desk.
         background:
-          "linear-gradient(to bottom, color-mix(in srgb, var(--bg) 70%, var(--elyst-green) 30%), color-mix(in srgb, var(--bg) 82%, var(--elyst-green) 18%))",
+          "linear-gradient(165deg, color-mix(in srgb, var(--surface-dark) 78%, var(--elyst-emerald) 22%), var(--surface-dark) 55%, color-mix(in srgb, var(--surface-dark) 88%, black 12%))",
       }}
     >
-      {/* Full-bleed film grain — fractal-noise SVG tiled over the green base */}
+      {/* Heavy film grain — fine fractal noise for a rough, tactile surface
+          (the dark base makes it read far more than it did on the light tint). */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
@@ -42,17 +45,33 @@ export default function AccelPaths() {
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
           backgroundRepeat: "repeat",
-          opacity: 0.85,
+          opacity: 0.9,
           mixBlendMode: "overlay",
+        }}
+      />
+      {/* Second, coarser noise layer — larger mottled patches so the surface
+          reads as worn/concrete-like rather than just "grainy photo," i.e. rough. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E\")",
+          backgroundRepeat: "repeat",
+          opacity: 0.35,
+          mixBlendMode: "soft-light",
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="chip" style={{ background: "var(--green-tint-15)" }}>
+          <span
+            className="chip"
+            style={{ background: "rgba(255,255,255,0.1)", color: "var(--elyst-green)" }}
+          >
             The program + the community
           </span>
-          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
+          <h2 className="mt-6" style={{ fontSize: "var(--text-h2)", color: "var(--fg-on-dark)" }}>
             The deep program for professionals — and the community around it.
           </h2>
         </div>
@@ -71,10 +90,9 @@ export default function AccelPaths() {
               className="flex flex-col p-8 sm:p-10"
               style={{
                 borderRadius: "var(--radius-xl, 24px)",
-                background:
-                  "linear-gradient(135deg, var(--green-tint-15), var(--emerald-tint-10))",
-                border: "1px solid var(--green-tint-15)",
-                boxShadow: "var(--shadow-card)",
+                background: "var(--card)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                boxShadow: "0 24px 60px -20px rgba(2, 20, 14, 0.55)",
               }}
             >
               <div className="flex items-center gap-3">
@@ -86,7 +104,7 @@ export default function AccelPaths() {
                 </span>
                 <span
                   className="rounded-pill px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wide text-emerald"
-                  style={{ background: "var(--bg)" }}
+                  style={{ background: "var(--green-tint-15)" }}
                 >
                   Coming soon · launching late June 2026
                 </span>
@@ -134,9 +152,9 @@ export default function AccelPaths() {
               className="flex h-full flex-col p-8"
               style={{
                 borderRadius: "var(--radius-xl, 24px)",
-                background: "var(--bg)",
-                border: "1px solid var(--green-tint-15)",
-                boxShadow: "var(--shadow-card)",
+                background: "var(--card)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                boxShadow: "0 24px 60px -20px rgba(2, 20, 14, 0.55)",
               }}
             >
               <span

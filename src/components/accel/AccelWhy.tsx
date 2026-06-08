@@ -10,7 +10,36 @@ import { Card } from "@/components/ui/card";
  * what AIOS (our Services arm) builds and experiments with daily, distilled
  * into what's actually useful to know in this AI era. Replaces the prior
  * founder-story block — same credibility, sharper and more concrete.
+ *
+ * Icon treatment borrowed from the 21st.dev "features-1" block (its
+ * `CardDecorator`: a masked blueprint-grid disc with a bordered icon well) —
+ * recoloured to brand emerald so it reads as "engineered," matching the
+ * gradient-frame card's architectural feel.
  */
+
+function IconDecorator({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      aria-hidden
+      className="relative mx-auto size-16 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] sm:mx-0"
+    >
+      <div
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, var(--elyst-emerald) 1px, transparent 1px), linear-gradient(to bottom, var(--elyst-emerald) 1px, transparent 1px)",
+          backgroundSize: "10px 10px",
+        }}
+      />
+      <div
+        className="absolute inset-0 m-auto flex size-10 items-center justify-center border-t border-l"
+        style={{ background: "var(--card)", borderColor: "var(--green-tint-15)" }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 const reasons = [
   {
@@ -62,12 +91,9 @@ export default function AccelWhy() {
                   border: "1px solid var(--green-tint-15)",
                 }}
               >
-                <span
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl"
-                  style={{ background: "var(--green-tint-15)" }}
-                >
+                <IconDecorator>
                   <Icon className="h-5 w-5 text-emerald" />
-                </span>
+                </IconDecorator>
                 <h3 className="mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
                   {title}
                 </h3>
@@ -95,12 +121,9 @@ export default function AccelWhy() {
                 border: "1px solid var(--green-tint-15)",
               }}
             >
-              <span
-                className="inline-flex h-11 w-11 items-center justify-center rounded-xl"
-                style={{ background: "var(--green-tint-15)" }}
-              >
+              <IconDecorator>
                 <FlaskConical className="h-5 w-5 text-emerald" />
-              </span>
+              </IconDecorator>
               <h3 className="mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
                 Built on what we ship
               </h3>
