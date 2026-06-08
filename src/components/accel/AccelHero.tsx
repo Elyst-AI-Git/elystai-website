@@ -16,7 +16,7 @@ import { BackgroundLines } from "@/components/ui/background-lines";
  * since the Flagship has no waitlist.
  */
 
-const CYCLE = ["capable", "fluent", "confident", "competitive"];
+const CYCLE = ["confident", "relevant", "competitive", "irreplaceable"];
 
 function CyclingWord() {
   const [i, setI] = useState(0);
@@ -30,17 +30,18 @@ function CyclingWord() {
     return () => clearInterval(id);
   }, []);
 
-  // Reserve width for the longest word so the line never reflows.
+  // Each word is centred within its own auto-sized cell, so the whole
+  // "Stay <word>" line stays optically centred for every word — short
+  // ("confident") or long ("irreplaceable").
   return (
     <span
-      className="relative inline-grid align-baseline"
+      className="relative inline-grid justify-items-center align-baseline"
       style={{ color: "var(--elyst-green)" }}
     >
-      <span aria-hidden className="invisible col-start-1 row-start-1">
-        competitive
-      </span>
       {reduce ? (
-        <span className="col-start-1 row-start-1 text-left">{CYCLE[0]}</span>
+        <span className="col-start-1 row-start-1 whitespace-nowrap">
+          {CYCLE[0]}
+        </span>
       ) : (
         <AnimatePresence mode="popLayout">
           <motion.span
@@ -49,7 +50,7 @@ function CyclingWord() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-0.4em" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="col-start-1 row-start-1 whitespace-nowrap text-left"
+            className="col-start-1 row-start-1 whitespace-nowrap"
           >
             {CYCLE[i]}
           </motion.span>
