@@ -36,30 +36,22 @@ export default function AccelPaths() {
           "linear-gradient(165deg, color-mix(in srgb, var(--surface-dark) 78%, var(--elyst-emerald) 22%), var(--surface-dark) 55%, color-mix(in srgb, var(--surface-dark) 88%, black 12%))",
       }}
     >
-      {/* Heavy film grain — fine fractal noise for a rough, tactile surface
-          (the dark base makes it read far more than it did on the light tint). */}
+      {/* Heavy film grain — ONE large, non-tiling noise image stretched to
+          cover the whole section (no `repeat`, so no seams/grid-lines between
+          tiles — the artefact the repeating SVG patterns produced before).
+          Two fractalNoise passes (fine grain + coarse mottling) are combined
+          inside a single filter via feBlend, so it still reads as rough/worn,
+          just as one continuous surface. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          backgroundRepeat: "repeat",
-          opacity: 0.9,
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='fine'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' result='coarse'/%3E%3CfeColorMatrix in='coarse' type='saturate' values='0' result='coarseGray'/%3E%3CfeBlend in='fine' in2='coarseGray' mode='overlay'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          opacity: 0.5,
           mixBlendMode: "overlay",
-        }}
-      />
-      {/* Second, coarser noise layer — larger mottled patches so the surface
-          reads as worn/concrete-like rather than just "grainy photo," i.e. rough. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E\")",
-          backgroundRepeat: "repeat",
-          opacity: 0.35,
-          mixBlendMode: "soft-light",
         }}
       />
 

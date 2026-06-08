@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { Languages, Radio, Users2, FlaskConical } from "lucide-react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
@@ -11,32 +12,57 @@ import { Card } from "@/components/ui/card";
  * into what's actually useful to know in this AI era. Replaces the prior
  * founder-story block — same credibility, sharper and more concrete.
  *
- * Icon treatment borrowed from the 21st.dev "features-1" block (its
- * `CardDecorator`: a masked blueprint-grid disc with a bordered icon well) —
- * recoloured to brand emerald so it reads as "engineered," matching the
- * gradient-frame card's architectural feel.
+ * Corner texture borrowed from the 21st.dev "grid-feature-cards" block — a
+ * faint blueprint grid with a few randomly "lit" cells, masked to fade from
+ * the top-left corner — recoloured to brand emerald so each card reads as a
+ * small architectural diagram rather than a flat panel. The "lit" cells are
+ * derived deterministically from the card's index (not Math.random) so SSR
+ * and the client always agree and the pattern stays stable across renders.
  */
 
-function IconDecorator({ children }: { children: React.ReactNode }) {
+function seededPattern(seed: number): [number, number][] {
+  return Array.from({ length: 5 }, (_, i) => [
+    ((seed * 13 + i * 7) % 4) + 7,
+    ((seed * 17 + i * 11) % 6) + 1,
+  ]);
+}
+
+function CardGridTexture({ seed }: { seed: number }) {
+  const patternId = React.useId();
+  const cells = seededPattern(seed);
+  const cell = 22;
   return (
     <div
       aria-hidden
-      className="relative mx-auto size-16 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] sm:mx-0"
+      className="pointer-events-none absolute inset-0 -ml-16 [mask-image:radial-gradient(farthest-side_at_top_left,white,transparent_75%)]"
     >
-      <div
-        className="absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--elyst-emerald) 1px, transparent 1px), linear-gradient(to bottom, var(--elyst-emerald) 1px, transparent 1px)",
-          backgroundSize: "10px 10px",
-        }}
-      />
-      <div
-        className="absolute inset-0 m-auto flex size-10 items-center justify-center border-t border-l"
-        style={{ background: "var(--card)", borderColor: "var(--green-tint-15)" }}
-      >
-        {children}
-      </div>
+      <svg className="absolute inset-0 h-full w-full">
+        <defs>
+          <pattern id={patternId} width={cell} height={cell} patternUnits="userSpaceOnUse" x="-12" y="4">
+            <path
+              d={`M.5 ${cell}V.5H${cell}`}
+              fill="none"
+              stroke="var(--elyst-emerald)"
+              strokeOpacity={0.3}
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
+        <svg x="-12" y="4" className="overflow-visible">
+          {cells.map(([cx, cy], i) => (
+            <rect
+              key={i}
+              strokeWidth={0}
+              width={cell + 1}
+              height={cell + 1}
+              x={cx * cell}
+              y={cy * cell}
+              fill="var(--elyst-emerald)"
+              fillOpacity={0.16}
+            />
+          ))}
+        </svg>
+      </svg>
     </div>
   );
 }
@@ -91,13 +117,17 @@ export default function AccelWhy() {
                   border: "1px solid var(--green-tint-15)",
                 }}
               >
-                <IconDecorator>
+                <CardGridTexture seed={i} />
+                <span
+                  className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-xl"
+                  style={{ background: "var(--green-tint-15)" }}
+                >
                   <Icon className="h-5 w-5 text-emerald" />
-                </IconDecorator>
-                <h3 className="mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                </span>
+                <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
                   {title}
                 </h3>
-                <p className="mt-2 text-small leading-relaxed text-fg-2">{line}</p>
+                <p className="relative z-10 mt-2 text-small leading-relaxed text-fg-2">{line}</p>
               </Card>
             </motion.div>
           ))}
@@ -121,13 +151,17 @@ export default function AccelWhy() {
                 border: "1px solid var(--green-tint-15)",
               }}
             >
-              <IconDecorator>
+              <CardGridTexture seed={reasons.length} />
+              <span
+                className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-xl"
+                style={{ background: "var(--green-tint-15)" }}
+              >
                 <FlaskConical className="h-5 w-5 text-emerald" />
-              </IconDecorator>
-              <h3 className="mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
+              </span>
+              <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
                 Built on what we ship
               </h3>
-              <p className="mt-2 text-small leading-relaxed text-fg-2">
+              <p className="relative z-10 mt-2 text-small leading-relaxed text-fg-2">
                 AIOS — our agency arm — builds and ships production AI for
                 businesses every day. What we learn, test, and experiment with
                 there doesn&rsquo;t stay there: it gets distilled straight into
