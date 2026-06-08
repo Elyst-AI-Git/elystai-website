@@ -1,255 +1,40 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FileText, FolderOpen, MessageCircle, Sparkles } from "lucide-react";
+import { FileText, FolderSearch, MessageCircle } from "lucide-react";
+import DisplayCards from "@/components/ui/display-cards";
 
-type Step = {
-  marker: string;
-  label: string;
-  sub: string;
-};
-
-const steps: Step[] = [
+const stepCards = [
   {
-    marker: "1 · Message",
-    label: "Message it like a colleague.",
-    sub: "In the WhatsApp or Telegram your team already uses.",
+    icon: <MessageCircle className="size-5 text-emerald" />,
+    title: "Message",
+    description: "Message it like a colleague — in the WhatsApp or Telegram your team already uses.",
+    date: "Step 1",
+    iconClassName: "bg-[var(--green-tint-15)]",
+    titleClassName: "text-emerald",
+    className:
+      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0 border-border",
   },
   {
-    marker: "2 · Understands",
-    label: "It understands your business.",
-    sub: "Reads your own documents, data, and tools — not the open internet.",
+    icon: <FolderSearch className="size-5 text-emerald" />,
+    title: "Understands",
+    description: "It reads your own documents, data and tools — not the open internet.",
+    date: "Step 2",
+    iconClassName: "bg-[var(--green-tint-15)]",
+    titleClassName: "text-emerald",
+    className:
+      "[grid-area:stack] translate-x-12 translate-y-12 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0 border-border",
   },
   {
-    marker: "3 · Acts",
-    label: "It answers, or does the work.",
-    sub: "The answer, or the finished document — straight to the right person.",
+    icon: <FileText className="size-5 text-emerald" />,
+    title: "Acts",
+    description: "It answers, or delivers the finished document — straight to the right person.",
+    date: "Step 3",
+    iconClassName: "bg-[var(--green-tint-15)]",
+    titleClassName: "text-emerald",
+    className:
+      "[grid-area:stack] translate-x-24 translate-y-24 hover:translate-y-12 border-border shadow-[var(--shadow-card)]",
   },
 ];
-
-/** Step 1 — the incoming message, a single bubble. */
-function StepOnePanel() {
-  return (
-    <div className="flex h-full flex-col items-start justify-center gap-3 p-8">
-      <span className="eyebrow text-fg-3">In WhatsApp</span>
-      <div
-        className="max-w-[80%] px-4 py-3 text-fg shadow-sm"
-        style={{
-          background: "#ffffff",
-          borderRadius: "14px 14px 14px 4px",
-          fontSize: "var(--text-small)",
-          border: "1px solid var(--border)",
-        }}
-      >
-        <MessageCircle className="mb-2 h-4 w-4 text-fg-3" />
-        “Make the June invoice for Al Noor Trading.”
-      </div>
-      <p className="text-fg-3" style={{ fontSize: "0.78rem" }}>
-        Plain language. No commands, no training.
-      </p>
-    </div>
-  );
-}
-
-/** Step 2 — AIOS reading the company's own sources, lighting up as context. */
-function StepTwoPanel() {
-  const sources = ["Invoices · Drive", "Client list · Sheets", "Templates · Docs"];
-  return (
-    <div className="flex h-full flex-col items-start justify-center gap-4 p-8">
-      <span className="eyebrow text-fg-3">Drawing on your business</span>
-      <div className="flex flex-col gap-2.5">
-        {sources.map((s, i) => (
-          <motion.div
-            key={s}
-            initial={{ opacity: 0.35 }}
-            animate={{ opacity: [0.35, 1, 0.7] }}
-            transition={{ duration: 1.1, delay: i * 0.18, ease: "easeInOut" }}
-            className="flex items-center gap-2.5 px-3.5 py-2"
-            style={{
-              background: "#ffffff",
-              borderRadius: "10px",
-              border: "1px solid var(--border)",
-              fontSize: "0.82rem",
-              color: "var(--fg-2)",
-            }}
-          >
-            <FolderOpen className="h-4 w-4 text-emerald" />
-            {s}
-          </motion.div>
-        ))}
-      </div>
-      <p className="text-fg-3" style={{ fontSize: "0.78rem" }}>
-        It checks what&rsquo;s actually true for Al Noor Trading — not a guess.
-      </p>
-    </div>
-  );
-}
-
-/** Step 3 — the outcome: answer returned and the finished artifact produced. */
-function StepThreePanel() {
-  return (
-    <div className="flex h-full flex-col items-start justify-center gap-3 p-8">
-      <span className="eyebrow text-fg-3">Done</span>
-      <div
-        className="flex w-full max-w-[340px] items-center gap-3 px-4 py-3"
-        style={{
-          background: "#ffffff",
-          borderRadius: "12px",
-          border: "1px solid var(--border)",
-          boxShadow: "var(--shadow-card)",
-        }}
-      >
-        <span
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-          style={{ background: "var(--green-tint-07)" }}
-        >
-          <FileText className="h-4 w-4 text-emerald" />
-        </span>
-        <div>
-          <p className="font-semibold text-fg" style={{ fontSize: "0.84rem" }}>
-            invoice-al-noor-june.pdf
-          </p>
-          <p className="text-fg-3" style={{ fontSize: "0.72rem" }}>
-            Sent to Accounts · 09:41
-          </p>
-        </div>
-        <Sparkles className="ml-auto h-4 w-4 text-emerald" />
-      </div>
-      <p className="text-fg-3" style={{ fontSize: "0.78rem" }}>
-        Totalled, formatted, and delivered — the right person sees it.
-      </p>
-    </div>
-  );
-}
-
-const panels = [StepOnePanel, StepTwoPanel, StepThreePanel];
-
-/** Desktop — interactive click-through: markers control one shared display panel. */
-function InteractiveWalkthrough() {
-  const [active, setActive] = useState(0);
-  const ActivePanel = panels[active];
-
-  return (
-    <div className="hidden md:block">
-      {/* Step markers + progress connector */}
-      <div className="relative flex items-start justify-between">
-        <div
-          className="absolute top-[9px] right-0 left-0 h-px"
-          style={{ background: "var(--border)" }}
-        />
-        <motion.div
-          className="absolute top-[9px] left-0 h-px"
-          style={{ background: "var(--elyst-emerald)" }}
-          animate={{ width: `${(active / (steps.length - 1)) * 100}%` }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        />
-        {steps.map((s, i) => {
-          const isActive = i === active;
-          const isPast = i < active;
-          return (
-            <button
-              key={s.marker}
-              onClick={() => setActive(i)}
-              className="relative flex flex-col items-start gap-3 text-left"
-              style={{ width: "31%" }}
-            >
-              <span
-                className="z-10 h-[18px] w-[18px] rounded-full transition-colors"
-                style={{
-                  background: isActive || isPast ? "var(--elyst-emerald)" : "var(--bg)",
-                  border: `2px solid ${isActive || isPast ? "var(--elyst-emerald)" : "var(--fg-3)"}`,
-                }}
-              />
-              <span
-                className="font-semibold transition-colors"
-                style={{
-                  fontSize: "0.78rem",
-                  color: isActive ? "var(--elyst-emerald)" : "var(--fg-3)",
-                }}
-              >
-                {s.marker}
-              </span>
-              <span
-                className="leading-snug transition-colors"
-                style={{
-                  fontSize: "var(--text-small)",
-                  color: isActive ? "var(--fg)" : "var(--fg-3)",
-                  fontWeight: isActive ? 600 : 400,
-                }}
-              >
-                {s.label}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Display panel — swaps on click, snappy crossfade */}
-      <div
-        className="relative mt-10 h-[260px] overflow-hidden"
-        style={{
-          background: "var(--surface-muted)",
-          borderRadius: "var(--radius-card)",
-        }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <ActivePanel />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
-/** Mobile — three static stacked panels, top to bottom. Always in the DOM. */
-function StackedSteps() {
-  return (
-    <div className="flex flex-col gap-6 md:hidden">
-      {steps.map((s, i) => {
-        const Panel = panels[i];
-        return (
-          <div key={s.marker}>
-            <div className="mb-3 flex items-center gap-2.5">
-              <span
-                className="flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full font-semibold"
-                style={{
-                  background: "var(--elyst-emerald)",
-                  color: "var(--fg-on-dark)",
-                  fontSize: "0.74rem",
-                }}
-              >
-                {i + 1}
-              </span>
-              <div>
-                <p className="font-semibold text-fg" style={{ fontSize: "var(--text-small)" }}>
-                  {s.label}
-                </p>
-                <p className="text-fg-3" style={{ fontSize: "0.76rem" }}>
-                  {s.sub}
-                </p>
-              </div>
-            </div>
-            <div
-              className="h-[220px] overflow-hidden"
-              style={{ background: "var(--surface-muted)", borderRadius: "var(--radius-card)" }}
-            >
-              <Panel />
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 export default function AiosHowItWorks() {
   return (
@@ -265,9 +50,12 @@ export default function AiosHowItWorks() {
           </h2>
         </div>
 
-        <div className="mt-14">
-          <InteractiveWalkthrough />
-          <StackedSteps />
+        {/* Stacked display cards — hover any card to bring it forward.
+            Scaled down on narrow screens so the offset deck stays on-canvas. */}
+        <div className="mt-12 flex min-h-[300px] w-full items-center justify-center sm:min-h-[400px] md:mt-20 md:min-h-[440px]">
+          <div className="origin-center scale-[0.6] sm:scale-[0.82] md:scale-100">
+            <DisplayCards cards={stepCards} />
+          </div>
         </div>
 
         {/* Contrast line — kills the "isn't this just ChatGPT?" doubt */}
