@@ -78,7 +78,6 @@ export default function AiosFaq() {
       {/* FAQPage schema — mirrors the visible Q&A copy exactly */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 

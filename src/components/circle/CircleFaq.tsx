@@ -46,7 +46,6 @@ export default function CircleFaq() {
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
