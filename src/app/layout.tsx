@@ -19,6 +19,15 @@ export const metadata: Metadata = {
   },
   description:
     "Elyst AI deploys AI into how businesses run (AIOS) and teaches people to use it (the Accelerator). Kozhikode, Kerala — for India and the GCC.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: { url: "/apple-touch-icon.png" },
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
