@@ -11,14 +11,40 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const SITE_URL = "https://elystai.com";
+const SITE_TITLE = "Elyst AI — AI systems for business, programs for people";
+const SITE_DESCRIPTION =
+  "Elyst AI deploys AI into how businesses run (AIOS) and teaches people to use it (the Accelerator). Kozhikode, Kerala — for India and the GCC.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://elyst.ai"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Elyst AI — AI systems for business, programs for people",
+    default: SITE_TITLE,
     template: "%s · Elyst AI",
   },
-  description:
-    "Elyst AI deploys AI into how businesses run (AIOS) and teaches people to use it (the Accelerator). Kozhikode, Kerala — for India and the GCC.",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "Elyst AI",
+    url: SITE_URL,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Elyst AI",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/og-image.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
