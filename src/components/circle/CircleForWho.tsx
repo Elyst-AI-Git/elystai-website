@@ -94,12 +94,11 @@ export default function CircleForWho() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-          className="mt-10 border-l-[3px] pl-5"
-          style={{ borderColor: "var(--elyst-green-mid)" }}
+          className="mt-10 text-center"
         >
           <p className="text-fg-2" style={{ fontSize: "1.08rem", lineHeight: 1.65, fontWeight: 500 }}>
             If either of those sounds like you,{" "}
-            <strong className="font-bold text-fg">the application takes two minutes.</strong>
+            <strong className="font-bold text-fg">apply now.</strong>
           </p>
         </motion.div>
       </div>

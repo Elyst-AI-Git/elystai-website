@@ -1,9 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BrandButton } from "@/components/ui/brand-button";
-
-const ENROLL_URL = "https://forms.gle/PWZteGnuDJYDm84Y7";
 
 export default function AiJuniorCta() {
   return (
@@ -35,19 +32,18 @@ export default function AiJuniorCta() {
           ₹999
         </p>
 
-        <BrandButton href={ENROLL_URL} tone="green" className="rounded-full!">
-          Register Now →
-        </BrandButton>
-
+        {/* Closed for now, non-clickable */}
         <span
-          className="mt-2 inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 font-bold uppercase tracking-wider text-green"
-          style={{ background: "rgba(0,223,130,0.12)", border: "1px solid rgba(0,223,130,0.28)", fontSize: "0.7rem" }}
+          aria-disabled="true"
+          className="inline-flex cursor-not-allowed items-center justify-center rounded-md px-7 py-3.5 font-bold"
+          style={{
+            background: "rgba(255,255,255,0.15)",
+            color: "rgba(255,255,255,0.55)",
+            fontSize: "var(--text-small)",
+            border: "1px solid rgba(255,255,255,0.2)",
+          }}
         >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ background: "var(--elyst-green)" }} />
-            <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "var(--elyst-green)" }} />
-          </span>
-          Batch Filling Fast · Only Limited Seats Per Batch
+          Register Now
         </span>
       </motion.div>
     </section>

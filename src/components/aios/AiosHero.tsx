@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 import { renderCanvas } from "@/components/ui/canvas";
 
@@ -25,12 +26,13 @@ export default function AiosHero() {
     <section
       className="relative overflow-hidden bg-bg"
       style={{
-        // Tight to the navbar up top; the extra white space lives below the
-        // content instead, so the section stays tall without a big top gap.
-        paddingTop: "clamp(30px, 5vw, 80px)",
-        paddingBottom: "clamp(60px, 8.5vw, 150px)",
+        paddingTop: "clamp(48px, 5vw, 80px)",
+        paddingBottom: "clamp(80px, 8.5vw, 150px)",
         paddingLeft: "var(--section-px)",
         paddingRight: "var(--section-px)",
+        minHeight: "clamp(0px, 92svh, 100vh)",
+        display: "flex",
+        alignItems: "center",
       }}
     >
       {/* Cursor-reactive flowing-line canvas — deep-emerald trail on white */}
@@ -39,27 +41,27 @@ export default function AiosHero() {
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      <div className="relative z-10 mx-auto flex w-fit max-w-4xl flex-col items-center px-12 py-8 text-center md:px-16 md:py-10">
+      <div className="relative z-10 mx-auto flex w-fit max-w-4xl flex-col items-center px-4 py-8 text-center sm:px-12 md:px-16 md:py-10">
         {/* Corner brackets framed close to the centered content */}
         <Corner position="tl" />
         <Corner position="tr" />
         <Corner position="bl" />
         <Corner position="br" />
 
-        <span className="chip">AIOS for Business</span>
+        <SectionMark>AIOS for Business</SectionMark>
 
         <h1
           className="mt-6 text-fg"
-          style={{ fontSize: "clamp(2.2rem, 6vw, 5.1rem)", lineHeight: 1.08 }}
+          style={{ fontSize: "clamp(3.2rem, 6vw, 5.1rem)", lineHeight: 1.08 }}
         >
-          <span className="block whitespace-nowrap">It&rsquo;s time to work,</span>
-          <span className="block whitespace-nowrap">
-            the <span style={{ color: "#00df82" }}>AI way</span>
+          <span className="block">It&rsquo;s time to work,</span>
+          <span className="block">
+            the <span style={{ color: "#03624c" }}>AI way</span>
           </span>
         </h1>
 
         <div className="mt-10">
-          <BrandButton href="/contact" tone="green">
+          <BrandButton href="https://cal.com/elyst-ai/30min" tone="green">
             Book a call
           </BrandButton>
         </div>
@@ -68,7 +70,7 @@ export default function AiosHero() {
           className="mt-4 text-fg-3"
           style={{ fontSize: "var(--text-small)" }}
         >
-          Your team learns nothing new — it already lives in WhatsApp.
+          The AI employee that already knows your whole business.
         </p>
       </div>
     </section>

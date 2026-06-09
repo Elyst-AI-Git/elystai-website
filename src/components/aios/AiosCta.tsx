@@ -77,12 +77,11 @@ export default function AiosCta() {
               maxWidth: "32ch",
             }}
           >
-            A short call. We&rsquo;ll show you exactly how it&rsquo;d work for
-            your team — no obligation.
+            We will show you exactly what it would do for your team.
           </p>
 
           <div className="pointer-events-auto mt-2">
-            <BrandButton href="/contact" tone="green">
+            <BrandButton href="https://cal.com/elyst-ai/30min" tone="green">
               Book a call
             </BrandButton>
           </div>

@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
+import { SectionMark } from "@/components/ui/section-mark";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import {
+  Clock,
   GraduationCap,
   MessageCircle,
   Rocket,
@@ -41,7 +42,7 @@ const programs: Program[] = [
     mark: Rocket,
     name: "AI Yathra",
     who: "For working professionals and career switchers",
-    status: "Next cohort",
+    status: "Closed",
     href: "/ai-yathra",
     surface: "#c0d8d3",
     image: "/images/programs/ai-yathra.png",
@@ -50,7 +51,7 @@ const programs: Program[] = [
     mark: Sparkles,
     name: "AI for Juniors",
     who: "For school students, Classes 5–10",
-    status: "Enrolling",
+    status: "Closed",
     href: "/juniors",
     surface: "#81b1a6",
     image: "/images/programs/ai-junior.png",
@@ -59,7 +60,7 @@ const programs: Program[] = [
     mark: MessageCircle,
     name: "Elyst AI Circle",
     who: "For professionals who want to stay ahead of AI",
-    status: "Open",
+    status: "Open Now",
     href: "/circle",
     surface: "#428979",
     dark: true,
@@ -67,9 +68,9 @@ const programs: Program[] = [
   },
   {
     mark: GraduationCap,
-    name: "Flagship Course",
+    name: "AI Program",
     who: "The deep-dive program for professionals",
-    status: "Coming soon",
+    status: "Coming Soon",
     href: "/flagship",
     surface: "#1c725e",
     dark: true,
@@ -127,7 +128,7 @@ function ProgramFace({ p }: { p: Program }) {
         <CutoutCardContent className="flex flex-col p-0 overflow-hidden">
           {/* Program cover image — 1:1 */}
           {p.image ? (
-            <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+            <div className="relative w-full aspect-[4/3] sm:aspect-square">
               <Image
                 src={p.image}
                 alt={p.name}
@@ -137,11 +138,37 @@ function ProgramFace({ p }: { p: Program }) {
               />
             </div>
           ) : (
+            /* Coming Soon placeholder */
             <div
-              className="flex w-full items-center justify-center"
-              style={{ aspectRatio: "1 / 1", background: p.surface }}
+              className="relative flex w-full flex-col items-center justify-center overflow-hidden aspect-[4/3] sm:aspect-square"
+              style={{ background: p.surface }}
             >
-              <Icon className="h-16 w-16 opacity-30" style={{ color: "#ffffff" }} />
+              {/* Dot grid */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px)",
+                  backgroundSize: "20px 20px",
+                }}
+              />
+              {/* Diagonal stripe wash */}
+              <div
+                className="absolute inset-0 opacity-[0.06]"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(-45deg, white 0, white 1px, transparent 0, transparent 50%)",
+                  backgroundSize: "10px 10px",
+                }}
+              />
+              {/* Content — a timer, signalling it's on its way */}
+              <div className="relative flex flex-col items-center">
+                <Clock
+                  strokeWidth={1.5}
+                  className="select-none"
+                  style={{ width: "4.5rem", height: "4.5rem", color: "rgba(255,255,255,0.55)" }}
+                />
+              </div>
             </div>
           )}
 
@@ -214,9 +241,9 @@ function FanStage() {
             onHoverStart={() => setHovered(i)}
             onHoverEnd={() => setHovered(null)}
           >
-            <Link href={p.href} className="block w-[230px]">
+            <div className="block w-[230px]">
               <ProgramFace p={p} />
-            </Link>
+            </div>
           </motion.div>
         );
       })}
@@ -228,7 +255,12 @@ export default function AcceleratorTeaser() {
   return (
     <section
       className="relative overflow-hidden bg-bg"
-      style={{ padding: "var(--section-py) var(--section-px)" }}
+      style={{
+        paddingTop: "clamp(44px, 5.5vw, 80px)",
+        paddingBottom: "var(--section-py)",
+        paddingLeft: "var(--section-px)",
+        paddingRight: "var(--section-px)",
+      }}
     >
       {/* Static brand-green glow behind the cards — replaced the interactive
           gradient component (felt sluggish/unreliable) with a plain layered
@@ -247,16 +279,19 @@ export default function AcceleratorTeaser() {
       />
       <div className="relative z-10 mx-auto max-w-[1100px]">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="chip">Learn AI · Accelerator</span>
+          <SectionMark>Learn AI</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Become genuinely capable with AI.
+            Become genuinely good with AI,
+            <br />
+            not just aware of it.
           </h2>
           <p
             className="mx-auto mt-4 max-w-prose text-fg-2"
             style={{ fontSize: "var(--text-body)" }}
           >
-            Live, bilingual programs — community-backed — for professionals,
-            students, and the parents choosing for them.
+            Programs if you want to use AI well in your work.
+            <br />
+            Taught by the team that builds AI for businesses.
           </p>
         </div>
 
@@ -264,11 +299,11 @@ export default function AcceleratorTeaser() {
           <FanStage />
 
           {/* Mobile: plain stacked cards (no fan) */}
-          <div className="grid gap-5 sm:hidden">
+          <div className="grid gap-4 sm:hidden">
             {programs.map((p) => (
-              <Link key={p.href} href={p.href} className="block">
+              <div key={p.href} className="mx-auto w-full max-w-[300px]">
                 <ProgramFace p={p} />
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -282,7 +317,7 @@ export default function AcceleratorTeaser() {
             className="block self-center text-emerald"
           />
           <BrandButton href="/learn" className="self-center">
-            Explore all programs
+            Explore Programs
           </BrandButton>
         </div>
       </div>

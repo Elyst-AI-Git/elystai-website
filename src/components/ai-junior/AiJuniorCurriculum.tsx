@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Download, Shield, ShieldHalf, Zap } from "lucide-react";
+import { IconTile } from "@/components/ui/icons";
 
 const points = [
   {
     Icon: Zap,
     title: "No Coding Required",
-    desc: "We focus on Prompt Engineering — teaching kids to communicate with AI using plain language. Zero syntax, all creativity.",
+    desc: "We focus on Prompt Engineering, teaching kids to communicate with AI using plain language. Zero syntax, all creativity.",
   },
   {
     Icon: ShieldHalf,
@@ -18,7 +19,7 @@ const points = [
   {
     Icon: Shield,
     title: "Built for Their Age",
-    desc: "Every session is designed for grades 5–10 — simple enough to follow, challenging enough to excite.",
+    desc: "Every session is designed for grades 5–10, simple enough to follow, challenging enough to excite.",
   },
 ];
 
@@ -77,9 +78,9 @@ export default function AiJuniorCurriculum() {
           <div className="flex flex-col gap-7">
             {points.map(({ Icon, title, desc }) => (
               <div key={title} className="flex gap-5">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald">
-                  <Icon className="h-5 w-5 text-fg-on-dark" />
-                </span>
+                <IconTile tone="darkgreen" size={48}>
+                  <Icon className="h-5 w-5" />
+                </IconTile>
                 <div>
                   <h4 className="font-display mb-1.5 font-bold text-fg" style={{ fontSize: "1.15rem" }}>{title}</h4>
                   <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.6 }}>{desc}</p>
@@ -91,7 +92,7 @@ export default function AiJuniorCurriculum() {
             <a
               href="/AI-for-juniors-curriculum.pdf"
               download="AI for juniors - Elyst AI.pdf"
-              className="inline-flex items-center gap-2 rounded-full px-9 py-4 font-bold shadow-lg transition-transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-2 rounded-md px-9 py-4 font-bold shadow-lg transition-transform hover:scale-105 active:scale-95"
               style={{ background: "var(--elyst-green)", color: "var(--elyst-emerald)", fontSize: "1.05rem" }}
             >
               <Download className="h-4 w-4" />

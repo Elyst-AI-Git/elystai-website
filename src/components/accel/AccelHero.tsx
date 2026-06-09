@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowDown } from "lucide-react";
 import { SectionMark } from "./SectionMark";
 import { AnimatePresence, motion } from "framer-motion";
-import { BrandButton } from "@/components/ui/brand-button";
 import { BackgroundLines } from "@/components/ui/background-lines";
 
 /**
@@ -61,7 +59,7 @@ export default function AccelHero() {
     <section
       className="relative overflow-hidden"
       style={{
-        paddingTop: "clamp(32px, 5vw, 72px)",
+        paddingTop: "clamp(26px, 4vw, 58px)",
         paddingBottom: "clamp(40px, 6vw, 96px)",
         paddingLeft: "var(--section-px)",
         paddingRight: "var(--section-px)",
@@ -74,7 +72,7 @@ export default function AccelHero() {
         svgOptions={{ duration: 12 }}
       >
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
-          <SectionMark>Learn AI · The Accelerator</SectionMark>
+          <SectionMark>The Accelerator</SectionMark>
 
           <h1
             className="mt-7 text-fg"
@@ -103,27 +101,9 @@ export default function AccelHero() {
             className="mx-auto mt-7 max-w-xl text-fg-2"
             style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}
           >
-            For working professionals across India &amp; the GCC who want to stay
-            ahead as AI reshapes their field — taught live, bilingually in
-            Malayalam &amp; English, and backed by a community that keeps you
-            sharp.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-            <BrandButton href="/circle" tone="green">
-              Join the community
-            </BrandButton>
-            <a
-              href="#paths"
-              className="inline-flex items-center gap-1.5 text-small font-semibold text-emerald underline-offset-4 hover:underline"
-            >
-              See what&rsquo;s coming
-              <ArrowDown className="h-4 w-4" />
-            </a>
-          </div>
-
-          <p className="mt-8 text-small text-fg-3">
-            Backed by a 34+ member community.
+            Programs for people who want to use AI in their work,
+            <br />
+            not just hear about it.
           </p>
         </div>
       </BackgroundLines>

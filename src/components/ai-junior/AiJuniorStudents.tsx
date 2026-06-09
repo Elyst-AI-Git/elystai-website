@@ -11,7 +11,7 @@ const audios = [
   { name: "Aradhya", role: "Grade 6", src: "/media/ai-junior/student-audio-4.mp3", rotate: 1.5 },
 ];
 
-// Fixed waveform pattern — alternating bar heights for a static, balanced look
+// Fixed waveform pattern, alternating bar heights for a static, balanced look
 const WAVE_HEIGHTS = [9, 16, 11, 20, 13, 18, 10, 16, 12, 20];
 
 function AudioCard({ a, i }: { a: (typeof audios)[number]; i: number }) {

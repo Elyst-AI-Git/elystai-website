@@ -108,12 +108,10 @@ export default function ProofBar() {
             <span
               className="font-display font-bold"
               style={{
-                fontSize: "clamp(3.5rem, 7vw, 6.5rem)",
+                fontSize: "clamp(2.45rem, 4.9vw, 4.55rem)",
                 color: "#00df82",
                 lineHeight: 1.05,
-                // Body tracking (-0.05em) reads too tight at this size — opened
-                // up by ~25% so the big numerals don't clamp into each other.
-                letterSpacing: "-0.0375em",
+                letterSpacing: "-0.045em",
               }}
             >
               {item.kind === "count" ? (
@@ -129,7 +127,7 @@ export default function ProofBar() {
             </span>
             <span
               className="mt-3 font-medium"
-              style={{ fontSize: "clamp(1.35rem, 2.4vw, 1.75rem)", color: "#ffffff" }}
+              style={{ fontSize: "clamp(1.08rem, 1.92vw, 1.4rem)", color: "#ffffff" }}
             >
               {item.label}
             </span>

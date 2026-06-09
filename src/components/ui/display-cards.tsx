@@ -11,6 +11,8 @@ interface DisplayCardProps {
   date?: string;
   iconClassName?: string;
   titleClassName?: string;
+  descriptionClassName?: string;
+  dateClassName?: string;
 }
 
 function DisplayCard({
@@ -21,6 +23,8 @@ function DisplayCard({
   date = "Just now",
   iconClassName = "text-blue-500",
   titleClassName = "text-blue-500",
+  descriptionClassName = "text-lg leading-snug text-fg-2",
+  dateClassName = "text-base font-semibold uppercase tracking-wide text-fg-3",
 }: DisplayCardProps) {
   return (
     <div
@@ -33,10 +37,10 @@ function DisplayCard({
         <span className={cn("relative inline-flex items-center justify-center rounded-full p-2.5", iconClassName)}>
           {icon}
         </span>
-        <p className={cn("text-2xl font-bold", titleClassName)}>{title}</p>
+        <p className={cn("font-bold", titleClassName)}>{title}</p>
       </div>
-      <p className="text-lg leading-snug text-fg-2">{description}</p>
-      <p className="text-base font-semibold uppercase tracking-wide text-fg-3">{date}</p>
+      <p className={cn(descriptionClassName)}>{description}</p>
+      <p className={cn(dateClassName)}>{date}</p>
     </div>
   );
 }

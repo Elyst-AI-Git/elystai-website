@@ -1,65 +1,51 @@
 "use client";
 
-import {
-  Bell,
-  FileText,
-  Lock,
-  MessageSquareText,
-  Plug,
-  Sparkles,
-} from "lucide-react";
 import { BentoGrid, type BentoItem } from "@/components/ui/bento-grid";
+import { SectionMark } from "@/components/ui/section-mark";
+import {
+  IconDocument,
+  IconBriefing,
+  IconIntegrations,
+  IconAnswer,
+  IconAccess,
+  IconCustom,
+} from "@/components/ui/icons";
 
 const items: BentoItem[] = [
   {
-    title: "Instant answers from your documents",
-    meta: "Knowledge",
+    title: "Create assets from one message.",
     description:
-      "The whole team gets the same correct answer, sourced from what you actually wrote down.",
-    icon: <MessageSquareText className="h-5 w-5 text-green" />,
-    status: "Live",
-    tags: ["Knowledge", "Search"],
+      "Offer letters, quotes, invoices, receipts, agreements, generated as finished PDFs from a single instruction.",
+    icon: <IconDocument size={22} variant="line" />,
     colSpan: 2,
   },
   {
-    title: "Documents done from one message",
-    meta: "Generate",
+    title: "Daily briefings and tasks.",
+    description: "Everyone gets what they need each morning.",
+    icon: <IconBriefing size={22} variant="line" />,
+  },
+  {
+    title: "Works with the tools you run.",
+    description: "Plug into Docs, Sheets, Drive, Canva, Notion, Microsoft etc.",
+    icon: <IconIntegrations size={22} variant="line" />,
+  },
+  {
+    title: "Answers from your own documents.",
     description:
-      "Offer letters, invoices and certificates — finished PDFs, formatted and consistent every time.",
-    icon: <FileText className="h-5 w-5 text-green" />,
-    status: "Live",
-    tags: ["PDFs", "Templates"],
-  },
-  {
-    title: "Everyone knows what to do each morning",
-    meta: "Briefings",
-    description: "Daily task briefings, sent automatically to the right people.",
-    icon: <Bell className="h-5 w-5 text-green" />,
-    tags: ["Automation"],
-  },
-  {
-    title: "Works with the tools you already run",
-    meta: "Integrations",
-    description: "Google Workspace, Canva, and the SME tools your team knows.",
-    icon: <Plug className="h-5 w-5 text-green" />,
-    tags: ["Workspace", "Canva"],
+      "Ask anything about your business. It replies from your files, not guesses.",
+    icon: <IconAnswer size={22} variant="line" />,
     colSpan: 2,
   },
   {
-    title: "The right person sees the right thing",
-    meta: "Access",
-    description: "Role-based access keeps sensitive data restricted, by default.",
-    icon: <Lock className="h-5 w-5 text-green" />,
-    status: "Secure",
-    tags: ["Roles"],
+    title: "The right person sees the right thing.",
+    description: "Role-based access, so the team see what they should and nothing they shouldn't.",
+    icon: <IconAccess size={22} variant="line" />,
     colSpan: 2,
   },
   {
-    title: "…and whatever else your workflows need",
-    meta: "Custom",
-    description: "AIOS is configured to your business — not picked off a shelf.",
-    icon: <Sparkles className="h-5 w-5 text-green" />,
-    tags: ["Bespoke"],
+    title: "…and whatever your work needs.",
+    description: "Configured to your workflows, not a generic fixed template.",
+    icon: <IconCustom size={22} variant="line" />,
   },
 ];
 
@@ -71,9 +57,15 @@ export default function AiosCapabilities() {
     >
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="chip">What AIOS does</span>
+          <SectionMark>What AIOS does</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Not one feature. A system that runs your operations.
+            Not one feature.
+            <br />
+            <span className="md:whitespace-nowrap">
+              A system that{" "}
+              <span style={{ color: "var(--elyst-emerald)" }}>runs</span>
+              {" "}your operations.
+            </span>
           </h2>
         </div>
 

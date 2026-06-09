@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Rocket, Sparkles } from "lucide-react";
-import { BrandButton } from "@/components/ui/brand-button";
-
-const ENROLL_URL = "https://forms.gle/PWZteGnuDJYDm84Y7";
+import { Rocket } from "lucide-react";
+import { SectionMark } from "@/components/ui/section-mark";
+import { IconTile } from "@/components/ui/icons";
 
 export default function AiJuniorHero() {
   return (
@@ -33,30 +32,39 @@ export default function AiJuniorHero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex flex-col items-start gap-7"
         >
-          <span
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold uppercase tracking-wider text-green"
-            style={{ background: "rgba(0,223,130,0.16)", border: "1px solid rgba(0,223,130,0.3)", fontSize: "0.72rem" }}
-          >
-            <Sparkles className="h-3.5 w-3.5" />
-            Next-Gen AI Learning
-          </span>
+          {/* Eyebrow matching the rest of the site, dark tone on dark bg */}
+          <SectionMark tone="dark">Next-Gen AI Learning</SectionMark>
 
           <h1 className="font-display font-bold leading-tight text-fg-on-dark" style={{ fontSize: "var(--text-h1)" }}>
             Your Child Will Build with AI in <span className="text-green">Just 5 Days</span>
           </h1>
 
           <p className="max-w-lg text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.7 }}>
-            Not just watching AI — your child will learn what AI is, how to
+            Not just watching AI, your child will learn what AI is, how to
             talk to it, and build something real with it.
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <BrandButton href={ENROLL_URL} tone="green" className="rounded-full!">
-              Enroll Your Child
-            </BrandButton>
+            {/* Closed, non-clickable */}
             <span
-              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5"
-              style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)" }}
+              className="inline-flex cursor-not-allowed items-center justify-center rounded-md px-7 py-3.5 font-bold"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "rgba(255,255,255,0.55)",
+                fontSize: "var(--text-body)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+            >
+              Closed for now
+            </span>
+            {/* 2000+ badge, navbar corner radius */}
+            <span
+              className="inline-flex items-center gap-2 px-5 py-2.5"
+              style={{
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "var(--radius-md, 10px)",
+              }}
             >
               <span className="font-display font-bold text-green" style={{ fontSize: "1.1rem", lineHeight: 1 }}>2000+</span>
               <span className="font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-small)" }}>Students Trained</span>
@@ -82,9 +90,9 @@ export default function AiJuniorHero() {
           </div>
           <div className="absolute -bottom-6 -left-6 -rotate-3 rounded-lg bg-white p-6 shadow-2xl">
             <div className="flex items-center gap-4">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-green">
-                <Rocket className="h-5 w-5" style={{ color: "var(--elyst-emerald)" }} />
-              </span>
+              <IconTile tone="darkgreen" size={44}>
+                <Rocket className="h-5 w-5" />
+              </IconTile>
               <span className="font-display font-bold text-fg" style={{ fontSize: "var(--text-small)" }}>
                 5 Live Sessions
               </span>

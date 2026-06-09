@@ -1,8 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { Languages, Radio, Users2, FlaskConical } from "lucide-react";
 import { motion } from "framer-motion";
+import {
+  IconBuild,
+  IconFocus,
+  IconCommunity,
+  IconPromise,
+  IconTile,
+  type IconProps,
+} from "@/components/ui/icons";
 import { Card } from "@/components/ui/card";
 import { SectionMark } from "./SectionMark";
 
@@ -68,21 +75,25 @@ function CardGridTexture({ seed }: { seed: number }) {
   );
 }
 
-const reasons = [
+const reasons: {
+  Icon: (props: IconProps) => React.ReactElement;
+  title: string;
+  line: string;
+}[] = [
   {
-    Icon: Languages,
-    title: "Bilingual & local",
-    line: "Taught in Malayalam + English, built for Indian and GCC professionals — not a generic Western course.",
+    Icon: IconBuild,
+    title: "Taught by people who build it.",
+    line: "Our AI agency builds AI. You learn what actually works, not what sounds good for a course.",
   },
   {
-    Icon: Radio,
-    title: "Live, not recorded",
-    line: "Real sessions with real interaction — not a dumped video library you never finish.",
+    Icon: IconFocus,
+    title: "Not your typical AI course.",
+    line: "Others flex the number of AI tools they cover. We cover what helps you become AI native.",
   },
   {
-    Icon: Users2,
-    title: "Community-backed",
-    line: "Learning doesn't stop when the session ends — the Circle keeps you sharp between them.",
+    Icon: IconCommunity,
+    title: "Backed by a community.",
+    line: "Learning doesn't stop when the session ends. The Circle keeps you sharp between them.",
   },
 ];
 
@@ -91,9 +102,11 @@ export default function AccelWhy() {
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <SectionMark>Why Elyst</SectionMark>
+          <SectionMark>Why Elyst AI</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Learn AI from people who actually build it.
+            Learn AI from people
+            <br />
+            who actually built it.
           </h2>
         </div>
 
@@ -117,16 +130,13 @@ export default function AccelWhy() {
                 }}
               >
                 <CardGridTexture seed={i} />
-                <span
-                  className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-xl"
-                  style={{ background: "var(--green-tint-15)" }}
-                >
-                  <Icon className="h-5 w-5 text-emerald" />
-                </span>
-                <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                <IconTile tone="darkgreen" className="relative z-10">
+                  <Icon size={22} variant="duotone" />
+                </IconTile>
+                <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)", fontWeight: 700 }}>
                   {title}
                 </h3>
-                <p className="relative z-10 mt-2 text-small leading-relaxed text-fg-2">{line}</p>
+                <p className="relative z-10 mt-2 leading-relaxed text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>{line}</p>
               </Card>
             </motion.div>
           ))}
@@ -151,20 +161,15 @@ export default function AccelWhy() {
               }}
             >
               <CardGridTexture seed={reasons.length} />
-              <span
-                className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-xl"
-                style={{ background: "var(--green-tint-15)" }}
-              >
-                <FlaskConical className="h-5 w-5 text-emerald" />
-              </span>
-              <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "var(--text-h3)" }}>
-                Built on what we ship
+              <IconTile tone="darkgreen" className="relative z-10">
+                <IconPromise size={22} variant="duotone" />
+              </IconTile>
+              <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)", fontWeight: 700 }}>
+                Our promise.
               </h3>
-              <p className="relative z-10 mt-2 text-small leading-relaxed text-fg-2">
-                AIOS — our agency arm — builds and ships production AI for
-                businesses every day. What we learn, test, and experiment with
-                there doesn&rsquo;t stay there: it gets distilled straight into
-                what you actually need to know to stay sharp in this AI era.
+              <p className="relative z-10 mt-2 leading-relaxed text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>
+                We don&rsquo;t do hundreds of courses in various domains. We do
+                one domain, that&rsquo;s AI.
               </p>
             </Card>
           </motion.div>

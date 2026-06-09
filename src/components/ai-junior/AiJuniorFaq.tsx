@@ -18,11 +18,11 @@ const faqs: Faq[] = [
   },
   {
     q: "Does my child need any technical background?",
-    a: "None at all. We start from scratch — no coding, no prior AI experience required. We focus on prompt engineering: teaching kids to communicate with AI in plain language.",
+    a: "None at all. We start from scratch, no coding, no prior AI experience required. We focus on prompt engineering: teaching kids to communicate with AI in plain language.",
   },
   {
     q: "What will they actually build?",
-    a: "Over 5 live sessions, your child will create AI-generated images and videos, design posters, write effective prompts, and even build a simple website — all using AI tools.",
+    a: "Over 5 live sessions, your child will create AI-generated images and videos, design posters, write effective prompts, and even build a simple website, all using AI tools.",
   },
   {
     q: "Are the sessions live or recorded?",
@@ -34,11 +34,11 @@ const faqs: Faq[] = [
   },
   {
     q: "What if my child misses a session?",
-    a: "No problem — every session is recorded and available for a full month after the program, so your child can catch up at their own pace.",
+    a: "No problem, every session is recorded and available for a full month after the program, so your child can catch up at their own pace.",
   },
 ];
 
-// Slight alternating tilt per row — straightens to 0 when that row is open.
+// Slight alternating tilt per row, straightens to 0 when that row is open.
 // Kept gentle so a tilted card's corner never overlaps the question below it.
 const ROTATIONS = [-1.7, 1.4, -1.2, 1.5, -1.3, 1.1];
 
@@ -100,7 +100,7 @@ export default function AiJuniorFaq() {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.65 }}>
+                    <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
                       {f.a}
                     </p>
                   </AccordionContent>

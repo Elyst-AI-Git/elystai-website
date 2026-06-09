@@ -6,47 +6,76 @@ import { cn } from '@/lib/utils';
 
 const SQRT_5000 = Math.sqrt(5000);
 
+// Arranged so no two testimonials from the same program are adjacent.
+// Sequence by program: Yathra → Circle → Juniors → Circle → Yathra →
+//   Juniors → Circle → Yathra → Juniors → Circle → Yathra
 const testimonials = [
   {
     tempId: 0,
-    testimonial: "AI Yathra finally made GenAI click for me — practical, in my own language, and taught by people who clearly build this stuff.",
-    by: "Participant, AI Yathra 2.0"
+    testimonial: "AI Yathra broke my brain in 48 Hours. If you're curious about AI but don't know where to start, I highly recommend keeping an eye out for their next event.",
+    name: "Rahima SV",
+    program: "AI Yathra 2.0"
   },
   {
     tempId: 1,
-    testimonial: "The community keeps me current without the noise. I get the updates that matter and people to actually talk through them with.",
-    by: "Member, the Circle"
+    testimonial: "What genuinely stood out to me was the mindset of the Elyst AI team, making sure people actually understand how to use them in both their personal and professional lives.",
+    name: "Shaheen Raheem",
+    program: "Elyst AI Circle"
   },
   {
     tempId: 2,
-    testimonial: "I went from occasionally using AI to working with it every day. The live sessions made all the difference.",
-    by: "Working professional, Kozhikode"
+    testimonial: "He loved creating his own superhero image and even built a simple website using Lovable. Overall, it's a great program that encourages kids to actually build things with AI.",
+    name: "Reshmi",
+    program: "AI for Juniors Parent"
   },
   {
     tempId: 3,
-    testimonial: "Learning in Malayalam and English meant nothing got lost in translation. It felt built for us, not adapted for us.",
-    by: "Participant, AI Yathra 2.0"
+    testimonial: "That was a really engaging and insightful session, Nihal. I picked up quite a few valuable takeaways. Looking forward to attending more sessions and courses from your team.",
+    name: "Basila Fathima",
+    program: "Elyst AI Circle"
   },
   {
     tempId: 4,
-    testimonial: "You can tell they ship real AI for a living — the examples were from actual work, not slides.",
-    by: "Professional, GCC"
+    testimonial: "Shirin and Nihal didn't just teach Gen AI, automations & AI tools. You guided us how to think, how to approach learning, it didn't feel like a webinar at all.",
+    name: "Rohit P",
+    program: "AI Yathra"
   },
   {
     tempId: 5,
-    testimonial: "I came in nervous about falling behind. I left genuinely confident using AI in my own field.",
-    by: "Member, the Circle"
+    testimonial: "I think my son got an idea about the language of future. Prompt Creation, web design using AI are so interesting for students, they can use this type of tools in many situations.",
+    name: "Anusha",
+    program: "AI for Juniors Parent"
   },
   {
     tempId: 6,
-    testimonial: "The pace was right for working people. Live, hands-on, and you could ask anything.",
-    by: "Working professional, Kerala"
+    testimonial: "It was such a great session, where we could clarify all the doubts and learn new things and unlearn old ones.",
+    name: "Shiju Roy",
+    program: "Elyst AI Circle"
   },
   {
     tempId: 7,
-    testimonial: "Being first to hear what's coming — and learning alongside people who build it — is why I stay in the community.",
-    by: "Member, the Circle"
-  }
+    testimonial: "The hands on approach of showing each things practically, showing how each tool actually works, made the sessions very effective. Looking forward to what's next.",
+    name: "Muhammed Sinan B",
+    program: "AI Yathra"
+  },
+  {
+    tempId: 8,
+    testimonial: "Thank you Elyst AI for your guidance to understand the basics of AI. Prompt Creation, web design using AI are so interesting for basic students. They can use this type of tools in many situations.",
+    name: "Parent",
+    program: "AI for Juniors"
+  },
+  {
+    tempId: 9,
+    testimonial: "The session made Claude feel much easier to explore and actually use in day-to-day work. And Nihal Anas, you did an amazing job taking us through each part patiently.",
+    name: "Adeela Thasneem",
+    program: "Elyst AI Circle"
+  },
+  {
+    tempId: 10,
+    testimonial: "Big shoutout to Nihal Anas and Fathima Shirin from Elyst AI. Your passion to deliver value was obvious throughout the journey. Expecting more sessions like this!",
+    name: "Muhammed Rasil N",
+    program: "AI Yathra"
+  },
 ];
 
 interface TestimonialCardProps {
@@ -56,11 +85,11 @@ interface TestimonialCardProps {
   cardSize: number;
 }
 
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ 
-  position, 
-  testimonial, 
-  handleMove, 
-  cardSize 
+const TestimonialCard: React.FC<TestimonialCardProps> = ({
+  position,
+  testimonial,
+  handleMove,
+  cardSize
 }) => {
   const isCenter = position === 0;
 
@@ -78,7 +107,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         height: cardSize,
         clipPath: `polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%, calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0)`,
         transform: `
-          translate(-50%, -50%) 
+          translate(-50%, -50%)
           translateX(${(cardSize / 1.5) * position}px)
           translateY(${isCenter ? -65 : position % 2 ? 15 : -15}px)
           rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)
@@ -96,23 +125,38 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         }}
       />
       <h3 className={cn(
-        "text-base sm:text-xl font-medium",
+        "font-medium",
         isCenter ? "text-primary-foreground" : "text-foreground"
-      )}>
-        "{testimonial.testimonial}"
+      )}
+        style={{ fontSize: "clamp(1.05rem, 1.5vw, 1.25rem)", lineHeight: 1.55 }}
+      >
+        &ldquo;{testimonial.testimonial}&rdquo;
       </h3>
-      <p className={cn(
-        "absolute bottom-8 left-8 right-8 mt-2 text-base font-semibold not-italic",
-        isCenter ? "text-primary-foreground/80" : "text-muted-foreground"
-      )}>
-        - {testimonial.by}
-      </p>
+      {/* Attribution — name on line 1, program on line 2, no dash */}
+      <div className="absolute bottom-8 left-8 right-8">
+        <p className={cn(
+          "font-bold not-italic",
+          isCenter ? "text-primary-foreground" : "text-foreground"
+        )}
+          style={{ fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", lineHeight: 1.3 }}
+        >
+          {testimonial.name}
+        </p>
+        <p className={cn(
+          "mt-0.5 font-normal not-italic",
+          isCenter ? "text-primary-foreground/70" : "text-muted-foreground"
+        )}
+          style={{ fontSize: "clamp(0.82rem, 1vw, 0.92rem)", lineHeight: 1.3 }}
+        >
+          {testimonial.program}
+        </p>
+      </div>
     </div>
   );
 };
 
 export const StaggerTestimonials: React.FC = () => {
-  const [cardSize, setCardSize] = useState(365);
+  const [cardSize, setCardSize] = useState(385);
   const [testimonialsList, setTestimonialsList] = useState(testimonials);
 
   const handleMove = (steps: number) => {
@@ -136,7 +180,7 @@ export const StaggerTestimonials: React.FC = () => {
   useEffect(() => {
     const updateSize = () => {
       const { matches } = window.matchMedia("(min-width: 640px)");
-      setCardSize(matches ? 365 : 290);
+      setCardSize(matches ? 385 : 300);
     };
 
     updateSize();
@@ -147,7 +191,7 @@ export const StaggerTestimonials: React.FC = () => {
   return (
     <div
       className="relative w-full overflow-hidden bg-muted/30"
-      style={{ height: 600 }}
+      style={{ height: 620 }}
     >
       {testimonialsList.map((testimonial, index) => {
         const position = testimonialsList.length % 2

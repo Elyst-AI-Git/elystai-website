@@ -13,21 +13,22 @@ const leftLinks = [
   { label: "AIOS", href: "/aios" },
 ];
 
-const learnItems = [
-  { label: "Accelerator overview", href: "/learn" },
+type LearnItem = { label: string; href?: string; soon?: boolean };
+
+const learnItems: LearnItem[] = [
+  { label: "Overview", href: "/learn" },
   { label: "Circle", href: "/circle" },
-  { label: "AI Junior", href: "/juniors" },
-  { label: "AI Yathra", href: "/ai-yathra" },
-  { label: "Flagship Course", href: "/flagship", soon: true },
+  { label: "AI for juniors", href: "/juniors" },
+  { label: "AI programs", soon: true },
 ];
 
-const joinPrefixes = ["/learn", "/circle", "/juniors", "/ai-yathra", "/flagship"];
+const joinPrefixes = ["/learn", "/circle", "/ai-yathra"];
 
 function ctaForPath(pathname: string) {
   const join = joinPrefixes.some((p) => pathname.startsWith(p));
   return join
     ? { label: "Join", href: "/learn#join" }
-    : { label: "Book a call", href: "/contact" };
+    : { label: "Book a call", href: "https://cal.com/elyst-ai/30min" };
 }
 
 function NavCta({
@@ -53,6 +54,24 @@ function NavCta({
     >
       {label}
     </BrandButton>
+  );
+}
+
+/** Light-grey metal badge, dark-green text, navbar corner radius. */
+function ComingSoon() {
+  return (
+    <span
+      className="shrink-0 rounded-md px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-wide"
+      style={{
+        background: "linear-gradient(180deg, #f8faf9 0%, #dde4e0 55%, #ebefed 100%)",
+        color: "hsl(160, 38%, 9%)",
+        borderTop: "1px solid rgba(255,255,255,0.92)",
+        borderBottom: "1px solid rgba(3,98,76,0.2)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
+      }}
+    >
+      Coming soon
+    </span>
   );
 }
 
@@ -180,24 +199,37 @@ export default function Nav() {
                     transition={{ duration: 0.18 }}
                     onMouseLeave={() => setLearnOpen(false)}
                     role="menu"
-                    className="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-card p-2 shadow-card"
-                    style={{ background: "var(--surface-dark-2)" }}
+                    className="absolute right-0 top-full mt-5 w-56 overflow-hidden rounded-md p-1.5 shadow-card"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, hsl(160 38% 12%) 0%, hsl(160 38% 8%) 55%, hsl(160 38% 11%) 100%)",
+                      borderTop: "1px solid rgba(255,255,255,0.09)",
+                      borderBottom: "1px solid rgba(0,0,0,0.35)",
+                    }}
                   >
-                    {learnItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        role="menuitem"
-                        className="flex items-center justify-between rounded-lg px-3 py-2 text-small text-fg-on-dark/85 transition-colors hover:bg-surface-dark-hover hover:text-fg-on-dark"
-                      >
-                        {item.label}
-                        {item.soon && (
-                          <span className="rounded-pill bg-emerald/30 px-2 py-0.5 text-[0.65rem] font-bold text-green">
-                            Coming soon
-                          </span>
-                        )}
-                      </Link>
-                    ))}
+                    {learnItems.map((item) =>
+                      item.href ? (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          role="menuitem"
+                          className="flex items-center justify-between gap-3 rounded-md px-3 py-2 text-small text-fg-on-dark/85 transition-colors hover:bg-surface-dark-hover hover:text-fg-on-dark"
+                        >
+                          {item.label}
+                          {item.soon && <ComingSoon />}
+                        </Link>
+                      ) : (
+                        <div
+                          key={item.label}
+                          role="menuitem"
+                          aria-disabled="true"
+                          className="flex cursor-default items-center justify-between gap-3 rounded-md px-3 py-2 text-small text-fg-on-dark/45"
+                        >
+                          {item.label}
+                          {item.soon && <ComingSoon />}
+                        </div>
+                      )
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -279,21 +311,28 @@ export default function Nav() {
                     className="overflow-hidden"
                   >
                     <div className="flex flex-col gap-3 py-2 pl-4">
-                      {learnItems.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={closeMobile}
-                          className="flex items-center gap-2 text-body text-fg-on-dark/80"
-                        >
-                          {item.label}
-                          {item.soon && (
-                            <span className="rounded-pill bg-emerald/30 px-2 py-0.5 text-[0.65rem] font-bold text-green">
-                              Coming soon
-                            </span>
-                          )}
-                        </Link>
-                      ))}
+                      {learnItems.map((item) =>
+                        item.href ? (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            onClick={closeMobile}
+                            className="flex items-center gap-2 text-body text-fg-on-dark/80"
+                          >
+                            {item.label}
+                            {item.soon && <ComingSoon />}
+                          </Link>
+                        ) : (
+                          <div
+                            key={item.label}
+                            aria-disabled="true"
+                            className="flex items-center gap-2 text-body text-fg-on-dark/45"
+                          >
+                            {item.label}
+                            {item.soon && <ComingSoon />}
+                          </div>
+                        )
+                      )}
                     </div>
                   </motion.div>
                 )}

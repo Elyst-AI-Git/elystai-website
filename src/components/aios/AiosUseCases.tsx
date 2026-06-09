@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { SectionMark } from "@/components/ui/section-mark";
 import { motion } from "framer-motion";
-import { Bell, FileText } from "lucide-react";
 import { BrandButton } from "@/components/ui/brand-button";
+import { IconBriefing, IconDocument, IconTile } from "@/components/ui/icons";
 
 /**
  * Tabbed industry switcher (Direction A). HARD SEO REQUIREMENT (NOTES.md):
@@ -74,7 +75,7 @@ const industries: Industry[] = [
 ];
 
 function OutcomeChip({ outcome }: { outcome: Industry["outcome"] }) {
-  const Icon = outcome.type === "briefing" ? Bell : FileText;
+  const Icon = outcome.type === "briefing" ? IconBriefing : IconDocument;
   return (
     <div
       className="flex items-center gap-3 px-4 py-3"
@@ -85,17 +86,14 @@ function OutcomeChip({ outcome }: { outcome: Industry["outcome"] }) {
         boxShadow: "var(--shadow-card)",
       }}
     >
-      <span
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-        style={{ background: "var(--green-tint-07)" }}
-      >
-        <Icon className="h-4 w-4 text-emerald" />
-      </span>
+      <IconTile tone="darkgreen" size={36}>
+        <Icon size={18} variant="line" />
+      </IconTile>
       <div>
-        <p className="font-semibold text-fg" style={{ fontSize: "0.84rem" }}>
+        <p className="font-semibold text-fg" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>
           {outcome.label}
         </p>
-        <p className="text-fg-3" style={{ fontSize: "0.72rem" }}>
+        <p className="text-fg-3" style={{ fontSize: "0.88rem" }}>
           {outcome.sub}
         </p>
       </div>
@@ -117,10 +115,10 @@ function IndustryPanel({ industry, active }: { industry: Industry; active: boole
       <div className="grid gap-8 sm:grid-cols-2 sm:items-center sm:gap-12">
         {/* Copy — pain + flow */}
         <div className="flex flex-col gap-4">
-          <p className="font-semibold text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+          <p className="font-semibold text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)", lineHeight: 1.5 }}>
             {industry.pain}
           </p>
-          <p className="text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.6 }}>
+          <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.6 }}>
             {industry.flow}
           </p>
         </div>
@@ -133,24 +131,28 @@ function IndustryPanel({ industry, active }: { industry: Industry; active: boole
             borderRadius: "var(--radius-card)",
           }}
         >
-          <div
-            className="self-start max-w-[88%] px-3.5 py-2.5 shadow-sm"
-            style={{
-              background: "#ffffff",
-              borderRadius: "12px 12px 12px 4px",
-              fontSize: "0.8rem",
-              border: "1px solid var(--border)",
-              color: "var(--fg-2)",
-            }}
-          >
-            {industry.flow.split("—")[0].trim()}
+          {/* User message — right */}
+          <div className="flex justify-end">
+            <div
+              className="max-w-[88%] px-3.5 py-2.5 shadow-sm"
+              style={{
+                background: "#DCF8C6",
+                borderRadius: "12px 12px 4px 12px",
+                fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
+                border: "1px solid rgba(0,0,0,0.06)",
+                color: "#111",
+              }}
+            >
+              {industry.flow.split("—")[0].trim()}
+            </div>
           </div>
+          {/* AIOS reply — left */}
           <OutcomeChip outcome={industry.outcome} />
         </div>
       </div>
 
-      <div className="mt-10">
-        <BrandButton href="/contact" variant="outline" tone="emerald">
+      <div className="mt-10 flex justify-center sm:justify-start">
+        <BrandButton href="https://cal.com/elyst-ai/30min" variant="outline" tone="emerald">
           {industry.ctaLabel}
         </BrandButton>
       </div>
@@ -165,9 +167,9 @@ export default function AiosUseCases() {
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="chip">Built for your industry</span>
+          <SectionMark>Built for your industry</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Configured for how your industry runs.
+            Set up for how your business actually runs.
           </h2>
         </div>
 
@@ -188,7 +190,7 @@ export default function AiosUseCases() {
                 onClick={() => setActive(i)}
                 className="relative px-4 py-2 font-medium transition-colors"
                 style={{
-                  fontSize: "var(--text-small)",
+                  fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
                   color: isActive ? "var(--elyst-emerald)" : "var(--fg-3)",
                 }}
               >
@@ -214,9 +216,9 @@ export default function AiosUseCases() {
               aria-selected={i === active}
               aria-controls={`use-case-${ind.id}`}
               onClick={() => setActive(i)}
-              className="flex items-center justify-between px-4 py-3 text-left font-medium"
+              className="flex items-center justify-center px-4 py-3 text-center font-medium"
               style={{
-                fontSize: "var(--text-small)",
+                fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
                 borderRadius: "var(--radius-card)",
                 background: i === active ? "var(--green-tint-07)" : "var(--surface-muted)",
                 color: i === active ? "var(--elyst-emerald)" : "var(--fg-2)",

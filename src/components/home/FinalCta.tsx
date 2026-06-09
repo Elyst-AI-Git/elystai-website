@@ -17,15 +17,15 @@ const panels: Panel[] = [
   {
     headline: "Book a call",
     description:
-      "Deploy AI into your operations — configured for your team, runs in WhatsApp.",
-    href: "/contact",
+      "Get an AI employee that runs inside your business.",
+    href: "https://cal.com/elyst-ai/30min",
     fill: "var(--elyst-emerald)",
     textOnFill: "var(--fg-on-dark)",
   },
   {
     headline: "Explore programs",
     description:
-      "Join a live program that makes you genuinely capable with AI.",
+      "Join a program that makes you AI native.",
     href: "/learn",
     fill: "var(--elyst-green)",
     textOnFill: "var(--elyst-ink)",
@@ -57,7 +57,7 @@ function CtaPanel({
     >
       <Link
         href={panel.href}
-        className="flex min-h-[60vh] flex-col justify-between p-10 max-md:min-h-[40vh] md:p-16"
+        className="flex min-h-[30vh] flex-col justify-between p-8 max-md:min-h-[22vh] md:p-12"
       >
         <div className="flex items-start justify-between gap-6">
           <h3
@@ -77,8 +77,8 @@ function CtaPanel({
           </span>
         </div>
         <p
-          className="max-w-xs text-body"
-          style={{ color: text }}
+          className="whitespace-nowrap"
+          style={{ color: text, fontSize: "clamp(1.15rem, 1.6vw, 1.35rem)" }}
         >
           {panel.description}
         </p>
@@ -94,7 +94,7 @@ export default function FinalCta() {
     <section className="bg-bg">
       <div className="mx-auto max-w-6xl px-[var(--section-px)] pt-[var(--section-py)] text-center">
         <h2 className="text-fg" style={{ fontSize: "var(--text-h2)" }}>
-          Where do you want to start?
+          Two doors. Pick yours.
         </h2>
       </div>
 

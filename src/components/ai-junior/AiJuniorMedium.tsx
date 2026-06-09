@@ -22,7 +22,7 @@ const tiles = [
     tagBg: "var(--elyst-green)",
     tagFg: "var(--elyst-emerald)",
     title: "AI Prompting",
-    desc: "Learn how to talk to AI effectively — craft prompts that get real, useful results every time.",
+    desc: "Learn how to talk to AI effectively, craft prompts that get real, useful results every time.",
   },
   {
     span: "sm",

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
+import { IconTile } from "@/components/ui/icons";
 
 const stats = [
   { value: "5 Days", label: "Live Challenge", rotate: -3, tone: "card" },
@@ -85,12 +86,12 @@ export default function AiJuniorAbout() {
               design, and build the skills that actually matter.
             </p>
             <div className="mt-6 flex items-center gap-4 rounded-xl bg-white p-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green">
-                <GraduationCap className="h-5 w-5" style={{ color: "var(--elyst-emerald)" }} />
-              </span>
+              <IconTile tone="darkgreen" size={48}>
+                <GraduationCap className="h-5 w-5" />
+              </IconTile>
               <div>
                 <p className="font-display font-bold text-fg" style={{ fontSize: "var(--text-small)" }}>
-                  No technical knowledge needed — we start from scratch
+                  No technical knowledge needed, we start from scratch
                 </p>
                 <p className="text-fg-3" style={{ fontSize: "0.82rem" }}>Grades 5–10</p>
               </div>

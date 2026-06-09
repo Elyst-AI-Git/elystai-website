@@ -11,7 +11,7 @@ const steps = [
   {
     num: "02",
     title: "Review",
-    desc: "We go through every application personally. Within 24 hours you will hear back — not an automated email, a real response.",
+    desc: "We go through every application personally. Within 24 hours you will hear back, not an automated email, a real response.",
   },
   {
     num: "03",

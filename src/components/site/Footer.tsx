@@ -138,9 +138,18 @@ export default function Footer() {
                         key={label}
                         href={href}
                         aria-label={label}
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/10 text-fg-on-dark transition-colors hover:bg-green hover:text-surface-dark"
+                        className="group inline-flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200 hover:scale-105 hover:brightness-105"
+                        style={{
+                          background: "linear-gradient(180deg, #f8faf9 0%, #dde4e0 55%, #ebefed 100%)",
+                          borderTop: "1px solid rgba(255,255,255,0.95)",
+                          borderBottom: "1px solid rgba(3,98,76,0.18)",
+                          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 2px 6px rgba(3,98,76,0.10)",
+                        }}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon
+                          className="h-4 w-4"
+                          style={{ color: "#0A0F0C" }}
+                        />
                       </a>
                     ))}
                   </div>

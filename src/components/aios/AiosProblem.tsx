@@ -1,43 +1,66 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { SectionMark } from "@/components/ui/section-mark";
 
 /**
- * The page's ONE deliberate dark contrast section (committed — see
- * references/aios-problem/NOTES.md). Three "chaos artifacts," one per pain,
- * rendered as quiet, muted panels on --surface-dark. No emerald here — the
- * darkness itself carries the section; the snap back to light afterwards is
- * the point. Kept deliberately spare: few elements, lots of negative space,
- * one consistent panel treatment so it reads as restraint, not collage.
+ * The page's ONE deliberate dark contrast section. Three "chaos artifacts,"
+ * one per pain, on --surface-dark. Chat-style bubbles for Pain 1, stacked
+ * doc thumbnails for Pain 2, empty checklist for Pain 3.
  */
 
 const muted = "var(--fg-muted-dark)";
 const panelBg = "var(--surface-dark-2)";
 const lineBg = "rgba(240, 250, 248, 0.1)";
 
-/** Pain 1 — knowledge trapped in a few heads: forwarded-question fragments. */
+/** Pain 1 — knowledge trapped in a few heads: left/right chat bubbles. */
 function KnowledgeArtifact() {
-  const fragments = [
-    { text: "Who has the vendor list?", dim: false },
-    { text: "Ask Rahul", dim: true },
-    { text: "He's on leave today", dim: true },
+  const messages = [
+    { text: "Who has the vendor list?", side: "right" as const },
+    { text: "Ask Rahul", side: "left" as const },
+    { text: "He's on leave today", side: "right" as const },
   ];
   return (
-    <div className="flex flex-col gap-2.5">
-      {fragments.map((f, i) => (
+    <div
+      className="flex flex-col justify-center gap-2.5 rounded-[10px] px-3.5 py-4"
+      style={{
+        height: "148px",
+        background: panelBg,
+        border: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      {messages.map((m) => (
         <div
-          key={f.text}
-          className="self-start rounded-[10px] px-3.5 py-2"
-          style={{
-            marginLeft: `${i * 18}px`,
-            background: panelBg,
-            color: f.dim ? muted : "var(--fg-on-dark)",
-            opacity: f.dim ? 0.6 : 0.92,
-            fontSize: "0.8rem",
-            border: "1px solid rgba(255,255,255,0.05)",
-          }}
+          key={m.text}
+          className={`flex ${m.side === "right" ? "justify-end" : "justify-start"}`}
         >
-          {f.text}
+          <div
+            className="rounded-[9px] px-3 py-1.5"
+            style={{
+              background:
+                m.text === "Ask Rahul"
+                  ? "rgba(3,98,76,0.18)"
+                  : m.side === "right"
+                  ? "rgba(0,223,130,0.15)"
+                  : "rgba(255,255,255,0.09)",
+              color:
+                m.text === "Ask Rahul"
+                  ? "rgba(200,255,235,0.65)"
+                  : m.side === "right"
+                  ? "rgba(200,255,235,0.85)"
+                  : "rgba(240,250,248,0.55)",
+              fontSize: "0.88rem",
+              maxWidth: "80%",
+              border:
+                m.text === "Ask Rahul"
+                  ? "1px solid rgba(0,223,130,0.10)"
+                  : m.side === "right"
+                  ? "1px solid rgba(0,223,130,0.12)"
+                  : "1px solid rgba(255,255,255,0.07)",
+            }}
+          >
+            {m.text}
+          </div>
         </div>
       ))}
     </div>
@@ -52,7 +75,7 @@ function DocumentsArtifact() {
     { rotate: -1, dashed: true },
   ];
   return (
-    <div className="relative flex h-[132px] items-center justify-center">
+    <div className="relative flex items-center justify-center" style={{ height: "148px" }}>
       {docs.map((d, i) => (
         <div
           key={i}
@@ -66,18 +89,9 @@ function DocumentsArtifact() {
             zIndex: i,
           }}
         >
-          <span
-            className="block h-1.5 w-[60%] rounded-full"
-            style={{ background: lineBg }}
-          />
-          <span
-            className="mt-2 block h-1 w-full rounded-full"
-            style={{ background: lineBg }}
-          />
-          <span
-            className="mt-1.5 block h-1 w-[80%] rounded-full"
-            style={{ background: lineBg }}
-          />
+          <span className="block h-1.5 w-[60%] rounded-full" style={{ background: lineBg }} />
+          <span className="mt-2 block h-1 w-full rounded-full" style={{ background: lineBg }} />
+          <span className="mt-1.5 block h-1 w-[80%] rounded-full" style={{ background: lineBg }} />
           <span
             className="mt-1.5 block h-1 w-[65%] rounded-full"
             style={{ background: lineBg, opacity: d.dashed ? 0.3 : 1 }}
@@ -92,8 +106,12 @@ function DocumentsArtifact() {
 function MorningArtifact() {
   return (
     <div
-      className="flex h-[132px] flex-col justify-center gap-3 rounded-[10px] px-5"
-      style={{ background: panelBg, border: "1px solid rgba(255,255,255,0.05)" }}
+      className="flex flex-col justify-center gap-3 rounded-[10px] px-5"
+      style={{
+        height: "148px",
+        background: panelBg,
+        border: "1px solid rgba(255,255,255,0.05)",
+      }}
     >
       {[0.92, 0.7, 0.8].map((w, i) => (
         <div key={i} className="flex items-center gap-2.5">
@@ -114,19 +132,19 @@ function MorningArtifact() {
 const pains = [
   {
     Artifact: KnowledgeArtifact,
-    line: "Everything waits on the one or two people who know how it works.",
+    line: "Everyone waits for their team leads.",
   },
   {
     Artifact: DocumentsArtifact,
-    line: "Offer letters, invoices, certificates — built by hand, slowly.",
+    line: "Documents still get typed out by hand.",
   },
   {
     Artifact: MorningArtifact,
-    line: "Each day starts without a plan, until someone gets chased.",
+    line: "Mornings start with “What am I doing today?”",
   },
 ];
 
-const offsets = ["sm:translate-y-0", "sm:translate-y-6", "sm:-translate-y-2"];
+const offsets = ["", "", ""];
 
 export default function AiosProblem() {
   return (
@@ -135,17 +153,20 @@ export default function AiosProblem() {
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
       <div className="mx-auto max-w-5xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow text-fg-muted-dark">Sound familiar?</span>
+        <div className="mx-auto max-w-3xl text-center">
+          <SectionMark tone="dark">The problem</SectionMark>
           <h2
-            className="mt-4 text-fg-on-dark"
+            className="mt-6 text-fg-on-dark"
             style={{ fontSize: "var(--text-h2)" }}
           >
-            Your team isn&rsquo;t slow. Everything just waits on a few people.
+            <span className="block">Your team has top talent.</span>
+            <span className="block md:whitespace-nowrap">
+              Then why does work still take time?
+            </span>
           </h2>
         </div>
 
-        <div className="mt-16 grid gap-12 sm:grid-cols-3 sm:gap-8">
+        <div className="mt-16 grid gap-10 sm:grid-cols-3 sm:gap-8">
           {pains.map(({ Artifact, line }, i) => (
             <motion.div
               key={line}
@@ -158,7 +179,12 @@ export default function AiosProblem() {
               <Artifact />
               <p
                 className="max-w-[26ch]"
-                style={{ color: muted, fontSize: "var(--text-small)", lineHeight: 1.5 }}
+                style={{
+                  color: muted,
+                  fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)",
+                  fontWeight: 500,
+                  lineHeight: 1.5,
+                }}
               >
                 {line}
               </p>

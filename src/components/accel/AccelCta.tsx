@@ -67,27 +67,19 @@ export default function AccelCta() {
           <h2
             style={{ fontSize: "var(--text-h2)", color: "var(--fg)", lineHeight: 1.15 }}
           >
-            Stay ahead of AI. Start with us.
+            Join the Circle today.
+            <br />
+            <span className="md:whitespace-nowrap">It&rsquo;s where the learning lives now.</span>
           </h2>
-          <p
-            style={{
-              fontSize: "var(--text-body)",
-              color: "var(--fg-2)",
-              maxWidth: "32ch",
-            }}
-          >
-            Join the community today — it&rsquo;s where the learning lives now,
-            and where members hear first when the Flagship opens.
-          </p>
 
-          <div className="pointer-events-auto mt-2">
+          <div className="pointer-events-auto mt-6">
             <BrandButton href="/circle" tone="green">
               Join the community
             </BrandButton>
           </div>
 
-          <p className="mt-1 text-small text-fg-3">
-            Flagship program launching late June 2026.
+          <p className="mt-3 text-small text-fg-3">
+            AI Program launching soon.
           </p>
         </motion.div>
       </div>

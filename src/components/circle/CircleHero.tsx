@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 
 /**
- * Dark cold-open, mirroring the reference site's "Section 1: Hero (black)" —
+ * Dark cold-open, mirroring the reference site's "Section 1: Hero (black)",
  * but resolved through this repo's tokens: `--surface-dark` (not a raw
  * `#060d09`) for the panel, `--elyst-green-mid` (`#2ec866`, an exact brand
  * match) for the accent line and dot-grid glow.
@@ -75,20 +75,13 @@ export default function CircleHero() {
           </h1>
           <div className="mt-8 flex flex-col items-center gap-3">
             <BrandButton href="https://nas.io/elystaicircle" tone="green" className="rounded-full!">
-              Join them →
+              Join them
             </BrandButton>
-            <a
-              href="#what-you-join"
-              className="text-fg-muted-dark/70 transition-colors hover:text-fg-muted-dark"
-              style={{ fontSize: "0.85rem", letterSpacing: "0.02em" }}
-            >
-              See what&rsquo;s inside ↓
-            </a>
           </div>
         </motion.div>
       </section>
 
-      {/* Intro split — the turn from dark cold-open into the page proper */}
+      {/* Intro split, the turn from dark cold-open into the page proper */}
       <section
         id="what-you-join"
         className="bg-bg"
@@ -103,7 +96,7 @@ export default function CircleHero() {
           >
             <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.85 }}>
               At some point, you noticed people around you getting more out of
-              AI than you. Not because they&rsquo;re smarter — but because
+              AI than you. Not because they&rsquo;re smarter, but because
               they&rsquo;re closer to how it&rsquo;s actually being used. In
               the right rooms, with the right people, applying things you
               haven&rsquo;t seen yet.
@@ -115,7 +108,7 @@ export default function CircleHero() {
               It closes by being in the right circle.
             </p>
             <p className="mt-5 font-semibold text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.8 }}>
-              This is that circle — Elyst AI Circle.
+              This is that circle, Elyst AI Circle.
             </p>
           </motion.div>
 

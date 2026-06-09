@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 
 /**
- * Closing dark band — mirrors the reference's near-black panel with a
+ * Closing dark band, mirrors the reference's near-black panel with a
  * dot-grid + radial glow, resolved through `--surface-dark` and the brand
  * `--elyst-green-mid` accent rather than raw hex.
  */
@@ -43,9 +43,6 @@ export default function CircleCta() {
             is whether you are <span className="text-green-mid">in it</span> or
             watching from outside.
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-fg-muted-dark" style={{ fontSize: "var(--text-body)" }}>
-            Early Bird spots are limited. Once they are gone, they are gone.
-          </p>
           <div className="mt-9 flex justify-center">
             <BrandButton href="https://nas.io/elystaicircle" tone="green" className="rounded-full!">
               Apply Now →

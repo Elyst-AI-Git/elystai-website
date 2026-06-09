@@ -1,22 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { SectionMark } from "@/components/ui/section-mark";
 import { Check } from "lucide-react";
 import { BrandButton } from "@/components/ui/brand-button";
 
+// Removed "Deals in AI" and "Member-Only Events" per user request
 const standardFeatures = [
   "Weekly AI Signal",
   "Monthly Catchup Call",
   "The Content Library",
   "The Network",
-  "Deals in AI",
-  "Member-Only Events",
 ];
 
+// Removed "A personalised gift from us" per user request
 const earlyBirdExtras = [
   "Priority access and offers",
   "Your rate stays locked forever",
-  "A personalised gift from us",
 ];
 
 function PriceCard({
@@ -44,30 +44,29 @@ function PriceCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.55, delay: index * 0.1, ease: "easeOut" }}
-      className="relative flex h-full flex-col overflow-hidden p-9"
+      className="relative flex h-full flex-col overflow-hidden p-7"
       style={{
         background: highlighted ? "var(--surface-dark-2)" : "#ffffff",
         border: `1.5px solid ${highlighted ? "var(--surface-dark-hover)" : "var(--border)"}`,
         borderRadius: "var(--radius-card)",
         boxShadow: "var(--shadow-card)",
-        opacity: highlighted ? 0.82 : 1,
+        opacity: highlighted ? 0.85 : 1,
       }}
     >
+      {/* Sold-out ribbon, horizontal, right-side, white bg, dark-green text */}
       {ribbon && (
         <div
-          className="absolute font-bold uppercase"
+          className="absolute top-5 right-0 flex items-center font-bold uppercase"
           style={{
-            top: 28,
-            right: -36,
-            width: 160,
-            textAlign: "center",
-            transform: "rotate(45deg)",
-            background: "var(--fg-3)",
-            color: "var(--fg-on-dark)",
-            fontSize: "0.62rem",
+            background: "#ffffff",
+            color: "var(--elyst-emerald)",
+            fontSize: "0.72rem",
             letterSpacing: "0.1em",
-            padding: "6px 0",
+            padding: "6px 14px 6px 10px",
+            borderRadius: "4px 0 0 4px",
+            boxShadow: "-2px 2px 6px rgba(0,0,0,0.18)",
             zIndex: 1,
+            borderLeft: "2px solid var(--elyst-emerald)",
           }}
         >
           {ribbon}
@@ -94,11 +93,11 @@ function PriceCard({
       >
         {price}
       </span>
-      <div className="mt-2 mb-6" style={{ fontSize: "var(--text-small)", color: highlighted ? "var(--fg-muted-dark)" : "var(--fg-3)" }}>
+      <div className="mt-2 mb-5" style={{ fontSize: "var(--text-small)", color: highlighted ? "var(--fg-muted-dark)" : "var(--fg-3)" }}>
         {sub}
       </div>
 
-      <div className="mb-5 h-px" style={{ background: highlighted ? "rgba(255,255,255,0.08)" : "var(--border)" }} />
+      <div className="mb-4 h-px" style={{ background: highlighted ? "rgba(255,255,255,0.08)" : "var(--border)" }} />
 
       <ul className="flex flex-col gap-3">
         {standardFeatures.map((f) => (
@@ -115,9 +114,9 @@ function PriceCard({
       </ul>
 
       {highlighted && (
-        <div className="mt-5">
-          <div className="mb-3.5 h-px" style={{ background: "rgba(255,255,255,0.08)" }} />
-          <p className="mb-2.5 font-bold uppercase" style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "var(--fg-3)" }}>
+        <div className="mt-4">
+          <div className="mb-3 h-px" style={{ background: "rgba(255,255,255,0.08)" }} />
+          <p className="mb-2 font-bold uppercase" style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "var(--fg-3)" }}>
             Plus, exclusively:
           </p>
           <ul className="flex flex-col gap-2.5">
@@ -131,16 +130,16 @@ function PriceCard({
         </div>
       )}
 
-      <div className="mt-auto pt-7">
+      <div className="mt-auto pt-6">
         {highlighted ? (
           <span
-            className="block cursor-not-allowed rounded-full py-3.5 text-center font-bold"
+            className="block cursor-not-allowed rounded-md py-3.5 text-center font-bold"
             style={{ background: "var(--surface-dark-hover)", color: "var(--fg-muted-dark)", fontSize: "0.95rem" }}
           >
             {cta}
           </span>
         ) : (
-          <BrandButton href={href} tone="emerald" full className="rounded-full!">
+          <BrandButton href={href} tone="emerald" full>
             {cta}
           </BrandButton>
         )}
@@ -151,7 +150,7 @@ function PriceCard({
 
 export default function CirclePricing() {
   return (
-    <section id="pricing" className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section id="pricing" className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -159,7 +158,7 @@ export default function CirclePricing() {
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <span className="chip">Pricing</span>
+          <SectionMark>Pricing</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.15 }}>
             Simple, transparent pricing.
           </h2>
@@ -179,26 +178,14 @@ export default function CirclePricing() {
           />
           <PriceCard
             name="Early Bird"
-            ribbon="Sold out"
+            ribbon="Sold Out"
             price="₹199"
-            sub={
-              <>
-                <span className="block font-bold" style={{ color: "var(--fg-muted-dark)" }}>
-                  gives you access until July 15
-                </span>
-                <span className="block">then ₹199/month · your rate stays locked</span>
-              </>
-            }
+            sub="one-time payment"
             cta="Early Bird Closed"
             highlighted
             index={1}
           />
         </div>
-
-        <p className="mt-5 text-fg-3" style={{ fontSize: "var(--text-small)" }}>
-          Early Bird spots are limited. Once they are gone, the standard rate
-          is all that remains.
-        </p>
       </div>
     </section>
   );

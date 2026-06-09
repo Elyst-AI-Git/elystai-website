@@ -1,18 +1,19 @@
 "use client";
 
+import * as React from "react";
+import { SectionMark } from "@/components/ui/section-mark";
 import { motion } from "framer-motion";
-import { Cog, MessagesSquare, Rocket, Search } from "lucide-react";
-
-/**
- * Direction B — vertical timeline (objection-killer: "is this another tool
- * I have to set up and maintain?"). Reframe up top, then four roomy nodes —
- * Discovery → Configuration → Deployment → Training — with an emerald
- * connector that fills in one scroll-reveal pass. No standalone CTA: this
- * flows straight into Pricing, which carries the booking action.
- */
+import {
+  IconDiscovery,
+  IconConfigure,
+  IconDeploy,
+  IconSupport,
+  IconTile,
+  type IconProps,
+} from "@/components/ui/icons";
 
 type Node = {
-  Icon: typeof Search;
+  Icon: (props: IconProps) => React.ReactElement;
   label: string;
   line: string;
   detail?: string;
@@ -20,26 +21,24 @@ type Node = {
 
 const nodes: Node[] = [
   {
-    Icon: Search,
+    Icon: IconDiscovery,
     label: "Discovery",
-    line: "We learn your workflows, documents, and the tools your team already runs.",
+    line: "We learn your workflows and where the time goes.",
   },
   {
-    Icon: Cog,
+    Icon: IconConfigure,
     label: "Configuration",
-    line: "We build AIOS around how your business actually works — not the other way round.",
-    detail: "Including the Google Workspace / Drive connection, set up for you.",
+    line: "We build AIOS around how you actually work.",
   },
   {
-    Icon: Rocket,
+    Icon: IconDeploy,
     label: "Deployment",
-    line: "It goes live inside the WhatsApp or Telegram your team already has open.",
+    line: "It goes live inside your team's WhatsApp or Telegram.",
   },
   {
-    Icon: MessagesSquare,
-    label: "Training",
-    line: "Your team learns to use it — in plain conversation, in under an hour.",
-    detail: "Optional add-on: AI-tools training for your team (NotebookLM, Claude Projects).",
+    Icon: IconSupport,
+    label: "Support",
+    line: "We stay on, tuning it as you grow.",
   },
 ];
 
@@ -51,27 +50,23 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
-      className="relative flex gap-5 pb-16 last:pb-0"
+      className="relative flex items-center gap-5 pb-16 last:pb-0"
     >
-      <span
-        className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-        style={{
-          background: "var(--bg)",
-          border: "2px solid var(--elyst-emerald)",
-          color: "var(--elyst-emerald)",
-        }}
-      >
-        <Icon className="h-[18px] w-[18px]" />
-      </span>
-      <div className="flex flex-col gap-1.5 pt-1.5">
-        <span className="eyebrow text-emerald" style={{ fontSize: "0.7rem" }}>
+      <IconTile tone="darkgreen" size={40} className="relative z-10 shrink-0">
+        <Icon size={20} variant="line" />
+      </IconTile>
+      <div className="flex flex-col gap-1.5">
+        <span className="eyebrow text-emerald" style={{ fontSize: "0.88rem" }}>
           {String(index + 1).padStart(2, "0")} · {label}
         </span>
-        <p className="text-fg" style={{ fontSize: "1.34rem", fontWeight: 600, lineHeight: 1.45 }}>
+        <p
+          className="text-fg md:whitespace-nowrap"
+          style={{ fontSize: "clamp(1.4rem, 2.2vw, 1.75rem)", fontWeight: 600, lineHeight: 1.45 }}
+        >
           {line}
         </p>
         {detail && (
-          <p className="text-fg-3" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
+          <p className="text-fg-3" style={{ fontSize: "clamp(1rem, 1.2vw, 1.1rem)", lineHeight: 1.5 }}>
             {detail}
           </p>
         )}
@@ -87,16 +82,13 @@ export default function AiosModel() {
         <div className="grid gap-12 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:gap-16">
           {/* Left — reframe + reassurance */}
           <div className="sm:sticky sm:top-32 sm:self-start">
-            <span className="chip">The model</span>
+            <SectionMark>The model</SectionMark>
             <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.15 }}>
               You don&rsquo;t set it up. We do.
             </h2>
-            <p className="mt-5 max-w-sm text-fg" style={{ fontSize: "var(--text-body)", fontWeight: 500, lineHeight: 1.6 }}>
-              Not software you install. A service we run for you — Elyst configures,
-              deploys, and supports AIOS directly.
-            </p>
-            <p className="mt-3 max-w-sm text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.6 }}>
-              Your team only needs WhatsApp.
+            <p className="mt-5 max-w-sm text-fg" style={{ fontSize: "clamp(1.25rem, 1.65vw, 1.45rem)", fontWeight: 500, lineHeight: 1.6 }}>
+              AIOS isn&rsquo;t software you install and figure out. We learn how your
+              business works and build AIOS around it.
             </p>
           </div>
 

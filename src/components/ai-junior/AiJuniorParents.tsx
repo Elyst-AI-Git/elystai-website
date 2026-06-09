@@ -21,7 +21,7 @@ const testimonials = [
   {
     name: "Anusha",
     role: "AI for Juniors Parent",
-    text: "Thank you Elyst AI for your guidance to understand the basics of AI. I think my son got an idea about the language of the future. Prompt creation, web design using AI — so interesting for basic students. They can use these tools in many situations.",
+    text: "Thank you Elyst AI for your guidance to understand the basics of AI. I think my son got an idea about the language of the future. Prompt creation, web design using AI, so interesting for basic students. They can use these tools in many situations.",
     initials: "A",
     color: "var(--elyst-green-mid)",
   },
