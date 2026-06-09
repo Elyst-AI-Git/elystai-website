@@ -1,4 +1,6 @@
 import { pageMeta } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
+import { courseSchema } from "@/lib/schema";
 import AiJuniorHero from "@/components/ai-junior/AiJuniorHero";
 import AiJuniorAbout from "@/components/ai-junior/AiJuniorAbout";
 import AiJuniorMedium from "@/components/ai-junior/AiJuniorMedium";
@@ -19,6 +21,14 @@ export const metadata = pageMeta({
 export default function AiJuniorPage() {
   return (
     <main id="main" className="flex-1 pt-24">
+      <JsonLd
+        data={courseSchema({
+          path: "/juniors",
+          name: "AI for Juniors",
+          description:
+            "A 5-day live AI program for students in Grades 5–10. Learn to prompt, design, and build real things with AI — no technical background required.",
+        })}
+      />
       <AiJuniorHero />
       <AiJuniorAbout />
       <AiJuniorMedium />

@@ -3,6 +3,8 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
+import JsonLd from "@/components/seo/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -63,6 +65,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable} h-full`}>
+      <head>
+        <JsonLd data={[organizationSchema, websiteSchema]} />
+      </head>
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <a
           href="#main"
