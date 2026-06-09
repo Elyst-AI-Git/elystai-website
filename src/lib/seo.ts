@@ -5,9 +5,9 @@ export const OG_IMAGE = "/og-image.png";
 
 /**
  * Builds per-page metadata with a self-canonical, page-specific Open Graph +
- * Twitter cards, and the shared og-image. `title` is the bare page title — the
- * root layout's title template appends "· Elyst AI", so do NOT include the
- * brand here (avoids the "… · Elyst AI · Elyst AI" double-branding).
+ * Twitter cards, and the shared og-image. `title` is the bare page title; the
+ * root layout's title template appends " | Elyst AI", so do NOT include the
+ * brand here (avoids "… | Elyst AI | Elyst AI" double-branding).
  */
 export function pageMeta({
   path,
@@ -18,7 +18,7 @@ export function pageMeta({
   title: string;
   description: string;
 }): Metadata {
-  const ogTitle = `${title} · Elyst AI`;
+  const ogTitle = `${title} | Elyst AI`;
   return {
     title,
     description,

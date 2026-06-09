@@ -15,7 +15,7 @@ export const metadata = pageMeta({
   path: "/juniors",
   title: "AI for Juniors",
   description:
-    "A 5-day live AI program for students in Grades 5–10. Your child will learn to prompt, design, and build real things with AI — no technical background required.",
+    "A 5-day live AI program for students in Grades 5 to 10. Your child learns to prompt, design, and build real things with AI, with no technical background needed.",
 });
 
 export default function AiJuniorPage() {
@@ -26,7 +26,7 @@ export default function AiJuniorPage() {
           path: "/juniors",
           name: "AI for Juniors",
           description:
-            "A 5-day live AI program for students in Grades 5–10. Learn to prompt, design, and build real things with AI — no technical background required.",
+            "A 5-day live AI program for students in Grades 5 to 10. They learn to prompt, design, and build real things with AI, with no technical background needed.",
         })}
       />
       <AiJuniorHero />

@@ -3,20 +3,22 @@ import { SITE_URL } from "@/lib/seo";
 const ORG_ID = `${SITE_URL}/#organization`;
 
 /**
- * Sitewide Organization entity. Establishes "Elyst AI" as a brand entity for
- * search + answer engines. Address is locality-level (Kozhikode, Kerala) —
- * street address, opening hours, and foundingDate can be added once supplied.
+ * Sitewide Organization + LocalBusiness entity. Establishes "Elyst AI" as a
+ * brand entity for search and answer engines. Address is locality-level
+ * (Kozhikode, Kerala); add a street address + geo coordinates later to enrich
+ * the local listing.
  */
 export const organizationSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "LocalBusiness"],
   "@id": ORG_ID,
   name: "Elyst AI",
   url: SITE_URL,
   logo: `${SITE_URL}/web-app-manifest-512x512.png`,
   image: `${SITE_URL}/og-image.png`,
   description:
-    "Elyst AI deploys AI into how businesses run (AIOS) and teaches people to use it (the Accelerator). Kozhikode, Kerala — for India and the GCC.",
+    "Elyst AI builds AI into how businesses run with AIOS, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.",
+  foundingDate: "2026",
   email: "info@elystai.com",
   telephone: "+91-9633288931",
   address: {
@@ -24,6 +26,12 @@ export const organizationSchema: Record<string, unknown> = {
     addressLocality: "Kozhikode",
     addressRegion: "Kerala",
     addressCountry: "IN",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens: "09:00",
+    closes: "18:00",
   },
   areaServed: [
     { "@type": "Country", name: "India" },

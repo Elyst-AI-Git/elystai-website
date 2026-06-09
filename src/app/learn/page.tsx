@@ -9,9 +9,9 @@ import AccelCta from "@/components/accel/AccelCta";
 
 export const metadata = pageMeta({
   path: "/learn",
-  title: "The Accelerator — Learn AI",
+  title: "Learn AI with the Accelerator",
   description:
-    "Stay genuinely capable with AI. Live, bilingual AI learning for working professionals across India and the GCC — taught by people who build production AI, and backed by a community that keeps you sharp.",
+    "Live, bilingual AI training for working professionals across India and the GCC. Taught by people who build AI for real businesses, and backed by a community that keeps you sharp.",
 });
 
 export default function LearnPage() {
@@ -22,7 +22,7 @@ export default function LearnPage() {
           path: "/learn",
           name: "The Elyst AI Accelerator",
           description:
-            "Live, bilingual AI learning for working professionals across India and the GCC — taught by people who build production AI.",
+            "Live, bilingual AI training for working professionals across India and the GCC, taught by people who build AI for real businesses.",
         })}
       />
       <AccelHero />

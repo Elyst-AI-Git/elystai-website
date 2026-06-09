@@ -13,7 +13,7 @@ export const metadata = pageMeta({
   path: "/aios",
   title: "AIOS for Business",
   description:
-    "AIOS is the operations layer for small teams with no technical staff. Message it like a colleague, in the WhatsApp your team already uses — it answers, drafts, and acts.",
+    "AIOS works for small teams with no technical staff. Message it like a colleague in the WhatsApp your team already uses, and it answers questions, drafts documents, and gets the work done.",
 });
 
 export default function AiosPage() {

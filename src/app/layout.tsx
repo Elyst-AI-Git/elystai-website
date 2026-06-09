@@ -14,15 +14,15 @@ const dmSans = DM_Sans({
 });
 
 const SITE_URL = "https://elystai.com";
-const SITE_TITLE = "Elyst AI — AI systems for business, programs for people";
+const SITE_TITLE = "Elyst AI: AI systems for business and programs for people";
 const SITE_DESCRIPTION =
-  "Elyst AI deploys AI into how businesses run (AIOS) and teaches people to use it (the Accelerator). Kozhikode, Kerala — for India and the GCC.";
+  "Elyst AI builds AI into how businesses run with AIOS, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
-    template: "%s · Elyst AI",
+    template: "%s | Elyst AI",
   },
   description: SITE_DESCRIPTION,
   openGraph: {
