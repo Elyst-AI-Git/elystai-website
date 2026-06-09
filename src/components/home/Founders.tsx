@@ -71,7 +71,7 @@ type Founder = {
 const founders: Founder[] = [
   {
     name: "Fathima Shirin P",
-    photo: "/images/founders/shirin.svg",
+    photo: "/images/founders/shirin.webp",
     role: "Co-founder",
     title: "CEO",
     linkedin: "https://www.linkedin.com/in/fathimashirin-p/",
@@ -82,7 +82,7 @@ const founders: Founder[] = [
   },
   {
     name: "Nihal Anas",
-    photo: "/images/founders/nihal.svg",
+    photo: "/images/founders/nihal.webp",
     role: "Co-founder",
     title: "Chief AI Officer",
     linkedin: "https://www.linkedin.com/in/nihalanas/",
