@@ -119,19 +119,22 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
       ref={svgRef}
       className={cn("w-full h-full absolute inset-0", className)}
     >
-      {star && (
-        <rect
-          key={star.id}
-          x={star.x}
-          y={star.y}
-          width={starWidth * star.scale}
-          height={starHeight}
-          fill="url(#gradient)"
-          transform={`rotate(${star.angle}, ${
-            star.x + (starWidth * star.scale) / 2
-          }, ${star.y + starHeight / 2})`}
-        />
-      )}
+      {star && (() => {
+        // star.scale can dip below 0 as a star travels off-screen; clamp so the
+        // <rect> never receives a negative width (invalid SVG → console errors).
+        const w = Math.max(0, starWidth * star.scale);
+        return (
+          <rect
+            key={star.id}
+            x={star.x}
+            y={star.y}
+            width={w}
+            height={starHeight}
+            fill="url(#gradient)"
+            transform={`rotate(${star.angle}, ${star.x + w / 2}, ${star.y + starHeight / 2})`}
+          />
+        );
+      })()}
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: trailColor, stopOpacity: 0 }} />

@@ -115,12 +115,12 @@ export default function Footer() {
                 {/* Middle — the three links that matter */}
                 <nav aria-label="Footer">
                   <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
-                  <ul className="flex flex-col gap-3">
+                  <ul className="flex flex-col gap-1">
                     {footerNav.map((l) => (
                       <li key={l.label}>
                         <Link
                           href={l.href}
-                          className="text-small text-fg-on-dark/80 transition-colors hover:text-green"
+                          className="inline-flex min-h-[40px] items-center text-small text-fg-on-dark/80 transition-colors hover:text-green"
                         >
                           {l.label}
                         </Link>

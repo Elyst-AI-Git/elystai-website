@@ -64,7 +64,7 @@ function PdfBubble() {
           style={{ background: "#ffffff" }}
         >
           <span style={{ fontSize: "0.72rem", color: "rgba(0,0,0,0.55)" }}>Open</span>
-          <p style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.4)", textAlign: "right" }}>
+          <p style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.55)", textAlign: "right" }}>
             12:47
           </p>
         </div>
@@ -171,7 +171,7 @@ function ChatMockup() {
               <p>Make the June invoice for Al Noor Trading.</p>
               <p
                 className="mt-1 flex items-center justify-end"
-                style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.4)", gap: "2px" }}
+                style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.55)", gap: "2px" }}
               >
                 12:47 PM
                 <BlueTick />
@@ -197,7 +197,7 @@ function ChatMockup() {
               {done && (
                 <p
                   className="mt-1 text-right"
-                  style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.4)" }}
+                  style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.55)" }}
                 >
                   12:47
                 </p>
@@ -233,7 +233,7 @@ export default function AiosTeaser() {
           >
             <span className="block">
               Your team already runs on{" "}
-              <span style={{ color: "#25D366" }}>WhatsApp</span>.
+              <span style={{ color: "#128C7E" }}>WhatsApp</span>.
             </span>
             <span className="mt-4 block">Now they can run on AI.</span>
           </h2>

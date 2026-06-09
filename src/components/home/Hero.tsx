@@ -37,7 +37,7 @@ export default function Hero() {
             className="mt-5 max-w-md text-fg-2 md:max-w-none md:whitespace-nowrap"
             style={{ fontSize: "var(--text-body)" }}
           >
-            We setup AI into your businesses and teach you how to use it.
+            We set up AI for your business and teach you how to use it.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
