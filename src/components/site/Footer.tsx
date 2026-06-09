@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { SVGProps } from "react";
 import Wordmark from "@/components/site/Wordmark";
-import { ShootingStars } from "@/components/ui/shooting-stars";
-import { StarsBackground } from "@/components/ui/stars-background";
+import FooterStarfield from "@/components/site/FooterStarfield";
 
 function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -59,25 +58,7 @@ export default function Footer() {
         }}
       >
         <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pt-14 pb-0">
-          <StarsBackground
-            className="absolute inset-0"
-            starDensity={0.00055}
-            allStarsTwinkle
-            twinkleProbability={0.85}
-            minTwinkleSpeed={0.4}
-            maxTwinkleSpeed={1.2}
-          />
-          <ShootingStars
-            className="absolute inset-0"
-            starColor="#00df82"
-            trailColor="#03624c"
-            starWidth={28}
-            starHeight={2.5}
-            minSpeed={18}
-            maxSpeed={42}
-            minDelay={500}
-            maxDelay={2200}
-          />
+          <FooterStarfield />
 
           <div className="relative z-10 mx-auto max-w-6xl">
             {/* Three-up utility row — brand/contact (left), core nav (middle),
