@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
-import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 
 const dmSans = DM_Sans({
@@ -38,7 +37,6 @@ export default function RootLayout({
         </a>
         <Nav />
         {children}
-        <PreFooter />
         <Footer />
       </body>
     </html>
