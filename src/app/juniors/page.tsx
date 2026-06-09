@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import AiJuniorHero from "@/components/ai-junior/AiJuniorHero";
 import AiJuniorAbout from "@/components/ai-junior/AiJuniorAbout";
 import AiJuniorMedium from "@/components/ai-junior/AiJuniorMedium";
@@ -9,12 +9,12 @@ import AiJuniorMentor from "@/components/ai-junior/AiJuniorMentor";
 import AiJuniorCta from "@/components/ai-junior/AiJuniorCta";
 import AiJuniorFaq from "@/components/ai-junior/AiJuniorFaq";
 
-export const metadata: Metadata = {
-  title: "AI for Juniors - Elyst AI",
+export const metadata = pageMeta({
+  path: "/juniors",
+  title: "AI for Juniors",
   description:
     "A 5-day live AI program for students in Grades 5–10. Your child will learn to prompt, design, and build real things with AI — no technical background required.",
-  alternates: { canonical: "https://elystai.com/juniors" },
-};
+});
 
 export default function AiJuniorPage() {
   return (

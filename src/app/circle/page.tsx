@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import CircleHero from "@/components/circle/CircleHero";
 import CircleAbout from "@/components/circle/CircleAbout";
 import CircleForWho from "@/components/circle/CircleForWho";
@@ -7,12 +7,12 @@ import CircleJoin from "@/components/circle/CircleJoin";
 import CircleFaq from "@/components/circle/CircleFaq";
 import CircleCta from "@/components/circle/CircleCta";
 
-export const metadata: Metadata = {
-  title: "Elyst AI Circle - Join the AI Circle",
+export const metadata = pageMeta({
+  path: "/circle",
+  title: "The AI Circle for Professionals",
   description:
     "A closed community for professionals applying AI to their real work. Weekly signals, monthly catchups. 25 founding spots only.",
-  alternates: { canonical: "https://elystai.com/circle" },
-};
+});
 
 export default function CirclePage() {
   return (

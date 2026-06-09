@@ -53,15 +53,16 @@ export default function CircleHero() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 mx-auto w-full max-w-[900px]"
         >
-          <p
-            className="font-display font-semibold text-fg-muted-dark"
-            style={{ fontSize: "clamp(1.4rem, 3.5vw, 2.2rem)" }}
-          >
-            The people in this circle
-          </p>
-          <h1 className="mt-1" style={{ lineHeight: 1.0 }}>
+          <h1 style={{ lineHeight: 1.0 }}>
+            <span className="sr-only">The Elyst AI Circle — </span>
             <span
-              className="font-display block font-black tracking-tight text-fg-on-dark"
+              className="font-display block font-semibold text-fg-muted-dark"
+              style={{ fontSize: "clamp(1.4rem, 3.5vw, 2.2rem)" }}
+            >
+              The people in this circle
+            </span>
+            <span
+              className="font-display mt-1 block font-black tracking-tight text-fg-on-dark"
               style={{ fontSize: "clamp(3.2rem, 9vw, 7rem)", letterSpacing: "-0.03em" }}
             >
               are already
