@@ -83,7 +83,13 @@ export const MetalButton = forwardRef<HTMLDivElement, MetalButtonProps>(
       strength = 0.9,
       paused,
       borderRadius,
-      disableGlow,
+      // Default the outer glow OFF: metal-fx's glow SVG renders a degenerate
+      // <rect width="-1" height="-1"> in its mask, throwing console errors on
+      // every page (the metal CTA is in the sitewide Nav). The glow is masked
+      // to nothing anyway, so disabling it removes the errors with no visual
+      // change while keeping the metal-ring shader. Pass disableGlow={false} to
+      // opt back in if the library fixes the mask sizing.
+      disableGlow = true,
       reflectionTargets,
       shaderScale,
       ringCssPx,
