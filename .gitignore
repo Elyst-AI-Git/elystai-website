@@ -42,3 +42,12 @@ next-env.d.ts
 
 # Claude Code worktrees (separate repo)
 /.claude/worktrees/
+
+# local tooling / agent scratch (not for deploy repo)
+/.claude/
+/.agents/
+/.playwright-mcp/
+skills-lock.json
+
+# working docs, reference assets & raw source material (kept local, not deployed)
+/_workspace/

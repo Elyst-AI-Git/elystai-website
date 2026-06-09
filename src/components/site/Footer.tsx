@@ -29,9 +29,9 @@ function WhatsappIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 const socials = [
-  { label: "LinkedIn", href: "#", Icon: LinkedinIcon },
-  { label: "Instagram", href: "#", Icon: InstagramIcon },
-  { label: "WhatsApp community", href: "#", Icon: WhatsappIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/elystai/", Icon: LinkedinIcon },
+  { label: "Instagram", href: "https://www.instagram.com/elyst.ai/", Icon: InstagramIcon },
+  { label: "WhatsApp community", href: "https://wa.me/919633288931", Icon: WhatsappIcon },
 ];
 
 // Trimmed to the three destinations that matter — everything else (Book a
@@ -39,9 +39,9 @@ const socials = [
 // reachable from those pages or the nav; keeping the footer lean leaves room
 // for the "Follow us" block.
 const footerNav = [
+  { label: "Home", href: "/" },
   { label: "AIOS for Business", href: "/aios" },
   { label: "AI Accelerator", href: "/learn" },
-  { label: "About", href: "/about" },
 ];
 
 export default function Footer() {

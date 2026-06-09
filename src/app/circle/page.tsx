@@ -21,7 +21,7 @@ export default function CirclePage() {
       <CircleAbout />
       <CircleForWho />
       <CirclePricing />
-      <CircleJoin />
+      {/* <CircleJoin />, How it works, commented out for now */}
       <CircleFaq />
       <CircleCta />
     </main>

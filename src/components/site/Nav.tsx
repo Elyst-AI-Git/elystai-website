@@ -9,7 +9,7 @@ import Wordmark from "@/components/site/Wordmark";
 import { BrandButton } from "@/components/ui/brand-button";
 
 const leftLinks = [
-  { label: "About", href: "/about" },
+  { label: "Home", href: "/" },
   { label: "AIOS", href: "/aios" },
 ];
 
