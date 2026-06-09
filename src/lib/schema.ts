@@ -17,7 +17,7 @@ export const organizationSchema: Record<string, unknown> = {
   logo: `${SITE_URL}/web-app-manifest-512x512.png`,
   image: `${SITE_URL}/og-image.png`,
   description:
-    "Elyst AI builds AI into how businesses run with AIOS, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.",
+    "Elyst AI builds an AI employee that changes how you run your business, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.",
   foundingDate: "2026",
   email: "info@elystai.com",
   telephone: "+91-9633288931",
