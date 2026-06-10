@@ -182,8 +182,12 @@ export default function MarkDither({
       if (reduce) frame(performance.now());
     });
     ro.observe(canvas);
-    canvas.addEventListener("pointermove", onMove);
-    canvas.addEventListener("pointerleave", onLeave);
+    // On touch/reduced-motion, skip pointer listeners entirely — there's no
+    // cursor to react to, and we never want a touch to trigger a redraw.
+    if (!reduce) {
+      canvas.addEventListener("pointermove", onMove);
+      canvas.addEventListener("pointerleave", onLeave);
+    }
 
     if (reduce) {
       frame(performance.now());
@@ -194,8 +198,10 @@ export default function MarkDither({
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      canvas.removeEventListener("pointermove", onMove);
-      canvas.removeEventListener("pointerleave", onLeave);
+      if (!reduce) {
+        canvas.removeEventListener("pointermove", onMove);
+        canvas.removeEventListener("pointerleave", onLeave);
+      }
     };
   }, [colorFront, colorBack, pixelSize]);
 

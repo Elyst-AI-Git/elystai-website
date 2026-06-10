@@ -8,6 +8,7 @@ import {
   useMotionTemplate,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useIsTouch } from "@/lib/use-touch";
 
 export const CometCard = ({
   rotateDepth = 17.5,
@@ -55,6 +56,8 @@ export const CometCard = ({
 
   const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%)`;
 
+  const isTouch = useIsTouch();
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
 
@@ -77,6 +80,16 @@ export const CometCard = ({
     x.set(0);
     y.set(0);
   };
+
+  // On touch devices there's no cursor to drive the 3D tilt/glare — render a
+  // plain static card instead of mounting the spring/transform machinery.
+  if (isTouch) {
+    return (
+      <div className={cn("perspective-distant transform-3d", className)}>
+        <div className="relative rounded-2xl">{children}</div>
+      </div>
+    );
+  }
 
   return (
     <div className={cn("perspective-distant transform-3d", className)}>

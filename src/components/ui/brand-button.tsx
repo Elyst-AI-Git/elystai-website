@@ -12,6 +12,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { MetalButton } from "@/components/ui/metal-button";
+import { useIsTouch } from "@/lib/use-touch";
 
 type BrandVariant = "metal" | "outline";
 /**
@@ -85,6 +86,7 @@ export function BrandButton({
   greenRing = false,
 }: BrandButtonProps) {
   const width = full ? "w-full" : "w-fit";
+  const isTouch = useIsTouch();
 
   if (variant === "outline") {
     return (
@@ -115,6 +117,23 @@ export function BrandButton({
   const ringOverride = greenRing
     ? "before:ring-[#00df82]/70! before:ring-[1.5px]!"
     : "";
+
+  // MetalFx renders an animated liquid-metal shader behind every button. On
+  // touch devices that's a continuous effect nobody can interact with (no
+  // cursor to reflect), so render a flat static button with the same brand
+  // fill/colors instead.
+  if (isTouch) {
+    const ringColor = greenRing ? "border-[#00df82]/70" : "border-border/70";
+    return (
+      <Inner
+        href={href}
+        onClick={onClick}
+        className={`${BASE} ${width} ${RADIUS_CLASS} border ${ringColor} ${fxFill} ${className ?? ""}`}
+      >
+        {children}
+      </Inner>
+    );
+  }
 
   return (
     <MetalButton

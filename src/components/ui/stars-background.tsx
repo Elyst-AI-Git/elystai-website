@@ -23,6 +23,9 @@ interface StarBackgroundProps {
   minTwinkleSpeed?: number;
   maxTwinkleSpeed?: number;
   className?: string;
+  /** Draw the starfield once and skip the per-frame RAF loop entirely (no
+   *  twinkle). Used on touch devices where the animation cost isn't worth it. */
+  staticField?: boolean;
 }
 
 export const StarsBackground: React.FC<StarBackgroundProps> = ({
@@ -32,6 +35,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   minTwinkleSpeed = 0.5,
   maxTwinkleSpeed = 1,
   className,
+  staticField = false,
 }) => {
   const [stars, setStars] = useState<StarProps[]>([]);
   const canvasRef: RefObject<HTMLCanvasElement | null> =
@@ -117,14 +121,16 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
         ctx.fill();
 
-        if (star.twinkleSpeed !== null) {
+        if (!staticField && star.twinkleSpeed !== null) {
           star.opacity =
             0.5 +
             Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
         }
       });
 
-      animationFrameId = requestAnimationFrame(render);
+      if (!staticField) {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
     render();
@@ -132,7 +138,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [stars]);
+  }, [stars, staticField]);
 
   return (
     <canvas

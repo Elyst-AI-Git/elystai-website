@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 import { renderCanvas } from "@/components/ui/canvas";
+import { useIsTouch } from "@/lib/use-touch";
 
 /** Decorative L-bracket that frames a corner of the centered content box. */
 function Corner({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
@@ -18,9 +19,16 @@ function Corner({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
 }
 
 export default function AiosHero() {
+  // The flowing-line canvas is a continuous RAF loop with mousemove-reactive
+  // trails. On phones there's no cursor to react to and the loop just burns
+  // CPU forever, so we skip mounting it entirely on touch devices and show a
+  // static background instead.
+  const isTouch = useIsTouch();
+
   useEffect(() => {
+    if (isTouch) return;
     renderCanvas();
-  }, []);
+  }, [isTouch]);
 
   return (
     <section
@@ -35,11 +43,14 @@ export default function AiosHero() {
         alignItems: "center",
       }}
     >
-      {/* Cursor-reactive flowing-line canvas — deep-emerald trail on white */}
-      <canvas
-        id="canvas"
-        className="pointer-events-none absolute inset-0 h-full w-full"
-      />
+      {/* Cursor-reactive flowing-line canvas — deep-emerald trail on white.
+          Desktop only; phones get a plain background (see isTouch above). */}
+      {!isTouch && (
+        <canvas
+          id="canvas"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+        />
+      )}
 
       <div className="relative z-10 mx-auto flex w-fit max-w-4xl flex-col items-center px-4 py-8 text-center sm:px-12 md:px-16 md:py-10">
         {/* Corner brackets framed close to the centered content */}
