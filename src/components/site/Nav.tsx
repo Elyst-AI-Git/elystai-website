@@ -78,7 +78,7 @@ function ComingSoon() {
 
 function Logo({ onClick, isTouch }: { onClick?: () => void; isTouch: boolean }) {
   return (
-    <Link href="/" onClick={onClick} aria-label="Elyst AI — home">
+    <Link href="/" onClick={onClick} aria-label="Elyst AI | Your AI Partner">
       <Wordmark
         className="h-5 w-auto text-fg-on-dark"
         // The drop-shadow glow is a few extra paint layers on every frame —

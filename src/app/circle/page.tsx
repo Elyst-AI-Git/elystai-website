@@ -7,12 +7,15 @@ import CircleJoin from "@/components/circle/CircleJoin";
 import CircleFaq from "@/components/circle/CircleFaq";
 import CircleCta from "@/components/circle/CircleCta";
 
-export const metadata = pageMeta({
-  path: "/circle",
-  title: "The AI Circle for Professionals",
-  description:
-    "A closed community for professionals applying AI to their real work. Weekly signals, monthly catchups. 25 founding spots only.",
-});
+export const metadata = {
+  ...pageMeta({
+    path: "/circle",
+    title: "AI Community for Professionals",
+    description:
+      "A focused community for professionals applying AI to their actual work. Weekly AI signals, monthly live catchups, and peers across India and the GCC doing the same.",
+  }),
+  title: { absolute: "AI Community for Professionals | Elyst AI" },
+};
 
 export default function CirclePage() {
   return (

@@ -11,12 +11,15 @@ import AiJuniorMentor from "@/components/ai-junior/AiJuniorMentor";
 import AiJuniorCta from "@/components/ai-junior/AiJuniorCta";
 import AiJuniorFaq from "@/components/ai-junior/AiJuniorFaq";
 
-export const metadata = pageMeta({
-  path: "/juniors",
-  title: "AI for Juniors",
-  description:
-    "A 5-day live AI program for students in Grades 5 to 10. Your child learns to prompt, design, and build real things with AI, with no technical background needed.",
-});
+export const metadata = {
+  ...pageMeta({
+    path: "/juniors",
+    title: "AI Program for Students Grades 5–10 | 5-Day Live Course",
+    description:
+      "A 5-day live AI program where students in Grades 5 to 10 learn to prompt, design, and build real things with AI. No coding or technical background needed.",
+  }),
+  title: { absolute: "AI Program for Students Grades 5–10 | 5-Day Live Course | Elyst AI" },
+};
 
 export default function AiJuniorPage() {
   return (

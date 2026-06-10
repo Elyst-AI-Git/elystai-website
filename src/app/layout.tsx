@@ -14,9 +14,9 @@ const dmSans = DM_Sans({
 });
 
 const SITE_URL = "https://elystai.com";
-const SITE_TITLE = "Elyst AI: AI systems for business and programs for people";
+const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "Elyst AI builds an AI employee that changes how you run your business, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.";
+  "AI system for small businesses and AI programs for professionals. Based in Kerala, serving India and the GCC.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

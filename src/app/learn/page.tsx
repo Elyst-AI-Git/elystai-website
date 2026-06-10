@@ -7,12 +7,15 @@ import AccelWhy from "@/components/accel/AccelWhy";
 import AccelProof from "@/components/accel/AccelProof";
 import AccelCta from "@/components/accel/AccelCta";
 
-export const metadata = pageMeta({
-  path: "/learn",
-  title: "Learn AI with the Accelerator",
-  description:
-    "Live, bilingual AI training for working professionals across India and the GCC. Taught by people who build AI for real businesses, and backed by a community that keeps you sharp.",
-});
+export const metadata = {
+  ...pageMeta({
+    path: "/learn",
+    title: "AI Programs for Professionals | India & GCC",
+    description:
+      "AI programs and courses for working professionals across India and the GCC. Taught by practitioners who build AI for real businesses, backed by a community that keeps you current.",
+  }),
+  title: { absolute: "AI Programs for Professionals | India & GCC | Elyst AI" },
+};
 
 export default function LearnPage() {
   return (
