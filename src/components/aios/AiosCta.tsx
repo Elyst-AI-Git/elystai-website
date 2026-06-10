@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Boxes } from "@/components/ui/background-boxes";
 import { BrandButton } from "@/components/ui/brand-button";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * Direction B — solid emerald band, the page's brightest, most saturated
@@ -21,6 +22,11 @@ import { BrandButton } from "@/components/ui/brand-button";
  */
 
 export default function AiosCta() {
+  // The 15,000-element hover-reactive grid is a desktop-only flourish — on
+  // touch a tap can leave a box "stuck" lit (sticky :hover), and there's no
+  // payoff for the cost of mounting it. Skip it entirely on touch.
+  const isTouch = useIsTouch();
+
   return (
     <section
       className="relative overflow-hidden"
@@ -28,21 +34,23 @@ export default function AiosCta() {
     >
       {/* Interactive boxes grid — same effect as the home Proof section, tuned
           for a white surface: dark-green grid lines + dark-green hover fills. */}
-      <div
-        className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
-        style={{
-          maskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
-          WebkitMaskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
-        }}
-      >
-        <div className="relative h-[44rem] w-[72rem] shrink-0">
-          <Boxes
-            lineColor="rgba(3,98,76,0.14)"
-            plusColor="rgba(3,98,76,0.18)"
-            colors={["#03624C", "#024A39", "#04855F", "#02402F", "#013A2C"]}
-          />
+      {!isTouch && (
+        <div
+          className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+          style={{
+            maskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
+          }}
+        >
+          <div className="relative h-[44rem] w-[72rem] shrink-0">
+            <Boxes
+              lineColor="rgba(3,98,76,0.14)"
+              plusColor="rgba(3,98,76,0.18)"
+              colors={["#03624C", "#024A39", "#04855F", "#02402F", "#013A2C"]}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{ background: "radial-gradient(ellipse at center, transparent 30%, var(--bg) 86%)" }}

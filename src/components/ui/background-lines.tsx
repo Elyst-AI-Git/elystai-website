@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
+import { useIsTouch } from "@/lib/use-touch";
 
 export const BackgroundLines = ({
   children,
@@ -14,6 +15,11 @@ export const BackgroundLines = ({
     duration?: number;
   };
 }) => {
+  // 40 SVG paths, each animating on an infinite loop forever — a permanent
+  // "snake" effect across the whole hero. On touch it's pure cost with no
+  // payoff, so skip mounting the SVG entirely and keep the plain background.
+  const isTouch = useIsTouch();
+
   return (
     <div
       className={cn(
@@ -21,7 +27,7 @@ export const BackgroundLines = ({
         className
       )}
     >
-      <SVG svgOptions={svgOptions} />
+      {!isTouch && <SVG svgOptions={svgOptions} />}
       {children}
     </div>
   );

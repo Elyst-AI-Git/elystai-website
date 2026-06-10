@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * The page's single biggest AEO/GEO citation asset (NOTES.md). The FAQPage
@@ -72,6 +73,10 @@ const jsonLd = {
 
 export default function AiosFaq() {
   const [open, setOpen] = useState<string | null>(null);
+  // The per-row tilt-to-straighten animation re-runs on every open/close.
+  // On touch, render every row flat/static — only the accordion's own
+  // height-collapse (its core function) remains.
+  const isTouch = useIsTouch();
 
   return (
     <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
@@ -96,6 +101,31 @@ export default function AiosFaq() {
         >
           {faqs.map((f, i) => {
             const isOpen = open === f.q;
+            const item = (
+              <AccordionItem
+                value={f.q}
+                className="overflow-hidden rounded-[20px] border bg-white px-6 shadow-sm transition-colors"
+                style={{ borderColor: isOpen ? "var(--elyst-green)" : "var(--border)" }}
+              >
+                <AccordionTrigger className="!border-0 py-5">
+                  <span className="font-display font-bold text-fg" style={{ fontSize: "var(--text-body)" }}>
+                    {f.q}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
+                    {f.a}
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            );
+            if (isTouch) {
+              return (
+                <div key={f.q} className="relative" style={{ zIndex: isOpen ? 10 : faqs.length - i }}>
+                  {item}
+                </div>
+              );
+            }
             return (
               <motion.div
                 key={f.q}
@@ -104,22 +134,7 @@ export default function AiosFaq() {
                 className="relative"
                 style={{ zIndex: isOpen ? 10 : faqs.length - i }}
               >
-                <AccordionItem
-                  value={f.q}
-                  className="overflow-hidden rounded-[20px] border bg-white px-6 shadow-sm transition-colors"
-                  style={{ borderColor: isOpen ? "var(--elyst-green)" : "var(--border)" }}
-                >
-                  <AccordionTrigger className="!border-0 py-5">
-                    <span className="font-display font-bold text-fg" style={{ fontSize: "var(--text-body)" }}>
-                      {f.q}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
-                      {f.a}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
+                {item}
               </motion.div>
             );
           })}

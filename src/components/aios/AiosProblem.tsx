@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SectionMark } from "@/components/ui/section-mark";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * The page's ONE deliberate dark contrast section. Three "chaos artifacts,"
@@ -147,6 +148,8 @@ const pains = [
 const offsets = ["", "", ""];
 
 export default function AiosProblem() {
+  const isTouch = useIsTouch();
+
   return (
     <section
       className="bg-surface-dark"
@@ -167,29 +170,45 @@ export default function AiosProblem() {
         </div>
 
         <div className="mt-16 grid gap-10 sm:grid-cols-3 sm:gap-8">
-          {pains.map(({ Artifact, line }, i) => (
-            <motion.div
-              key={line}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-              className={`flex flex-col gap-5 ${offsets[i]}`}
-            >
-              <Artifact />
-              <p
-                className="max-w-[26ch]"
-                style={{
-                  color: muted,
-                  fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)",
-                  fontWeight: 500,
-                  lineHeight: 1.5,
-                }}
+          {pains.map(({ Artifact, line }, i) => {
+            const content = (
+              <>
+                <Artifact />
+                <p
+                  className="max-w-[26ch]"
+                  style={{
+                    color: muted,
+                    fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)",
+                    fontWeight: 500,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {line}
+                </p>
+              </>
+            );
+            // On touch, skip the whileInView fade/slide entirely — render
+            // the finished widgets immediately, fully static.
+            if (isTouch) {
+              return (
+                <div key={line} className={`flex flex-col gap-5 ${offsets[i]}`}>
+                  {content}
+                </div>
+              );
+            }
+            return (
+              <motion.div
+                key={line}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+                className={`flex flex-col gap-5 ${offsets[i]}`}
               >
-                {line}
-              </p>
-            </motion.div>
-          ))}
+                {content}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Wordmark from "@/components/site/Wordmark";
 import { BrandButton } from "@/components/ui/brand-button";
+import { useIsTouch } from "@/lib/use-touch";
 
 const leftLinks = [
   { label: "Home", href: "/" },
@@ -75,15 +76,22 @@ function ComingSoon() {
   );
 }
 
-function Logo({ onClick }: { onClick?: () => void }) {
+function Logo({ onClick, isTouch }: { onClick?: () => void; isTouch: boolean }) {
   return (
     <Link href="/" onClick={onClick} aria-label="Elyst AI — home">
       <Wordmark
         className="h-5 w-auto text-fg-on-dark"
-        style={{
-          filter:
-            "drop-shadow(0 0 1px rgba(255,255,255,0.65)) drop-shadow(0 1px 2px rgba(180,210,200,0.45)) drop-shadow(0 0 8px rgba(0,223,130,0.25))",
-        }}
+        // The drop-shadow glow is a few extra paint layers on every frame —
+        // on touch the navbar is otherwise static, so skip it and render
+        // the plain wordmark.
+        style={
+          isTouch
+            ? undefined
+            : {
+                filter:
+                  "drop-shadow(0 0 1px rgba(255,255,255,0.65)) drop-shadow(0 1px 2px rgba(180,210,200,0.45)) drop-shadow(0 0 8px rgba(0,223,130,0.25))",
+              }
+        }
       />
     </Link>
   );
@@ -93,18 +101,23 @@ export default function Nav() {
   const pathname = usePathname() ?? "/";
   const cta = ctaForPath(pathname);
 
+  const isTouch = useIsTouch();
   const [scrolled, setScrolled] = useState(false);
   const [learnOpen, setLearnOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileLearnOpen, setMobileLearnOpen] = useState(false);
   const learnRef = useRef<HTMLDivElement>(null);
 
+  // The scrolled-state restyle (background/blur/shadow swap) fires on every
+  // scroll event and triggers a repaint of the fixed navbar — on touch we
+  // skip the listener entirely and keep one plain, static pill.
   useEffect(() => {
+    if (isTouch) return;
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isTouch]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -140,18 +153,28 @@ export default function Nav() {
         style={{ width: "min(900px, calc(100vw - 48px))" }}
       >
         <div
-          className="relative flex h-14 items-center rounded-md px-3 transition-all duration-300"
-          style={{
-            background: scrolled
-              ? "linear-gradient(180deg, hsl(160 38% 12%) 0%, hsl(160 38% 8%) 55%, hsl(160 38% 11%) 100%)"
-              : "color-mix(in srgb, var(--surface-dark) 95%, transparent)",
-            backdropFilter: scrolled ? "blur(16px)" : "none",
-            borderTop: "1px solid rgba(255,255,255,0.09)",
-            borderBottom: "1px solid rgba(0,0,0,0.35)",
-            boxShadow: scrolled
-              ? "inset 0 1px 0 rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)"
-              : "0 4px 24px rgba(3,98,76,0.12)",
-          }}
+          className={`relative flex h-14 items-center rounded-md px-3 ${isTouch ? "" : "transition-all duration-300"}`}
+          style={
+            isTouch
+              ? {
+                  // Plain, static pill — no scroll-driven repaints, no blur.
+                  background: "color-mix(in srgb, var(--surface-dark) 95%, transparent)",
+                  borderTop: "1px solid rgba(255,255,255,0.09)",
+                  borderBottom: "1px solid rgba(0,0,0,0.35)",
+                  boxShadow: "0 4px 24px rgba(3,98,76,0.12)",
+                }
+              : {
+                  background: scrolled
+                    ? "linear-gradient(180deg, hsl(160 38% 12%) 0%, hsl(160 38% 8%) 55%, hsl(160 38% 11%) 100%)"
+                    : "color-mix(in srgb, var(--surface-dark) 95%, transparent)",
+                  backdropFilter: scrolled ? "blur(16px)" : "none",
+                  borderTop: "1px solid rgba(255,255,255,0.09)",
+                  borderBottom: "1px solid rgba(0,0,0,0.35)",
+                  boxShadow: scrolled
+                    ? "inset 0 1px 0 rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)"
+                    : "0 4px 24px rgba(3,98,76,0.12)",
+                }
+          }
         >
           {/* Desktop: left links */}
           <div className="hidden flex-1 items-center gap-6 md:flex">
@@ -164,12 +187,12 @@ export default function Nav() {
 
           {/* Centred logo (desktop) */}
           <div className="absolute left-1/2 hidden -translate-x-1/2 md:block">
-            <Logo />
+            <Logo isTouch={isTouch} />
           </div>
 
           {/* Mobile: logo left */}
           <div className="flex flex-1 items-center md:hidden">
-            <Logo />
+            <Logo isTouch={isTouch} />
           </div>
 
           {/* Desktop: right links + CTA */}
@@ -264,7 +287,7 @@ export default function Nav() {
             style={{ background: "var(--surface-dark)" }}
           >
             <div className="relative flex items-center justify-center px-6 py-5">
-              <Logo onClick={() => setMobileOpen(false)} />
+              <Logo onClick={() => setMobileOpen(false)} isTouch={isTouch} />
               <button
                 type="button"
                 aria-label="Close menu"

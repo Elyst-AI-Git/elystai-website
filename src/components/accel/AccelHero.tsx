@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SectionMark } from "./SectionMark";
 import { AnimatePresence, motion } from "framer-motion";
 import { BackgroundLines } from "@/components/ui/background-lines";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * Accelerator hero — the warm tonal pole opposite the AIOS hero.
@@ -20,21 +21,25 @@ const CYCLE = ["confident", "relevant", "competitive", "irreplaceable"];
 function CyclingWord() {
   const [i, setI] = useState(0);
   const [reduce, setReduce] = useState(false);
+  // The word swap fires every 2s forever via setInterval — a permanent
+  // background timer + re-render. Touch devices get the static first word,
+  // same as prefers-reduced-motion.
+  const isTouch = useIsTouch();
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReduce(mq.matches);
-    if (mq.matches) return;
+    if (mq.matches || isTouch) return;
     const id = setInterval(() => setI((n) => (n + 1) % CYCLE.length), 2000);
     return () => clearInterval(id);
-  }, []);
+  }, [isTouch]);
 
   return (
     <span
       className="relative inline-block whitespace-nowrap align-baseline"
       style={{ color: "var(--elyst-green)" }}
     >
-      {reduce ? (
+      {reduce || isTouch ? (
         <span>{CYCLE[0]}</span>
       ) : (
         <AnimatePresence mode="popLayout">

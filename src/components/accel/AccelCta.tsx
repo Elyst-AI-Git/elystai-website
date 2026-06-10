@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Boxes } from "@/components/ui/background-boxes";
 import { BrandButton } from "@/components/ui/brand-button";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * Accelerator final CTA — mirrors the AIOS page's closing band (interactive
@@ -15,6 +16,10 @@ import { BrandButton } from "@/components/ui/brand-button";
  */
 
 export default function AccelCta() {
+  // Same 15,000-element hover grid as AiosCta — desktop-only; on touch a tap
+  // can leave a box "stuck" lit, and there's no payoff for the cost.
+  const isTouch = useIsTouch();
+
   return (
     <section
       className="relative overflow-hidden"
@@ -25,21 +30,23 @@ export default function AccelCta() {
     >
       {/* Interactive boxes grid — same effect as the AIOS close, retuned for
           a light-green surface: deep-emerald grid lines + bright-green hover fills. */}
-      <div
-        className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
-        style={{
-          maskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
-          WebkitMaskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
-        }}
-      >
-        <div className="relative h-[44rem] w-[72rem] shrink-0">
-          <Boxes
-            lineColor="rgba(3,98,76,0.16)"
-            plusColor="rgba(3,98,76,0.22)"
-            colors={["#00DF82", "#2EC866", "#04855F", "#03624C", "#7CEFC0"]}
-          />
+      {!isTouch && (
+        <div
+          className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+          style={{
+            maskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
+          }}
+        >
+          <div className="relative h-[44rem] w-[72rem] shrink-0">
+            <Boxes
+              lineColor="rgba(3,98,76,0.16)"
+              plusColor="rgba(3,98,76,0.22)"
+              colors={["#00DF82", "#2EC866", "#04855F", "#03624C", "#7CEFC0"]}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{

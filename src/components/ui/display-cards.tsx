@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Sparkles } from "lucide-react";
+import { useIsTouch } from "@/lib/use-touch";
 
 interface DisplayCardProps {
   className?: string;
@@ -26,10 +27,15 @@ function DisplayCard({
   descriptionClassName = "text-lg leading-snug text-fg-2",
   dateClassName = "text-base font-semibold uppercase tracking-wide text-fg-3",
 }: DisplayCardProps) {
+  // backdrop-blur-sm is a per-frame compositing cost on a stack of 3
+  // overlapping cards; the hover lift/scale (transition-all) never fires on
+  // touch since there's no hover. Drop both on touch, keep desktop as-is.
+  const isTouch = useIsTouch();
   return (
     <div
       className={cn(
-        "relative flex h-64 w-[32rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-card/90 backdrop-blur-sm px-7 py-6 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[30rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:bg-card [&>*]:flex [&>*]:items-center [&>*]:gap-3",
+        "relative flex h-64 w-[32rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-card/90 px-7 py-6 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[30rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] [&>*]:flex [&>*]:items-center [&>*]:gap-3",
+        isTouch ? "" : "backdrop-blur-sm transition-all duration-700 hover:bg-card",
         className
       )}
     >
