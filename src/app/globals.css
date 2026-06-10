@@ -319,6 +319,20 @@
     }
   }
 
+  /* On touch devices the shifting gradient is just a continuous repaint
+     nobody can interact with — render "runs" as flat solid emerald. */
+  @media (hover: none) {
+    .runs-word {
+      animation: none;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      -webkit-text-fill-color: #03624c;
+      color: #03624c;
+      filter: none;
+    }
+  }
+
   @keyframes wordmark-shift {
     0%,
     100% {

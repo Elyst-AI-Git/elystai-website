@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { useIsTouch } from "@/lib/use-touch";
 
 export function PointerHighlight({
   children,
@@ -16,6 +17,7 @@ export function PointerHighlight({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const isTouch = useIsTouch();
 
   useEffect(() => {
     if (containerRef.current) {
@@ -47,54 +49,68 @@ export function PointerHighlight({
       ref={containerRef}
     >
       {children}
-      {dimensions.width > 0 && dimensions.height > 0 && (
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-0"
-          initial={{ opacity: 0, scale: 0.95, originX: 0, originY: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <motion.div
-            className={cn(
-              "absolute inset-0 border border-neutral-800 dark:border-neutral-200",
-              rectangleClassName,
-            )}
-            initial={{
-              width: 0,
-              height: 0,
-            }}
-            whileInView={{
-              width: dimensions.width,
-              height: dimensions.height,
-            }}
-            transition={{
-              duration: 1,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="pointer-events-none absolute"
-            initial={{ opacity: 0 }}
-            whileInView={{
-              opacity: 1,
-              x: dimensions.width + 4,
-              y: dimensions.height + 4,
-            }}
-            style={{
-              rotate: -90,
-            }}
-            transition={{
-              opacity: { duration: 0.1, ease: "easeInOut" },
-              duration: 1,
-              ease: "easeInOut",
-            }}
-          >
-            <Pointer
-              className={cn("h-5 w-5 text-blue-500", pointerClassName)}
+      {dimensions.width > 0 &&
+        dimensions.height > 0 &&
+        (isTouch ? (
+          // Touch devices skip the open/draw-in animation entirely — render
+          // the finished rectangle + pointer immediately, no motion.
+          <div className="pointer-events-none absolute inset-0 z-0">
+            <div
+              className={cn(
+                "absolute inset-0 border border-neutral-800 dark:border-neutral-200",
+                rectangleClassName,
+              )}
+              style={{ width: dimensions.width, height: dimensions.height }}
             />
+          </div>
+        ) : (
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-0"
+            initial={{ opacity: 0, scale: 0.95, originX: 0, originY: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <motion.div
+              className={cn(
+                "absolute inset-0 border border-neutral-800 dark:border-neutral-200",
+                rectangleClassName,
+              )}
+              initial={{
+                width: 0,
+                height: 0,
+              }}
+              whileInView={{
+                width: dimensions.width,
+                height: dimensions.height,
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="pointer-events-none absolute"
+              initial={{ opacity: 0 }}
+              whileInView={{
+                opacity: 1,
+                x: dimensions.width + 4,
+                y: dimensions.height + 4,
+              }}
+              style={{
+                rotate: -90,
+              }}
+              transition={{
+                opacity: { duration: 0.1, ease: "easeInOut" },
+                duration: 1,
+                ease: "easeInOut",
+              }}
+            >
+              <Pointer
+                className={cn("h-5 w-5 text-blue-500", pointerClassName)}
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        ))}
     </div>
   );
 }
