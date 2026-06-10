@@ -11,6 +11,7 @@ import {
   IconTile,
   type IconProps,
 } from "@/components/ui/icons";
+import { useIsTouch } from "@/lib/use-touch";
 
 type Node = {
   Icon: (props: IconProps) => React.ReactElement;
@@ -44,14 +45,9 @@ const nodes: Node[] = [
 
 function TimelineNode({ node, index }: { node: Node; index: number }) {
   const { Icon, label, line, detail } = node;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
-      className="relative flex items-center gap-5 pb-16 last:pb-0"
-    >
+  const isTouch = useIsTouch();
+  const content = (
+    <>
       <IconTile tone="darkgreen" size={40} className="relative z-10 shrink-0">
         <Icon size={20} variant="line" />
       </IconTile>
@@ -71,11 +67,26 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
           </p>
         )}
       </div>
+    </>
+  );
+  if (isTouch) {
+    return <div className="relative flex items-center gap-5 pb-16 last:pb-0">{content}</div>;
+  }
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
+      className="relative flex items-center gap-5 pb-16 last:pb-0"
+    >
+      {content}
     </motion.div>
   );
 }
 
 export default function AiosModel() {
+  const isTouch = useIsTouch();
   return (
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
@@ -100,16 +111,25 @@ export default function AiosModel() {
               className="absolute top-[20px] bottom-[20px] left-5 w-px -translate-x-1/2"
               style={{ background: "var(--border)" }}
             />
-            {/* Fill — emerald, scroll-reveal in one pass */}
-            <motion.span
-              aria-hidden
-              initial={{ scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1.1, ease: "easeInOut" }}
-              className="absolute top-[20px] bottom-[20px] left-5 w-px -translate-x-1/2"
-              style={{ background: "var(--elyst-emerald)", transformOrigin: "top" }}
-            />
+            {/* Fill — emerald, scroll-reveal in one pass (skipped on touch:
+                render the finished line immediately) */}
+            {isTouch ? (
+              <span
+                aria-hidden
+                className="absolute top-[20px] bottom-[20px] left-5 w-px -translate-x-1/2"
+                style={{ background: "var(--elyst-emerald)" }}
+              />
+            ) : (
+              <motion.span
+                aria-hidden
+                initial={{ scaleY: 0 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 1.1, ease: "easeInOut" }}
+                className="absolute top-[20px] bottom-[20px] left-5 w-px -translate-x-1/2"
+                style={{ background: "var(--elyst-emerald)", transformOrigin: "top" }}
+              />
+            )}
 
             <div className="relative">
               {nodes.map((node, i) => (

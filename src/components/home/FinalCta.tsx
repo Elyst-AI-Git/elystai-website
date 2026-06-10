@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { useIsTouch } from "@/lib/use-touch";
 
 type Panel = {
   headline: string;
@@ -43,7 +44,42 @@ function CtaPanel({
   dim: boolean;
   onHover: (v: boolean) => void;
 }) {
-  const text = hovered ? panel.textOnFill : "var(--fg)";
+  const isTouch = useIsTouch();
+  const text = !isTouch && hovered ? panel.textOnFill : "var(--fg)";
+
+  // The hover-fill colour swap never resolves on touch (no hover, and a tap
+  // navigates immediately) — render a flat static panel.
+  if (isTouch) {
+    return (
+      <div className="relative" style={{ background: "var(--bg)" }}>
+        <Link
+          href={panel.href}
+          className="flex min-h-[30vh] flex-col justify-between p-8 max-md:min-h-[22vh] md:p-12"
+        >
+          <div className="flex items-start justify-between gap-6">
+            <h3
+              className="font-display font-bold leading-[1.05]"
+              style={{ fontSize: "var(--text-h1)", color: text }}
+            >
+              {panel.headline}
+            </h3>
+            <span
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border"
+              style={{ borderColor: "var(--border)", color: text }}
+            >
+              <ArrowUpRight className="h-5 w-5" />
+            </span>
+          </div>
+          <p
+            className="md:whitespace-nowrap"
+            style={{ color: text, fontSize: "clamp(1.15rem, 1.6vw, 1.35rem)" }}
+          >
+            {panel.description}
+          </p>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <motion.div

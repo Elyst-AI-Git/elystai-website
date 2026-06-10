@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 import type { CSSProperties, SVGProps } from "react";
+import { useIsTouch } from "@/lib/use-touch";
 
 function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -105,6 +106,18 @@ function FounderCard({
   onHover: (v: boolean) => void;
 }) {
   const isLeft = founder.side === "left";
+  // The hover-fill colour swap and dim-the-other-card effect have no
+  // meaning on touch (no hover state, and a tap on the full-card link
+  // navigates immediately) — render a flat static panel.
+  const isTouch = useIsTouch();
+
+  if (isTouch) {
+    return (
+      <div className="relative overflow-hidden" style={{ background: "var(--bg)", minHeight: "68vh" }}>
+        <FounderCardBody founder={founder} isLeft={isLeft} isTouch />
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -116,6 +129,15 @@ function FounderCard({
       className="relative overflow-hidden"
       style={{ opacity: dim ? 0.6 : 1, minHeight: "68vh" }}
     >
+      <FounderCardBody founder={founder} isLeft={isLeft} isTouch={false} />
+    </motion.div>
+  );
+}
+
+function FounderCardBody({ founder, isLeft, isTouch }: { founder: Founder; isLeft: boolean; isTouch: boolean }) {
+  const socialClass = `flex h-9 w-9 items-center justify-center rounded-md ${isTouch ? "" : "transition-all duration-200 hover:scale-110"}`;
+  return (
+    <>
       {/* Full-card link sits below text (z-[1]) */}
       <Link
         href={founder.href}
@@ -159,7 +181,7 @@ function FounderCard({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${founder.name} on Instagram`}
-                  className="flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200 hover:scale-110"
+                  className={socialClass}
                   style={socialStyle}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -170,7 +192,7 @@ function FounderCard({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${founder.name} on LinkedIn`}
-                  className="flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200 hover:scale-110"
+                  className={socialClass}
                   style={socialStyle}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -195,7 +217,7 @@ function FounderCard({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${founder.name} on Instagram`}
-                  className="flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200 hover:scale-110"
+                  className={socialClass}
                   style={socialStyle}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -206,7 +228,7 @@ function FounderCard({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${founder.name} on LinkedIn`}
-                  className="flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200 hover:scale-110"
+                  className={socialClass}
                   style={socialStyle}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -223,7 +245,7 @@ function FounderCard({
           </>
         )}
       </div>
-    </motion.div>
+    </>
   );
 }
 

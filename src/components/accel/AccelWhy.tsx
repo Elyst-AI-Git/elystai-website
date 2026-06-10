@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/icons";
 import { Card } from "@/components/ui/card";
 import { SectionMark } from "./SectionMark";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * Why learn with Elyst — the differentiator. Four warm value blocks, all
@@ -98,6 +99,9 @@ const reasons: {
 ];
 
 export default function AccelWhy() {
+  // On touch, skip the whileInView fade/slide on these 4 cards — render
+  // them finished/static immediately, same pattern as AiosProblem.
+  const isTouch = useIsTouch();
   return (
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
@@ -112,14 +116,8 @@ export default function AccelWhy() {
 
         {/* Three value blocks + the agency-proof card, all gradient-framed */}
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
-          {reasons.map(({ Icon, title, line }, i) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: "easeOut" }}
-            >
+          {reasons.map(({ Icon, title, line }, i) => {
+            const card = (
               <Card
                 variant="gradient"
                 className="h-full p-7"
@@ -138,41 +136,61 @@ export default function AccelWhy() {
                 </h3>
                 <p className="relative z-10 mt-2 leading-relaxed text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>{line}</p>
               </Card>
-            </motion.div>
-          ))}
+            );
+            if (isTouch) return <div key={title}>{card}</div>;
+            return (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.55, delay: i * 0.08, ease: "easeOut" }}
+              >
+                {card}
+              </motion.div>
+            );
+          })}
 
           {/* Agency-proof card — replaces the prior founder-story block.
               What AIOS (our Services arm) builds and experiments with daily,
               distilled into what's actually useful for you to know right now. */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.55, delay: reasons.length * 0.08, ease: "easeOut" }}
-          >
-            <Card
-              variant="gradient"
-              className="h-full p-7"
-              style={{
-                borderRadius: "var(--radius-card, 20px)",
-                background:
-                  "linear-gradient(135deg, var(--green-tint-15), var(--emerald-tint-10))",
-                border: "1px solid var(--green-tint-15)",
-              }}
-            >
-              <CardGridTexture seed={reasons.length} />
-              <IconTile tone="darkgreen" className="relative z-10">
-                <IconPromise size={22} variant="duotone" />
-              </IconTile>
-              <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)", fontWeight: 700 }}>
-                Our promise.
-              </h3>
-              <p className="relative z-10 mt-2 leading-relaxed text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>
-                We don&rsquo;t do hundreds of courses in various domains. We do
-                one domain, that&rsquo;s AI.
-              </p>
-            </Card>
-          </motion.div>
+          {(() => {
+            const card = (
+              <Card
+                variant="gradient"
+                className="h-full p-7"
+                style={{
+                  borderRadius: "var(--radius-card, 20px)",
+                  background:
+                    "linear-gradient(135deg, var(--green-tint-15), var(--emerald-tint-10))",
+                  border: "1px solid var(--green-tint-15)",
+                }}
+              >
+                <CardGridTexture seed={reasons.length} />
+                <IconTile tone="darkgreen" className="relative z-10">
+                  <IconPromise size={22} variant="duotone" />
+                </IconTile>
+                <h3 className="relative z-10 mt-5 text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)", fontWeight: 700 }}>
+                  Our promise.
+                </h3>
+                <p className="relative z-10 mt-2 leading-relaxed text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>
+                  We don&rsquo;t do hundreds of courses in various domains. We do
+                  one domain, that&rsquo;s AI.
+                </p>
+              </Card>
+            );
+            if (isTouch) return <div>{card}</div>;
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.55, delay: reasons.length * 0.08, ease: "easeOut" }}
+              >
+                {card}
+              </motion.div>
+            );
+          })()}
         </div>
       </div>
     </section>

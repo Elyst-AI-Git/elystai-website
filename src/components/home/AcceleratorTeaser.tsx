@@ -24,6 +24,7 @@ import {
 import { BrandButton } from "@/components/ui/brand-button";
 import SquigglyArrow from "@/components/ui/squiggle-arrow";
 import { NoiseBackground } from "@/components/ui/noise-background";
+import { useIsTouch } from "@/lib/use-touch";
 
 type Program = {
   mark: LucideIcon;
@@ -99,13 +100,19 @@ function ProgramFace({ p }: { p: Program }) {
   const headingColor = p.dark ? "var(--fg-on-dark)" : "var(--elyst-ink)";
   const bodyColor    = p.dark ? "rgba(240,250,248,0.8)" : "rgba(7,24,20,0.72)";
   const dividerColor = p.dark ? "rgba(255,255,255,0.2)" : "rgba(3,98,76,0.18)";
+  // NoiseBackground runs a continuous useAnimationFrame spring loop driving a
+  // moving gradient, plus backdrop-blur-sm — on touch this runs once per card
+  // (4 cards on this section) forever with no pointer to react to. Freeze the
+  // gradient and drop the blur on touch.
+  const isTouch = useIsTouch();
 
   return (
     <NoiseBackground
-      containerClassName="rounded-[33px] bg-transparent p-[5px] shadow-none ring-1 ring-black/25 dark:bg-transparent"
+      containerClassName={`rounded-[33px] bg-transparent p-[5px] shadow-none ring-1 ring-black/25 dark:bg-transparent ${isTouch ? "backdrop-blur-none" : ""}`}
       className="overflow-hidden rounded-[28px]"
       gradientColors={["#060d09", "#1a1a1a", "#03624c"]}
       noiseIntensity={0.12}
+      animating={!isTouch}
     >
     <div
       className={cutoutCardSurfaceClassName}

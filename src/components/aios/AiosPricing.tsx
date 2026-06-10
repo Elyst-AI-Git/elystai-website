@@ -11,6 +11,7 @@ import {
   IconTile,
   type IconProps,
 } from "@/components/ui/icons";
+import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * Pricing WITHOUT numbers (Direction B). Signals premium/custom, sets the
@@ -43,18 +44,15 @@ const structure: {
 
 function StructureCard({ item, index }: { item: (typeof structure)[number]; index: number }) {
   const { Icon, label, line } = item;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
-      className="group relative card flex flex-col gap-3 p-6 overflow-hidden"
-    >
-      {/* Dotted hover overlay */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,98,76,0.12)_1px,transparent_1px)] bg-[length:5px_5px]" />
-      </div>
+  const isTouch = useIsTouch();
+  const content = (
+    <>
+      {/* Dotted hover overlay — desktop only, never fires on touch */}
+      {!isTouch && (
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,98,76,0.12)_1px,transparent_1px)] bg-[length:5px_5px]" />
+        </div>
+      )}
       <IconTile tone="darkgreen" className="relative z-10">
         <Icon size={21} variant="line" />
       </IconTile>
@@ -64,6 +62,20 @@ function StructureCard({ item, index }: { item: (typeof structure)[number]; inde
       <p className="relative z-10 text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.5 }}>
         {line}
       </p>
+    </>
+  );
+  if (isTouch) {
+    return <div className="group relative card flex flex-col gap-3 p-6 overflow-hidden">{content}</div>;
+  }
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
+      className="group relative card flex flex-col gap-3 p-6 overflow-hidden"
+    >
+      {content}
     </motion.div>
   );
 }
