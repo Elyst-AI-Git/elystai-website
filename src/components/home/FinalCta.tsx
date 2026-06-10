@@ -77,7 +77,7 @@ function CtaPanel({
           </span>
         </div>
         <p
-          className="whitespace-nowrap"
+          className="md:whitespace-nowrap"
           style={{ color: text, fontSize: "clamp(1.15rem, 1.6vw, 1.35rem)" }}
         >
           {panel.description}

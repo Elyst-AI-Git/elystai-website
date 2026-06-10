@@ -72,9 +72,14 @@ export default function MarkDither({
 
     const front = hexToRgb(colorFront);
     const back = hexToRgb(colorBack);
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    // Render a single static frame (no per-frame RAF loop) when the user
+    // prefers reduced motion OR the device can't hover (touch / mobile). On a
+    // phone the cursor-reveal has no cursor to react to, and the continuous
+    // dithering loop saturates the main thread — so we draw the formed mark
+    // once and stop. Desktops with a real pointer keep the live effect.
+    const reduce =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(hover: none)").matches;
 
     let cols = 0;
     let rows = 0;
