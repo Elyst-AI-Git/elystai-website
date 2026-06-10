@@ -6,7 +6,7 @@ import AcceleratorTeaser from "@/components/home/AcceleratorTeaser";
 import Founders from "@/components/home/Founders";
 import FinalCta from "@/components/home/FinalCta";
 
-const HOME_TITLE = "Elyst AI | AI System for Business & AI Programs for Professionals";
+const HOME_TITLE = "Elyst AI | AI System for Businesses & AI Programs for Professionals";
 const HOME_DESCRIPTION =
   "Elyst AI builds an AI employee that small business teams use on WhatsApp and runs AI programs and courses for professionals across India and the GCC. No technical background needed for either.";
 
