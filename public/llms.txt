@@ -1,0 +1,13 @@
+# Elyst AI
+
+> Elyst AI helps small businesses and working people use AI in simple, practical ways. We are based in Kerala, India, and we work with people across India and the GCC.
+
+We build AI tools that fit into the way teams already work, and we run live programs that teach people how to use AI for their real jobs and studies. Everything we make is meant to be easy to start with, with no heavy setup and no need for a technical background.
+
+## Pages
+
+- [Home](https://elystai.com/): What Elyst AI does and who we help.
+- [AIOS](https://elystai.com/aios): An AI helper for businesses that works inside the WhatsApp your team already uses. It answers questions, writes documents, and handles small tasks. No new software and no technical staff needed.
+- [Learn](https://elystai.com/learn): AI programs and courses for working people across India and the GCC. Taught by people who build AI for real businesses, with a community that helps you stay up to date.
+- [Juniors](https://elystai.com/juniors): A 5 day live program where students in Grades 5 to 10 learn to use AI to think, design, and build real things. No coding or tech background needed.
+- [Circle](https://elystai.com/circle): A community for working people who want to use AI in their actual work. Weekly AI updates, monthly live meetups, and peers across India and the GCC.
