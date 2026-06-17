@@ -79,15 +79,14 @@ export default function AccelCta() {
             <span className="md:whitespace-nowrap">It&rsquo;s where the learning lives now.</span>
           </h2>
 
-          <div className="pointer-events-auto mt-6">
+          <div className="pointer-events-auto mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <BrandButton href="/circle" tone="green">
               Join the community
             </BrandButton>
+            <BrandButton href="/waitlist" variant="outline">
+              Join the AI for Work waitlist
+            </BrandButton>
           </div>
-
-          <p className="mt-3 text-small text-fg-3">
-            AI Program launching soon.
-          </p>
         </motion.div>
       </div>
     </section>

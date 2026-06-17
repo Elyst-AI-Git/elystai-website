@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Wordmark from "@/components/site/Wordmark";
@@ -14,13 +14,13 @@ const leftLinks = [
   { label: "AIOS", href: "/aios" },
 ];
 
-type LearnItem = { label: string; href?: string; soon?: boolean };
+type LearnItem = { label: string; href?: string; badge?: string };
 
 const learnItems: LearnItem[] = [
   { label: "Overview", href: "/learn" },
-  { label: "Circle", href: "/circle" },
-  { label: "AI for juniors", href: "/juniors" },
-  { label: "AI programs", soon: true },
+  { label: "Elyst AI Circle", href: "/circle" },
+  { label: "AI for Juniors", href: "/juniors" },
+  { label: "AI for Work", href: "/waitlist", badge: "Waitlist" },
 ];
 
 const joinPrefixes = ["/learn", "/circle", "/ai-yathra"];
@@ -59,7 +59,7 @@ function NavCta({
 }
 
 /** Light-grey metal badge, dark-green text, navbar corner radius. */
-function ComingSoon() {
+function Pill({ children }: { children: ReactNode }) {
   return (
     <span
       className="shrink-0 rounded-md px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-wide"
@@ -71,7 +71,7 @@ function ComingSoon() {
         boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
       }}
     >
-      Coming soon
+      {children}
     </span>
   );
 }
@@ -239,7 +239,7 @@ export default function Nav() {
                           className="flex items-center justify-between gap-3 rounded-md px-3 py-2 text-small text-fg-on-dark/85 transition-colors hover:bg-surface-dark-hover hover:text-fg-on-dark"
                         >
                           {item.label}
-                          {item.soon && <ComingSoon />}
+                          {item.badge && <Pill>{item.badge}</Pill>}
                         </Link>
                       ) : (
                         <div
@@ -249,7 +249,7 @@ export default function Nav() {
                           className="flex cursor-default items-center justify-between gap-3 rounded-md px-3 py-2 text-small text-fg-on-dark/45"
                         >
                           {item.label}
-                          {item.soon && <ComingSoon />}
+                          {item.badge && <Pill>{item.badge}</Pill>}
                         </div>
                       )
                     )}
@@ -343,7 +343,7 @@ export default function Nav() {
                             className="flex items-center gap-2 text-body text-fg-on-dark/80"
                           >
                             {item.label}
-                            {item.soon && <ComingSoon />}
+                            {item.badge && <Pill>{item.badge}</Pill>}
                           </Link>
                         ) : (
                           <div
@@ -352,7 +352,7 @@ export default function Nav() {
                             className="flex items-center gap-2 text-body text-fg-on-dark/45"
                           >
                             {item.label}
-                            {item.soon && <ComingSoon />}
+                            {item.badge && <Pill>{item.badge}</Pill>}
                           </div>
                         )
                       )}

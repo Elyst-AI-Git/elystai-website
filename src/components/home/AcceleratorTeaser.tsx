@@ -69,10 +69,10 @@ const programs: Program[] = [
   },
   {
     mark: GraduationCap,
-    name: "AI Program",
+    name: "AI for Work",
     who: "The deep-dive program for professionals",
-    status: "Coming Soon",
-    href: "/flagship",
+    status: "Join waitlist",
+    href: "/waitlist",
     surface: "#1c725e",
     dark: true,
   },
