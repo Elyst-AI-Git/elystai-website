@@ -2,7 +2,7 @@ import { pageMeta } from "@/lib/seo";
 import Hero from "@/components/ai-for-work/Hero";
 import WhoItsFor from "@/components/ai-for-work/WhoItsFor";
 import Curriculum from "@/components/ai-for-work/Curriculum";
-import Format from "@/components/ai-for-work/Format";
+import Skills from "@/components/ai-for-work/Skills";
 import Instructor from "@/components/ai-for-work/Instructor";
 import PriceEnrol from "@/components/ai-for-work/PriceEnrol";
 import Faq from "@/components/ai-for-work/Faq";
@@ -10,11 +10,11 @@ import Faq from "@/components/ai-for-work/Faq";
 export const metadata = {
   ...pageMeta({
     path: "/ai-for-work",
-    title: "AI for Work — 2-Week Live AI Program",
+    title: "AI for Work: 2-Week Live AI Program",
     description:
-      "AI for Work is a 2-week live program by Elyst AI for practitioners and founders who want to actually use AI — no tech background needed. 7 live sessions, recordings, certificate. ₹2,900.",
+      "AI for Work is a 2-week live program by Elyst AI for professionals and founders who want to use AI with confidence in their everyday work. Live classes, live Q&A, free recordings, and a certificate. ₹2,999.",
   }),
-  title: { absolute: "AI for Work — 2-Week Live AI Program | Elyst AI" },
+  title: { absolute: "AI for Work: 2-Week Live AI Program | Elyst AI" },
 };
 
 export default function AiForWorkPage() {
@@ -23,7 +23,7 @@ export default function AiForWorkPage() {
       <Hero />
       <WhoItsFor />
       <Curriculum />
-      <Format />
+      <Skills />
       <Instructor />
       <PriceEnrol />
       <Faq />

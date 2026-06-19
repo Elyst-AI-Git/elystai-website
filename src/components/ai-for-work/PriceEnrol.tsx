@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 import EnquiryForm from "./EnquiryForm";
-import { PRICE, INCLUDED, RAZORPAY_URL } from "./config";
+import { PRICE, ORIGINAL_PRICE, INCLUDED, RAZORPAY_URL } from "./config";
 
 /**
  * Price & Enrol — the conversion section. A single transparent pricing card
@@ -36,10 +36,21 @@ export default function PriceEnrol() {
         >
           <div className="bg-surface-dark px-8 py-10 text-center">
             <p className="text-fg-on-dark/70" style={{ fontSize: "var(--text-small)" }}>
-              AI for Work — one-time
+              AI for Work · one-time
             </p>
-            <p className="mt-2 font-display font-bold text-fg-on-dark" style={{ fontSize: "var(--text-hero)", lineHeight: 1 }}>
-              {PRICE}
+            <div className="mt-2 flex items-baseline justify-center gap-3">
+              <span
+                className="font-display font-bold text-fg-on-dark/50 line-through"
+                style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)", lineHeight: 1, textDecorationColor: "rgba(255,255,255,0.4)" }}
+              >
+                {ORIGINAL_PRICE}
+              </span>
+              <span className="font-display font-bold text-fg-on-dark" style={{ fontSize: "var(--text-hero)", lineHeight: 1 }}>
+                {PRICE}
+              </span>
+            </div>
+            <p className="mt-3 inline-block rounded-full px-3 py-1 font-semibold" style={{ background: "var(--elyst-green)", color: "#053d2e", fontSize: "0.8rem" }}>
+              Limited-time offer price
             </p>
           </div>
 
@@ -57,7 +68,7 @@ export default function PriceEnrol() {
 
             <div className="mt-8 flex flex-col gap-3">
               <BrandButton href={RAZORPAY_URL} tone="green" full>
-                Pay &amp; enrol now — {PRICE}
+                Pay &amp; enrol now · {PRICE}
               </BrandButton>
               {!showEnquiry && (
                 <button

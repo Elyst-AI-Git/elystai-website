@@ -56,7 +56,7 @@ export default function EnquiryForm() {
         body: JSON.stringify({
           access_key: ACCESS_KEY,
           subject: "New AI for Work enquiry",
-          from_name: "AI for Work — Enquiry",
+          from_name: "AI for Work Enquiry",
           // Web3Forms uses `email` as reply-to; fall back when omitted.
           email: email.trim() || "no-email@ai-for-work.elystai.com",
           name: name.trim(),
@@ -82,7 +82,7 @@ export default function EnquiryForm() {
   if (status === "success") {
     return (
       <p className="text-center text-fg" style={{ fontSize: "var(--text-body)" }}>
-        Thanks — we&rsquo;ve got your enquiry and will be in touch shortly.
+        Thanks, we&rsquo;ve got your enquiry and will be in touch shortly.
       </p>
     );
   }

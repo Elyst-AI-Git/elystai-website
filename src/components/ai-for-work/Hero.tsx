@@ -21,11 +21,11 @@ type Fact = { label: string; rotate: number; tone: keyof typeof toneStyles };
 // Five quick facts, each its own tile. Alternating tilt + cycling tones so the
 // row reads as a playful collage rather than a flat list.
 const facts: Fact[] = [
-  { label: "2 weeks", rotate: -4, tone: "green" },
-  { label: "7 live sessions", rotate: 3, tone: "light" },
-  { label: "100% online", rotate: -2.5, tone: "emerald" },
-  { label: "Activity-based", rotate: 3.5, tone: "light" },
-  { label: "Certificate", rotate: -3, tone: "green" },
+  { label: "2 Weeks", rotate: -4, tone: "green" },
+  { label: "Live Classes", rotate: 3, tone: "light" },
+  { label: "Work Faster", rotate: -2.5, tone: "emerald" },
+  { label: "Live Q&A", rotate: 3.5, tone: "light" },
+  { label: "Free Recordings", rotate: -3, tone: "green" },
 ];
 
 const toneStyles = {
@@ -125,13 +125,13 @@ export default function Hero() {
           className="max-w-xl text-white/90"
           style={{ fontSize: "var(--text-body)", textShadow: "0 1px 12px rgba(0,0,0,0.6)" }}
         >
-          A 2-week live program for practitioners and founders who want to
-          actually use AI — no tech background needed.
+          Stop feeling left behind by AI and start using it with confidence in
+          your everyday work.
         </p>
 
         <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
           <BrandButton href="#enrol" tone="green">
-            Join AI for Work — {PRICE}
+            Join AI for Work · {PRICE}
           </BrandButton>
           <BrandButton href="#curriculum" variant="outline">
             See more

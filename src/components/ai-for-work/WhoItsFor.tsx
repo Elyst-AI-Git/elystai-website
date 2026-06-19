@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { SectionMark } from "@/components/ui/section-mark";
-import { Briefcase, Rocket, GraduationCap } from "lucide-react";
+import { Briefcase, Rocket } from "lucide-react";
 import { useIsTouch } from "@/lib/use-touch";
 
 /**
@@ -16,27 +16,20 @@ import { useIsTouch } from "@/lib/use-touch";
 const audiences = [
   {
     icon: Briefcase,
-    title: "Practitioners",
-    body: "Professionals who want AI woven into their everyday work — faster output, less busywork.",
+    title: "Get Ahead at Work",
+    body: "For professionals aiming for an edge in their career.",
   },
   {
     icon: Rocket,
-    title: "Founders",
-    body: "Business owners bringing AI into their teams and operations to do more with less.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Educators & coaches",
-    body: "People who want to use AI in their teaching, training and the way they guide others.",
+    title: "Grow Your Business",
+    body: "For founders using AI to save time and money.",
   },
 ];
 
-// Branch timing: trunk → cross-bar → the three drops, each picking up where the
-// previous left off, so it reads as one continuous drawing motion.
-const TRUNK = { duration: 0.4, ease: "easeOut" as const };
-const CROSS = { duration: 0.5, delay: 0.4, ease: "easeInOut" as const };
-const DROP = { duration: 0.4, delay: 0.9, ease: "easeOut" as const };
-const CARDS_DELAY = 1.2;
+// One smooth curved branch per card, fanning from a single node below the
+// heading. The x positions match the two card centres (1/4, 3/4).
+const BRANCH_X = [25, 75];
+const CARDS_DELAY = 1.0;
 
 export default function WhoItsFor() {
   const isTouch = useIsTouch();
@@ -57,52 +50,49 @@ export default function WhoItsFor() {
           </p>
         </div>
 
-        {/* Branch connector — draws from the heading down into each card. */}
+        {/* Branch connector — smooth curves fanning from a node below the
+            heading down into each card, drawing in as the section scrolls in. */}
         {!isTouch && (
-          <div className="relative mt-6 hidden h-16 md:block" aria-hidden>
+          <div className="relative mx-auto mt-6 hidden h-20 max-w-5xl md:block" aria-hidden>
             <svg
               className="absolute inset-0 h-full w-full"
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
               fill="none"
               stroke="var(--elyst-emerald)"
-              strokeWidth={1.5}
+              strokeWidth={1.6}
+              strokeLinecap="round"
             >
-              {/* Trunk down from the heading */}
-              <motion.path
-                d="M50,0 V40"
-                vectorEffect="non-scaling-stroke"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={TRUNK}
-              />
-              {/* Cross-bar spanning the three card centres */}
-              <motion.path
-                d="M16.667,40 H83.333"
-                vectorEffect="non-scaling-stroke"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={CROSS}
-              />
-              {/* Three drops into the cards */}
-              {[16.667, 50, 83.333].map((x) => (
+              {BRANCH_X.map((x, i) => (
                 <motion.path
                   key={x}
-                  d={`M${x},40 V100`}
+                  // One smooth, continuous branch per card. Control points share
+                  // y=50 so the curve descends monotonically (no wiggle/kink):
+                  // it leaves the node vertically and settles vertically into
+                  // the card — the classic smooth node-tree connector.
+                  d={`M50,0 C50,50 ${x},50 ${x},100`}
                   vectorEffect="non-scaling-stroke"
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true, amount: 0.4 }}
-                  transition={DROP}
+                  transition={{ duration: 0.9, delay: 0.15 + i * 0.1, ease: "easeInOut" }}
+                  style={{ opacity: 0.85 }}
                 />
               ))}
             </svg>
+            {/* Origin node where the branches meet the heading */}
+            <motion.span
+              className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{ background: "var(--elyst-emerald)" }}
+              initial={{ scale: 0, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
           </div>
         )}
 
-        <div className={`grid gap-6 md:grid-cols-3 ${isTouch ? "mt-14" : "mt-0"}`}>
+        <div className={`grid gap-6 md:grid-cols-2 ${isTouch ? "mt-14" : "mt-0"}`}>
           {audiences.map((a, i) => (
             <motion.div
               key={a.title}

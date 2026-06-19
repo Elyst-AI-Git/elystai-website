@@ -30,20 +30,21 @@ import { useIsTouch } from "@/lib/use-touch";
 type Node = {
   Icon: (props: IconProps) => React.ReactElement;
   label: string;
+  desc: string;
 };
 
 const nodes: Node[] = [
-  { Icon: IconUnderstand, label: "Understanding AI" },
-  { Icon: IconMessage, label: "Prompting Mastery & Context engineering" },
-  { Icon: IconIntegrations, label: "Tools work for you" },
-  { Icon: IconDocument, label: "AI Multimedia" },
-  { Icon: IconProgram, label: "Your Personal AI" },
-  { Icon: IconAct, label: "Meet AI Agents" },
-  { Icon: IconConfigure, label: "Automate Your Work" },
+  { Icon: IconUnderstand, label: "Understanding AI", desc: "Start from zero and finally get what AI is, without the confusing tech talk." },
+  { Icon: IconMessage, label: "Prompting Mastery & Context Engineering", desc: "Learn how to talk to AI so it gives you what you want, not random answers." },
+  { Icon: IconIntegrations, label: "Tools Work For You", desc: "Build your own AI toolkit, made for the work you do." },
+  { Icon: IconDocument, label: "AI Multimedia", desc: "Turn your ideas into visuals in minutes." },
+  { Icon: IconProgram, label: "Your Personal AI", desc: "Have your own AI assistant ready whenever you need it." },
+  { Icon: IconAct, label: "Meet AI Agents", desc: "See how AI can do tasks on its own, while you focus on the bigger things." },
+  { Icon: IconConfigure, label: "Automate Your Work", desc: "Set it up once, and let AI handle the same work again and again." },
 ];
 
 function TimelineNode({ node, index }: { node: Node; index: number }) {
-  const { Icon, label } = node;
+  const { Icon, label, desc } = node;
   const isLeft = index % 2 === 1; // 0-based: nodes 2,4,6 sit on the left
   const num = String(index + 1).padStart(2, "0");
 
@@ -55,6 +56,9 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
       <h3 className="text-fg" style={{ fontSize: "clamp(1.3rem, 2vw, 1.65rem)", fontWeight: 700, lineHeight: 1.25 }}>
         {label}
       </h3>
+      <p className="mt-1 max-w-md text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.55 }}>
+        {desc}
+      </p>
     </div>
   );
 
@@ -140,7 +144,7 @@ export default function Curriculum() {
             Seven modules, step by step.
           </h2>
           <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-body)" }}>
-            Every session is activity-based — you practise as you learn.
+            Every session is activity-based, so you practise as you learn.
           </p>
         </div>
 

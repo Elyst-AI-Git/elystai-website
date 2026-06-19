@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useIsTouch } from "@/lib/use-touch";
-import { PRICE } from "./config";
 
 /**
  * FAQ — kills the doubts that stop people enrolling. The FAQPage JSON-LD below
@@ -23,28 +22,28 @@ type Faq = { q: string; a: string };
 
 const faqs: Faq[] = [
   {
-    q: "I'm not technical — can I still do this?",
-    a: "Yes. AI for Work is built for beginners. No coding, no tech background — if you can use everyday apps, you can do this.",
+    q: "I'm not technical, can I still do this?",
+    a: "Yes, that's exactly who this is for. You don't need any coding or tech background. We start from zero and keep everything in plain language. If you can use WhatsApp and email, you can do this.",
   },
   {
     q: "What if I miss a session?",
-    a: "Every session is recorded and yours to keep, so you can catch up any time.",
+    a: "No problem. Every live session is recorded and shared with you, so you can catch up anytime. And if anything is unclear, you can bring your doubts to the next live Q&A or ask in the community.",
   },
   {
     q: "How much time per week?",
-    a: "It's a focused 2-week sprint — 7 live sessions plus short activities between them.",
+    a: "Plan for about 4 to 5 hours a week. That includes the live sessions plus a little practice time, so you actually use what you learn instead of just watching.",
   },
   {
     q: "Is it live or recorded?",
-    a: "Live. The sessions are taught live so you can ask questions, and you keep the recordings afterwards.",
+    a: "Both. The classes are taught live so you can ask questions and learn in real time, and you also get the recordings to keep and revisit whenever you want.",
   },
   {
     q: "Do I get a certificate?",
-    a: "Yes — you receive a certificate on completion.",
+    a: "Yes. You'll receive a certificate once you complete the course, something you can add to your CV or LinkedIn to show you've got real, practical AI skills.",
   },
   {
     q: "How do I pay and join?",
-    a: `Enrolment is a one-time ${PRICE}. Pay securely online via the enrol button, or send us an enquiry first and we'll help.`,
+    a: "Just click the join button on this page and complete the payment. You'll get a confirmation with all the details on how to access your sessions. If you get stuck, reach out and we'll help you get in.",
   },
 ];
 

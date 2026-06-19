@@ -3,23 +3,20 @@
 import * as React from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 import {
-  IconProgram,
-  IconAccess,
-  IconBuild,
+  IconMessage,
+  IconIntegrations,
   IconDocument,
-  IconAnswer,
-  IconPromise,
+  IconProgram,
+  IconAct,
+  IconConfigure,
   type IconProps,
 } from "@/components/ui/icons";
-import { SESSION_SCHEDULE } from "./config";
 
 /**
- * Format & details — the AIOS card treatment (black/green cards, metal icon
- * tiles, hover lift) in three columns. Card heights alternate within each
- * column: column 1 is big-then-small, column 2 small-then-big, column 3
- * big-then-small — so the big card zig-zags across the row. Big cards are
- * black, small cards green. Columns share a total height so tops and bottoms
- * line up. On mobile every card stacks in one column.
+ * Skills You Will Learn — the six concrete skills you walk away with. Uses the
+ * AIOS card treatment (black/green cards, metal icon tiles, hover lift) in three
+ * columns; card heights alternate within each column so the big card zig-zags
+ * across the row. Big cards are black, small cards green.
  */
 
 type Item = {
@@ -29,12 +26,12 @@ type Item = {
 };
 
 const items: Item[] = [
-  { title: "2 weeks, 7 live sessions", description: SESSION_SCHEDULE, Icon: IconProgram },
-  { title: "Fully online & live", description: "Join from anywhere — India, the GCC, or beyond.", Icon: IconAccess },
-  { title: "Hands-on", description: "Activity-oriented — you build as you go.", Icon: IconBuild },
-  { title: "Resources included", description: "Materials and templates to keep and reuse.", Icon: IconDocument },
-  { title: "Recordings included", description: "Miss one? Catch up any time, keep them for good.", Icon: IconAnswer },
-  { title: "Certificate", description: "Earn a certificate on completion.", Icon: IconPromise },
+  { title: "Master AI Prompts", description: "Turn vague questions into clear instructions AI can follow.", Icon: IconMessage },
+  { title: "Work Smarter with AI Tools", description: "Put the best AI tools to use in your daily work.", Icon: IconIntegrations },
+  { title: "Make Visuals with AI", description: "Design images, videos and voice without any design skills.", Icon: IconDocument },
+  { title: "Build Your Personal AI", description: "Set up an AI that knows your work and helps you daily.", Icon: IconProgram },
+  { title: "Work with AI Agents", description: "Hand off jobs and let AI complete them for you.", Icon: IconAct },
+  { title: "Put Your Work on Autopilot", description: "Set it up once and let AI run it again and again.", Icon: IconConfigure },
 ];
 
 // Three columns of two; `big` (the taller, black card) zig-zags top→bottom.
@@ -99,14 +96,14 @@ function Card({ item, big }: { item: Item; big: boolean }) {
   );
 }
 
-export default function Format() {
+export default function Skills() {
   return (
     <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <SectionMark>Format & details</SectionMark>
+          <SectionMark>Skills you will learn</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            A two-week sprint that fits your week.
+            What you&rsquo;ll walk away able to do.
           </h2>
         </div>
 

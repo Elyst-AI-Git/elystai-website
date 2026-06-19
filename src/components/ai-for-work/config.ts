@@ -9,8 +9,11 @@
 /** Razorpay payment link — the primary "Pay & enrol now" destination. */
 export const RAZORPAY_URL = "#"; // TODO(launch): paste Razorpay payment link
 
-/** One-time price, shown in the hero CTA, the pricing card and the FAQ. */
-export const PRICE = "₹2,900";
+/** Current one-time price, shown in the hero CTA, the pricing card and the FAQ. */
+export const PRICE = "₹2,999";
+
+/** Original price — struck through next to the offer price on the pricing card. */
+export const ORIGINAL_PRICE = "₹4,999";
 
 /** Human-readable session schedule (days + timings). */
 export const SESSION_SCHEDULE = "Schedule announced soon"; // TODO(launch): e.g. "Mon–Fri, 8–9pm IST"
