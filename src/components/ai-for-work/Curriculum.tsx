@@ -125,7 +125,6 @@ export default function Curriculum() {
             }}
             animate={{
               backgroundPosition: ["0px 0px", "18px 36px", "0px 0px"],
-              WebkitMaskPosition: ["0px 0px", "45px 30px", "0px 0px"],
               maskPosition: ["0px 0px", "45px 30px", "0px 0px"],
             }}
             transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}

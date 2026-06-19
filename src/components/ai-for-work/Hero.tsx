@@ -5,8 +5,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
+import SquigglyArrow from "@/components/ui/squiggle-arrow";
 import { useIsTouch } from "@/lib/use-touch";
-import { PRICE } from "./config";
 
 /**
  * AI for Work hero — the 5-second hook. The reference artwork (aurora rays
@@ -21,21 +21,16 @@ type Fact = { label: string; rotate: number; tone: keyof typeof toneStyles };
 // Five quick facts, each its own tile. Alternating tilt + cycling tones so the
 // row reads as a playful collage rather than a flat list.
 const facts: Fact[] = [
-  { label: "2 Weeks", rotate: -4, tone: "green" },
+  { label: "2 Weeks", rotate: -4, tone: "emerald" },
   { label: "Live Classes", rotate: 3, tone: "light" },
   { label: "Work Faster", rotate: -2.5, tone: "emerald" },
   { label: "Live Q&A", rotate: 3.5, tone: "light" },
-  { label: "Free Recordings", rotate: -3, tone: "green" },
+  { label: "Free Recordings", rotate: -3, tone: "emerald" },
 ];
 
 const toneStyles = {
   // 3D look = a chunky hard offset shadow in a darker shade of the same hue,
   // plus a top highlight + bottom inner shade for a moulded, tactile face.
-  green: {
-    bg: "linear-gradient(180deg, #2bf29a 0%, #00df82 60%, #00c172 100%)",
-    color: "#053d2e",
-    shadow: "#016b46",
-  },
   light: {
     bg: "linear-gradient(180deg, #ffffff 0%, #eef4f1 100%)",
     color: "var(--elyst-emerald)",
@@ -43,7 +38,7 @@ const toneStyles = {
   },
   emerald: {
     bg: "linear-gradient(180deg, #04855f 0%, #03624c 100%)",
-    color: "#9bffd5",
+    color: "#ffffff",
     shadow: "#01130d",
   },
 } as const;
@@ -62,7 +57,7 @@ function FactTile({ fact, isTouch }: { fact: Fact; isTouch: boolean }) {
         y: hovered && !isTouch ? -3 : 0,
       }}
       transition={{ duration: 0.32, ease: "easeOut" }}
-      className="cursor-default select-none rounded-xl font-display font-bold"
+      className="cursor-default select-none rounded-md font-display font-bold"
       style={{
         background: t.bg,
         color: t.color,
@@ -118,7 +113,9 @@ export default function Hero() {
           className="font-display font-bold text-white"
           style={{ fontSize: "var(--text-hero)", lineHeight: 1.05, textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
         >
-          Put AI to work in your daily work.
+          Start working
+          <br />
+          with <span style={{ color: "#00df82" }}>AI</span>
         </h1>
 
         <p
@@ -129,12 +126,16 @@ export default function Hero() {
           your everyday work.
         </p>
 
-        <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
-          <BrandButton href="#enrol" tone="green">
-            Join AI for Work · {PRICE}
-          </BrandButton>
-          <BrandButton href="#curriculum" variant="outline">
-            See more
+        <div className="mt-2 flex items-center justify-center gap-1">
+          <SquigglyArrow
+            direction="right"
+            variant="bouncy"
+            width={160}
+            height={88}
+            className="hidden self-center text-[var(--elyst-green)] sm:block"
+          />
+          <BrandButton href="#enrol" tone="green" className="self-center">
+            Join AI for Work
           </BrandButton>
         </div>
 

@@ -15,18 +15,6 @@ export const PRICE = "₹2,999";
 /** Original price — struck through next to the offer price on the pricing card. */
 export const ORIGINAL_PRICE = "₹4,999";
 
-/** Human-readable session schedule (days + timings). */
-export const SESSION_SCHEDULE = "Schedule announced soon"; // TODO(launch): e.g. "Mon–Fri, 8–9pm IST"
-
-/** Quick facts shown as the hero stat row. */
-export const QUICK_FACTS = [
-  "2 weeks",
-  "7 live sessions",
-  "100% online",
-  "Activity-based",
-  "Certificate",
-];
-
 /** What every ticket includes — reused by the pricing card. */
 export const INCLUDED = [
   "7 live sessions",
