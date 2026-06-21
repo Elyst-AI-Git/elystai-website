@@ -1,0 +1,25 @@
+/**
+ * AI for Work — single source of truth for the launch details that Shirin will
+ * paste in just before going live. Every section reads from here, so updating a
+ * link or a time happens in exactly one place.
+ *
+ * TODO(launch): replace the placeholder values below with the real ones.
+ */
+
+/** Razorpay payment link — the primary "Pay & enrol now" destination. */
+export const RAZORPAY_URL = "#"; // TODO(launch): paste Razorpay payment link
+
+/** Current one-time price, shown in the hero CTA, the pricing card and the FAQ. */
+export const PRICE = "₹2,999";
+
+/** Original price — struck through next to the offer price on the pricing card. */
+export const ORIGINAL_PRICE = "₹4,999";
+
+/** What every ticket includes — reused by the pricing card. */
+export const INCLUDED = [
+  "7 live sessions",
+  "Session recordings",
+  "Materials & resources",
+  "Activity-based learning",
+  "Certificate on completion",
+];
