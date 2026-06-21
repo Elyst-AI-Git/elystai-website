@@ -50,7 +50,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      // Note: the old /favicon.svg was a 2 MB base64 raster wrapped in <svg>
+      // (no vector benefit) that was fetched on every page. Dropped in favour
+      // of the 12 KB PNG + ICO below.
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
       { url: "/favicon.ico" },
     ],

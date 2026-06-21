@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Boxes } from "@/components/ui/background-boxes";
-import { useIsTouch } from "@/lib/use-touch";
+import { useReducedEffects } from "@/lib/use-reduced-effects";
 
 type Item =
   | { kind: "count"; value: number; prefix?: string; suffix?: string; label: string }
@@ -19,13 +19,13 @@ function CountUp({
   prefix = "",
   suffix = "",
   active,
-  isTouch,
+  reduced,
 }: {
   target: number;
   prefix?: string;
   suffix?: string;
   active: boolean;
-  isTouch: boolean;
+  reduced: boolean;
 }) {
   const [n, setN] = useState(0);
 
@@ -33,7 +33,7 @@ function CountUp({
     if (!active) return;
     let raf = 0;
     const reduce =
-      isTouch || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      reduced || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       raf = requestAnimationFrame(() => setN(target));
       return () => cancelAnimationFrame(raf);
@@ -49,7 +49,7 @@ function CountUp({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [active, target, isTouch]);
+  }, [active, target, reduced]);
 
   return (
     <>
@@ -62,14 +62,14 @@ function CountUp({
 
 export default function ProofBar() {
   const ref = useRef<HTMLDivElement>(null);
-  const isTouch = useIsTouch();
-  // Touch devices skip the IntersectionObserver entrance animation entirely
-  // — the section is rendered fully visible/static from the start, so it
-  // never has to "redo" anything when scrolled out and back into view.
-  const [active, setActive] = useState(isTouch);
+  const reducedEffects = useReducedEffects();
+  // Touch and low-powered devices skip the IntersectionObserver entrance
+  // animation entirely — the section renders fully visible/static from the
+  // start, so it never has to "redo" anything when scrolled out and back in.
+  const [active, setActive] = useState(reducedEffects);
 
   useEffect(() => {
-    if (isTouch) {
+    if (reducedEffects) {
       setActive(true);
       return;
     }
@@ -86,14 +86,14 @@ export default function ProofBar() {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [isTouch]);
+  }, [reducedEffects]);
 
   return (
     <section className="relative mt-10 overflow-hidden bg-surface-dark md:mt-16">
-      {/* The 15,000-element hover-reactive grid is a desktop-only flourish —
-          on touch there's no hover, and re-mounting/painting it every time
-          this section scrolls back into view is the main cost on phones. */}
-      {!isTouch && (
+      {/* The 15,000-element hover-reactive grid is a capable-desktop flourish —
+          touch has no hover, and on low-powered machines mounting/painting 15k
+          nodes is far too expensive, so both get the plain dark band. */}
+      {!reducedEffects && (
         <div
           className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
           style={{
@@ -120,7 +120,7 @@ export default function ProofBar() {
             key={item.label}
             className={`flex flex-col items-center text-center md:px-6 ${
               i > 0 ? "md:border-l md:border-[rgba(255,255,255,0.1)]" : ""
-            } ${isTouch ? "opacity-100" : `transition-opacity duration-700 ${active ? "opacity-100" : "opacity-0"}`}`}
+            } ${reducedEffects ? "opacity-100" : `transition-opacity duration-700 ${active ? "opacity-100" : "opacity-0"}`}`}
           >
             <span
               className="font-display font-bold"
@@ -137,7 +137,7 @@ export default function ProofBar() {
                   prefix={item.prefix}
                   suffix={item.suffix}
                   active={active}
-                  isTouch={isTouch}
+                  reduced={reducedEffects}
                 />
               ) : (
                 item.value

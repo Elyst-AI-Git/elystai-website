@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
-import { useIsTouch } from "@/lib/use-touch";
+import { useReducedEffects } from "@/lib/use-reduced-effects";
 
 /**
  * Footer starfield is decorative and lives below the fold on every page, yet
@@ -13,14 +13,15 @@ import { useIsTouch } from "@/lib/use-touch";
  * scroll. This gate mounts the animations only once the footer is near the
  * viewport, and skips them entirely when the user prefers reduced motion.
  *
- * On touch devices we go further: render a single static starfield (one
- * canvas paint, no RAF loop) and skip the shooting-stars layer entirely —
- * neither is worth a permanent animation loop on a phone.
+ * On touch devices *and low-powered desktops* we go further: render a single
+ * static starfield (one canvas paint, no RAF loop) and skip the shooting-stars
+ * layer entirely — neither is worth a permanent animation loop where the main
+ * thread is already tight.
  */
 export default function FooterStarfield() {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const isTouch = useIsTouch();
+  const reducedEffects = useReducedEffects();
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -42,14 +43,14 @@ export default function FooterStarfield() {
 
   return (
     <div ref={ref} className="pointer-events-none absolute inset-0" aria-hidden>
-      {active && isTouch && (
+      {active && reducedEffects && (
         <StarsBackground
           className="absolute inset-0"
           starDensity={0.00055}
           staticField
         />
       )}
-      {active && !isTouch && (
+      {active && !reducedEffects && (
         <>
           <StarsBackground
             className="absolute inset-0"

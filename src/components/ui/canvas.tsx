@@ -116,6 +116,23 @@ Line.prototype = {
   },
 };
 
+// Hoisted to module scope (these were nested inside onMousemove) so the
+// cleanup returned by renderCanvas can detach them on unmount.
+// @ts-ignore
+function setPos(e) {
+  e.touches
+    ? // @ts-ignore
+      ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY))
+    : // @ts-ignore
+      ((pos.x = e.clientX), (pos.y = e.clientY)),
+    e.preventDefault();
+}
+// @ts-ignore
+function setPosTouch(e) {
+  // @ts-ignore
+  1 == e.touches.length &&
+    ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY));
+}
 // @ts-ignore
 function onMousemove(e) {
   function o() {
@@ -123,27 +140,12 @@ function onMousemove(e) {
     for (let e = 0; e < E.trails; e++)
       lines.push(new Line({ spring: 0.45 + (e / E.trails) * 0.025 }));
   }
-  // @ts-ignore
-  function c(e) {
-    e.touches
-      ? // @ts-ignore
-        ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY))
-      : // @ts-ignore
-        ((pos.x = e.clientX), (pos.y = e.clientY)),
-      e.preventDefault();
-  }
-  // @ts-ignore
-  function l(e) {
-    // @ts-ignore
-    1 == e.touches.length &&
-      ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY));
-  }
   document.removeEventListener("mousemove", onMousemove),
     document.removeEventListener("touchstart", onMousemove),
-    document.addEventListener("mousemove", c),
-    document.addEventListener("touchmove", c),
-    document.addEventListener("touchstart", l),
-    c(e),
+    document.addEventListener("mousemove", setPos),
+    document.addEventListener("touchmove", setPos),
+    document.addEventListener("touchstart", setPosTouch),
+    setPos(e),
     o(),
     render();
 }
@@ -206,6 +208,23 @@ function Node() {
   this.vx = 0;
 }
 
+// @ts-ignore
+function onFocus() {
+  // @ts-ignore
+  if (!ctx.running) {
+    // @ts-ignore
+    ctx.running = true;
+    render();
+  }
+}
+function onBlur() {
+  // Pause the loop when the window loses focus. The original set this to
+  // `true`, so it never actually paused — a needless CPU drain whenever the
+  // tab/window was in the background.
+  // @ts-ignore
+  ctx.running = false;
+}
+
 export const renderCanvas = function () {
   // @ts-ignore
   ctx = document.getElementById("canvas").getContext("2d");
@@ -221,17 +240,24 @@ export const renderCanvas = function () {
   document.addEventListener("touchstart", onMousemove);
   document.body.addEventListener("orientationchange", resizeCanvas);
   window.addEventListener("resize", resizeCanvas);
-  window.addEventListener("focus", () => {
-    // @ts-ignore
-    if (!ctx.running) {
-      // @ts-ignore
-      ctx.running = true;
-      render();
-    }
-  });
-  window.addEventListener("blur", () => {
-    // @ts-ignore
-    ctx.running = true;
-  });
+  window.addEventListener("focus", onFocus);
+  window.addEventListener("blur", onBlur);
   resizeCanvas();
+
+  // Return a teardown so the caller can stop the loop and detach every global
+  // listener on unmount — otherwise the RAF keeps painting a now-detached
+  // canvas and the document-level pointer listeners leak across navigations.
+  return function cleanup() {
+    // @ts-ignore
+    ctx.running = false;
+    document.removeEventListener("mousemove", onMousemove);
+    document.removeEventListener("touchstart", onMousemove);
+    document.removeEventListener("mousemove", setPos);
+    document.removeEventListener("touchmove", setPos);
+    document.removeEventListener("touchstart", setPosTouch);
+    document.body.removeEventListener("orientationchange", resizeCanvas);
+    window.removeEventListener("resize", resizeCanvas);
+    window.removeEventListener("focus", onFocus);
+    window.removeEventListener("blur", onBlur);
+  };
 };

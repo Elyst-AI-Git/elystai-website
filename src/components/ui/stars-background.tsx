@@ -112,9 +112,14 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     if (!ctx) return;
 
     let animationFrameId: number;
+    // Twinkle is a slow opacity drift — it reads identically at 30fps and
+    // halves the per-frame canvas work versus an uncapped 60fps loop.
+    const frameInterval = 1000 / 30;
+    let last = 0;
 
-    const render = () => {
+    const draw = (now: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const t = now * 0.001;
       stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
@@ -122,18 +127,23 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         ctx.fill();
 
         if (!staticField && star.twinkleSpeed !== null) {
-          star.opacity =
-            0.5 +
-            Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
+          star.opacity = 0.5 + Math.abs(Math.sin(t / star.twinkleSpeed) * 0.5);
         }
       });
-
-      if (!staticField) {
-        animationFrameId = requestAnimationFrame(render);
-      }
     };
 
-    render();
+    const render = (now: number) => {
+      animationFrameId = requestAnimationFrame(render);
+      if (now - last < frameInterval) return;
+      last = now;
+      draw(now);
+    };
+
+    if (staticField) {
+      draw(performance.now());
+    } else {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);

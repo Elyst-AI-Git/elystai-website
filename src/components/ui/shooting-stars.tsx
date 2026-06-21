@@ -1,16 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState, useRef } from "react";
-
-interface ShootingStar {
-  id: number;
-  x: number;
-  y: number;
-  angle: number;
-  scale: number;
-  speed: number;
-  distance: number;
-}
+import React, { useEffect, useRef } from "react";
 
 interface ShootingStarsProps {
   minSpeed?: number;
@@ -22,6 +12,15 @@ interface ShootingStarsProps {
   starWidth?: number;
   starHeight?: number;
   className?: string;
+}
+
+interface ActiveStar {
+  x: number;
+  y: number;
+  angle: number;
+  scale: number;
+  speed: number;
+  distance: number;
 }
 
 const getRandomStartPoint = () => {
@@ -41,6 +40,7 @@ const getRandomStartPoint = () => {
       return { x: 0, y: 0, angle: 45 };
   }
 };
+
 export const ShootingStars: React.FC<ShootingStarsProps> = ({
   minSpeed = 10,
   maxSpeed = 30,
@@ -52,14 +52,25 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
   starHeight = 1,
   className,
 }) => {
-  const [star, setStar] = useState<ShootingStar | null>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
+  const rectRef = useRef<SVGRectElement>(null);
 
+  // The previous implementation called setState on every animation frame, which
+  // forced a full React re-render *and* re-subscribed the move effect ~60×/sec
+  // just to slide one <rect> across the screen — a real cost on weak CPUs. Here
+  // a single RAF loop mutates the <rect> attributes directly, so React renders
+  // the SVG exactly once. (Background tabs throttle RAF, so it self-pauses when
+  // the page isn't visible.)
   useEffect(() => {
-    const createStar = () => {
+    const rect = rectRef.current;
+    if (!rect) return;
+
+    let star: ActiveStar | null = null;
+    let raf = 0;
+    let spawnTimer: ReturnType<typeof setTimeout>;
+
+    const spawn = () => {
       const { x, y, angle } = getRandomStartPoint();
-      const newStar: ShootingStar = {
-        id: Date.now(),
+      star = {
         x,
         y,
         angle,
@@ -67,74 +78,68 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
         speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
         distance: 0,
       };
-      setStar(newStar);
-
-      const randomDelay = Math.random() * (maxDelay - minDelay) + minDelay;
-      setTimeout(createStar, randomDelay);
     };
 
-    createStar();
+    const scheduleSpawn = () => {
+      const delay = Math.random() * (maxDelay - minDelay) + minDelay;
+      spawnTimer = setTimeout(() => {
+        spawn();
+        scheduleSpawn();
+      }, delay);
+    };
 
-    return () => {};
-  }, [minSpeed, maxSpeed, minDelay, maxDelay]);
-
-  useEffect(() => {
-    const moveStar = () => {
+    const tick = () => {
       if (star) {
-        setStar((prevStar) => {
-          if (!prevStar) return null;
-          const newX =
-            prevStar.x +
-            prevStar.speed * Math.cos((prevStar.angle * Math.PI) / 180);
-          const newY =
-            prevStar.y +
-            prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180);
-          const newDistance = prevStar.distance + prevStar.speed;
-          const newScale = 1 + newDistance / 100;
-          if (
-            newX < -20 ||
-            newX > window.innerWidth + 20 ||
-            newY < -20 ||
-            newY > window.innerHeight + 20
-          ) {
-            return null;
-          }
-          return {
-            ...prevStar,
-            x: newX,
-            y: newY,
-            distance: newDistance,
-            scale: newScale,
-          };
-        });
+        star.x += star.speed * Math.cos((star.angle * Math.PI) / 180);
+        star.y += star.speed * Math.sin((star.angle * Math.PI) / 180);
+        star.distance += star.speed;
+        star.scale = 1 + star.distance / 100;
+
+        const offscreen =
+          star.x < -20 ||
+          star.x > window.innerWidth + 20 ||
+          star.y < -20 ||
+          star.y > window.innerHeight + 20;
+
+        if (offscreen) {
+          star = null;
+          rect.style.display = "none";
+        } else {
+          // scale can dip below 0 as a star leaves the frame; clamp so the
+          // <rect> never gets a negative width (invalid SVG → console errors).
+          const w = Math.max(0, starWidth * star.scale);
+          rect.setAttribute("x", String(star.x));
+          rect.setAttribute("y", String(star.y));
+          rect.setAttribute("width", String(w));
+          rect.setAttribute(
+            "transform",
+            `rotate(${star.angle}, ${star.x + w / 2}, ${star.y + starHeight / 2})`,
+          );
+          rect.style.display = "";
+        }
       }
+      raf = requestAnimationFrame(tick);
     };
 
-    const animationFrame = requestAnimationFrame(moveStar);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [star]);
+    spawn();
+    scheduleSpawn();
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(spawnTimer);
+    };
+  }, [minSpeed, maxSpeed, minDelay, maxDelay, starWidth, starHeight]);
 
   return (
-    <svg
-      ref={svgRef}
-      className={cn("w-full h-full absolute inset-0", className)}
-    >
-      {star && (() => {
-        // star.scale can dip below 0 as a star travels off-screen; clamp so the
-        // <rect> never receives a negative width (invalid SVG → console errors).
-        const w = Math.max(0, starWidth * star.scale);
-        return (
-          <rect
-            key={star.id}
-            x={star.x}
-            y={star.y}
-            width={w}
-            height={starHeight}
-            fill="url(#gradient)"
-            transform={`rotate(${star.angle}, ${star.x + w / 2}, ${star.y + starHeight / 2})`}
-          />
-        );
-      })()}
+    <svg className={cn("w-full h-full absolute inset-0", className)}>
+      <rect
+        ref={rectRef}
+        width={starWidth}
+        height={starHeight}
+        fill="url(#gradient)"
+        style={{ display: "none" }}
+      />
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: trailColor, stopOpacity: 0 }} />

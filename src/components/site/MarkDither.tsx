@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { isLowPerfDevice } from "@/lib/use-reduced-effects";
 
 // Elyst wordmark glyph paths (same source as the Wordmark component). Each
 // glyph shares the baseline translate ty; tx positions it along the line.
@@ -73,13 +74,15 @@ export default function MarkDither({
     const front = hexToRgb(colorFront);
     const back = hexToRgb(colorBack);
     // Render a single static frame (no per-frame RAF loop) when the user
-    // prefers reduced motion OR the device can't hover (touch / mobile). On a
-    // phone the cursor-reveal has no cursor to react to, and the continuous
-    // dithering loop saturates the main thread — so we draw the formed mark
-    // once and stop. Desktops with a real pointer keep the live effect.
+    // prefers reduced motion, the device can't hover (touch / mobile), or it's
+    // a low-powered machine. On a phone the cursor-reveal has no cursor to
+    // react to, and the continuous per-pixel dithering loop saturates the main
+    // thread on weak hardware, so we draw the formed mark once and stop.
+    // Capable desktops with a real pointer keep the live effect.
     const reduce =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      window.matchMedia("(hover: none)").matches;
+      window.matchMedia("(hover: none)").matches ||
+      isLowPerfDevice();
 
     let cols = 0;
     let rows = 0;
@@ -124,6 +127,13 @@ export default function MarkDither({
 
     let raf = 0;
     let start = 0;
+    let last = 0;
+    let visible = true;
+    // The dithering shimmer + cursor halo read fine at 30fps; throttling the
+    // live loop halves its per-frame cost (a full per-pixel pass) on every
+    // machine, and an IntersectionObserver pauses it entirely once the hero
+    // scrolls off-screen instead of churning the CPU forever.
+    const frameInterval = 1000 / 30;
 
     function frame(now: number) {
       if (!start) start = now;
@@ -163,7 +173,17 @@ export default function MarkDither({
         }
       }
       ctx!.putImageData(image!, 0, 0);
-      if (!reduce) raf = requestAnimationFrame(frame);
+    }
+
+    function loop(now: number) {
+      if (!visible) {
+        raf = 0;
+        return;
+      }
+      raf = requestAnimationFrame(loop);
+      if (now - last < frameInterval) return;
+      last = now;
+      frame(now);
     }
 
     function onMove(e: PointerEvent) {
@@ -182,26 +202,41 @@ export default function MarkDither({
       if (reduce) frame(performance.now());
     });
     ro.observe(canvas);
-    // On touch/reduced-motion, skip pointer listeners entirely — there's no
-    // cursor to react to, and we never want a touch to trigger a redraw.
-    if (!reduce) {
-      canvas.addEventListener("pointermove", onMove);
-      canvas.addEventListener("pointerleave", onLeave);
-    }
 
+    // On touch / reduced-motion / low-power devices, draw the formed mark once
+    // and stop — no pointer listeners, no loop, no IntersectionObserver.
     if (reduce) {
       frame(performance.now());
-    } else {
-      raf = requestAnimationFrame(frame);
+      return () => {
+        ro.disconnect();
+      };
     }
+
+    canvas.addEventListener("pointermove", onMove);
+    canvas.addEventListener("pointerleave", onLeave);
+
+    // Only run the live loop while the hero is actually on screen.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !raf) {
+          last = 0;
+          raf = requestAnimationFrame(loop);
+        } else if (!visible && raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: "150px" },
+    );
+    io.observe(canvas);
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      if (!reduce) {
-        canvas.removeEventListener("pointermove", onMove);
-        canvas.removeEventListener("pointerleave", onLeave);
-      }
+      io.disconnect();
+      canvas.removeEventListener("pointermove", onMove);
+      canvas.removeEventListener("pointerleave", onLeave);
     };
   }, [colorFront, colorBack, pixelSize]);
 
