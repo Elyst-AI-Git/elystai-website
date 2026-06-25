@@ -1,11 +1,16 @@
 import { pageMeta } from "@/lib/seo";
 import Hero from "@/components/ai-for-work/Hero";
-import WhoItsFor from "@/components/ai-for-work/WhoItsFor";
+import Marquee from "@/components/ai-for-work/Marquee";
+import Pain from "@/components/ai-for-work/Pain";
+import Transformation from "@/components/ai-for-work/Transformation";
+import HowItWorks from "@/components/ai-for-work/HowItWorks";
 import Curriculum from "@/components/ai-for-work/Curriculum";
-import Skills from "@/components/ai-for-work/Skills";
+import ValueStack from "@/components/ai-for-work/ValueStack";
 import Instructor from "@/components/ai-for-work/Instructor";
-import PriceEnrol from "@/components/ai-for-work/PriceEnrol";
+import Testimonials from "@/components/ai-for-work/Testimonials";
 import Faq from "@/components/ai-for-work/Faq";
+import PriceEnrol from "@/components/ai-for-work/PriceEnrol";
+import FinalCta from "@/components/ai-for-work/FinalCta";
 
 export const metadata = {
   ...pageMeta({
@@ -21,12 +26,17 @@ export default function AiForWorkPage() {
   return (
     <main id="main" className="flex-1">
       <Hero />
-      <WhoItsFor />
+      <Marquee />
+      <Pain />
+      <Transformation />
+      <HowItWorks />
       <Curriculum />
-      <Skills />
+      <ValueStack />
       <Instructor />
-      <PriceEnrol />
+      <Testimonials />
       <Faq />
+      <PriceEnrol />
+      <FinalCta />
     </main>
   );
 }

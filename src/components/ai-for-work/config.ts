@@ -15,11 +15,35 @@ export const PRICE = "₹2,999";
 /** Original price — struck through next to the offer price on the pricing card. */
 export const ORIGINAL_PRICE = "₹4,999";
 
-/** What every ticket includes — reused by the pricing card. */
-export const INCLUDED = [
-  "7 live sessions",
-  "Session recordings",
-  "Materials & resources",
-  "Activity-based learning",
-  "Certificate on completion",
+/**
+ * The full value stack — every deliverable in the box, surfaced before the
+ * price by the "What you get" section.
+ */
+export const VALUE_STACK = [
+  "7 live sessions with real-time Q&A",
+  "Lifetime session recordings",
+  "Full learning portal access",
+  "A resource vault of templates & prompts",
+  "Ready-to-use Claude skills",
+  "A private WhatsApp group",
+  "3 months in the Elyst AI Circle",
+  "1 month of follow-up support",
+  "A certificate on completion",
 ];
+
+/**
+ * Scarcity & urgency on the pricing card. Real values go here just before
+ * launch so the bar and deadline stay honest and easy to update.
+ *
+ * TODO(launch): set real seat counts and the actual launch-price deadline.
+ */
+export const SEATS_TOTAL = 20;
+export const SEATS_LEFT = 12;
+/** Human-readable deadline for the launch price. */
+export const PRICE_DEADLINE = "this Sunday";
+
+/** Discounted price for Elyst AI Circle members (shown as a ribbon). */
+export const CIRCLE_PRICE = "₹2,399";
+
+/** Cohort start date — shown as a ribbon on the pricing card. */
+export const START_DATE = "July 13";

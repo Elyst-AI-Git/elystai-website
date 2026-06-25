@@ -48,7 +48,7 @@ function PriceCard({
       style={{
         background: highlighted ? "var(--surface-dark-2)" : "#ffffff",
         border: `1.5px solid ${highlighted ? "var(--surface-dark-hover)" : "var(--border)"}`,
-        borderRadius: "var(--radius-card)",
+        borderRadius: "var(--radius-md, 0.375rem)",
         boxShadow: "var(--shadow-card)",
         opacity: highlighted ? 0.85 : 1,
       }}
@@ -60,7 +60,7 @@ function PriceCard({
           style={{
             background: "#ffffff",
             color: "var(--elyst-emerald)",
-            fontSize: "0.72rem",
+            fontSize: "var(--text-micro)",
             letterSpacing: "0.1em",
             padding: "6px 14px 6px 10px",
             borderRadius: "4px 0 0 4px",
@@ -76,7 +76,7 @@ function PriceCard({
       <span
         className="font-bold uppercase"
         style={{
-          fontSize: "0.72rem",
+          fontSize: "var(--text-micro)",
           letterSpacing: "0.12em",
           color: highlighted ? "var(--fg-muted-dark)" : "var(--elyst-emerald)",
         }}
@@ -116,7 +116,7 @@ function PriceCard({
       {highlighted && (
         <div className="mt-4">
           <div className="mb-3 h-px" style={{ background: "rgba(255,255,255,0.08)" }} />
-          <p className="mb-2 font-bold uppercase" style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "var(--fg-3)" }}>
+          <p className="mb-2 font-bold uppercase" style={{ fontSize: "var(--text-micro)", letterSpacing: "0.06em", color: "var(--fg-3)" }}>
             Plus, exclusively:
           </p>
           <ul className="flex flex-col gap-2.5">
@@ -134,7 +134,7 @@ function PriceCard({
         {highlighted ? (
           <span
             className="block cursor-not-allowed rounded-md py-3.5 text-center font-bold"
-            style={{ background: "var(--surface-dark-hover)", color: "var(--fg-muted-dark)", fontSize: "0.95rem" }}
+            style={{ background: "var(--surface-dark-hover)", color: "var(--fg-muted-dark)", fontSize: "var(--text-small)" }}
           >
             {cta}
           </span>

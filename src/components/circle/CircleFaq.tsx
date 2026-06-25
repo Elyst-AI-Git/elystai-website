@@ -43,7 +43,7 @@ const jsonLd = {
 
 export default function CircleFaq() {
   return (
-    <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section style={{ padding: "var(--section-py) var(--section-px)", background: "#c2edcb" }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -58,16 +58,21 @@ export default function CircleFaq() {
         </div>
 
         <div className="mt-12">
-          <Accordion>
+          <Accordion className="gap-2.5">
             {faqs.map((f) => (
-              <AccordionItem key={f.q} value={f.q} style={{ borderColor: "var(--border)" }}>
-                <AccordionTrigger className="py-5">
+              <AccordionItem
+                key={f.q}
+                value={f.q}
+                className="overflow-hidden rounded-md border bg-white px-6 shadow-sm"
+                style={{ borderColor: "var(--border)" }}
+              >
+                <AccordionTrigger className="!border-0 py-5">
                   <span className="font-semibold text-fg" style={{ fontSize: "var(--text-body)" }}>
                     {f.q}
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
+                  <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
                     {f.a}
                   </p>
                 </AccordionContent>

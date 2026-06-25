@@ -42,13 +42,25 @@ const faqs: Faq[] = [
     a: "Yes. You'll receive a certificate once you complete the course, something you can add to your CV or LinkedIn to show you've got real, practical AI skills.",
   },
   {
+    q: "Is this only for people in India?",
+    a: "Not at all. The sessions are online and open to anyone, anywhere. The price is in rupees, but you can join from any country and the recordings work in every timezone.",
+  },
+  {
+    q: "What tools will I need, and are any of them paid?",
+    a: "You can do the whole course on free tools. We'll show you the best free options first, and where a paid tool is worth it, we'll be upfront so you can decide. All you really need is a laptop and an internet connection.",
+  },
+  {
+    q: "What happens after the course ends?",
+    a: "You keep the recordings and resources for life, get 3 months in the Elyst AI Circle community, and a month of follow-up support to help everything stick. You won't be left on your own once the two weeks are up.",
+  },
+  {
     q: "How do I pay and join?",
     a: "Just click the join button on this page and complete the payment. You'll get a confirmation with all the details on how to access your sessions. If you get stuck, reach out and we'll help you get in.",
   },
 ];
 
 // Slight alternating tilt per row — straightens to 0 when that row is open.
-const ROTATIONS = [-1.7, 1.4, -1.2, 1.5, -1.3, 1.1];
+const ROTATIONS = [-1.7, 1.4, -1.2, 1.5, -1.3, 1.1, -1.5, 1.3, -1.1];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -68,19 +80,13 @@ export default function Faq() {
   const isTouch = useIsTouch();
 
   return (
-    <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      {/* This dark FAQ is the last section before the global footer. The footer
-          fades from --bg (white) into --surface-dark over its top 160px — against
-          a dark section that reads as an ugly white band. Repointing --bg to the
-          dark surface on the footer makes that fade dark→dark, so the FAQ flows
-          straight into the footer. Scoped here; reverts on navigation. */}
-      <style>{`footer > div { --bg: var(--surface-dark); }`}</style>
+    <section style={{ padding: "var(--section-py) var(--section-px)", background: "#c2edcb" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div className="mx-auto max-w-3xl">
         <div className="mx-auto max-w-2xl text-center">
-          <SectionMark tone="dark">FAQ</SectionMark>
-          <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
+          <SectionMark>FAQ</SectionMark>
+          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
             Questions before you join.
           </h2>
         </div>
@@ -104,7 +110,7 @@ export default function Faq() {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
+                  <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
                     {f.a}
                   </p>
                 </AccordionContent>

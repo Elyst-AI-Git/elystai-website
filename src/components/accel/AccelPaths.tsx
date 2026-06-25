@@ -1,172 +1,116 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { IconProgram, IconCircle, IconTile } from "@/components/ui/icons";
 import { SectionMark } from "./SectionMark";
 import { useIsTouch } from "@/lib/use-touch";
 
 /**
- * Accelerator paths — the core section. One anchor offering (the Flagship,
- * presented as a restrained teaser with NO CTA) plus the community (Circle),
- * which carries the page's primary action since there's no waitlist.
- *
- * Card layout: big title top-left, icon top-right, body text bottom.
+ * Accelerator paths — two program cards sitting on a narrow pastel-green band.
+ * Each white card carries the program name as a full-bleed highlight bar with a
+ * thinner "by Elyst AI" bar beneath; hovering lifts the card and reveals a one-
+ * line briefing of what the program is.
  */
 
+type Program = {
+  name: string;
+  href: string;
+  blurb: string;
+  titleBg: string;
+  titleColor: string;
+  ribbon?: string;
+};
+
+const programs: Program[] = [
+  {
+    name: "AI for Work",
+    href: "/ai-for-work",
+    blurb: "A 2 week live program to make AI your everyday working assistant. Prompts, automations and agents that save you hours every week, taught live by the team that builds AI for real businesses.",
+    titleBg: "var(--elyst-emerald)",
+    titleColor: "#eafff2",
+    ribbon: "Open now",
+  },
+  {
+    name: "The Circle",
+    href: "/circle",
+    blurb: "An always-on community that keeps you sharp on everything AI, with a new question every day and people moving at your pace, not following the noise.",
+    titleBg: "#103b30",
+    titleColor: "#eafff2",
+  },
+];
+
+function ProgramCard({ program, index, isTouch }: { program: Program; index: number; isTouch: boolean }) {
+  const card = (
+    <div
+      className="group relative h-full overflow-hidden rounded-md bg-white shadow-[0_14px_36px_-18px_rgba(3,98,76,0.45)] transition-transform duration-300 ease-out hover:-translate-y-1.5"
+    >
+      {/* Title bar — full bleed, edge to edge */}
+      <div
+        className="relative w-full px-7 py-7 text-left font-display font-bold"
+        style={{ background: program.titleBg, color: program.titleColor, fontSize: "clamp(2.2rem, 3.8vw, 3.1rem)", lineHeight: 1.05 }}
+      >
+        {program.name}
+        {/* Edge ribbon — white, top-right, fully inside the visible card */}
+        {program.ribbon && (
+          <span
+            className="absolute right-5 top-5 rounded-md px-4 py-1.5 font-bold uppercase tracking-wide"
+            style={{ background: "#ffffff", color: "var(--elyst-emerald)", fontSize: "var(--text-small)", boxShadow: "0 4px 12px rgba(0,0,0,0.18)" }}
+          >
+            {program.ribbon}
+          </span>
+        )}
+      </div>
+
+      {/* Briefing — always visible */}
+      <div className="px-7 py-6">
+        <p
+          style={{ color: "#0A0F0C", fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.6 }}
+        >
+          {program.blurb}
+        </p>
+      </div>
+    </div>
+  );
+
+  const wrapped = (
+    <Link href={program.href} className="block h-full">
+      {card}
+    </Link>
+  );
+
+  if (isTouch) return <div className="h-full">{wrapped}</div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+      className="h-full"
+    >
+      {wrapped}
+    </motion.div>
+  );
+}
+
 export default function AccelPaths() {
-  // The film-grain SVG filter (feTurbulence over the whole section) and the
-  // two cards' whileInView entrances + hover-only dotted overlays are
-  // desktop flourishes — render flat/static and skip the grain on touch.
   const isTouch = useIsTouch();
   return (
-    <section
-      id="paths"
-      className="relative scroll-mt-28 overflow-hidden"
-      style={{
-        padding: "var(--section-py) var(--section-px)",
-        background:
-          "linear-gradient(165deg, color-mix(in srgb, var(--surface-dark) 78%, var(--elyst-emerald) 22%), var(--surface-dark) 55%, color-mix(in srgb, var(--surface-dark) 88%, black 12%))",
-      }}
-    >
-      {/* Heavy film grain — skipped on touch */}
-      {!isTouch && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-0"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='fine'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' result='coarse'/%3E%3CfeColorMatrix in='coarse' type='saturate' values='0' result='coarseGray'/%3E%3CfeBlend in='fine' in2='coarseGray' mode='overlay'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            opacity: 0.5,
-            mixBlendMode: "overlay",
-          }}
-        />
-      )}
-
-      <div className="relative z-10 mx-auto max-w-5xl">
+    <section id="paths" className="relative scroll-mt-28 bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div className="relative z-10 mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
-          <SectionMark tone="dark">Programs</SectionMark>
-          <h2 className="mt-6" style={{ fontSize: "var(--text-h2)", color: "var(--fg-on-dark)" }}>
+          <SectionMark>Programs</SectionMark>
+          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
             The perfect place to be AI native.
           </h2>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {/* Card 1 — AI Programs */}
-          {(() => {
-            const card1 = (
-              <Card
-                variant="gradient"
-                className="group relative flex h-full flex-col justify-between overflow-hidden p-8 sm:p-10"
-                style={{
-                  borderRadius: "var(--radius-xl, 24px)",
-                  background: "var(--card)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  boxShadow: "0 24px 60px -20px rgba(2, 20, 14, 0.55)",
-                  minHeight: "260px",
-                }}
-              >
-                {/* Dotted hover overlay — desktop only, never fires on touch */}
-                {!isTouch && (
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,98,76,0.12)_1px,transparent_1px)] bg-[length:5px_5px]" />
-                  </div>
-                )}
-
-                {/* Top row: big title left, icon right */}
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <h3
-                    className="font-display font-bold leading-tight text-fg"
-                    style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", lineHeight: 1.1 }}
-                  >
-                    AI Programs
-                  </h3>
-                  <IconTile tone="darkgreen" className="mt-1 shrink-0">
-                    <IconProgram size={22} variant="duotone" />
-                  </IconTile>
-                </div>
-
-                {/* Body bottom */}
-                <p
-                  className="relative z-10 mt-6 text-fg-2"
-                  style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}
-                >
-                  A program for professionals to make AI your working assistant.
-                </p>
-              </Card>
-            );
-            if (isTouch) return <div className="h-full">{card1}</div>;
-            return (
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="h-full"
-              >
-                {card1}
-              </motion.div>
-            );
-          })()}
-
-          {/* Card 2 — The Circle */}
-          {(() => {
-            const card2 = (
-              <Card
-                variant="gradient"
-                className="group relative flex h-full flex-col justify-between overflow-hidden p-8"
-                style={{
-                  borderRadius: "var(--radius-xl, 24px)",
-                  background: "var(--card)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  boxShadow: "0 24px 60px -20px rgba(2, 20, 14, 0.55)",
-                  minHeight: "260px",
-                }}
-              >
-                {/* Dotted hover overlay — desktop only, never fires on touch */}
-                {!isTouch && (
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,98,76,0.12)_1px,transparent_1px)] bg-[length:5px_5px]" />
-                  </div>
-                )}
-
-                {/* Top row: big title left, icon right */}
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <h3
-                    className="font-display font-bold leading-tight text-fg"
-                    style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", lineHeight: 1.1 }}
-                  >
-                    The Circle.
-                  </h3>
-                  <IconTile tone="darkgreen" className="mt-1 shrink-0">
-                    <IconCircle size={22} variant="duotone" />
-                  </IconTile>
-                </div>
-
-                {/* Body bottom */}
-                <p
-                  className="relative z-10 mt-6 text-fg-2"
-                  style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}
-                >
-                  A space that keeps you sharp on everything you must know around AI.
-                </p>
-              </Card>
-            );
-            if (isTouch) return <div className="h-full">{card2}</div>;
-            return (
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                className="h-full"
-              >
-                {card2}
-              </motion.div>
-            );
-          })()}
+        {/* Wide pastel-green band behind the two cards only */}
+        <div className="mt-12 rounded-md p-8 sm:p-16" style={{ background: "#c2edcb" }}>
+          <div className="grid items-start gap-6 sm:grid-cols-2">
+            {programs.map((p, i) => (
+              <ProgramCard key={p.href} program={p} index={i} isTouch={isTouch} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

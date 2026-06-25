@@ -70,7 +70,7 @@ export default function AiosHero() {
         >
           <span className="block">It&rsquo;s time to work,</span>
           <span className="block">
-            the <span style={{ color: "#03624c" }}>AI way</span>
+            the <span style={{ color: "var(--elyst-emerald)" }}>AI way</span>
           </span>
         </h1>
 

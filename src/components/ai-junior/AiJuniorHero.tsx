@@ -45,17 +45,21 @@ export default function AiJuniorHero() {
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            {/* Closed, non-clickable */}
+            {/* Closed status — high-contrast solid badge so it clearly reads as
+                "not open right now" against the green hero, with a live status dot. */}
             <span
-              className="inline-flex cursor-not-allowed items-center justify-center rounded-md px-7 py-3.5 font-bold"
+              className="inline-flex cursor-not-allowed items-center gap-2.5 rounded-md px-6 py-3.5 font-bold shadow-lg"
               style={{
-                background: "rgba(255,255,255,0.15)",
-                color: "rgba(255,255,255,0.55)",
+                background: "#ffffff",
+                color: "var(--elyst-emerald)",
                 fontSize: "var(--text-body)",
-                border: "1px solid rgba(255,255,255,0.2)",
               }}
             >
-              Closed for now
+              <span aria-hidden className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#e0392b] opacity-70" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#e0392b]" />
+              </span>
+              Enrolment closed for now
             </span>
             {/* 2000+ badge, navbar corner radius */}
             <span
@@ -66,7 +70,7 @@ export default function AiJuniorHero() {
                 borderRadius: "var(--radius-md, 10px)",
               }}
             >
-              <span className="font-display font-bold text-green" style={{ fontSize: "1.1rem", lineHeight: 1 }}>2000+</span>
+              <span className="font-display font-bold text-green" style={{ fontSize: "var(--text-h3)", lineHeight: 1 }}>2000+</span>
               <span className="font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-small)" }}>Students Trained</span>
             </span>
           </div>

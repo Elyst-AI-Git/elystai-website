@@ -6,9 +6,10 @@ import { SectionMark } from "@/components/ui/section-mark";
 
 /**
  * Instructor — trust section for Shirin (Fathima Shirin P), Founder of Elyst AI.
- * Reuses her brand photo from the home page. The photo sits like a sticker:
- * white-bordered, slightly rotated and scaled past its tinted frame, so it pops
- * off the surface. Three credibility stats sit alongside the bio.
+ * Sits on the same light-green halftone texture as the Accelerator hero. The
+ * photo rests on a square card with no border, anchored so its bottom edge
+ * lines up with the card's bottom — Shirin's head rises above the card's top
+ * edge rather than being contained inside it.
  */
 
 const stats = [
@@ -19,33 +20,35 @@ const stats = [
 
 export default function Instructor() {
   return (
-    <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section
+      style={{
+        padding: "var(--section-py) var(--section-px)",
+        background: "var(--bg) url('/ai-for-work/instructor-bg.jpg') center / cover no-repeat",
+      }}
+    >
       <div className="mx-auto grid max-w-4xl items-center gap-14 md:grid-cols-[300px_1fr] md:gap-16">
-        {/* Photo — framed mat with the sticker-style portrait popping out of it */}
+        {/* Photo — square mat with the portrait anchored to its bottom edge,
+            rising above the top edge rather than being framed inside it. */}
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative mx-auto w-56 md:w-full"
+          className="relative order-2 mx-auto w-56 md:order-1 md:w-full"
         >
-          {/* Tinted frame / mat — the card the photo rests on */}
+          {/* Mat — the square card the photo rests on */}
           <div
             className="aspect-square rounded-[28px]"
             style={{
-              background: "linear-gradient(160deg, rgba(0,223,130,0.22), rgba(3,98,76,0.30))",
-              border: "1px solid rgba(255,255,255,0.12)",
+              background: "linear-gradient(160deg, rgba(3,98,76,0.16), rgba(0,223,130,0.22))",
+              border: "1px solid rgba(3,98,76,0.14)",
             }}
           />
-          {/* Sticker photo — tilted, white-bordered, and anchored to the card's
-              bottom while rising well above its top edge so it pops out above
-              the card rather than sitting inside it. */}
-          <div
-            className="absolute -top-16 right-1 bottom-3 left-1 overflow-hidden rounded-[22px] border-[6px] border-white shadow-2xl"
-            style={{ transform: "rotate(-4deg)" }}
-          >
+          {/* Photo — bottom flush with the mat's bottom edge, head rising
+              above the mat's top edge. No border. */}
+          <div className="absolute -top-14 right-0 bottom-0 left-0 overflow-hidden rounded-[24px]">
             <Image
-              src="/images/founders/shirin.webp"
+              src="/images/founders/shirin-v2.webp"
               alt="Fathima Shirin P, Founder of Elyst AI"
               fill
               sizes="(max-width: 768px) 224px, 300px"
@@ -60,12 +63,13 @@ export default function Instructor() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
+          className="order-1 md:order-2"
         >
-          <SectionMark tone="dark">Your instructor</SectionMark>
-          <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
+          <SectionMark>Your instructor</SectionMark>
+          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
             Taught by Shirin.
           </h2>
-          <p className="mt-4 text-fg-on-dark/80" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
+          <p className="mt-4 text-fg-2" style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.65 }}>
             Fathima Shirin P is an AI educator and founder of Elyst AI. She helps
             professionals, founders and educators turn AI into a real, everyday
             advantage through hands-on live sessions, practical use cases, and
@@ -79,13 +83,13 @@ export default function Instructor() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl border border-white/10 px-4 py-5 text-center"
-                style={{ background: "rgba(255,255,255,0.04)" }}
+                className="rounded-2xl border-[3px] px-4 py-5 text-center"
+                style={{ background: "rgba(255,255,255,0.7)", borderColor: "var(--elyst-emerald)" }}
               >
-                <dt className="font-display font-bold text-[var(--elyst-green)]" style={{ fontSize: "clamp(1.6rem, 3vw, 2.1rem)", lineHeight: 1 }}>
+                <dt className="font-display font-bold text-emerald" style={{ fontSize: "clamp(1.6rem, 3vw, 2.1rem)", lineHeight: 1 }}>
                   {s.value}
                 </dt>
-                <dd className="mt-1.5 text-fg-on-dark/70" style={{ fontSize: "0.85rem", lineHeight: 1.3 }}>
+                <dd className="mt-1.5 text-fg-2" style={{ fontSize: "calc(0.85rem + 2px)", lineHeight: 1.3 }}>
                   {s.label}
                 </dd>
               </div>

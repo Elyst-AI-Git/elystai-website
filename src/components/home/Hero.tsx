@@ -25,8 +25,8 @@ export default function Hero() {
               make you{" "}
               <PointerHighlight
                 containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[4px] !border-[#00df82] translate-y-[0.17em]"
-                pointerClassName="text-[#00df82]"
+                rectangleClassName="border-[4px] !border-green translate-y-[0.17em]"
+                pointerClassName="text-green"
               >
                 <span className="relative z-10 block py-0 pl-1 pr-2.5 leading-[1.15]">grow</span>
               </PointerHighlight>
@@ -35,17 +35,17 @@ export default function Hero() {
 
           <p
             className="mt-5 max-w-md text-fg-2 md:max-w-none md:whitespace-nowrap"
-            style={{ fontSize: "var(--text-body)" }}
+            style={{ fontSize: "calc(var(--text-body) + 2px)" }}
           >
             We set up AI for your business and teach you how to use it.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <BrandButton href="/aios" tone="green">
-              See AIOS
+              <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>See AIOS</span>
             </BrandButton>
             <BrandButton href="/learn" variant="outline">
-              Explore programs
+              <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>Explore programs</span>
             </BrandButton>
           </div>
         </div>

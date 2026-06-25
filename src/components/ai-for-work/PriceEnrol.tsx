@@ -1,29 +1,87 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
-import EnquiryForm from "./EnquiryForm";
-import { PRICE, ORIGINAL_PRICE, INCLUDED, RAZORPAY_URL } from "./config";
+import {
+  PRICE,
+  ORIGINAL_PRICE,
+  RAZORPAY_URL,
+  SEATS_TOTAL,
+  SEATS_LEFT,
+  CIRCLE_PRICE,
+  START_DATE,
+  VALUE_STACK,
+} from "./config";
 
 /**
- * Price & Enrol — the conversion section. A single transparent pricing card
- * states the one-time price and everything included, then the enrol block:
- * primary "Pay & enrol now" → Razorpay, secondary "Enquire first" reveals the
- * on-site enquiry form inline (no Google Form, no leaving the page).
+ * Price & Enrol — a dark-green ticket card on the page's plain white
+ * background, finished with a grainy hard-paper texture (feTurbulence noise,
+ * not a gradient). Edge ribbons carry the cohort start date and the
+ * Circle-member price; a perforated tear separates the price from the
+ * included list below.
  */
-export default function PriceEnrol() {
-  const [showEnquiry, setShowEnquiry] = useState(false);
 
+const included = VALUE_STACK.slice(0, 5);
+
+/** Metallic ribbon chip — identical treatment to the How It Works
+    "4 to 5 hours a week" time-commitment strip. */
+function MetalChip({ children, className, style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
-    <section id="enrol" className="scroll-mt-24" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div className="mx-auto max-w-xl">
+    <span
+      className={`inline-flex items-center rounded-md px-4 py-1.5 font-bold ${className ?? ""}`}
+      style={{
+        background: "linear-gradient(180deg, #f8faf9 0%, #dde4e0 55%, #ebefed 100%)",
+        color: "#0A0F0C",
+        borderTop: "1px solid rgba(255,255,255,0.95)",
+        borderBottom: "1px solid rgba(3,98,76,0.18)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 2px 6px rgba(3,98,76,0.12)",
+        fontSize: "var(--text-small)",
+        ...style,
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+/** Grainy hard-paper texture — feTurbulence noise, not a gradient. */
+function GrainTexture() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 opacity-[0.5] mix-blend-overlay"
+      style={{
+        backgroundImage:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        backgroundRepeat: "repeat",
+      }}
+    />
+  );
+}
+
+/** The ticket "tear" — a dashed perforation with punched-out circles on each
+    edge, in the page's white background so they read as cut-outs. */
+function Perforation() {
+  return (
+    <div className="relative h-0">
+      <span aria-hidden className="absolute -left-3.5 -top-3.5 h-7 w-7 rounded-full bg-white" />
+      <span aria-hidden className="absolute -right-3.5 -top-3.5 h-7 w-7 rounded-full bg-white" />
+      <div className="absolute left-5 right-5 top-0 border-t-2" style={{ borderColor: "rgba(255,255,255,0.25)", borderStyle: "dashed" }} />
+    </div>
+  );
+}
+
+export default function PriceEnrol() {
+  return (
+    <section id="enrol" className="scroll-mt-24 bg-white" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div className="mx-auto max-w-sm">
         <div className="text-center">
-          <SectionMark>Price & enrol</SectionMark>
+          <SectionMark>Pricing</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            One price. Everything included.
+            One price.
+            <br />
+            Everything included.
           </h2>
         </div>
 
@@ -32,71 +90,76 @@ export default function PriceEnrol() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mt-12 overflow-hidden rounded-[24px] border border-border bg-white shadow-card"
+          className="relative mt-12 overflow-hidden rounded-[28px]"
+          style={{ background: "var(--elyst-emerald)", boxShadow: "0 30px 80px -28px rgba(3,98,76,0.45)" }}
         >
-          <div className="bg-surface-dark px-8 py-10 text-center">
-            <p className="text-fg-on-dark/70" style={{ fontSize: "var(--text-small)" }}>
-              AI for Work · one-time
-            </p>
-            <div className="mt-2 flex items-baseline justify-center gap-3">
-              <span
-                className="font-display font-bold text-fg-on-dark/50 line-through"
-                style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)", lineHeight: 1, textDecorationColor: "rgba(255,255,255,0.4)" }}
-              >
-                {ORIGINAL_PRICE}
-              </span>
-              <span className="font-display font-bold text-fg-on-dark" style={{ fontSize: "var(--text-hero)", lineHeight: 1 }}>
-                {PRICE}
-              </span>
+          <GrainTexture />
+
+          {/* Top stub — edge ribbons + price */}
+          <div className="relative overflow-hidden px-8 pt-9 pb-12 text-center">
+            {/* Edge ribbons — top-left cohort start, top-right Circle price */}
+            <MetalChip className="absolute left-0 top-6 z-10 rounded-l-none">Starts {START_DATE}</MetalChip>
+            <MetalChip className="absolute right-0 top-6 z-10 rounded-r-none">{CIRCLE_PRICE} for Circle members</MetalChip>
+
+            <div className="relative z-[5] mt-6">
+              <div className="flex items-end justify-center gap-2.5">
+                <span
+                  className="font-display font-bold text-fg-on-dark"
+                  style={{ fontSize: "calc(var(--text-hero) - 10px)", lineHeight: 1, letterSpacing: "-0.0236em" }}
+                >
+                  {PRICE}
+                </span>
+                <span
+                  className="font-display font-semibold line-through"
+                  style={{ fontSize: "var(--text-h3)", lineHeight: 1.3, color: "rgba(240,250,248,0.5)" }}
+                >
+                  {ORIGINAL_PRICE}
+                </span>
+              </div>
+              <p className="mt-3 font-semibold" style={{ fontSize: "var(--text-small)", color: "var(--elyst-green)" }}>
+                Save 40% &mdash; exclusive for Batch 1
+              </p>
             </div>
-            <p className="mt-3 inline-block rounded-full px-3 py-1 font-semibold" style={{ background: "var(--elyst-green)", color: "#053d2e", fontSize: "0.8rem" }}>
-              Limited-time offer price
-            </p>
           </div>
 
-          <div className="px-8 py-8">
-            <ul className="flex flex-col gap-3">
-              {INCLUDED.map((item) => (
-                <li key={item} className="flex items-center gap-3">
-                  <Check className="h-5 w-5 shrink-0 text-emerald" />
-                  <span className="text-fg-2" style={{ fontSize: "var(--text-small)" }}>
-                    {item}
-                  </span>
+          <Perforation />
+
+          {/* Bottom stub — included list + CTA */}
+          <div className="relative px-8 pt-10 pb-8">
+            <ul className="flex flex-col gap-3.5">
+              {included.map((item) => (
+                <li
+                  key={item}
+                  className="border-b pb-3.5 text-fg-on-dark last:border-0 last:pb-0"
+                  style={{ borderColor: "rgba(255,255,255,0.14)", fontSize: "var(--text-small)" }}
+                >
+                  {item}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-3">
-              <BrandButton href={RAZORPAY_URL} tone="green" full>
-                Pay &amp; enrol now · {PRICE}
-              </BrandButton>
-              {!showEnquiry && (
-                <button
-                  type="button"
-                  onClick={() => setShowEnquiry(true)}
-                  className="text-center font-medium text-emerald underline-offset-4 hover:underline"
-                  style={{ fontSize: "var(--text-small)" }}
-                >
-                  Enquire first
-                </button>
-              )}
+            {/* Seats remaining */}
+            <div className="mt-7">
+              <div className="mb-2 flex items-center justify-between text-fg-on-dark/70" style={{ fontSize: "var(--text-label)" }}>
+                <span>{SEATS_LEFT} of {SEATS_TOTAL} seats left</span>
+                <span>Filling up</span>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full" style={{ background: "rgba(255,255,255,0.14)" }}>
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${((SEATS_TOTAL - SEATS_LEFT) / SEATS_TOTAL) * 100}%`, background: "var(--elyst-green)" }}
+                />
+              </div>
             </div>
 
-            {showEnquiry && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="overflow-hidden"
-              >
-                <div className="mt-8 border-t border-border pt-8">
-                  <p className="mb-4 text-center text-fg-2" style={{ fontSize: "var(--text-small)" }}>
-                    Not sure yet? Send us your question and we&rsquo;ll get back to you.
-                  </p>
-                  <EnquiryForm />
-                </div>
-              </motion.div>
-            )}
+            <div className="mt-7 flex flex-col gap-3">
+              <BrandButton href={RAZORPAY_URL} tone="green" full>
+                Join now
+              </BrandButton>
+              <BrandButton href="#site-footer" variant="outline" tone="emerald" className="border-white! bg-transparent! text-white! hover:bg-white/10!" full>
+                Enquire first
+              </BrandButton>
+            </div>
           </div>
         </motion.div>
       </div>

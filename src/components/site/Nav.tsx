@@ -20,7 +20,7 @@ const learnItems: LearnItem[] = [
   { label: "Overview", href: "/learn" },
   { label: "Elyst AI Circle", href: "/circle" },
   { label: "AI for Juniors", href: "/juniors" },
-  { label: "AI for Work", href: "/ai-for-work" },
+  { label: "AI for Work", href: "/ai-for-work", badge: "Open now" },
 ];
 
 const joinPrefixes = ["/learn", "/circle", "/ai-yathra"];
@@ -50,8 +50,7 @@ function NavCta({
       full={full}
       tone="light"
       preset="silver"
-      greenRing
-      className="min-h-[40px]! px-5! text-[length:var(--text-small)]"
+      className="min-h-[40px]! px-5! text-[length:calc(var(--text-small)+1px)]"
     >
       {label}
     </BrandButton>
@@ -80,7 +79,7 @@ function Logo({ onClick, isTouch }: { onClick?: () => void; isTouch: boolean }) 
   return (
     <Link href="/" onClick={onClick} aria-label="Elyst AI | Your AI Partner">
       <Wordmark
-        className="h-5 w-auto text-fg-on-dark"
+        className="h-7 w-auto text-fg-on-dark"
         // The drop-shadow glow is a few extra paint layers on every frame —
         // on touch the navbar is otherwise static, so skip it and render
         // the plain wordmark.
@@ -143,7 +142,8 @@ export default function Nav() {
   }, [mobileOpen]);
 
   const linkClass =
-    "text-small font-medium text-fg-on-dark/85 transition-colors duration-200 hover:text-green";
+    "font-medium text-fg-on-dark/85 transition-colors duration-200 hover:text-green";
+  const linkStyle = { fontSize: "calc(var(--text-small) + 1px)" };
 
   return (
     <>
@@ -179,7 +179,7 @@ export default function Nav() {
           {/* Desktop: left links */}
           <div className="hidden flex-1 items-center gap-6 md:flex">
             {leftLinks.map((l) => (
-              <Link key={l.href} href={l.href} className={linkClass}>
+              <Link key={l.href} href={l.href} className={linkClass} style={linkStyle}>
                 {l.label}
               </Link>
             ))}
@@ -203,6 +203,7 @@ export default function Nav() {
                 onClick={() => setLearnOpen((o) => !o)}
                 onMouseEnter={() => setLearnOpen(true)}
                 className={`inline-flex items-center gap-1 ${linkClass}`}
+                style={linkStyle}
                 aria-expanded={learnOpen}
                 aria-haspopup="menu"
               >

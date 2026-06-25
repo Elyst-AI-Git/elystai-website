@@ -50,7 +50,7 @@ function KnowledgeArtifact() {
                   : m.side === "right"
                   ? "rgba(200,255,235,0.85)"
                   : "rgba(240,250,248,0.55)",
-              fontSize: "0.88rem",
+              fontSize: "var(--text-eyebrow)",
               maxWidth: "80%",
               border:
                 m.text === "Ask Rahul"
@@ -178,7 +178,7 @@ export default function AiosProblem() {
                   className="max-w-[26ch]"
                   style={{
                     color: muted,
-                    fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)",
+                    fontSize: "var(--text-h3)",
                     fontWeight: 500,
                     lineHeight: 1.5,
                   }}

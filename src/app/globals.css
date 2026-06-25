@@ -76,6 +76,9 @@
   --text-body: clamp(1.15rem, 1.45vw, 1.25rem);
   --text-small: 1rem;
   --text-eyebrow: 0.95rem;
+  /* sub-small labels: sub-eyebrows (Week 1), captions, and tiny meta text */
+  --text-label: 0.85rem;
+  --text-micro: 0.72rem;
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.042em;
@@ -114,7 +117,7 @@
   /* Text */
   --fg: hsl(150 25% 5%);
   --fg-2: hsl(155 17% 27%);
-  --fg-3: hsl(155 10% 52%);
+  --fg-3: hsl(155 12% 40%);
   --fg-on-dark: hsl(150 50% 96%);
   --fg-muted-dark: hsl(155 24% 62%);
 
@@ -159,6 +162,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  ::selection {
+    background: var(--elyst-green);
+    color: var(--elyst-ink);
   }
   html {
     @apply font-sans;
@@ -327,8 +334,8 @@
       background: none;
       -webkit-background-clip: initial;
       background-clip: initial;
-      -webkit-text-fill-color: #03624c;
-      color: #03624c;
+      -webkit-text-fill-color: var(--elyst-emerald);
+      color: var(--elyst-emerald);
       filter: none;
     }
   }
@@ -364,6 +371,18 @@
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
   }
+}
+
+/*
+  AIOS page — sharp-edged language. Every card/box on /aios drops its corner
+  radius (zeroed even over inline border-radius via !important). Genuinely
+  circular elements (rounded-full dots, bars, avatars, pills) are preserved.
+*/
+.aios-sharp [class*="rounded"]:not([class*="rounded-full"]):not(.metal-fx-root):not(.metal-fx-root *),
+.aios-sharp [style*="border-radius"]:not(.metal-fx-root):not(.metal-fx-root *),
+.aios-sharp [style*="borderRadius"]:not(.metal-fx-root):not(.metal-fx-root *),
+.aios-sharp .card {
+  border-radius: 0 !important;
 }
 
 @utility animate-cosmic-spin {

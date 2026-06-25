@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
+import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
@@ -80,6 +81,7 @@ export default function RootLayout({
         </a>
         <Nav />
         {children}
+        <PreFooter />
         <Footer />
         <Analytics />
       </body>

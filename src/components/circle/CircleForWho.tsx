@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { SectionMark } from "@/components/ui/section-mark";
 
 const cards = [
   {
@@ -35,7 +36,8 @@ export default function CircleForWho() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.15 }}>
+          <SectionMark>Who it&rsquo;s for</SectionMark>
+          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.15 }}>
             Who this is for
           </h2>
           <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.8 }}>
@@ -52,7 +54,7 @@ export default function CircleForWho() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}
-              className={c.dark ? "rounded-[20px] bg-emerald p-8" : "card p-8"}
+              className={c.dark ? "rounded-md bg-emerald p-8" : "card rounded-md p-8"}
               style={c.dark ? { boxShadow: "0 12px 40px rgba(3,98,76,0.25)" } : undefined}
             >
               <h3
@@ -96,7 +98,7 @@ export default function CircleForWho() {
           transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
           className="mt-10 text-center"
         >
-          <p className="text-fg-2" style={{ fontSize: "1.08rem", lineHeight: 1.65, fontWeight: 500 }}>
+          <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65, fontWeight: 500 }}>
             If either of those sounds like you,{" "}
             <strong className="font-bold text-fg">apply now.</strong>
           </p>

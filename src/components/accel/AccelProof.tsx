@@ -17,7 +17,7 @@ export default function AccelProof() {
     <section
       style={{
         padding: "var(--section-py) 0",
-        background: "var(--surface-muted)",
+        background: "var(--bg)",
       }}
     >
       <div className="mx-auto mb-4 max-w-2xl px-[var(--section-px)] text-center">

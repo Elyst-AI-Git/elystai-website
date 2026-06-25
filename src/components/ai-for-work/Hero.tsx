@@ -1,148 +1,140 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
-import SquigglyArrow from "@/components/ui/squiggle-arrow";
-import { useIsTouch } from "@/lib/use-touch";
 
 /**
- * AI for Work hero — the 5-second hook. The reference artwork (aurora rays
- * converging on a glowing doorway) sits as a dimmed full-bleed background with a
- * layered scrim over it so the copy stays legible. The quick-facts row is a set
- * of funky 3D tiles that sit slightly misaligned and straighten on hover
- * (desktop only); on touch they stack one per line, flat.
+ * AI for Work hero — airy and optimistic: a soft cloudy sky (built from layered
+ * radial gradients, lightly brand-green tinted), one big promise with an emerald
+ * italic accent, a single prominent action, and six funky 3D fact-tiles
+ * floating around the copy.
+ *
+ * Large screens float the tiles around the column; below lg (no room to clear
+ * the centred copy) the tiles collapse into a tidy wrapped row beneath the CTA.
  */
 
-type Fact = { label: string; rotate: number; tone: keyof typeof toneStyles };
+type Tone = "emerald" | "light";
 
-// Five quick facts, each its own tile. Alternating tilt + cycling tones so the
-// row reads as a playful collage rather than a flat list.
-const facts: Fact[] = [
-  { label: "2 Weeks", rotate: -4, tone: "emerald" },
-  { label: "Live Classes", rotate: 3, tone: "light" },
-  { label: "Work Faster", rotate: -2.5, tone: "emerald" },
-  { label: "Live Q&A", rotate: 3.5, tone: "light" },
-  { label: "Free Recordings", rotate: -3, tone: "emerald" },
-];
-
-const toneStyles = {
-  // 3D look = a chunky hard offset shadow in a darker shade of the same hue,
-  // plus a top highlight + bottom inner shade for a moulded, tactile face.
+const toneStyles: Record<Tone, { bg: string; color: string; shadow: string }> = {
   light: {
     bg: "linear-gradient(180deg, #ffffff 0%, #eef4f1 100%)",
     color: "var(--elyst-emerald)",
-    shadow: "#9fb8ad",
+    shadow: "#c2d3cb",
   },
   emerald: {
-    bg: "linear-gradient(180deg, #04855f 0%, #03624c 100%)",
+    bg: "linear-gradient(180deg, var(--elyst-emerald-light) 0%, var(--elyst-emerald) 100%)",
     color: "#ffffff",
-    shadow: "#01130d",
+    shadow: "#013024",
   },
-} as const;
+};
 
-function FactTile({ fact, isTouch }: { fact: Fact; isTouch: boolean }) {
-  const [hovered, setHovered] = useState(false);
-  const t = toneStyles[fact.tone];
-  const depth = 5; // px of 3D extrusion
+type Fact = { label: string; tone: Tone; rotate: number; pos: string };
 
+// Six facts, floated around the copy on lg (laptop occupies the top-right).
+const facts: Fact[] = [
+  { label: "2 Weeks", tone: "emerald", rotate: -7, pos: "left-[14%] top-[22%]" },
+  { label: "Live Classes", tone: "light", rotate: 5, pos: "left-[10%] top-[50%]" },
+  { label: "Work Faster", tone: "light", rotate: 6, pos: "left-[14%] top-[78%]" },
+  { label: "Live Q&A", tone: "light", rotate: -4, pos: "right-[14%] top-[22%]" },
+  { label: "Free Recordings", tone: "light", rotate: 4, pos: "right-[10%] top-[50%]" },
+  { label: "Certificate", tone: "emerald", rotate: -6, pos: "right-[14%] top-[78%]" },
+];
+
+function Tile({ label, tone, rotate }: { label: string; tone: Tone; rotate: number }) {
+  const t = toneStyles[tone];
+  const depth = 5;
   return (
-    <motion.div
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      animate={{
-        rotate: isTouch ? 0 : hovered ? 0 : fact.rotate,
-        y: hovered && !isTouch ? -3 : 0,
-      }}
-      transition={{ duration: 0.32, ease: "easeOut" }}
-      className="cursor-default select-none rounded-md font-display font-bold"
+    <span
+      className="inline-block select-none rounded-md font-display font-bold"
       style={{
         background: t.bg,
         color: t.color,
         fontSize: "var(--text-small)",
-        padding: "0.6rem 1.05rem",
-        // Hard offset shadow = the extruded 3D side; soft glow underneath grounds it.
-        boxShadow: `0 ${depth}px 0 ${t.shadow}, 0 ${depth + 6}px 14px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.5)`,
+        padding: "0.55rem 1rem",
+        transform: `rotate(${rotate}deg)`,
+        boxShadow: `0 ${depth}px 0 ${t.shadow}, 0 ${depth + 5}px 13px rgba(3,98,76,0.18), inset 0 1px 0 rgba(255,255,255,0.6)`,
       }}
     >
-      {fact.label}
-    </motion.div>
+      {label}
+    </span>
   );
 }
 
 export default function Hero() {
-  const isTouch = useIsTouch();
-
   return (
     <section
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
-      style={{ background: "var(--surface-dark)" }}
+      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden"
+      style={{
+        padding: "clamp(120px, 16vh, 200px) var(--section-px) clamp(60px, 9vh, 110px)",
+        background: "linear-gradient(to bottom, #e3eef0 0%, #eef5f2 38%, var(--bg) 100%)",
+      }}
     >
-      {/* Full-bleed reference artwork — dimmed for text contrast. */}
-      <Image
-        src="/images/waitlist-hero.png"
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
-        style={{ opacity: 0.32 }}
-      />
-
-      {/* Legibility scrim — pools darkness behind the centred copy. */}
+      {/* Soft cloud puffs — white radial blobs, lightly brand-tinted. */}
       <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(42% 60% at 20% 20%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 70%), radial-gradient(30% 44% at 33% 15%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%), radial-gradient(46% 64% at 80% 15%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 72%), radial-gradient(30% 44% at 64% 22%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%), radial-gradient(52% 55% at 48% 90%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0) 75%), radial-gradient(36% 50% at 90% 82%, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0) 72%)",
+        }}
+      />
+      {/* Faint green warmth so the sky still reads brand, not stock-blue. */}
+      <div
+        aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 45%, rgba(2,8,6,0.72) 0%, rgba(2,8,6,0.4) 55%, transparent 100%), linear-gradient(to bottom, rgba(2,8,6,0.55) 0%, rgba(2,8,6,0.25) 45%, rgba(2,8,6,0.6) 100%)",
+            "radial-gradient(ellipse 46% 40% at 16% 30%, rgba(0,223,130,0.10) 0%, transparent 62%), radial-gradient(ellipse 48% 42% at 86% 76%, rgba(3,98,76,0.08) 0%, transparent 64%)",
         }}
       />
+
+      {/* Floating fact tiles — lg+ only, framing the copy where there's room. */}
+      <div aria-hidden className="absolute inset-0 hidden lg:block">
+        {facts.map((f, i) => (
+          <motion.div
+            key={f.label}
+            className={`absolute ${f.pos}`}
+            initial={{ opacity: 0, y: 14, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1], delay: 0.35 + i * 0.08 }}
+          >
+            <Tile label={f.label} tone={f.tone} rotate={f.rotate} />
+          </motion.div>
+        ))}
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-7 px-6 pt-28 pb-16 text-center"
+        className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 text-center"
       >
-        <SectionMark tone="dark">A program by Elyst AI</SectionMark>
+        <SectionMark>AI for Work</SectionMark>
 
-        <h1
-          className="font-display font-bold text-white"
-          style={{ fontSize: "var(--text-hero)", lineHeight: 1.05, textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
-        >
-          Start working
+        <h1 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-hero)", lineHeight: 1.04 }}>
+          Start working at the
           <br />
-          with <span style={{ color: "#00df82" }}>AI</span>
+          <span style={{ color: "var(--elyst-emerald)", fontStyle: "italic" }}>
+            speed of AI.
+          </span>
         </h1>
 
-        <p
-          className="max-w-xl text-white/90"
-          style={{ fontSize: "var(--text-body)", textShadow: "0 1px 12px rgba(0,0,0,0.6)" }}
-        >
-          Stop feeling left behind by AI and start using it with confidence in
-          your everyday work.
+        <p className="max-w-xl text-fg-2" style={{ fontSize: "calc(var(--text-body) + 2px)" }}>
+          No guesswork, no overwhelm. In two weeks you&rsquo;ll use AI with real
+          confidence in your everyday work.
         </p>
 
-        <div className="mt-2 flex items-center justify-center gap-1">
-          <SquigglyArrow
-            direction="right"
-            variant="bouncy"
-            width={160}
-            height={88}
-            className="hidden self-center text-[var(--elyst-green)] sm:block"
-          />
-          <BrandButton href="#enrol" tone="green" className="self-center">
-            Join AI for Work
+        <div className="mt-3 flex flex-col items-center gap-3">
+          <BrandButton href="#enrol" tone="green">
+            Join now
           </BrandButton>
         </div>
 
-        {/* Quick facts — funky 3D tiles, misaligned on desktop, stacked on touch. */}
-        <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
+        {/* Below lg: the floating tiles collapse into a tidy wrapped row here. */}
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-3 lg:hidden">
           {facts.map((f) => (
-            <FactTile key={f.label} fact={f} isTouch={isTouch} />
+            <Tile key={f.label} label={f.label} tone={f.tone} rotate={0} />
           ))}
         </div>
       </motion.div>

@@ -1,154 +1,65 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  RefObject,
-  useCallback,
-} from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 
 interface StarProps {
   x: number;
   y: number;
   radius: number;
   opacity: number;
-  twinkleSpeed: number | null;
 }
 
 interface StarBackgroundProps {
   starDensity?: number;
-  allStarsTwinkle?: boolean;
-  twinkleProbability?: number;
-  minTwinkleSpeed?: number;
-  maxTwinkleSpeed?: number;
   className?: string;
-  /** Draw the starfield once and skip the per-frame RAF loop entirely (no
-   *  twinkle). Used on touch devices where the animation cost isn't worth it. */
-  staticField?: boolean;
 }
 
+/**
+ * A static starfield: stars are generated and painted once to a canvas (and
+ * repainted only on resize). No per-frame animation loop — the field is
+ * decorative and sits below the fold, so a single paint is all it needs.
+ */
 export const StarsBackground: React.FC<StarBackgroundProps> = ({
   starDensity = 0.00015,
-  allStarsTwinkle = true,
-  twinkleProbability = 0.7,
-  minTwinkleSpeed = 0.5,
-  maxTwinkleSpeed = 1,
   className,
-  staticField = false,
 }) => {
-  const [stars, setStars] = useState<StarProps[]>([]);
-  const canvasRef: RefObject<HTMLCanvasElement | null> =
-    useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const generateStars = useCallback(
-    (width: number, height: number): StarProps[] => {
-      const area = width * height;
-      const numStars = Math.floor(area * starDensity);
-      return Array.from({ length: numStars }, () => {
-        const shouldTwinkle =
-          allStarsTwinkle || Math.random() < twinkleProbability;
-        return {
-          x: Math.random() * width,
-          y: Math.random() * height,
-          radius: Math.random() * 0.05 + 0.5,
-          opacity: Math.random() * 0.5 + 0.5,
-          twinkleSpeed: shouldTwinkle
-            ? minTwinkleSpeed +
-              Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
-            : null,
-        };
-      });
-    },
-    [
-      starDensity,
-      allStarsTwinkle,
-      twinkleProbability,
-      minTwinkleSpeed,
-      maxTwinkleSpeed,
-    ]
-  );
-
-  useEffect(() => {
-    const updateStars = () => {
-      if (canvasRef.current) {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        const { width, height } = canvas.getBoundingClientRect();
-        canvas.width = width;
-        canvas.height = height;
-        setStars(generateStars(width, height));
-      }
-    };
-
-    updateStars();
-
-    const resizeObserver = new ResizeObserver(updateStars);
-    if (canvasRef.current) {
-      resizeObserver.observe(canvasRef.current);
-    }
-
-    return () => {
-      if (canvasRef.current) {
-        resizeObserver.unobserve(canvasRef.current);
-      }
-    };
-  }, [
-    starDensity,
-    allStarsTwinkle,
-    twinkleProbability,
-    minTwinkleSpeed,
-    maxTwinkleSpeed,
-    generateStars,
-  ]);
-
-  useEffect(() => {
+  const draw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
-    // Twinkle is a slow opacity drift — it reads identically at 30fps and
-    // halves the per-frame canvas work versus an uncapped 60fps loop.
-    const frameInterval = 1000 / 30;
-    let last = 0;
+    const { width, height } = canvas.getBoundingClientRect();
+    canvas.width = width;
+    canvas.height = height;
 
-    const draw = (now: number) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const t = now * 0.001;
-      stars.forEach((star) => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.fill();
+    const numStars = Math.floor(width * height * starDensity);
+    const stars: StarProps[] = Array.from({ length: numStars }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 0.05 + 0.5,
+      opacity: Math.random() * 0.5 + 0.5,
+    }));
 
-        if (!staticField && star.twinkleSpeed !== null) {
-          star.opacity = 0.5 + Math.abs(Math.sin(t / star.twinkleSpeed) * 0.5);
-        }
-      });
-    };
+    ctx.clearRect(0, 0, width, height);
+    stars.forEach((star) => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.fill();
+    });
+  }, [starDensity]);
 
-    const render = (now: number) => {
-      animationFrameId = requestAnimationFrame(render);
-      if (now - last < frameInterval) return;
-      last = now;
-      draw(now);
-    };
-
-    if (staticField) {
-      draw(performance.now());
-    } else {
-      animationFrameId = requestAnimationFrame(render);
-    }
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [stars, staticField]);
+  useEffect(() => {
+    draw();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const resizeObserver = new ResizeObserver(draw);
+    resizeObserver.observe(canvas);
+    return () => resizeObserver.disconnect();
+  }, [draw]);
 
   return (
     <canvas

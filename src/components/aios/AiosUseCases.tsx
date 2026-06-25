@@ -90,10 +90,10 @@ function OutcomeChip({ outcome }: { outcome: Industry["outcome"] }) {
         <Icon size={18} variant="line" />
       </IconTile>
       <div>
-        <p className="font-semibold text-fg" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)" }}>
+        <p className="font-semibold text-fg" style={{ fontSize: "var(--text-body)" }}>
           {outcome.label}
         </p>
-        <p className="text-fg-3" style={{ fontSize: "0.88rem" }}>
+        <p className="text-fg-3" style={{ fontSize: "var(--text-eyebrow)" }}>
           {outcome.sub}
         </p>
       </div>
@@ -115,10 +115,10 @@ function IndustryPanel({ industry, active }: { industry: Industry; active: boole
       <div className="grid gap-8 sm:grid-cols-2 sm:items-center sm:gap-12">
         {/* Copy — pain + flow */}
         <div className="flex flex-col gap-4">
-          <p className="font-semibold text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)", lineHeight: 1.5 }}>
+          <p className="font-semibold text-fg" style={{ fontSize: "var(--text-h3)", lineHeight: 1.5 }}>
             {industry.pain}
           </p>
-          <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.6 }}>
+          <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
             {industry.flow}
           </p>
         </div>
@@ -138,7 +138,7 @@ function IndustryPanel({ industry, active }: { industry: Industry; active: boole
               style={{
                 background: "#DCF8C6",
                 borderRadius: "12px 12px 4px 12px",
-                fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
+                fontSize: "var(--text-body)",
                 border: "1px solid rgba(0,0,0,0.06)",
                 color: "#111",
               }}
@@ -190,7 +190,7 @@ export default function AiosUseCases() {
                 onClick={() => setActive(i)}
                 className="relative px-4 py-2 font-medium transition-colors"
                 style={{
-                  fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
+                  fontSize: "var(--text-body)",
                   color: isActive ? "var(--elyst-emerald)" : "var(--fg-3)",
                 }}
               >
@@ -218,7 +218,7 @@ export default function AiosUseCases() {
               onClick={() => setActive(i)}
               className="flex items-center justify-center px-4 py-3 text-center font-medium"
               style={{
-                fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
+                fontSize: "var(--text-body)",
                 borderRadius: "var(--radius-card)",
                 background: i === active ? "var(--green-tint-07)" : "var(--surface-muted)",
                 color: i === active ? "var(--elyst-emerald)" : "var(--fg-2)",

@@ -99,7 +99,7 @@ export default function AiJuniorFaq() {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
+                    <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
                       {f.a}
                     </p>
                   </AccordionContent>

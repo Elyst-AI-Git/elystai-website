@@ -42,8 +42,8 @@ export default function CircleAbout() {
           </p>
         </motion.div>
 
-        {/* Right, 2×3 feature grid */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {/* Right, 2×3 feature grid on a pastel-green band */}
+        <div className="grid grid-cols-1 gap-3 rounded-md p-5 sm:grid-cols-2 sm:p-6" style={{ background: "#c2edcb" }}>
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -51,12 +51,12 @@ export default function CircleAbout() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.5, delay: i * 0.06, ease: "easeOut" }}
-              className="card-tint p-5"
+              className="rounded-md bg-white p-5 shadow-sm"
             >
-              <h3 className="font-display font-bold text-fg" style={{ fontSize: "0.98rem", lineHeight: 1.3 }}>
+              <h3 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.3 }}>
                 {f.title}
               </h3>
-              <p className="mt-1.5 text-fg-2" style={{ fontSize: "0.9rem", lineHeight: 1.7 }}>
+              <p className="mt-1.5 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.7 }}>
                 {f.desc}
               </p>
             </motion.div>

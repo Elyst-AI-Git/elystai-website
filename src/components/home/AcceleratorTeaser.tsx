@@ -15,8 +15,6 @@ import {
 import {
   CutoutCard,
   CutoutCardContent,
-  CutoutCardPin,
-  CutoutCorner,
   cutoutCardSurfaceClassName,
   MotionDiv,
   useCutoutContentStaggerVariants,
@@ -31,6 +29,8 @@ type Program = {
   name: string;
   who: string;
   status: string;
+  /** true = program is live/open right now (bright neon pin); false = closed (dim pin) */
+  live: boolean;
   href: string;
   surface: string;
   /** true = surface is dark enough to need light text */
@@ -44,6 +44,7 @@ const programs: Program[] = [
     name: "AI Yathra",
     who: "For working professionals and career switchers",
     status: "Closed",
+    live: false,
     href: "/ai-yathra",
     surface: "#c0d8d3",
     image: "/images/programs/ai-yathra.png",
@@ -53,6 +54,7 @@ const programs: Program[] = [
     name: "AI for Juniors",
     who: "For school students, Classes 5–10",
     status: "Closed",
+    live: false,
     href: "/juniors",
     surface: "#81b1a6",
     image: "/images/programs/ai-junior.png",
@@ -62,6 +64,7 @@ const programs: Program[] = [
     name: "Elyst AI Circle",
     who: "For professionals who want to stay ahead of AI",
     status: "Open Now",
+    live: true,
     href: "/circle",
     surface: "#428979",
     dark: true,
@@ -71,8 +74,9 @@ const programs: Program[] = [
     mark: GraduationCap,
     name: "AI for Work",
     who: "The deep-dive program for professionals",
-    status: "Join waitlist",
-    href: "/waitlist",
+    status: "Open Now",
+    live: true,
+    href: "/ai-for-work",
     surface: "#1c725e",
     dark: true,
   },
@@ -95,7 +99,6 @@ const stacked = programs.map((_, i) => ({
 
 function ProgramFace({ p }: { p: Program }) {
   const stagger = useCutoutContentStaggerVariants();
-  const Icon = p.mark;
   // Adaptive text/divider colours based on surface brightness
   const headingColor = p.dark ? "var(--fg-on-dark)" : "var(--elyst-ink)";
   const bodyColor    = p.dark ? "rgba(240,250,248,0.8)" : "rgba(7,24,20,0.72)";
@@ -119,18 +122,19 @@ function ProgramFace({ p }: { p: Program }) {
       style={{ background: p.surface }}
     >
       <CutoutCard>
-        {/* Status pin, cut into the top-right corner */}
-        <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] bg-emerald px-3 py-1.5 text-[0.68rem] font-semibold text-fg-on-dark">
+        {/* Status ribbon — same flush white edge-ribbon effect as the AI for
+            Work pricing card's "Starts July 13" / "Circle members" ribbons. */}
+        <div
+          className="absolute right-0 top-5 z-10 rounded-l-md px-3 py-1.5 font-bold uppercase tracking-wide"
+          style={{
+            background: "#ffffff",
+            color: p.live ? "var(--elyst-emerald)" : "rgba(3,98,76,0.55)",
+            fontSize: "var(--text-micro)",
+            boxShadow: "-2px 2px 8px rgba(0,0,0,0.18)",
+          }}
+        >
           {p.status}
-          <CutoutCorner
-            size={16}
-            className="top-0 -left-[15px] text-emerald"
-          />
-          <CutoutCorner
-            size={16}
-            className="-bottom-[15px] right-0 text-emerald"
-          />
-        </CutoutCardPin>
+        </div>
 
         <CutoutCardContent className="flex flex-col p-0 overflow-hidden">
           {/* Program cover image — 1:1 */}
@@ -294,7 +298,7 @@ export default function AcceleratorTeaser() {
           </h2>
           <p
             className="mx-auto mt-4 max-w-prose text-fg-2"
-            style={{ fontSize: "var(--text-body)" }}
+            style={{ fontSize: "calc(var(--text-body) + 2px)" }}
           >
             Programs if you want to use AI well in your work.
             <br />
@@ -324,7 +328,7 @@ export default function AcceleratorTeaser() {
             className="block self-center text-emerald"
           />
           <BrandButton href="/learn" className="self-center">
-            Explore Programs
+            <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>Explore Programs</span>
           </BrandButton>
         </div>
       </div>

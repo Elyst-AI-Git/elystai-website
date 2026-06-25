@@ -14,7 +14,7 @@ import Link from "next/link";
 import { MetalButton } from "@/components/ui/metal-button";
 import { useIsTouch } from "@/lib/use-touch";
 
-type BrandVariant = "metal" | "outline";
+type BrandVariant = "metal" | "outline" | "solid";
 /**
  * "emerald" = brand emerald fill (default).
  * "light"   = premium light-grey fill, black text (Nav CTA).
@@ -31,10 +31,6 @@ type BrandButtonProps = {
   onClick?: () => void;
   full?: boolean;
   preset?: "chromatic" | "silver" | "gold";
-  /** Recolour the MetalFx ring/edge from its default chromatic-grey to brand
-      light-green (#00df82) — used where the default ring reads as a flat
-      black edge against our surfaces. */
-  greenRing?: boolean;
 };
 
 const BASE =
@@ -83,7 +79,6 @@ export function BrandButton({
   onClick,
   full,
   preset = "silver",
-  greenRing = false,
 }: BrandButtonProps) {
   const width = full ? "w-full" : "w-fit";
   const isTouch = useIsTouch();
@@ -93,7 +88,30 @@ export function BrandButton({
       <Inner
         href={href}
         onClick={onClick}
-        className={`${BASE} ${width} ${RADIUS_CLASS} border-[1.5px] border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
+        className={`${BASE} ${width} ${RADIUS_CLASS} border-2 border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
+      >
+        {children}
+      </Inner>
+    );
+  }
+
+  // Flat, solid filled button — no metal shader, no glow. Used in the CTA
+  // banners where a plain high-contrast action reads cleaner than the metal
+  // ring. Tone picks the fill + a text colour with enough contrast on it.
+  if (variant === "solid") {
+    let solidFill: string;
+    if (tone === "light") {
+      solidFill = "bg-[#eef0ee] text-[#0a0a0a] hover:bg-[#e3e6e2]";
+    } else if (tone === "green") {
+      solidFill = "bg-green text-[#06140e] hover:bg-[#00c973]";
+    } else {
+      solidFill = "bg-emerald text-fg-on-dark hover:bg-emerald-light";
+    }
+    return (
+      <Inner
+        href={href}
+        onClick={onClick}
+        className={`${BASE} ${width} ${RADIUS_CLASS} ${solidFill} transition-colors ${className ?? ""}`}
       >
         {children}
       </Inner>
@@ -108,27 +126,24 @@ export function BrandButton({
   if (isLight) {
     fxFill = "bg-[#eef0ee]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
   } else if (isGreen) {
-    fxFill = "bg-[#00df82]! text-[#0a0a0a]! hover:bg-[#00c973]!";
+    fxFill = "bg-green! text-[#0a0a0a]! hover:bg-[#00c973]!";
   } else {
     fxFill = "bg-emerald! text-fg-on-dark! hover:bg-emerald-light!";
   }
 
-  // metal variant — emerald (default) / light-grey (Nav) / bright-green (See AIOS) fill
-  const ringOverride = greenRing
-    ? "before:ring-[#00df82]/70! before:ring-[1.5px]!"
-    : "";
+  // metal variant — emerald (default) / light-grey (Nav) / bright-green (See AIOS) fill.
+  // The liquid-metal shader ring IS the effect; no outer glow.
 
   // MetalFx renders an animated liquid-metal shader behind every button. On
   // touch devices that's a continuous effect nobody can interact with (no
   // cursor to reflect), so render a flat static button with the same brand
   // fill/colors instead.
   if (isTouch) {
-    const ringColor = greenRing ? "border-[#00df82]/70" : "border-border/70";
     return (
       <Inner
         href={href}
         onClick={onClick}
-        className={`${BASE} ${width} ${RADIUS_CLASS} border ${ringColor} ${fxFill} ${className ?? ""}`}
+        className={`${BASE} ${width} ${RADIUS_CLASS} border-2 border-border ${fxFill} ${className ?? ""}`}
       >
         {children}
       </Inner>
@@ -140,7 +155,7 @@ export function BrandButton({
       preset={isGreen ? "silver" : preset}
       theme={isGreen ? "dark" : isLight ? "light" : "auto"}
       borderRadius={RADIUS_PX}
-      metalFxClassName={`${full ? "w-full" : ""} ${fxFill} ${ringOverride}`}
+      metalFxClassName={`${full ? "w-full" : ""} ${fxFill}`}
       className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""}`}
       render={
         href ? (

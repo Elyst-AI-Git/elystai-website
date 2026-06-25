@@ -33,7 +33,7 @@ export default function Error({
       </h1>
       <p
         className="mx-auto mt-4 max-w-sm text-fg-muted-dark"
-        style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}
+        style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}
       >
         A part of the page failed to load. You can try again, or head back home.
       </p>

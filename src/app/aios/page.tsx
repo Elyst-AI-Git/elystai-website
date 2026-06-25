@@ -21,7 +21,7 @@ export const metadata = {
 
 export default function AiosPage() {
   return (
-    <main id="main" className="flex-1 pt-24">
+    <main id="main" className="aios-sharp flex-1 pt-24">
       <AiosHero />
       <AiosProblem />
       <AiosHowItWorks />
