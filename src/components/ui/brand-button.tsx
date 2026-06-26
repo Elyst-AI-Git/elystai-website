@@ -166,6 +166,7 @@ export function BrandButton({
           )
         ) : undefined
       }
+      nativeButton={!href}
       onClick={!href ? onClick : undefined}
     >
       {children}
