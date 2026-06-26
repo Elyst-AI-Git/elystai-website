@@ -133,11 +133,11 @@ export default function AccelHero() {
             className="mt-7 text-fg"
             style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", lineHeight: 1.1 }}
           >
-            <span className="relative inline-block whitespace-nowrap align-baseline">
-              <span aria-hidden className="invisible">
+            <span className="relative inline-block align-baseline sm:whitespace-nowrap">
+              <span aria-hidden className="invisible hidden sm:inline-block sm:whitespace-nowrap">
                 Stay confident
               </span>
-              <span className="absolute inset-y-0 left-0 flex items-baseline whitespace-nowrap">
+              <span className="flex flex-wrap items-baseline justify-center sm:absolute sm:inset-y-0 sm:left-0 sm:flex-nowrap sm:whitespace-nowrap">
                 <span>Stay&nbsp;</span>
                 <CyclingWord />
               </span>
