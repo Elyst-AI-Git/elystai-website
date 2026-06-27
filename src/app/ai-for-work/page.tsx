@@ -1,4 +1,5 @@
 import { pageMeta } from "@/lib/seo";
+import { PRICE } from "@/components/ai-for-work/config";
 import Hero from "@/components/ai-for-work/Hero";
 import Marquee from "@/components/ai-for-work/Marquee";
 import Pain from "@/components/ai-for-work/Pain";
@@ -17,7 +18,7 @@ export const metadata = {
     path: "/ai-for-work",
     title: "AI for Work: 2-Week Live AI Program",
     description:
-      "AI for Work is a 2-week live program by Elyst AI for professionals and founders who want to use AI with confidence in their everyday work. Live classes, live Q&A, free recordings, and a certificate. ₹2,999.",
+      `AI for Work is a 2-week live program by Elyst AI for professionals and founders who want to use AI with confidence in their everyday work. Live classes, live Q&A, free recordings, and a certificate. ${PRICE}.`,
   }),
   title: { absolute: "AI for Work: 2-Week Live AI Program | Elyst AI" },
 };

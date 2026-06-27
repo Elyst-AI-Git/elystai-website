@@ -34,13 +34,14 @@ export function isLowPerfDevice(): boolean {
  * touch-gating misses them entirely) but few CPU cores or little memory, where
  * our canvas / WebGL / requestAnimationFrame loops still cause visible jank.
  *
- * Like {@link useIsTouch} it returns `false` on the server and the first client
- * render so the markup matches SSR, then flips after mount once the relevant
- * signals can be read. Capable desktops are never affected — they keep the full
+ * Like {@link useIsTouch} it returns `true` (reduced) on the server and the
+ * first client render — so the markup matches SSR and no consumer ever starts
+ * an expensive canvas/RAF loop before the real signals can be read — then
+ * flips to `false` after mount on capable desktops, which keep the full
  * experience.
  */
 export function useReducedEffects(): boolean {
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(true);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia(

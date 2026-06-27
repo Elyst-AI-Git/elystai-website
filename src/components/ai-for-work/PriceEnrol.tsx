@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode, CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
@@ -26,7 +27,7 @@ const included = VALUE_STACK.filter((item) => item !== "Ready-to-use Claude skil
 
 /** Metallic ribbon chip — identical treatment to the How It Works
     "4 to 5 hours a week" time-commitment strip. */
-function MetalChip({ children, className, style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+function MetalChip({ children, className, style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   return (
     <span
       className={`inline-flex items-center rounded-md px-4 py-1.5 font-bold ${className ?? ""}`}

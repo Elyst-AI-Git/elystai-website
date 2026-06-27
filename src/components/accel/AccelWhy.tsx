@@ -36,10 +36,11 @@ const reasons: Reason[] = [
   },
 ];
 
-function ReasonCard({ r }: { r: Reason }) {
+function ReasonCard({ r, alwaysExpanded }: { r: Reason; alwaysExpanded: boolean }) {
   return (
     <div
-      className="group relative flex flex-col items-center justify-center self-start rounded-md p-7 text-center transition-all duration-300 ease-out hover:-translate-y-2"
+      tabIndex={0}
+      className="group relative flex flex-col items-center justify-center self-start rounded-md p-7 text-center transition-all duration-300 ease-out hover:-translate-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--elyst-emerald)]"
       style={{
         background: r.bg,
         border: "1px solid rgba(3,98,76,0.16)",
@@ -61,12 +62,17 @@ function ReasonCard({ r }: { r: Reason }) {
         style={{ fontSize: "clamp(1.7rem, 2.3vw, 1.95rem)", lineHeight: 1.2 }}
       >
         <span>{r.title}</span>
-        <span aria-hidden className="rotate-90 transition-transform duration-300 group-hover:translate-y-1">›</span>
+        <span aria-hidden className="rotate-90 transition-transform duration-300 group-hover:translate-y-1 group-focus-visible:translate-y-1">›</span>
       </h3>
 
-      {/* Body — collapsed at rest, revealed on hover. self-start above keeps
+      {/* Body — collapsed at rest, revealed on hover/focus, and always shown
+          on touch devices where hover never fires. self-start above keeps
           this card's own height change from stretching its siblings. */}
-      <div className="relative z-10 grid grid-rows-[0fr] transition-all duration-300 ease-out group-hover:grid-rows-[1fr]">
+      <div
+        className={`relative z-10 grid transition-all duration-300 ease-out ${
+          alwaysExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr] group-hover:grid-rows-[1fr] group-focus-visible:grid-rows-[1fr]"
+        }`}
+      >
         <div className="overflow-hidden">
           <p className="mt-4" style={{ fontSize: "calc(var(--text-body) + 1px)", lineHeight: 1.6, color: "#0A0F0C" }}>
             {r.body}
@@ -97,7 +103,7 @@ export default function AccelWhy() {
           {reasons.map((r, i) =>
             isTouch ? (
               <div key={r.title}>
-                <ReasonCard r={r} />
+                <ReasonCard r={r} alwaysExpanded />
               </div>
             ) : (
               <motion.div
@@ -107,7 +113,7 @@ export default function AccelWhy() {
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
               >
-                <ReasonCard r={r} />
+                <ReasonCard r={r} alwaysExpanded={false} />
               </motion.div>
             ),
           )}

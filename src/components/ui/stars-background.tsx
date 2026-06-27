@@ -32,8 +32,10 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     if (!ctx) return;
 
     const { width, height } = canvas.getBoundingClientRect();
-    canvas.width = width;
-    canvas.height = height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.max(1, Math.round(width * dpr));
+    canvas.height = Math.max(1, Math.round(height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const numStars = Math.floor(width * height * starDensity);
     const stars: StarProps[] = Array.from({ length: numStars }, () => ({

@@ -134,19 +134,20 @@ function setPosTouch(e) {
     ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY));
 }
 // @ts-ignore
+function resetLines() {
+  lines = [];
+  for (let e = 0; e < E.trails; e++)
+    lines.push(new Line({ spring: 0.45 + (e / E.trails) * 0.025 }));
+}
+// @ts-ignore
 function onMousemove(e) {
-  function o() {
-    lines = [];
-    for (let e = 0; e < E.trails; e++)
-      lines.push(new Line({ spring: 0.45 + (e / E.trails) * 0.025 }));
-  }
   document.removeEventListener("mousemove", onMousemove),
     document.removeEventListener("touchstart", onMousemove),
     document.addEventListener("mousemove", setPos),
     document.addEventListener("touchmove", setPos),
     document.addEventListener("touchstart", setPosTouch),
     setPos(e),
-    o(),
+    resetLines(),
     render();
 }
 
@@ -214,6 +215,9 @@ function onFocus() {
   if (!ctx.running) {
     // @ts-ignore
     ctx.running = true;
+    // Guard against resuming before the first pointer event has seeded
+    // `lines` — render() indexes into it unconditionally.
+    if (!lines.length) resetLines();
     render();
   }
 }
