@@ -39,7 +39,7 @@ const reasons: Reason[] = [
 function ReasonCard({ r }: { r: Reason }) {
   return (
     <div
-      className="group relative flex flex-col self-start rounded-md p-7 transition-all duration-300 ease-out hover:-translate-y-2"
+      className="group relative flex flex-col items-center justify-center self-start rounded-md p-7 text-center transition-all duration-300 ease-out hover:-translate-y-2"
       style={{
         background: r.bg,
         border: "1px solid rgba(3,98,76,0.16)",
@@ -57,11 +57,11 @@ function ReasonCard({ r }: { r: Reason }) {
       />
 
       <h3
-        className="relative z-10 flex min-h-[5.2em] items-start gap-1.5 font-display font-bold text-[var(--elyst-emerald)]"
-        style={{ fontSize: "clamp(1.5rem, 2.3vw, 1.95rem)", lineHeight: 1.2 }}
+        className="relative z-10 flex min-h-[5.2em] flex-col items-center justify-center gap-1.5 font-display font-bold text-[var(--elyst-emerald)]"
+        style={{ fontSize: "clamp(1.7rem, 2.3vw, 1.95rem)", lineHeight: 1.2 }}
       >
         <span>{r.title}</span>
-        <span aria-hidden className="mt-0.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1">›</span>
+        <span aria-hidden className="rotate-90 transition-transform duration-300 group-hover:translate-y-1">›</span>
       </h3>
 
       {/* Body — collapsed at rest, revealed on hover. self-start above keeps
