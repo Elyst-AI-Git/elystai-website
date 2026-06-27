@@ -46,14 +46,14 @@ function ProgramCard({ program, index, isTouch }: { program: Program; index: num
     >
       {/* Title bar — full bleed, edge to edge */}
       <div
-        className="relative w-full px-7 py-7 text-left font-display font-bold"
+        className="relative flex w-full flex-wrap items-center justify-between gap-3 px-7 py-7 text-left font-display font-bold"
         style={{ background: program.titleBg, color: program.titleColor, fontSize: "clamp(2.2rem, 3.8vw, 3.1rem)", lineHeight: 1.05 }}
       >
-        {program.name}
-        {/* Edge ribbon — white, top-right, fully inside the visible card */}
+        <span>{program.name}</span>
+        {/* Edge ribbon — white, vertically centered with the title, never overlapping it */}
         {program.ribbon && (
           <span
-            className="absolute right-5 top-5 rounded-md px-4 py-1.5 font-bold uppercase tracking-wide"
+            className="shrink-0 rounded-md px-4 py-1.5 font-bold uppercase tracking-wide"
             style={{ background: "#ffffff", color: "var(--elyst-emerald)", fontSize: "var(--text-small)", boxShadow: "0 4px 12px rgba(0,0,0,0.18)" }}
           >
             {program.ribbon}
