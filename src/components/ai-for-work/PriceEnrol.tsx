@@ -22,7 +22,7 @@ import {
  * included list below.
  */
 
-const included = VALUE_STACK.slice(0, 5);
+const included = VALUE_STACK.filter((item) => item !== "Ready-to-use Claude skills").slice(0, 4);
 
 /** Metallic ribbon chip — identical treatment to the How It Works
     "4 to 5 hours a week" time-commitment strip. */
@@ -101,11 +101,11 @@ export default function PriceEnrol() {
             <MetalChip className="absolute left-0 top-6 z-10 rounded-l-none">Starts {START_DATE}</MetalChip>
             <MetalChip className="absolute right-0 top-6 z-10 rounded-r-none">{CIRCLE_PRICE} for Circle members</MetalChip>
 
-            <div className="relative z-[5] mt-6">
+            <div className="relative z-[5] mt-16">
               <div className="flex items-end justify-center gap-2.5">
                 <span
                   className="font-display font-bold text-fg-on-dark"
-                  style={{ fontSize: "calc(var(--text-hero) - 10px)", lineHeight: 1, letterSpacing: "-0.0236em" }}
+                  style={{ fontSize: "calc(var(--text-hero) - 4px)", lineHeight: 1, letterSpacing: "-0.0236em" }}
                 >
                   {PRICE}
                 </span>
