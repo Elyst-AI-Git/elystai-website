@@ -37,8 +37,8 @@ export default function OnboardingPage() {
   }, [supabase, router]);
 
   const handleSkip = () => {
-    // Redirect cleanly to accelerator home page
-    router.push("/learn");
+    // Redirect cleanly to confirmation page
+    router.push("/register/confirmation");
   };
 
   const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
@@ -70,8 +70,8 @@ export default function OnboardingPage() {
         throw new Error(errorData.error || "Failed to submit survey.");
       }
 
-      // On successful submission, redirect to accelerator page
-      router.push("/learn");
+      // On successful submission, redirect to confirmation page
+      router.push("/register/confirmation");
     } catch (err: unknown) {
       const error = err as Error;
       setSubmitError(error.message || "An unexpected error occurred.");

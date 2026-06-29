@@ -9,12 +9,19 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
+  const next = searchParams.get("next") || "/register";
+
+  // Sanitize next to prevent open-redirect vulnerabilities
+  let safeNext = "/register";
+  if (next.startsWith("/") && !next.startsWith("//")) {
+    safeNext = next;
+  }
 
   if (code) {
     const supabase = await createServerSupabaseClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}/register`);
+      return NextResponse.redirect(`${origin}${safeNext}`);
     }
   }
 

@@ -101,7 +101,7 @@ export default function RegisterForm() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/api/auth/callback`,
+          redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent("/register")}`,
         },
       });
       if (error) throw error;
@@ -124,7 +124,7 @@ export default function RegisterForm() {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent("/register")}`,
           shouldCreateUser: true,
         },
       });
@@ -287,7 +287,7 @@ export default function RegisterForm() {
 
         {/* Auth Step */}
         {!user ? (
-          <Card className="p-8 bg-white rounded-card shadow-card">
+          <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card">
             <h2 className="text-fg font-display font-bold text-h3 mb-6">
               Step 1: Verify your identity
             </h2>
@@ -324,7 +324,7 @@ export default function RegisterForm() {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-muted" />
               </div>
-              <span className="relative px-3 bg-white text-micro font-bold uppercase tracking-wider text-fg-3">
+              <span className="relative px-3 bg-[#c2edcb] text-micro font-bold uppercase tracking-wider text-fg-3">
                 Or use email
               </span>
             </div>
@@ -387,7 +387,7 @@ export default function RegisterForm() {
           </Card>
         ) : (
           /* Checkout Step */
-          <Card className="p-8 bg-white rounded-card shadow-card">
+          <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-muted">
               <div>
                 <p className="text-micro font-bold uppercase tracking-wider text-fg-3">Logged in as</p>

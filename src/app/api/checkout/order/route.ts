@@ -24,6 +24,7 @@ export async function POST(request: Request) {
       utm_medium,
       utm_campaign,
       referrer,
+      courseSlug,
     } = body;
 
     if (!phone) {
@@ -31,17 +32,18 @@ export async function POST(request: Request) {
     }
 
     const supabaseAdmin = createAdminSupabaseClient();
+    const targetSlug = courseSlug || "ai-for-work";
 
-    // 3. Find the 'ai-for-work' course
+    // 3. Find the course
     const { data: course, error: courseError } = await supabaseAdmin
       .schema("app")
       .from("courses")
       .select("id")
-      .eq("slug", "ai-for-work")
+      .eq("slug", targetSlug)
       .single();
 
     if (courseError || !course) {
-      return NextResponse.json({ error: "Course not found" }, { status: 404 });
+      return NextResponse.json({ error: `Course '${targetSlug}' not found` }, { status: 404 });
     }
 
     // 4. Find open or upcoming batch for the course
