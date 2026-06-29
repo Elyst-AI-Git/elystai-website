@@ -1,0 +1,35 @@
+# Supabase CLI project config.
+# project_id is set to your project ref after `supabase link` (see SETUP.md).
+project_id = "elyst-ai"
+
+[api]
+enabled = true
+port = 54321
+# IMPORTANT: `app` is exposed so PostgREST serves the course-platform tables.
+# `public` holds shared identity; `app` holds the course domain.
+schemas = ["public", "app", "graphql_public"]
+extra_search_path = ["public", "app", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[auth]
+enabled = true
+# Registration lives on the main domain; LMS later at learn.elystai.com.
+site_url = "https://elystai.com"
+additional_redirect_urls = ["http://localhost:3000/**", "https://elystai.com/**", "https://learn.elystai.com/**"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+# Email OTP fallback (login happens BEFORE payment).
+enable_confirmations = true
+
+# Google sign-in (primary). Secrets come from env, never committed.
+[auth.external.google]
+enabled = true
+client_id = "env(SUPABASE_AUTH_GOOGLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_GOOGLE_SECRET)"
