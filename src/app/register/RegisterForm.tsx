@@ -112,8 +112,8 @@ export default function RegisterForm() {
     }
   };
 
-  const handleSendOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSendOtp = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (!email) {
       setAuthError("Please enter your email address.");
       return;
@@ -138,8 +138,8 @@ export default function RegisterForm() {
     }
   };
 
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleVerifyOtp = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (!otpCode || otpCode.length !== 6) {
       setAuthError("Please enter the 6-digit verification code.");
       return;
@@ -172,8 +172,8 @@ export default function RegisterForm() {
     setEmail("");
   };
 
-  const handleCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCheckout = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     setCheckoutError("");
     setValidationErrors({});
 
@@ -347,7 +347,7 @@ export default function RegisterForm() {
                     className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                   />
                 </div>
-                <BrandButton variant="solid" tone="emerald" className="w-full" onClick={() => {}} full>
+                <BrandButton variant="solid" tone="emerald" className="w-full" onClick={handleSendOtp} full>
                   {authLoading ? "Sending Code..." : "Send Verification Code"}
                 </BrandButton>
               </form>
@@ -378,7 +378,7 @@ export default function RegisterForm() {
                   >
                     Back
                   </button>
-                  <BrandButton variant="solid" tone="emerald" className="flex-[2]" onClick={() => {}} full>
+                  <BrandButton variant="solid" tone="emerald" className="flex-[2]" onClick={handleVerifyOtp} full>
                     {authLoading ? "Verifying..." : "Verify & Continue"}
                   </BrandButton>
                 </div>
@@ -493,7 +493,7 @@ export default function RegisterForm() {
               </div>
 
               {/* Submit CTA */}
-              <BrandButton variant="solid" tone="green" className="w-full mt-6" onClick={() => {}} full>
+              <BrandButton variant="solid" tone="green" className="w-full mt-6" onClick={handleCheckout} full>
                 {checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
               </BrandButton>
             </form>
