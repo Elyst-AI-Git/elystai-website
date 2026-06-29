@@ -31,7 +31,11 @@ type BrandButtonProps = {
   onClick?: () => void;
   full?: boolean;
   preset?: "chromatic" | "silver" | "gold";
+  /** Disables the button (and, for href-rendered links, blocks navigation). */
+  disabled?: boolean;
 };
+
+const DISABLED_CLASS = "opacity-50 cursor-not-allowed pointer-events-none";
 
 const BASE =
   "inline-flex items-center justify-center gap-2 font-bold whitespace-nowrap " +
@@ -42,29 +46,57 @@ const BASE =
 const RADIUS_CLASS = "rounded-md";
 const RADIUS_PX = 6;
 
-function Inner({ href, onClick, className, children }: {
+function Inner({ href, onClick, className, children, disabled }: {
   href?: string;
   onClick?: () => void;
   className: string;
   children: React.ReactNode;
+  disabled?: boolean;
 }) {
   if (href) {
     const external = href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:");
+    // Links have no native `disabled`; block navigation explicitly and mark
+    // it for assistive tech instead of just dimming the style.
+    const linkClassName = disabled ? `${className} ${DISABLED_CLASS}` : className;
+    const handleLinkClick: React.MouseEventHandler = (e) => {
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
+      onClick?.();
+    };
     if (external) {
       return (
-        <a href={href} onClick={onClick} className={className}>
+        <a
+          href={disabled ? undefined : href}
+          onClick={handleLinkClick}
+          className={linkClassName}
+          aria-disabled={disabled}
+          tabIndex={disabled ? -1 : undefined}
+        >
           {children}
         </a>
       );
     }
     return (
-      <Link href={href} onClick={onClick} className={className}>
+      <Link
+        href={href}
+        onClick={handleLinkClick}
+        className={linkClassName}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : undefined}
+      >
         {children}
       </Link>
     );
   }
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={disabled ? `${className} ${DISABLED_CLASS}` : className}
+    >
       {children}
     </button>
   );
@@ -79,6 +111,7 @@ export function BrandButton({
   onClick,
   full,
   preset = "silver",
+  disabled,
 }: BrandButtonProps) {
   const width = full ? "w-full" : "w-fit";
   const isTouch = useIsTouch();
@@ -88,6 +121,7 @@ export function BrandButton({
       <Inner
         href={href}
         onClick={onClick}
+        disabled={disabled}
         className={`${BASE} ${width} ${RADIUS_CLASS} border-2 border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
       >
         {children}
@@ -111,6 +145,7 @@ export function BrandButton({
       <Inner
         href={href}
         onClick={onClick}
+        disabled={disabled}
         className={`${BASE} ${width} ${RADIUS_CLASS} ${solidFill} transition-colors ${className ?? ""}`}
       >
         {children}
@@ -143,6 +178,7 @@ export function BrandButton({
       <Inner
         href={href}
         onClick={onClick}
+        disabled={disabled}
         className={`${BASE} ${width} ${RADIUS_CLASS} border-2 border-border ${fxFill} ${className ?? ""}`}
       >
         {children}
@@ -150,23 +186,34 @@ export function BrandButton({
     );
   }
 
+  // For href-rendered metal buttons there's no native `disabled`; block
+  // navigation explicitly the same way Inner does for links.
+  const handleMetalLinkClick: React.MouseEventHandler = (e) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.();
+  };
+
   return (
     <MetalButton
       preset={isGreen ? "silver" : preset}
       theme={isGreen ? "dark" : isLight ? "light" : "auto"}
       borderRadius={RADIUS_PX}
       metalFxClassName={`${full ? "w-full" : ""} ${fxFill}`}
-      className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""}`}
+      className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""} ${disabled ? DISABLED_CLASS : ""}`}
       render={
         href ? (
           href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:") ? (
-            <a href={href} onClick={onClick} />
+            <a href={disabled ? undefined : href} onClick={handleMetalLinkClick} aria-disabled={disabled} />
           ) : (
-            <Link href={href} onClick={onClick} />
+            <Link href={href} onClick={handleMetalLinkClick} aria-disabled={disabled} />
           )
         ) : undefined
       }
       nativeButton={!href}
+      disabled={!href ? disabled : undefined}
       onClick={!href ? onClick : undefined}
     >
       {children}

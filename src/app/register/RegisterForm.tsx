@@ -347,7 +347,7 @@ export default function RegisterForm() {
                     className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                   />
                 </div>
-                <BrandButton variant="solid" tone="emerald" className="w-full" onClick={handleSendOtp} full>
+                <BrandButton variant="solid" tone="emerald" className="w-full" onClick={handleSendOtp} disabled={authLoading} full>
                   {authLoading ? "Sending Code..." : "Send Verification Code"}
                 </BrandButton>
               </form>
@@ -378,7 +378,7 @@ export default function RegisterForm() {
                   >
                     Back
                   </button>
-                  <BrandButton variant="solid" tone="emerald" className="flex-[2]" onClick={handleVerifyOtp} full>
+                  <BrandButton variant="solid" tone="emerald" className="flex-[2]" onClick={handleVerifyOtp} disabled={authLoading} full>
                     {authLoading ? "Verifying..." : "Verify & Continue"}
                   </BrandButton>
                 </div>
@@ -493,7 +493,7 @@ export default function RegisterForm() {
               </div>
 
               {/* Submit CTA */}
-              <BrandButton variant="solid" tone="green" className="w-full mt-6" onClick={handleCheckout} full>
+              <BrandButton variant="solid" tone="green" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading} full>
                 {checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
               </BrandButton>
             </form>

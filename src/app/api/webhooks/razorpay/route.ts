@@ -17,11 +17,38 @@ export async function POST(request: Request) {
       .update(rawBody)
       .digest("hex");
 
-    if (expectedSignature !== signature) {
+    // A malformed signature header (not valid hex) or a malformed JSON body
+    // will never succeed on retry — return 400 (no retry) instead of letting
+    // it fall through to the catch-all 500 (which Razorpay retries forever).
+    let signatureValid = false;
+    try {
+      const expectedBuf = Buffer.from(expectedSignature, "hex");
+      const signatureBuf = Buffer.from(signature, "hex");
+      signatureValid =
+        expectedBuf.length === signatureBuf.length &&
+        crypto.timingSafeEqual(expectedBuf, signatureBuf);
+    } catch {
+      return NextResponse.json({ error: "Malformed signature header" }, { status: 400 });
+    }
+
+    if (!signatureValid) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
-    const payload = JSON.parse(rawBody);
+    type RazorpayWebhookPayload = {
+      id?: string;
+      event?: string;
+      payload?: {
+        order?: { entity?: { id?: string } };
+        payment?: { entity?: { id?: string; order_id?: string } };
+      };
+    };
+    let payload: RazorpayWebhookPayload;
+    try {
+      payload = JSON.parse(rawBody);
+    } catch {
+      return NextResponse.json({ error: "Malformed JSON payload" }, { status: 400 });
+    }
     const eventId = payload.id;
     const eventType = payload.event;
 
