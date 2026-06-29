@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import { BrandButton } from "@/components/ui/brand-button";
 import { Card } from "@/components/ui/card";
+import { SectionMark } from "@/components/ui/section-mark";
 import { useRouter } from "next/navigation";
 
 export default function ConfirmationPage() {
   const router = useRouter();
   const [supabase] = useState(() => createBrowserSupabaseClient());
-  const [email, setEmail] = useState<string | null>(null);
   const [loadingSession, setLoadingSession] = useState(true);
 
   useEffect(() => {
@@ -17,8 +17,6 @@ export default function ConfirmationPage() {
       if (!session) {
         // Redirect to register if not authenticated
         router.push("/register");
-      } else {
-        setEmail(session.user.email ?? null);
       }
       setLoadingSession(false);
     });
@@ -39,39 +37,33 @@ export default function ConfirmationPage() {
     <main id="main" className="flex-1 pt-32 pb-24 bg-bg">
       <div className="mx-auto max-w-xl px-4">
         {/* Header */}
-        <div className="text-center mb-8">
-          <span className="inline-block text-micro font-bold uppercase tracking-wider text-emerald mb-2 px-3 py-1 rounded-full bg-emerald/5 border border-emerald/10">
-            Welcome Aboard
-          </span>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <div className="mb-2">
+            <SectionMark>Welcome Aboard</SectionMark>
+          </div>
           <h1 className="text-fg font-display font-bold leading-none tracking-display mb-3" style={{ fontSize: "var(--text-h2)" }}>
             Registration Confirmed
           </h1>
-          <p className="text-fg-2 text-small max-w-md mx-auto">
+          <p className="text-fg-2 text-[15px] max-w-md mx-auto">
             Your seat in the cohort has been reserved. Here is what happens next.
           </p>
         </div>
 
         {/* Card Component */}
         <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card text-center flex flex-col items-center">
-          {/* Success Check Icon */}
-          <div className="h-16 w-16 bg-white/60 border border-emerald/10 rounded-full flex items-center justify-center mb-6">
+          {/* Success Check Icon (Square with 6px border radius) */}
+          <div className="h-16 w-16 bg-white/60 border border-emerald/10 rounded-md flex items-center justify-center mb-6">
             <svg className="h-8 w-8 text-[#03624c] fill-current" viewBox="0 0 24 24">
               <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
             </svg>
           </div>
 
-          <h2 className="text-fg font-display font-bold text-h3 mb-4">
+          <h2 className="text-fg font-display font-bold text-[22px] mb-4">
             You are officially enrolled!
           </h2>
 
-          <div className="space-y-4 text-small text-fg-2 max-w-sm mb-8 text-center leading-relaxed">
-            <p>
-              We have sent a receipt and initial cohort details to your registered email
-              {email ? <strong className="text-fg font-bold"> {email}</strong> : " address"}.
-            </p>
-            <p>
-              Our operations team will reach out via WhatsApp with details to join the private group 48 hours before the program begins.
-            </p>
+          <div className="text-[16px] text-fg-2 max-w-sm mb-8 text-center leading-relaxed font-medium">
+            Our team will reach out via WhatsApp soon.
           </div>
 
           {/* Action CTAs */}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import { BrandButton } from "@/components/ui/brand-button";
 import { Card } from "@/components/ui/card";
+import { SectionMark } from "@/components/ui/section-mark";
 import { useRouter } from "next/navigation";
 
 export default function OnboardingPage() {
@@ -35,11 +36,6 @@ export default function OnboardingPage() {
       setLoadingSession(false);
     });
   }, [supabase, router]);
-
-  const handleSkip = () => {
-    // Redirect cleanly to confirmation page
-    router.push("/register/confirmation");
-  };
 
   const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -79,6 +75,8 @@ export default function OnboardingPage() {
     }
   };
 
+  const selectStyle = "w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 pr-10 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%234b5563%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_12px_center] bg-[size:20px_20px] bg-no-repeat";
+
   if (loadingSession) {
     return (
       <main id="main" className="flex-1 pt-32 pb-24 bg-bg flex items-center justify-center min-h-[70vh]">
@@ -94,30 +92,23 @@ export default function OnboardingPage() {
     <main id="main" className="flex-1 pt-32 pb-24 bg-bg">
       <div className="mx-auto max-w-xl px-4">
         {/* Header */}
-        <div className="text-center mb-8">
-          <span className="inline-block text-micro font-bold uppercase tracking-wider text-emerald mb-2 px-3 py-1 rounded-full bg-emerald/5 border border-emerald/10">
-            Payment Confirmed
-          </span>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <div className="mb-2">
+            <SectionMark>Payment Confirmed</SectionMark>
+          </div>
           <h1 className="text-fg font-display font-bold leading-none tracking-display mb-3" style={{ fontSize: "var(--text-h2)" }}>
             Welcome to the Cohort
           </h1>
-          <p className="text-fg-2 text-small max-w-md mx-auto">
+          <p className="text-fg-2 text-[15px] max-w-md mx-auto">
             Help us tailor the live sessions and resources to your experience and goals.
           </p>
         </div>
 
-        <Card className="p-8 bg-white rounded-card shadow-card">
+        <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card">
           <div className="flex justify-between items-center mb-6 pb-4 border-b border-muted">
-            <h2 className="text-fg font-display font-bold text-h3">
+            <h2 className="text-fg font-display font-bold text-[22px]">
               Onboarding Survey
             </h2>
-            <button
-              type="button"
-              onClick={handleSkip}
-              className="text-micro font-bold uppercase tracking-wider text-fg-3 hover:text-fg transition hover:underline"
-            >
-              Skip Survey &rarr;
-            </button>
           </div>
 
           {submitError && (
@@ -129,14 +120,14 @@ export default function OnboardingPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Audience Type Dropdown */}
             <div>
-              <label htmlFor="audienceType" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+              <label htmlFor="audienceType" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                 Which best describes you?
               </label>
               <select
                 id="audienceType"
                 value={audienceType}
                 onChange={(e) => setAudienceType(e.target.value)}
-                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                className={selectStyle}
               >
                 <option value="">Select an option</option>
                 <option value="professional">Working Professional</option>
@@ -150,7 +141,7 @@ export default function OnboardingPage() {
             {/* Role & Industry in 2-column grid on desktop */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label htmlFor="role" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="role" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   Your Role / Title
                 </label>
                 <input
@@ -159,12 +150,12 @@ export default function OnboardingPage() {
                   placeholder="e.g. Marketing Manager"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                 />
               </div>
 
               <div>
-                <label htmlFor="industry" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="industry" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   Industry
                 </label>
                 <input
@@ -173,54 +164,59 @@ export default function OnboardingPage() {
                   placeholder="e.g. Healthcare, Retail"
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                 />
               </div>
             </div>
 
             {/* Seniority Field */}
             <div>
-              <label htmlFor="seniority" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+              <label htmlFor="seniority" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                 Seniority Level <span className="text-fg-3 font-normal">(Optional)</span>
               </label>
-              <input
+              <select
                 id="seniority"
-                type="text"
-                placeholder="e.g. Junior, Senior, Director, C-Level"
                 value={seniority}
                 onChange={(e) => setSeniority(e.target.value)}
-                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
-              />
+                className={selectStyle}
+              >
+                <option value="">Select seniority level</option>
+                <option value="entry">Entry Level</option>
+                <option value="mid">Mid Level</option>
+                <option value="senior">Senior</option>
+                <option value="director">Director / VP</option>
+                <option value="c_level">C-Level / Founder</option>
+              </select>
             </div>
 
             {/* AI Experience */}
             <div>
-              <label htmlFor="aiExperience" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+              <label htmlFor="aiExperience" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                 Current AI Experience
               </label>
               <select
                 id="aiExperience"
                 value={aiExperience}
                 onChange={(e) => setAiExperience(e.target.value)}
-                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                className={selectStyle}
               >
                 <option value="">Select experience level</option>
-                <option value="none">None (Absolute beginner)</option>
-                <option value="dabbled">Dabbled (Used ChatGPT/Claude occasionally)</option>
-                <option value="regular">Regular (Use AI daily in my workflow)</option>
+                <option value="none">I have never used AI tools before</option>
+                <option value="dabbled">I use ChatGPT or Claude occasionally</option>
+                <option value="regular">I use AI daily in my work and life</option>
               </select>
             </div>
 
             {/* Primary Goal Dropdown */}
             <div>
-              <label htmlFor="primaryGoal" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+              <label htmlFor="primaryGoal" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                 What is your primary goal for this program?
               </label>
               <select
                 id="primaryGoal"
                 value={primaryGoal}
                 onChange={(e) => setPrimaryGoal(e.target.value)}
-                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                className={selectStyle}
               >
                 <option value="">Select your main goal</option>
                 <option value="automate">Automate repetitive daily tasks</option>
@@ -234,7 +230,7 @@ export default function OnboardingPage() {
             {/* Goal Other Field (Conditional) */}
             {primaryGoal === "other" && (
               <div className="transition-all duration-300">
-                <label htmlFor="goalOther" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="goalOther" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   Please specify your goal
                 </label>
                 <textarea
@@ -243,29 +239,35 @@ export default function OnboardingPage() {
                   placeholder="Tell us what you want to achieve..."
                   value={goalOther}
                   onChange={(e) => setGoalOther(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 resize-none"
+                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 resize-none"
                 />
               </div>
             )}
 
             {/* Heard About Us */}
             <div>
-              <label htmlFor="heardAboutUs" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+              <label htmlFor="heardAboutUs" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                 How did you hear about Elyst AI?
               </label>
-              <input
+              <select
                 id="heardAboutUs"
-                type="text"
-                placeholder="e.g. LinkedIn, Friend, Instagram"
                 value={heardAboutUs}
                 onChange={(e) => setHeardAboutUs(e.target.value)}
-                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
-              />
+                className={selectStyle}
+              >
+                <option value="">Select an option</option>
+                <option value="friend">via a friend</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="instagram">Instagram</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="circle">Elyst AI circle</option>
+                <option value="other">other</option>
+              </select>
             </div>
 
             {/* LinkedIn URL */}
             <div>
-              <label htmlFor="linkedinUrl" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+              <label htmlFor="linkedinUrl" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                 LinkedIn Profile URL <span className="text-fg-3 font-normal">(Optional)</span>
               </label>
               <input
@@ -274,21 +276,13 @@ export default function OnboardingPage() {
                 placeholder="https://linkedin.com/in/username"
                 value={linkedinUrl}
                 onChange={(e) => setLinkedinUrl(e.target.value)}
-                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
               />
             </div>
 
             {/* Action buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <button
-                type="button"
-                onClick={handleSkip}
-                disabled={submitLoading}
-                className="flex-1 min-h-[48px] font-bold border border-muted text-fg-2 rounded-md hover:bg-surface-muted transition disabled:opacity-50 text-[15px]"
-              >
-                Skip survey
-              </button>
-              <BrandButton variant="solid" tone="green" className="flex-1" onClick={handleSubmit} disabled={submitLoading} full>
+            <div className="pt-4">
+              <BrandButton variant="solid" tone="green" className="w-full" onClick={handleSubmit} disabled={submitLoading} full>
                 {submitLoading ? "Submitting..." : "Submit & Complete"}
               </BrandButton>
             </div>

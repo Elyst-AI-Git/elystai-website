@@ -280,7 +280,7 @@ export default function RegisterForm() {
           <h1 className="text-fg font-display font-bold leading-none tracking-display mb-3" style={{ fontSize: "var(--text-h2)" }}>
             AI for Work Registration
           </h1>
-          <p className="text-fg-2 text-small">
+          <p className="text-fg-2 text-[15px]">
             Join the 2-week live program. Secure your cohort seat below.
           </p>
         </div>
@@ -288,7 +288,7 @@ export default function RegisterForm() {
         {/* Auth Step */}
         {!user ? (
           <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card">
-            <h2 className="text-fg font-display font-bold text-h3 mb-6">
+            <h2 className="text-fg font-display font-bold text-[21px] mb-6">
               Step 1: Verify your identity
             </h2>
 
@@ -314,7 +314,7 @@ export default function RegisterForm() {
                 </svg>
                 <span>Continue with Google</span>
               </button>
-              <p className="mt-2 text-center text-micro text-fg-3">
+              <p className="mt-2 text-center text-[13px] text-fg-3">
                 Recommended. Pulls name and email automatically.
               </p>
             </div>
@@ -324,7 +324,7 @@ export default function RegisterForm() {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-muted" />
               </div>
-              <span className="relative px-3 bg-[#c2edcb] text-micro font-bold uppercase tracking-wider text-fg-3">
+              <span className="relative px-3 bg-[#c2edcb] text-[13px] font-bold uppercase tracking-wider text-fg-3">
                 Or use email
               </span>
             </div>
@@ -333,7 +333,7 @@ export default function RegisterForm() {
             {!otpSent ? (
               <form onSubmit={handleSendOtp} className="space-y-4">
                 <div>
-                  <label htmlFor="email" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                  <label htmlFor="email" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                     Email Address
                   </label>
                   <input
@@ -344,7 +344,7 @@ export default function RegisterForm() {
                     placeholder="e.g. name@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                    className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                   />
                 </div>
                 <BrandButton variant="solid" tone="emerald" className="w-full" onClick={handleSendOtp} disabled={authLoading} full>
@@ -354,7 +354,7 @@ export default function RegisterForm() {
             ) : (
               <form onSubmit={handleVerifyOtp} className="space-y-4">
                 <div>
-                  <label htmlFor="otp" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                  <label htmlFor="otp" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                     6-Digit Code sent to {email}
                   </label>
                   <input
@@ -374,7 +374,7 @@ export default function RegisterForm() {
                     type="button"
                     onClick={() => setOtpSent(false)}
                     disabled={authLoading}
-                    className="flex-1 text-label font-bold border border-muted rounded-md py-2.5 text-fg-2 transition hover:bg-surface-muted"
+                    className="flex-1 text-[15px] font-bold border border-muted rounded-md py-2.5 text-fg-2 transition hover:bg-surface-muted"
                   >
                     Back
                   </button>
@@ -390,21 +390,21 @@ export default function RegisterForm() {
           <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-muted">
               <div>
-                <p className="text-micro font-bold uppercase tracking-wider text-fg-3">Logged in as</p>
-                <p className="text-small font-bold text-fg truncate max-w-[200px]" title={user.email}>
+                <p className="text-[13px] font-bold uppercase tracking-wider text-fg-3">Logged in as</p>
+                <p className="text-[16px] font-bold text-fg truncate max-w-[200px]" title={user.email}>
                   {user.email}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="text-micro font-bold uppercase tracking-wider text-destructive hover:underline"
+                className="text-[13px] font-bold uppercase tracking-wider text-destructive hover:underline"
               >
                 Sign Out
               </button>
             </div>
 
-            <h2 className="text-fg font-display font-bold text-h3 mb-6">
+            <h2 className="text-fg font-display font-bold text-[21px] mb-6">
               Step 2: Delivery & Contact details
             </h2>
 
@@ -417,7 +417,7 @@ export default function RegisterForm() {
             <form onSubmit={handleCheckout} className="space-y-5">
               {/* Phone Field */}
               <div>
-                <label htmlFor="phone" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="phone" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   Phone / WhatsApp number <span className="text-destructive font-normal">*</span>
                 </label>
                 <input
@@ -440,18 +440,18 @@ export default function RegisterForm() {
                       setValidationErrors((prev) => ({ ...prev, phone: undefined }));
                     }
                   }}
-                  className={`w-full rounded-md border bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 ${
+                  className={`w-full rounded-md border bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 ${
                     validationErrors.phone ? "border-destructive focus:ring-destructive" : "border-muted"
                   }`}
                 />
                 {validationErrors.phone && (
-                  <p className="mt-1 text-micro text-destructive font-medium">{validationErrors.phone}</p>
+                  <p className="mt-1 text-[13px] text-destructive font-medium">{validationErrors.phone}</p>
                 )}
               </div>
 
               {/* City Field */}
               <div>
-                <label htmlFor="city" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="city" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   City <span className="text-fg-3 font-normal">(Optional)</span>
                 </label>
                 <input
@@ -461,13 +461,13 @@ export default function RegisterForm() {
                   placeholder="e.g. Kozhikode / Dubai"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                 />
               </div>
 
               {/* Country Field */}
               <div>
-                <label htmlFor="country" className="block text-micro font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="country" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   Country <span className="text-fg-3 font-normal">(Optional)</span>
                 </label>
                 <input
@@ -477,17 +477,17 @@ export default function RegisterForm() {
                   placeholder="e.g. India / UAE"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-small text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
                 />
               </div>
 
               {/* Price outline */}
               <div className="mt-6 p-4 rounded-md bg-surface-muted border border-muted/50">
                 <div className="flex justify-between items-baseline mb-1">
-                  <span className="text-small font-bold text-fg-2">Course Price</span>
+                  <span className="text-[16px] font-bold text-fg-2">Course Price</span>
                   <span className="text-h3 font-display font-bold text-fg">₹2,999</span>
                 </div>
-                <p className="text-[12px] text-fg-3 leading-relaxed">
+                <p className="text-[14px] text-fg-3 leading-relaxed">
                   Circle members automatically receive 20% discount (₹2,399 charged) computed server-side for eligible emails.
                 </p>
               </div>
