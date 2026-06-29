@@ -41,8 +41,8 @@ export default function OnboardingPage() {
     router.push("/learn");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     setSubmitError("");
     setSubmitLoading(true);
 
@@ -288,7 +288,7 @@ export default function OnboardingPage() {
               >
                 Skip survey
               </button>
-              <BrandButton variant="solid" tone="green" className="flex-1" onClick={() => {}} full>
+              <BrandButton variant="solid" tone="green" className="flex-1" onClick={handleSubmit} disabled={submitLoading} full>
                 {submitLoading ? "Submitting..." : "Submit & Complete"}
               </BrandButton>
             </div>
