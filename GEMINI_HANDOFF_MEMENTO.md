@@ -18,7 +18,7 @@ This document serves as a complete context snapshot of the cohort registration i
 *   **[server.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/lib/supabase/server.ts)**:
     *   `createServerSupabaseClient()`: Cookie-based server client (handles React 19 / Next.js 16 async cookie parameters).
     *   `createAdminSupabaseClient()`: Standalone admin client initialized with the `SUPABASE_SERVICE_ROLE_KEY` to bypass Row-Level Security (RLS) for backend operations (e.g. modifying `enrollments` or `payments`).
-*   **[middleware.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/middleware.ts)**: Refreshes user auth sessions on every request.
+*   **[proxy.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/proxy.ts)**: Refreshes user auth sessions on every request (Next.js 16 Proxy convention replacing the deprecated `middleware.ts`).
 *   **[callback/route.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/api/auth/callback/route.ts)**: `GET /api/auth/callback` exchanges the OAuth code for a session and redirects to `/register`.
 
 ### B. Checkout Flow & APIs
@@ -35,7 +35,8 @@ This document serves as a complete context snapshot of the cohort registration i
 
 ### C. Razorpay Webhooks
 *   **[webhooks/razorpay/route.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/api/webhooks/razorpay/route.ts)**: `POST /api/webhooks/razorpay`
-    *   Verifies incoming request signatures on the raw payload using HMAC-SHA256 and `RAZORPAY_WEBHOOK_SECRET`.
+    *   Verifies incoming request signatures on the raw payload using HMAC-SHA256 and `RAZORPAY_WEBHOOK_SECRET` with **timing-safe string comparison** (`crypto.timingSafeEqual`).
+    *   Added **malformed payload and signature protection** (immediately returns `400 Bad Request` to prevent infinite Razorpay retries).
     *   Inserts event logs into `app.webhook_events` to enforce idempotency (duplicate keys immediately return `200 OK` and halt).
     *   Monitors `payment.captured` and `order.paid` events.
     *   Checks existing DB status before mutating to prevent out-of-order events from overwriting `paid` fields back to `created` or `failed`.
@@ -47,25 +48,10 @@ This document serves as a complete context snapshot of the cohort registration i
 
 ---
 
-## 3. Current Blockers & Active Issues
-
-### 🔴 Blocker: Supabase Schema Privilege Denied (Permission Denied for Schema `app`)
-When clicking "Proceed to Payment", the API endpoint returns a `404 Course not found`. This happens because the administrative client queries tables inside the custom `app` schema (e.g. `app.courses`, `app.batches`), resulting in the following Postgres error:
-```
-Error reading courses: {
-  code: '42501',
-  message: 'permission denied for schema app'
-}
-```
-*   **Why**: The database migrations (`0002_app_course_structure.sql`) grant schema usage privileges to `anon` and `authenticated` roles, but they **do not grant usage privileges to the `service_role` role** (which is the database user used by our server-side API client).
-*   **How to Fix**: Run the following SQL queries in the Supabase Dashboard SQL Editor (documented in `SCHEMA_CHANGE_REQUEST.md`):
-    ```sql
-    grant usage on schema app to service_role;
-    grant all privileges on all tables in schema app to service_role;
-    grant all privileges on all sequences in schema app to service_role;
-    alter default privileges in schema app grant all on tables to service_role;
-    alter default privileges in schema app grant all on sequences to service_role;
-    ```
+### 🟢 Resolved: Supabase Schema Privilege Denied (Permission Denied for Schema `app`)
+During initial tests, querying database tables under the custom `app` schema returned a `42501 permission denied for schema app` error.
+*   **Why**: The database migrations (`0002_app_course_structure.sql`) grant schema usage privileges to `anon` and `authenticated` roles, but they **did not grant usage privileges to the `service_role` role** (which is the database user used by our server-side API client).
+*   **How it was Fixed**: We added **[0004_grant_service_role_app_schema.sql](file:///Users/nihalanas/Documents/Development/elyst-website/supabase/migrations/0004_grant_service_role_app_schema.sql)** to the migrations directory to grant `usage` and `all privileges` on the `app` schema and tables to `service_role` and configure default privileges for future migrations. This has been applied to the database.
 
 ---
 
@@ -84,7 +70,7 @@ RAZORPAY_WEBHOOK_SECRET=...
 
 ## 5. Pending Tasks & Verification Checklist
 
-- [ ] **Database Grants**: Run the SQL commands in `SCHEMA_CHANGE_REQUEST.md` on your Supabase project.
+- [x] **Database Grants**: Run the SQL commands in `0004_grant_service_role_app_schema.sql` on your Supabase project (already completed and applied).
 - [ ] **Local Webhook Testing**: Setup a public webhook tunnel (like `ngrok`) to route Razorpay webhooks to `http://localhost:3000/api/webhooks/razorpay` and register it in Razorpay dashboard.
 - [ ] **Configure Google OAuth Redirects**: Confirm redirect callbacks point to `https://<ref>.supabase.co/auth/v1/callback` in both Google Cloud console and Supabase dashboard settings.
 - [ ] **HTML Email Templates**: Replace default Supabase raw text email templates with custom HTML templates under Supabase Settings.
