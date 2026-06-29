@@ -7,7 +7,6 @@ import { BrandButton } from "@/components/ui/brand-button";
 import {
   PRICE,
   ORIGINAL_PRICE,
-  RAZORPAY_URL,
   SEATS_TOTAL,
   SEATS_LEFT,
   CIRCLE_PRICE,
@@ -154,7 +153,7 @@ export default function PriceEnrol() {
             </div>
 
             <div className="mt-7 flex flex-col gap-3">
-              <BrandButton href={RAZORPAY_URL} tone="green" full>
+              <BrandButton href="/register" tone="green" full>
                 Join now
               </BrandButton>
               <BrandButton href="#site-footer" variant="outline" tone="emerald" className="border-white! bg-transparent! text-white! hover:bg-white/10!" full>
