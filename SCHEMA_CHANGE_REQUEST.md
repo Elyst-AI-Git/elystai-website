@@ -16,21 +16,12 @@ This occurs because the migration `0002_app_course_structure.sql` grants `USAGE`
 ---
 
 ## Proposed SQL Resolution
-Please run the following SQL commands in your **Supabase Dashboard SQL Editor** to grant the server-side API permissions to read and write in the `app` schema:
+This is already a reviewed migration — `supabase/migrations/0004_grant_service_role_app_schema.sql` — rather than an ad hoc dashboard edit. Apply it (and any later migrations) the normal way:
 
-```sql
--- 1. Grant usage on the app schema to service_role
-grant usage on schema app to service_role;
-
--- 2. Grant all privileges on existing tables in app schema
-grant all privileges on all tables in schema app to service_role;
-
--- 3. Grant all privileges on existing sequences in app schema
-grant all privileges on all sequences in schema app to service_role;
-
--- 4. Set default privileges so future tables/sequences automatically grant rights
-alter default privileges in schema app grant all on tables to service_role;
-alter default privileges in schema app grant all on sequences to service_role;
+```sh
+supabase db push
 ```
 
-Once this is run, the service-role client used by the Next.js API routes will be able to query the courses and write to the enrollment/payment tables correctly.
+Schema changes should always be routed through `supabase/migrations/`, not run by hand in the Supabase Dashboard SQL Editor, so the change is reviewed, versioned, and reproducible across environments.
+
+Once applied, the service-role client used by the Next.js API routes will be able to query the courses and write to the enrollment/payment tables correctly.

@@ -30,6 +30,12 @@ export async function POST(request: Request) {
     if (!phone) {
       return NextResponse.json({ error: "Phone number is required" }, { status: 400 });
     }
+    if (!city || !String(city).trim()) {
+      return NextResponse.json({ error: "City is required" }, { status: 400 });
+    }
+    if (!country || !String(country).trim()) {
+      return NextResponse.json({ error: "Country is required" }, { status: 400 });
+    }
 
     const supabaseAdmin = createAdminSupabaseClient();
     const targetSlug = courseSlug || "ai-for-work";
@@ -116,11 +122,22 @@ export async function POST(request: Request) {
       .eq("email", user.email.toLowerCase())
       .maybeSingle();
 
+    // Fail closed: a real query error here must not silently fall through to
+    // full price — that overcharges a legitimate Circle member with no error
+    // trail. .maybeSingle() only sets `error` for an actual failure (zero
+    // rows is `data: null, error: null`), so this never blocks non-members.
+    if (segmentMemberError) {
+      return NextResponse.json(
+        { error: "Failed to verify discount eligibility, please try again" },
+        { status: 500 }
+      );
+    }
+
     let discountApplied = false;
     let discountAmount = 0; // in paise
     let segmentId: string | null = null;
 
-    if (segmentMember && !segmentMemberError) {
+    if (segmentMember) {
       const rawSegment = segmentMember.discount_segments;
       const segment = (Array.isArray(rawSegment) ? rawSegment[0] : rawSegment) as { id: string; name: string; kind: string; value: number; active: boolean } | null;
       if (segment && segment.active && segment.name.toLowerCase() === "circle") {
@@ -138,6 +155,9 @@ export async function POST(request: Request) {
           const finalAmountPaise = finalAmountRupees * 100;
           discountAmount = batch.base_price_amount - finalAmountPaise;
         }
+        // Clamp: bad segment data (percent > 100, fixed > price) must never
+        // be able to drop the charged amount to zero or negative.
+        discountAmount = Math.min(Math.max(discountAmount, 0), batch.base_price_amount);
       }
     }
 
@@ -216,6 +236,30 @@ export async function POST(request: Request) {
       });
 
     if (paymentError) {
+      // 23505 = unique_violation on payments_one_open_per_enrollment (see
+      // migration 0006): a concurrent request (double-click, two tabs) won
+      // the race and already inserted a 'created' payment for this
+      // enrollment first. We already created a now-orphaned Razorpay order
+      // above — fetch the winner's row and hand its order back instead of
+      // erroring, so the user still gets a single, working checkout.
+      if (paymentError.code === "23505") {
+        const { data: winningPayment } = await supabaseAdmin
+          .schema("app")
+          .from("payments")
+          .select("razorpay_order_id, amount, currency")
+          .eq("enrollment_id", enrollment.id)
+          .eq("status", "created")
+          .maybeSingle();
+
+        if (winningPayment?.razorpay_order_id) {
+          return NextResponse.json({
+            orderId: winningPayment.razorpay_order_id,
+            amount: winningPayment.amount,
+            currency: winningPayment.currency,
+            keyId: process.env.RAZORPAY_KEY_ID,
+          });
+        }
+      }
       return NextResponse.json(
         { error: `Failed to record payment row: ${paymentError.message}` },
         { status: 500 }

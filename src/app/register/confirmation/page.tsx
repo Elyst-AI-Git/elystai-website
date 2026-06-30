@@ -13,11 +13,29 @@ export default function ConfirmationPage() {
   const [loadingSession, setLoadingSession] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!session) {
         // Redirect to register if not authenticated
         router.push("/register");
+        return;
       }
+
+      // Session alone only proves who's asking — also require an enrollment
+      // row before showing the success screen, so a logged-in user who never
+      // checked out can't reach this page just by typing the URL.
+      const { data: enrollment } = await supabase
+        .schema("app")
+        .from("enrollments")
+        .select("id")
+        .eq("profile_id", session.user.id)
+        .limit(1)
+        .maybeSingle();
+
+      if (!enrollment) {
+        router.push("/register");
+        return;
+      }
+
       setLoadingSession(false);
     });
   }, [supabase, router]);

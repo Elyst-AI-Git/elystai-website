@@ -57,7 +57,7 @@ business owners, and freelancers across **India and the GCC**.
 
 ## Data collection — the three moments
 
-- **Moment 1 (checkout, minimal):** phone/WhatsApp (required); city, country (optional).
+- **Moment 1 (checkout, minimal):** phone/WhatsApp, city, country (all required).
   Name/email from Google. No password, no discount field. → `public.profiles`.
 - **Moment 2 (post-payment survey, skippable):** audience type, role, industry,
   seniority (opt), AI experience, primary goal (+ one open-text), how they heard of us,

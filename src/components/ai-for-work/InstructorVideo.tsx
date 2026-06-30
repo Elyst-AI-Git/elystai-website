@@ -13,8 +13,15 @@ import { SectionMark } from "@/components/ui/section-mark";
 
 const YOUTUBE_VIDEO_ID = "dVCHcU--9aI";
 
+// Static — autoplay always starts muted (the only way browsers allow it).
+// Unmuting afterwards goes through the postMessage API below instead of
+// changing this src, which would otherwise reload the iframe and restart
+// the video from 0:00 every time the viewer taps "unmute".
+const SRC = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&rel=0&playsinline=1&enablejsapi=1`;
+
 export default function InstructorVideo() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
   const [shouldLoad, setShouldLoad] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -23,7 +30,17 @@ export default function InstructorVideo() {
     if (isInView) setShouldLoad(true);
   }, [isInView]);
 
-  const src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=${muted ? 1 : 0}&rel=0&playsinline=1&enablejsapi=1`;
+  const handleUnmute = () => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func: "unMute", args: [] }),
+      "*",
+    );
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+      "*",
+    );
+    setMuted(false);
+  };
 
   return (
     <section
@@ -50,7 +67,8 @@ export default function InstructorVideo() {
         >
           {shouldLoad ? (
             <iframe
-              src={src}
+              ref={iframeRef}
+              src={SRC}
               title="Shirin explains the AI for Work program"
               className="absolute inset-0 h-full w-full"
               allow="autoplay; encrypted-media; picture-in-picture"
@@ -65,7 +83,7 @@ export default function InstructorVideo() {
           {shouldLoad && muted && (
             <button
               type="button"
-              onClick={() => setMuted(false)}
+              onClick={handleUnmute}
               className="absolute bottom-4 right-4 rounded-md bg-[#0A0F0C]/85 px-4 py-2 text-[13px] font-bold uppercase tracking-wider text-white transition hover:bg-[#0A0F0C]"
             >
               Tap to unmute

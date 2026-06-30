@@ -44,6 +44,10 @@ psql "$DATABASE_URL" -f supabase/seed.sql   # or run seed.sql in the SQL editor
 - `0001_shared_identity.sql` — profiles (+ auto-create trigger), discount segments, RLS
 - `0002_app_course_structure.sql` — `app` schema; courses, batches, modules, lessons
 - `0003_app_commerce.sql` — enrollments, payments, onboarding, webhook_events, lesson gating
+- `0004_grant_service_role_app_schema.sql` — service_role write access on `app` schema
+- `0005_grant_service_role_public_writes.sql` — service_role write access on `public` schema
+- `0006_payments_one_open_per_enrollment.sql` — one open ("created") payment per enrollment
+- `0007_normalize_discount_member_emails.sql` — lowercase + enforce `discount_segment_members.email`
 
 ## 4. Expose the `app` schema to the API — **[You/Claude]**
 
@@ -60,7 +64,11 @@ Google sign-in is **primary**, email OTP is the **fallback**. Login happens
    (Authorized redirect URI: `https://<REF>.supabase.co/auth/v1/callback`).
    Dashboard → **Authentication → Providers → Google** → paste Client ID + Secret.
 2. **Email OTP**: Authentication → Providers → Email → enable, and set "Confirm email"
-   to use OTP. (Disable password sign-in if you only want Google + OTP.)
+   to use OTP. (Disable password sign-in if you only want Google + OTP.) Note: on a
+   free-tier project Supabase's default email provider is rate-limited (a few
+   emails/hour) and uses unbranded templates — don't treat OTP as production-ready
+   until custom SMTP (e.g. Resend) and branded templates are configured; see the
+   project's Supabase guardrails notes for the current rate limit.
 3. **URL config**: Authentication → URL Configuration → Site URL =
    `https://elystai.com` (registration is on the main domain), plus redirect URLs
    for `http://localhost:3000/**` and later `https://learn.elystai.com/**` (LMS).

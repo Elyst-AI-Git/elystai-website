@@ -14,27 +14,27 @@ This document serves as a complete context snapshot of the cohort registration i
 ## 2. Completed Architecture & Added Files
 
 ### A. Supabase Client Configuration
-*   **[browser.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/lib/supabase/browser.ts)**: Configures the client-side Supabase client using `@supabase/ssr`. Added fallback dummy placeholders for the API keys so static page generation during `next build` does not crash when local `.env.local` keys are missing.
-*   **[server.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/lib/supabase/server.ts)**:
+*   **[browser.ts](src/lib/supabase/browser.ts)**: Configures the client-side Supabase client using `@supabase/ssr`. Added fallback dummy placeholders for the API keys so static page generation during `next build` does not crash when local `.env.local` keys are missing.
+*   **[server.ts](src/lib/supabase/server.ts)**:
     *   `createServerSupabaseClient()`: Cookie-based server client (handles React 19 / Next.js 16 async cookie parameters).
     *   `createAdminSupabaseClient()`: Standalone admin client initialized with the `SUPABASE_SERVICE_ROLE_KEY` to bypass Row-Level Security (RLS) for backend operations (e.g. modifying `enrollments` or `payments`).
-*   **[proxy.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/proxy.ts)**: Refreshes user auth sessions on every request (Next.js 16 Proxy convention replacing the deprecated `middleware.ts`).
-*   **[callback/route.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/api/auth/callback/route.ts)**: `GET /api/auth/callback` exchanges the OAuth code for a session and redirects to `/register`.
+*   **[proxy.ts](src/proxy.ts)**: Refreshes user auth sessions on every request (Next.js 16 Proxy convention replacing the deprecated `middleware.ts`).
+*   **[callback/route.ts](src/app/api/auth/callback/route.ts)**: `GET /api/auth/callback` exchanges the OAuth code for a session and redirects to `/register`.
 
 ### B. Checkout Flow & APIs
-*   **[RegisterForm.tsx](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/register/RegisterForm.tsx)**: Reusable client component. Handles conditional steps: Google / OTP authentication, collection of Moment 1 fields (Phone required, City/Country optional), and loading/triggering the Razorpay Standard Checkout overlay popup.
-*   **[page.tsx](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/register/page.tsx)**: Server component wrapping `RegisterForm` in `<Suspense>` to avoid static build bailouts with `useSearchParams`.
-*   **[checkout/order/route.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/api/checkout/order/route.ts)**: `POST /api/checkout/order`
+*   **[RegisterForm.tsx](src/app/register/RegisterForm.tsx)**: Reusable client component. Handles conditional steps: Google / OTP authentication, collection of Moment 1 fields (Phone required, City/Country optional), and loading/triggering the Razorpay Standard Checkout overlay popup.
+*   **[page.tsx](src/app/register/page.tsx)**: Server component wrapping `RegisterForm` in `<Suspense>` to avoid static build bailouts with `useSearchParams`.
+*   **[checkout/order/route.ts](src/app/api/checkout/order/route.ts)**: `POST /api/checkout/order`
     *   Verifies user session.
     *   Performs server-side case-insensitive email check against `public.discount_segment_members` joined to `active` segments. If email matches the `circle` segment, applies 20% discount.
     *   Fetches the active cohort batch for `ai-for-work`.
     *   Computes the final charge in paise, rounding to the nearest whole rupee (₹2,999 base -> ₹2,399 for Circle).
     *   Inserts/upserts `pending` enrollment (capturing Moment 3 UTM parameters/referrer silently) and `created` payment rows.
     *   Requests a Razorpay Order and returns checkout metadata to the client.
-*   **[PriceEnrol.tsx](file:///Users/nihalanas/Documents/Development/elyst-website/src/components/ai-for-work/PriceEnrol.tsx)**: Redirected landing page CTA button to `/register`.
+*   **[PriceEnrol.tsx](src/components/ai-for-work/PriceEnrol.tsx)**: Redirected landing page CTA button to `/register`.
 
 ### C. Razorpay Webhooks
-*   **[webhooks/razorpay/route.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/api/webhooks/razorpay/route.ts)**: `POST /api/webhooks/razorpay`
+*   **[webhooks/razorpay/route.ts](src/app/api/webhooks/razorpay/route.ts)**: `POST /api/webhooks/razorpay`
     *   Verifies incoming request signatures on the raw payload using HMAC-SHA256 and `RAZORPAY_WEBHOOK_SECRET` with **timing-safe string comparison** (`crypto.timingSafeEqual`).
     *   Added **malformed payload and signature protection** (immediately returns `400 Bad Request` to prevent infinite Razorpay retries).
     *   Inserts event logs into `app.webhook_events` to enforce idempotency (duplicate keys immediately return `200 OK` and halt).
@@ -43,15 +43,15 @@ This document serves as a complete context snapshot of the cohort registration i
     *   Sets payment status to `paid` and enrollment status to `active`.
 
 ### D. Onboarding Survey
-*   **[onboarding/page.tsx](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/register/onboarding/page.tsx)**: Gathers Moment 2 data (audience type, industry, role, seniority, AI experience, goals, and LinkedIn). Incorporates a prominent, skippable action that redirects directly to `/learn`.
-*   **[onboarding/route.ts](file:///Users/nihalanas/Documents/Development/elyst-website/src/app/api/onboarding/route.ts)**: `POST /api/onboarding` upserts user responses to `app.onboarding`.
+*   **[onboarding/page.tsx](src/app/register/onboarding/page.tsx)**: Gathers Moment 2 data (audience type, industry, role, seniority, AI experience, goals, and LinkedIn). Incorporates a prominent, skippable action that redirects directly to `/learn`.
+*   **[onboarding/route.ts](src/app/api/onboarding/route.ts)**: `POST /api/onboarding` upserts user responses to `app.onboarding`.
 
 ---
 
 ### 🟢 Resolved: Supabase Schema Privilege Denied (Permission Denied for Schema `app`)
 During initial tests, querying database tables under the custom `app` schema returned a `42501 permission denied for schema app` error.
 *   **Why**: The database migrations (`0002_app_course_structure.sql`) grant schema usage privileges to `anon` and `authenticated` roles, but they **did not grant usage privileges to the `service_role` role** (which is the database user used by our server-side API client).
-*   **How it was Fixed**: We added **[0004_grant_service_role_app_schema.sql](file:///Users/nihalanas/Documents/Development/elyst-website/supabase/migrations/0004_grant_service_role_app_schema.sql)** to the migrations directory to grant `usage` and `all privileges` on the `app` schema and tables to `service_role` and configure default privileges for future migrations. This has been applied to the database.
+*   **How it was Fixed**: We added **[0004_grant_service_role_app_schema.sql](supabase/migrations/0004_grant_service_role_app_schema.sql)** to the migrations directory to grant `usage` and `all privileges` on the `app` schema and tables to `service_role` and configure default privileges for future migrations. This has been applied to the database.
 
 ---
 

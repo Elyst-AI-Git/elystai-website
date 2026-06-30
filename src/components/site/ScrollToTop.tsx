@@ -3,18 +3,20 @@
 import { useEffect } from "react";
 
 /**
- * Forces every page to open at the top on a fresh load / refresh. Browsers
- * default to history.scrollRestoration = "auto", which restores the previous
- * scroll position on reload — so a refresh half-way down a page leaves you
- * half-way down. Switching to "manual" and scrolling to the top on mount makes
- * a refresh always start from the top, which is what we want here.
+ * Forces a page to open at the top on an actual browser refresh (F5) — without
+ * touching `history.scrollRestoration` globally, which would also disable the
+ * browser's native scroll-position restore on back/forward navigation. Scoped
+ * to the `navigation.type === "reload"` case via the Navigation Timing API, and
+ * skipped entirely when the URL has a hash (e.g. `#enrol`) so deep links still
+ * land on the right section instead of being yanked back to the top.
  */
 export default function ScrollToTop() {
   useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+    if (window.location.hash) return;
+    const [entry] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+    if (entry?.type === "reload") {
+      window.scrollTo(0, 0);
     }
-    window.scrollTo(0, 0);
   }, []);
 
   return null;

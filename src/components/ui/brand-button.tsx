@@ -206,9 +206,9 @@ export function BrandButton({
       render={
         href ? (
           href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:") ? (
-            <a href={disabled ? undefined : href} onClick={handleMetalLinkClick} aria-disabled={disabled} />
+            <a href={disabled ? undefined : href} onClick={handleMetalLinkClick} aria-disabled={disabled} tabIndex={disabled ? -1 : undefined} />
           ) : (
-            <Link href={href} onClick={handleMetalLinkClick} aria-disabled={disabled} />
+            <Link href={href} onClick={handleMetalLinkClick} aria-disabled={disabled} tabIndex={disabled ? -1 : undefined} />
           )
         ) : undefined
       }

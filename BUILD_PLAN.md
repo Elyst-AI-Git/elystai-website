@@ -38,7 +38,7 @@ Checkout page (Moment 1 fields)      ← phone (req), city/country (opt)
         • server computes amount: base_price_amount, minus 20% if Circle → round to ₹
         • create/upsert enrollment (status 'pending') + payment (status 'created')
         • create Razorpay Order (Orders API) with the computed amount
-        • return { orderId, amount, currency, key_id }
+        • return { orderId, amount, currency, keyId }
 Embedded Razorpay Standard Checkout modal opens on the same page
    └─ user pays
 Razorpay → POST /api/webhooks/razorpay   ← THE ONLY TRUSTED SIGNAL
