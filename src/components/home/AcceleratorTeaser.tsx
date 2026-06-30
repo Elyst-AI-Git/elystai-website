@@ -79,6 +79,7 @@ const programs: Program[] = [
     href: "/ai-for-work",
     surface: "#1c725e",
     dark: true,
+    image: "/images/programs/ai-for-work.jpg",
   },
 ];
 

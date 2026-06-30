@@ -11,7 +11,7 @@ import { SectionMark } from "@/components/ui/section-mark";
  * unmute control since a silently autoplaying video is easy to miss.
  */
 
-const YOUTUBE_VIDEO_ID = "dVCHcU--9aI";
+const YOUTUBE_VIDEO_ID = "_g9XH0ArBng";
 
 // Static — autoplay always starts muted (the only way browsers allow it).
 // Unmuting afterwards goes through the postMessage API below instead of
