@@ -31,40 +31,34 @@ type Node = {
   Icon: (props: IconProps) => React.ReactElement;
   label: string;
   desc: string;
-  why: string;
+  week: 1 | 2;
 };
 
 const nodes: Node[] = [
-  { Icon: IconUnderstand, label: "Understanding AI", desc: "Start from zero and finally get what AI is, without the confusing tech talk.", why: "You stop feeling lost and start making confident choices." },
-  { Icon: IconMessage, label: "Prompting Mastery & Context Engineering", desc: "Learn how to talk to AI so it gives you what you want, not random answers.", why: "You get usable results on the first try, not the fifth." },
-  { Icon: IconIntegrations, label: "Tools Work For You", desc: "Build your own AI toolkit, made for the work you do.", why: "You know exactly which tool to reach for, and when." },
-  { Icon: IconDocument, label: "AI Multimedia", desc: "Turn your ideas into visuals in minutes.", why: "You make images, video and voice without hiring anyone." },
-  { Icon: IconProgram, label: "Your Personal AI", desc: "Have your own AI assistant ready whenever you need it.", why: "It already knows your work, so you never start from scratch." },
-  { Icon: IconAct, label: "Meet AI Agents", desc: "See how AI can do tasks on its own, while you focus on the bigger things.", why: "Agents handle multi-step tasks for you, like a junior who never sleeps." },
-  { Icon: IconConfigure, label: "Automate Your Work", desc: "Set it up once, and let AI handle the same work again and again.", why: "The repeat work runs itself, and your week opens up." },
+  { Icon: IconUnderstand, label: "What AI Actually Is", desc: "A clear picture of how AI actually works across tools and where it is today.", week: 1 },
+  { Icon: IconMessage, label: "Prompting & Context", desc: "Write prompts that get you the right answer the first time, not the fifth time.", week: 1 },
+  { Icon: IconIntegrations, label: "Your AI Toolkit", desc: "Pick the right AI tools for your job and know exactly when to use each one.", week: 1 },
+  { Icon: IconDocument, label: "Create With AI", desc: "Make images, video and voice for your work in minutes without prior skills.", week: 1 },
+  { Icon: IconProgram, label: "Your Personal AI", desc: "Set up an assistant that already knows your work and is ready on demand.", week: 2 },
+  { Icon: IconAct, label: "AI Agents At Work", desc: "Hand multi-step tasks to AI that finishes them while you focus elsewhere.", week: 2 },
+  { Icon: IconConfigure, label: "Automate The Repeats", desc: "Build automations once and let the same work run itself, week after week.", week: 2 },
 ];
 
 function TimelineNode({ node, index }: { node: Node; index: number }) {
-  const { Icon, label, desc, why } = node;
+  const { Icon, label, desc } = node;
   const isLeft = index % 2 === 1; // 0-based: nodes 2,4,6 sit on the left
   const num = String(index + 1).padStart(2, "0");
 
   const card = (
     <div className={`flex flex-col gap-1 ${isLeft ? "md:items-end md:text-right" : "md:items-start md:text-left"}`}>
-      <span className="eyebrow text-emerald" style={{ fontSize: "calc(var(--text-label) + 2px)" }}>
-        Module {num}
+      <span className="eyebrow text-emerald" style={{ fontSize: "calc(var(--text-label) + 3px)" }}>
+        Area {num}
       </span>
-      <h3 className="text-fg" style={{ fontSize: "clamp(1.3rem, 2vw, 1.65rem)", fontWeight: 700, lineHeight: 1.25 }}>
+      <h3 className="text-fg" style={{ fontSize: "clamp(1.4rem, 2.2vw, 1.8rem)", fontWeight: 700, lineHeight: 1.25 }}>
         {label}
       </h3>
-      <p className="mt-1 max-w-md text-fg-2" style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1.55 }}>
+      <p className="mt-1 max-w-md text-fg-2" style={{ fontSize: "calc(var(--text-small) + 3px)", lineHeight: 1.55 }}>
         {desc}
-      </p>
-      <p
-        className={`mt-2 max-w-md font-medium text-emerald ${isLeft ? "md:text-right" : "md:text-left"}`}
-        style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1.5 }}
-      >
-        Why it matters: {why}
       </p>
     </div>
   );
@@ -145,12 +139,12 @@ export default function Curriculum() {
       <div className="relative z-10 mx-auto max-w-4xl">
         {/* Centred heading */}
         <div className="mx-auto max-w-2xl text-center">
-          <SectionMark>Curriculum</SectionMark>
+          <SectionMark>What you go through</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Seven modules, step by step.
+            Seven curated sections
           </h2>
           <p className="mt-4 text-fg-2" style={{ fontSize: "calc(var(--text-body) + 2px)" }}>
-            Every session is activity-based, so you practise as you learn.
+            Every section, picked with purpose
           </p>
         </div>
 
@@ -182,9 +176,32 @@ export default function Curriculum() {
           )}
 
           <div className="relative flex flex-col gap-16">
-            {nodes.map((node, i) => (
-              <TimelineNode key={node.label} node={node} index={i} />
-            ))}
+            {nodes.map((node, i) => {
+              // A week banner sits above the first module of each week, so the
+              // two-week arc reads at a glance: 4 modules in Week 1, 3 in Week 2.
+              const firstOfWeek = i === 0 || node.week !== nodes[i - 1].week;
+              return (
+                <React.Fragment key={node.label}>
+                  {firstOfWeek && (
+                    <div className="relative z-10 flex justify-center">
+                      <span
+                        className="inline-flex items-center gap-2 rounded-xl border-[3px] px-6 py-2 font-display font-bold uppercase tracking-wide"
+                        style={{
+                          background: node.week === 1 ? "var(--elyst-emerald)" : "var(--elyst-green)",
+                          color: node.week === 1 ? "#ffffff" : "#06140e",
+                          borderColor: "#06140e",
+                          fontSize: "calc(var(--text-label) + 2px)",
+                          boxShadow: "0 6px 18px -8px rgba(3,98,76,0.5)",
+                        }}
+                      >
+                        Week {node.week} · {node.week === 1 ? "Say Hello to Effective AI" : "Let's start automating"}
+                      </span>
+                    </div>
+                  )}
+                  <TimelineNode node={node} index={i} />
+                </React.Fragment>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -11,8 +11,10 @@ import { VALUE_STACK } from "./config";
  * lets the copy breathe. Each card untilts on hover.
  */
 
-const rotations = [-3, 2, -1, 3, -2, 1, -3, 2, -1];
-const tones = ["card", "green", "dark", "tint", "darkAlt", "card", "tint", "dark", "green"] as const;
+const rotations = [-3, 2, -1, 3, -2, 1];
+// 3-col / 2-row grid (desktop): order picked so no two grid-adjacent cards
+// (left-right or top-bottom neighbours) share the same tone.
+const tones = ["card", "green", "dark", "tint", "darkAlt", "green"] as const;
 
 const toneStyles: Record<string, { bg: string; titleColor: string; borderColor: string }> = {
   card: { bg: "#ffffff", titleColor: "#000000", borderColor: "var(--elyst-emerald)" },

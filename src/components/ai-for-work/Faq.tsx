@@ -87,7 +87,7 @@ export default function Faq() {
         <div className="mx-auto max-w-2xl text-center">
           <SectionMark>FAQ</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Questions before you join.
+            Answers you might need
           </h2>
         </div>
 

@@ -26,6 +26,9 @@ const learnItems: LearnItem[] = [
 const joinPrefixes = ["/learn", "/circle", "/ai-yathra"];
 
 function ctaForPath(pathname: string) {
+  if (pathname.startsWith("/ai-for-work")) {
+    return { label: "Join", href: "#enrol" };
+  }
   const join = joinPrefixes.some((p) => pathname.startsWith(p));
   return join
     ? { label: "Join", href: "/learn#join" }

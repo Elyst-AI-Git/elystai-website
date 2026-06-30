@@ -20,13 +20,10 @@ export const ORIGINAL_PRICE = "₹4,999";
  * price by the "What you get" section.
  */
 export const VALUE_STACK = [
-  "7 live sessions with real-time Q&A",
-  "Lifetime session recordings",
+  "7 live sessions with Q&A",
   "Full learning portal access",
-  "A resource vault of templates & prompts",
-  "Ready-to-use Claude skills",
-  "A private WhatsApp group",
-  "3 months in the Elyst AI Circle",
+  "Resource vault of prompts & skills",
+  "3-Month access to the Circle",
   "1 month of follow-up support",
   "A certificate on completion",
 ];

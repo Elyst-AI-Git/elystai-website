@@ -70,12 +70,12 @@ export default function Instructor() {
             Taught by Shirin.
           </h2>
           <p className="mt-4 text-fg-2" style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.65 }}>
-            Fathima Shirin P is an AI educator and founder of Elyst AI. She helps
-            professionals, founders and educators turn AI into a real, everyday
-            advantage through hands-on live sessions, practical use cases, and
-            simple, jargon-free teaching. Having guided thousands of
-            non-technical learners, she equips everyday people to confidently
-            use, build with, and lead alongside AI.
+            Fathima Shirin P is an AI educator and the Co-Founder of Elyst AI.
+            She helps professionals, founders and educators turn AI into a
+            real, everyday advantage through effective live sessions and
+            practical use cases. Having guided thousands of non-technical
+            learners, she equips everyday people to confidently use, build
+            with, and lead alongside AI.
           </p>
 
           {/* Credibility stats */}

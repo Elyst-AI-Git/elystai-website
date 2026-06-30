@@ -10,15 +10,15 @@ import { SectionMark } from "@/components/ui/section-mark";
  */
 
 const testimonials = [
-  { quote: "AI Yathra broke my brain in 48 hours. If you're curious about AI but don't know where to start, I highly recommend keeping an eye out for their next event.", name: "Rahima SV", program: "AI Yathra 2.0" },
-  { quote: "What genuinely stood out to me was the mindset of the Elyst AI team, making sure people actually understand how to use them in both their personal and professional lives.", name: "Shaheen Raheem", program: "Elyst AI Circle" },
-  { quote: "That was a really engaging and insightful session. I picked up quite a few valuable takeaways. Looking forward to attending more sessions and courses from your team.", name: "Basila Fathima", program: "Elyst AI Circle" },
-  { quote: "Shirin and Nihal didn't just teach Gen AI, automations & AI tools. They guided us how to think, how to approach learning. It didn't feel like a webinar at all.", name: "Rohit P", program: "Elyst AI Circle" },
-  { quote: "It was such a great session, where we could clarify all our doubts and learn new things and unlearn old ones.", name: "Shiju Roy", program: "Elyst AI Circle" },
-  { quote: "The hands-on approach of showing each thing practically, showing how each tool actually works, made the sessions very effective. Looking forward to what's next.", name: "Muhammed Sinan B", program: "AI Yathra" },
-  { quote: "The session made Claude feel much easier to explore and actually use in day-to-day work. Nihal did an amazing job taking us through each part patiently.", name: "Adeela Thasneem", program: "Elyst AI Circle" },
-  { quote: "Big shoutout to the Elyst AI team. Your passion to deliver value was obvious throughout the journey. Expecting more sessions like this!", name: "Muhammed Rasil N", program: "AI Yathra" },
-  { quote: "I think my son got an idea about the language of the future. Prompt creation and web design using AI are so interesting for students.", name: "Anusha", program: "AI for Juniors Parent" },
+  { quote: "AI Yathra broke my brain in 48 hours. If you're curious about AI but don't know where to start, I highly recommend keeping an eye out for their next event.", name: "Rahima SV", designation: "SEO Specialist" },
+  { quote: "What genuinely stood out to me was the mindset of the Elyst AI team, making sure people actually understand how to use them in both their personal and professional lives.", name: "Shaheen Raheem", designation: "Marketing Coordinator" },
+  { quote: "That was a really engaging and insightful session. I picked up quite a few valuable takeaways. Looking forward to attending more sessions and courses from your team.", name: "Basila Fathima", designation: "R&D Lead" },
+  { quote: "Shirin and Nihal didn't just teach Gen AI, automations & AI tools. They guided us how to think, how to approach learning. It didn't feel like a webinar at all.", name: "Rohit P", designation: "Student" },
+  { quote: "It was such a great session, where we could clarify all our doubts and learn new things and unlearn old ones.", name: "Shiju Roy", designation: "Founder" },
+  { quote: "The hands-on approach of showing each thing practically, showing how each tool actually works, made the sessions very effective. Looking forward to what's next.", name: "Muhammed Sinan B", designation: "LinkedIn Strategist" },
+  { quote: "The session made Claude feel much easier to explore and actually use in day-to-day work. Nihal did an amazing job taking us through each part patiently.", name: "Adeela Thasneem", designation: "Social Media Strategist" },
+  { quote: "Big shoutout to the Elyst AI team. Your passion to deliver value was obvious throughout the journey. Expecting more sessions like this!", name: "Muhammed Rasil N", designation: "Growth Strategist" },
+  { quote: "As a parent, I was happy to see my son so involved during the AI session. He got practical experience with posters, videos and website designing.", name: "Saleena Ali", designation: "Doctor" },
 ];
 
 const columns = [
@@ -33,15 +33,15 @@ function QuoteCard({ t, tint }: { t: (typeof testimonials)[number]; tint: boolea
       className="flex flex-col gap-4 rounded-2xl border-[3px] p-6"
       style={{ background: tint ? "#c2edcb" : "#ffffff", borderColor: "var(--elyst-emerald)" }}
     >
-      <p className="text-fg" style={{ fontSize: "var(--text-small)", lineHeight: 1.55 }}>
+      <p className="text-fg" style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1.55 }}>
         &ldquo;{t.quote}&rdquo;
       </p>
       <div>
-        <p className="font-display font-bold text-fg" style={{ fontSize: "var(--text-small)" }}>
+        <p className="font-display font-bold text-fg" style={{ fontSize: "calc(var(--text-small) + 2px)" }}>
           {t.name}
         </p>
         <p className="text-fg-3" style={{ fontSize: "var(--text-label)" }}>
-          {t.program}
+          {t.designation}
         </p>
       </div>
     </div>

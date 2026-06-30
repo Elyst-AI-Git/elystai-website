@@ -27,7 +27,7 @@ const cards = [
 
 export default function CircleForWho() {
   return (
-    <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section style={{ padding: "var(--section-py) var(--section-px)", background: "#c2edcb" }}>
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

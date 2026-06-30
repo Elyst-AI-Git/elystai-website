@@ -178,12 +178,6 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-
-            <hr className="border-white/10" />
-
-            <div className="py-6 text-center text-small text-fg-muted-dark">
-              <p>© 2026 Elyst AI · All rights reserved.</p>
-            </div>
           </div>
 
           {/* Giant wordmark — clean white, no glow, bottom-aligned */}
@@ -192,6 +186,11 @@ export default function Footer() {
               title="Elyst AI"
               className="block h-auto w-full max-w-[975px] text-fg-on-dark"
             />
+          </div>
+
+          {/* Copyright — tucked to the bottom-right, under the giant wordmark */}
+          <div className="relative z-10 mx-auto max-w-6xl pb-6 text-right text-small text-fg-muted-dark">
+            <p>© 2026 Elyst AI · All rights reserved.</p>
           </div>
         </div>
       </div>
