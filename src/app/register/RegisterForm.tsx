@@ -215,6 +215,13 @@ export default function RegisterForm() {
 
       const orderData = await res.json();
       if (!res.ok) {
+        if (orderData.alreadyPaid) {
+          // The server just reconciled a payment whose webhook never landed
+          // — the user really is paid and enrolled, so send them onward
+          // instead of showing them an error for something that succeeded.
+          router.push("/register/onboarding");
+          return;
+        }
         throw new Error(orderData.error || "Failed to initialize payment order.");
       }
 

@@ -92,7 +92,7 @@ export async function POST(request: Request) {
       const { data: existingPayment } = await supabaseAdmin
         .schema("app")
         .from("payments")
-        .select("razorpay_order_id, amount, currency, status")
+        .select("id, razorpay_order_id, amount, currency, status")
         .eq("enrollment_id", existingEnrollment.id)
         .eq("status", "created")
         .order("created_at", { ascending: false })
@@ -100,18 +100,70 @@ export async function POST(request: Request) {
         .maybeSingle();
 
       if (existingPayment?.razorpay_order_id) {
-        // Still update the profile fields (phone/city/country) on retry.
-        await supabaseAdmin
-          .from("profiles")
-          .update({ phone, city: city || null, country: country || null })
-          .eq("id", user.id);
-
-        return NextResponse.json({
-          orderId: existingPayment.razorpay_order_id,
-          amount: existingPayment.amount,
-          currency: existingPayment.currency,
-          keyId: process.env.RAZORPAY_KEY_ID,
+        // Don't trust our own 'created' status blindly — if the webhook for
+        // this order never arrived (delayed, or — as actually happened —
+        // delivered to a domain that didn't have this route live yet), the
+        // order can already be fully paid on Razorpay's side while we still
+        // think it's open. Handing that order_id back to Razorpay Checkout
+        // crashes the SDK (there's nothing left to pay), which surfaced to a
+        // real Circle member as a hard error screen. Verify with Razorpay
+        // first; if it's already paid, reconcile our records instead of
+        // reopening checkout.
+        const razorpay = new Razorpay({
+          key_id: process.env.RAZORPAY_KEY_ID!,
+          key_secret: process.env.RAZORPAY_KEY_SECRET!,
         });
+
+        let razorpayOrder: { status: string; amount_paid: number } | null = null;
+        try {
+          razorpayOrder = await razorpay.orders.fetch(existingPayment.razorpay_order_id);
+        } catch (fetchErr) {
+          console.error("Failed to fetch existing Razorpay order, will mint a new one:", fetchErr);
+        }
+
+        if (razorpayOrder?.status === "paid") {
+          // Already paid, just never reconciled (missed/delayed webhook).
+          // Self-heal: mark paid + activate enrollment now, same as the
+          // webhook would have done.
+          await supabaseAdmin
+            .schema("app")
+            .from("payments")
+            .update({ status: "paid", paid_at: new Date().toISOString() })
+            .eq("id", existingPayment.id);
+          await supabaseAdmin
+            .schema("app")
+            .from("enrollments")
+            .update({ status: "active" })
+            .eq("id", existingEnrollment.id);
+
+          return NextResponse.json(
+            { error: "You are already enrolled in this batch", alreadyPaid: true },
+            { status: 409 }
+          );
+        }
+
+        if (razorpayOrder && razorpayOrder.status !== "paid") {
+          // Genuinely still open — safe to hand back for reuse.
+          await supabaseAdmin
+            .from("profiles")
+            .update({ phone, city: city || null, country: country || null })
+            .eq("id", user.id);
+
+          return NextResponse.json({
+            orderId: existingPayment.razorpay_order_id,
+            amount: existingPayment.amount,
+            currency: existingPayment.currency,
+            keyId: process.env.RAZORPAY_KEY_ID,
+          });
+        }
+
+        // Order fetch failed outright (e.g. truly invalid/expired order) —
+        // mark the stale row failed and fall through to mint a fresh order.
+        await supabaseAdmin
+          .schema("app")
+          .from("payments")
+          .update({ status: "failed" })
+          .eq("id", existingPayment.id);
       }
     }
 

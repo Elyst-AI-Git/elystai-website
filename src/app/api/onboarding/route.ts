@@ -53,21 +53,40 @@ export async function POST(request: Request) {
       linkedin_url,
     } = body;
 
+    // 2b. Every onboarding field is required (matches the client-side form).
+    const missing: string[] = [];
+    if (!audience_type) missing.push("audience_type");
+    if (!role || !String(role).trim()) missing.push("role");
+    if (!industry || !String(industry).trim()) missing.push("industry");
+    if (!seniority) missing.push("seniority");
+    if (!ai_experience) missing.push("ai_experience");
+    if (!primary_goal) missing.push("primary_goal");
+    if (primary_goal === "other" && (!goal_other || !String(goal_other).trim())) missing.push("goal_other");
+    if (!heard_about_us) missing.push("heard_about_us");
+    if (!linkedin_url || !String(linkedin_url).trim()) missing.push("linkedin_url");
+
+    if (missing.length > 0) {
+      return NextResponse.json(
+        { error: `Missing required field(s): ${missing.join(", ")}` },
+        { status: 400 }
+      );
+    }
+
     // 3. Upsert onboarding data for the user profile
     const { data, error } = await supabaseAdmin
       .schema("app")
       .from("onboarding")
       .upsert({
         profile_id: user.id,
-        audience_type: audience_type || null,
-        role: role || null,
-        industry: industry || null,
-        seniority: seniority || null,
-        ai_experience: ai_experience || null,
-        primary_goal: primary_goal || null,
-        goal_other: goal_other || null,
-        heard_about_us: heard_about_us || null,
-        linkedin_url: linkedin_url || null,
+        audience_type,
+        role,
+        industry,
+        seniority,
+        ai_experience,
+        primary_goal,
+        goal_other: primary_goal === "other" ? goal_other : null,
+        heard_about_us,
+        linkedin_url,
         completed_at: new Date().toISOString(),
       })
       .select()
