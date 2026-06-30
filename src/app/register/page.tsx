@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+// This page is auth-gated and constructs a Supabase client client-side on
+// render — there's nothing useful to statically prerender, and forcing a
+// build-time render here means a missing env var at BUILD time (rather than
+// at request time) takes the whole deployment down. Always render on request.
+export const dynamic = "force-dynamic";
+
 export default function RegisterPage() {
   return (
     <Suspense
