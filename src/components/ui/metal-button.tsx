@@ -43,7 +43,7 @@ const metalHostChromeReset =
 
 /** Keep a stable edge above the animated shader so bright frames cannot erase it. */
 const metalStableEdge =
-  "relative isolate before:pointer-events-none before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:ring-1 before:ring-border/70 before:ring-inset dark:before:ring-border/80"
+  "relative isolate before:pointer-events-none before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:ring-2 before:ring-border before:ring-inset dark:before:ring-border"
 
 type MetalSurfaceVariant = NonNullable<
   VariantProps<typeof metalSurfaceVariants>["variant"]
@@ -69,8 +69,6 @@ type MetalShellProps = Pick<
 }
 
 export type MetalButtonProps = ComponentProps<typeof Button> & MetalShellProps
-
-export type MetalIconButtonProps = MetalButtonProps
 
 export const MetalButton = forwardRef<HTMLDivElement, MetalButtonProps>(
   function MetalButton(
@@ -138,25 +136,3 @@ export const MetalButton = forwardRef<HTMLDivElement, MetalButtonProps>(
 )
 
 MetalButton.displayName = "MetalButton"
-
-export const MetalIconButton = forwardRef<HTMLDivElement, MetalIconButtonProps>(
-  function MetalIconButton(
-    { size = "icon-sm", metalVariant = "circle", className, ...props },
-    ref
-  ) {
-    return (
-      <MetalButton
-        className={cn(
-          "leading-none! [&_svg]:block [&_svg]:shrink-0",
-          className
-        )}
-        metalVariant={metalVariant}
-        ref={ref}
-        size={size}
-        {...props}
-      />
-    )
-  }
-)
-
-MetalIconButton.displayName = "MetalIconButton"

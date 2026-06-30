@@ -66,7 +66,7 @@ function AudioCard({ a, i }: { a: (typeof audios)[number]; i: number }) {
 
       <div className="hidden text-center sm:block sm:flex-1">
         <p className="font-display font-bold text-fg" style={{ fontSize: "1rem" }}>{a.name}</p>
-        <p className="text-fg-3" style={{ fontSize: "0.82rem" }}>{a.role}</p>
+        <p className="text-fg-3" style={{ fontSize: "var(--text-label)" }}>{a.role}</p>
       </div>
 
       <div className="ml-auto text-right sm:ml-0 sm:text-right">

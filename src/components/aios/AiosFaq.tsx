@@ -2,23 +2,21 @@
 
 import { useState } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
-import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useIsTouch } from "@/lib/use-touch";
 
 /**
- * The page's single biggest AEO/GEO citation asset (NOTES.md). The FAQPage
- * JSON-LD below mirrors the visible copy exactly, word for word. base-ui's
- * Accordion.Panel keeps its children mounted in the DOM (height-animated only),
- * so every answer is present in the rendered HTML even before interaction.
+ * AIOS FAQ — on the Elyst system: a dark-surface section with clean, sharp
+ * white cards (squared by the page's .aios-sharp rule), an emerald accent rail
+ * that lights up on the open row, and brand type/tokens throughout. No tilt —
+ * the AIOS page's language is sharp and straight.
  *
- * Items marked [confirm] echo NOTES.md's bracketed facts — conservative
- * wording that Nihal must verify is literally true before launch.
+ * The FAQPage JSON-LD mirrors the visible copy word-for-word — the page's
+ * biggest AEO/GEO citation asset.
  */
 
 type Faq = { q: string; a: string };
@@ -54,95 +52,81 @@ const faqs: Faq[] = [
   },
 ];
 
-// Slight alternating tilt per row — straightens to 0 when that row is open.
-// Kept gentle so a tilted card's corner never overlaps the question below it.
-const ROTATIONS = [-1.7, 1.4, -1.2, 1.5, -1.3, 1.1];
-
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: faqs.map((f) => ({
     "@type": "Question",
     name: f.q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: f.a,
-    },
+    acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 };
 
 export default function AiosFaq() {
   const [open, setOpen] = useState<string | null>(null);
-  // The per-row tilt-to-straighten animation re-runs on every open/close.
-  // On touch, render every row flat/static — only the accordion's own
-  // height-collapse (its core function) remains.
-  const isTouch = useIsTouch();
 
   return (
     <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      {/* FAQPage schema — mirrors the visible Q&A copy exactly */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mx-auto max-w-3xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <SectionMark tone="dark">FAQ</SectionMark>
-          <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
-            Questions teams ask before they start.
-          </h2>
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-14">
+          {/* Left — stamp-style label + heading. Stays in normal flow (no
+              sticky-follow) so it holds its place as the list scrolls. */}
+          <div className="md:self-start">
+            <SectionMark tone="dark">FAQ</SectionMark>
+            <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
+              Questions teams ask before they start.
+            </h2>
+          </div>
+
+          {/* Right — all rows inside one tinted panel, divided by hairlines */}
+          <div
+            className="rounded-[var(--radius-card)] px-2"
+            style={{ background: "var(--surface-dark-2)" }}
+          >
+            <Accordion
+              value={open ? [open] : []}
+              onValueChange={(value) => setOpen((value as string[])[0] ?? null)}
+              className="flex flex-col"
+            >
+              {faqs.map((f) => {
+                const isOpen = open === f.q;
+                return (
+                  <AccordionItem
+                    key={f.q}
+                    value={f.q}
+                    className="relative overflow-hidden px-5 transition-colors not-last:border-b"
+                    style={{ borderColor: "rgba(255,255,255,0.08)" }}
+                  >
+                    <AccordionTrigger className="!border-0 py-5">
+                      <span
+                        className="font-display font-bold"
+                        style={{
+                          fontSize: "var(--text-body)",
+                          color: isOpen ? "var(--elyst-green)" : "var(--fg-on-dark)",
+                        }}
+                      >
+                        {f.q}
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <p
+                        className="text-fg-muted-dark"
+                        style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}
+                      >
+                        {f.a}
+                      </p>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </div>
         </div>
-
-        <Accordion
-          value={open ? [open] : []}
-          onValueChange={(value) => setOpen((value as string[])[0] ?? null)}
-          className="mt-14 gap-2.5"
-        >
-          {faqs.map((f, i) => {
-            const isOpen = open === f.q;
-            const item = (
-              <AccordionItem
-                value={f.q}
-                className="overflow-hidden rounded-[20px] border bg-white px-6 shadow-sm transition-colors"
-                style={{ borderColor: isOpen ? "var(--elyst-green)" : "var(--border)" }}
-              >
-                <AccordionTrigger className="!border-0 py-5">
-                  <span className="font-display font-bold text-fg" style={{ fontSize: "var(--text-body)" }}>
-                    {f.q}
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.65 }}>
-                    {f.a}
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-            );
-            if (isTouch) {
-              return (
-                <div key={f.q} className="relative" style={{ zIndex: isOpen ? 10 : faqs.length - i }}>
-                  {item}
-                </div>
-              );
-            }
-            return (
-              <motion.div
-                key={f.q}
-                animate={{ rotate: isOpen ? 0 : ROTATIONS[i % ROTATIONS.length] }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="relative"
-                style={{ zIndex: isOpen ? 10 : faqs.length - i }}
-              >
-                {item}
-              </motion.div>
-            );
-          })}
-        </Accordion>
-
-        <p className="mt-12 text-center text-fg-muted-dark" style={{ fontSize: "var(--text-small)" }}>
-          Still have a question? Ask us on the call.
-        </p>
       </div>
     </section>
   );

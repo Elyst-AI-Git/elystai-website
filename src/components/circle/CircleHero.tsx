@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 
 /**
@@ -53,6 +54,9 @@ export default function CircleHero() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 mx-auto w-full max-w-[900px]"
         >
+          <div className="mb-7 flex justify-center">
+            <SectionMark tone="dark">Elyst AI Circle</SectionMark>
+          </div>
           <h1 style={{ lineHeight: 1.0 }}>
             <span className="sr-only">The Elyst AI Circle — </span>
             <span
@@ -75,7 +79,7 @@ export default function CircleHero() {
             </span>
           </h1>
           <div className="mt-8 flex flex-col items-center gap-3">
-            <BrandButton href="https://nas.io/elystaicircle" tone="green" className="rounded-full!">
+            <BrandButton href="https://nas.io/elystaicircle" tone="green">
               Join them
             </BrandButton>
           </div>

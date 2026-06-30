@@ -56,10 +56,10 @@ function StructureCard({ item, index }: { item: (typeof structure)[number]; inde
       <IconTile tone="darkgreen" className="relative z-10">
         <Icon size={21} variant="line" />
       </IconTile>
-      <h3 className="relative z-10 font-bold text-fg" style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.5rem)" }}>
+      <h3 className="relative z-10 font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>
         {label}
       </h3>
-      <p className="relative z-10 text-fg-2" style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)", lineHeight: 1.5 }}>
+      <p className="relative z-10 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
         {line}
       </p>
     </>

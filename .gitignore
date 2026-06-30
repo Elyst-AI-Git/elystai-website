@@ -51,3 +51,9 @@ skills-lock.json
 
 # working docs, reference assets & raw source material (kept local, not deployed)
 /_workspace/
+
+# Circle member PII — never commit
+Email List.md
+
+# Supabase CLI scratch
+supabase/.temp/

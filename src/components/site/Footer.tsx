@@ -33,19 +33,45 @@ const socials = [
   { label: "WhatsApp community", href: "https://wa.me/919633288931", Icon: WhatsappIcon },
 ];
 
-// Trimmed to the three destinations that matter — everything else (Book a
-// call, Circle, AI Junior, AI Yathra, Flagship, Blog, Privacy, Terms) is
-// reachable from those pages or the nav; keeping the footer lean leaves room
-// for the "Follow us" block.
-const footerNav = [
+// Trimmed to the destinations that matter. The Accelerator carries two
+// sub-programs (Circle + AI for Work) nested beneath it as compact indented
+// links, so the footer surfaces them without growing taller.
+type FooterLink = { label: string; href: string; badge?: string };
+const footerNav: { label: string; href: string; children?: FooterLink[] }[] = [
   { label: "Home", href: "/" },
   { label: "AIOS for Business", href: "/aios" },
-  { label: "AI Accelerator", href: "/learn" },
+  {
+    label: "AI Accelerator",
+    href: "/learn",
+    children: [
+      { label: "Elyst AI Circle", href: "/circle" },
+      { label: "AI for Work", href: "/ai-for-work", badge: "Open now" },
+    ],
+  },
 ];
+
+/** Rectangular metallic badge — same liquid-silver treatment as the social
+    buttons, used to flag the live AI for Work enrolment. */
+function MetalBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="shrink-0 rounded px-1.5 py-0.5 text-[0.58rem] font-bold uppercase tracking-wide"
+      style={{
+        background: "linear-gradient(180deg, #f8faf9 0%, #dde4e0 55%, #ebefed 100%)",
+        color: "#0A0F0C",
+        borderTop: "1px solid rgba(255,255,255,0.95)",
+        borderBottom: "1px solid rgba(3,98,76,0.18)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 1px 4px rgba(3,98,76,0.10)",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer className="mt-auto">
+    <footer id="site-footer" className="mt-auto scroll-mt-24">
       {/* A single unified footer — utility links, contact/social details, and
           the giant brand wordmark all live together on the starfield over the
           dark surface (no separate light "utility footer" zone). */}
@@ -96,15 +122,30 @@ export default function Footer() {
                 {/* Middle — the three links that matter */}
                 <nav aria-label="Footer">
                   <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
-                  <ul className="flex flex-col gap-1">
+                  <ul className="flex flex-col gap-1.5">
                     {footerNav.map((l) => (
                       <li key={l.label}>
                         <Link
                           href={l.href}
-                          className="inline-flex min-h-[40px] items-center text-small text-fg-on-dark/80 transition-colors hover:text-green"
+                          className="inline-flex items-center py-1 text-small text-fg-on-dark/80 transition-colors hover:text-green"
                         >
                           {l.label}
                         </Link>
+                        {l.children && (
+                          <ul className="mt-1 flex flex-col gap-1 border-l border-white/10 pl-3">
+                            {l.children.map((c) => (
+                              <li key={c.label}>
+                                <Link
+                                  href={c.href}
+                                  className="inline-flex items-center gap-2 py-0.5 text-[0.82rem] text-fg-on-dark/65 transition-colors hover:text-green"
+                                >
+                                  {c.label}
+                                  {c.badge && <MetalBadge>{c.badge}</MetalBadge>}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -137,12 +178,6 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-
-            <hr className="border-white/10" />
-
-            <div className="py-6 text-center text-small text-fg-muted-dark">
-              <p>© 2026 Elyst AI · All rights reserved.</p>
-            </div>
           </div>
 
           {/* Giant wordmark — clean white, no glow, bottom-aligned */}
@@ -151,6 +186,11 @@ export default function Footer() {
               title="Elyst AI"
               className="block h-auto w-full max-w-[975px] text-fg-on-dark"
             />
+          </div>
+
+          {/* Copyright — tucked to the bottom-right, under the giant wordmark */}
+          <div className="relative z-10 mx-auto max-w-6xl pb-6 text-right text-small text-fg-muted-dark">
+            <p>© 2026 Elyst AI · All rights reserved.</p>
           </div>
         </div>
       </div>

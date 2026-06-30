@@ -14,7 +14,7 @@ import Link from "next/link";
 import { MetalButton } from "@/components/ui/metal-button";
 import { useIsTouch } from "@/lib/use-touch";
 
-type BrandVariant = "metal" | "outline";
+type BrandVariant = "metal" | "outline" | "solid";
 /**
  * "emerald" = brand emerald fill (default).
  * "light"   = premium light-grey fill, black text (Nav CTA).
@@ -31,11 +31,11 @@ type BrandButtonProps = {
   onClick?: () => void;
   full?: boolean;
   preset?: "chromatic" | "silver" | "gold";
-  /** Recolour the MetalFx ring/edge from its default chromatic-grey to brand
-      light-green (#00df82) — used where the default ring reads as a flat
-      black edge against our surfaces. */
-  greenRing?: boolean;
+  /** Disables the button (and, for href-rendered links, blocks navigation). */
+  disabled?: boolean;
 };
+
+const DISABLED_CLASS = "opacity-50 cursor-not-allowed pointer-events-none";
 
 const BASE =
   "inline-flex items-center justify-center gap-2 font-bold whitespace-nowrap " +
@@ -46,29 +46,57 @@ const BASE =
 const RADIUS_CLASS = "rounded-md";
 const RADIUS_PX = 6;
 
-function Inner({ href, onClick, className, children }: {
+function Inner({ href, onClick, className, children, disabled }: {
   href?: string;
   onClick?: () => void;
   className: string;
   children: React.ReactNode;
+  disabled?: boolean;
 }) {
   if (href) {
     const external = href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:");
+    // Links have no native `disabled`; block navigation explicitly and mark
+    // it for assistive tech instead of just dimming the style.
+    const linkClassName = disabled ? `${className} ${DISABLED_CLASS}` : className;
+    const handleLinkClick: React.MouseEventHandler = (e) => {
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
+      onClick?.();
+    };
     if (external) {
       return (
-        <a href={href} onClick={onClick} className={className}>
+        <a
+          href={disabled ? undefined : href}
+          onClick={handleLinkClick}
+          className={linkClassName}
+          aria-disabled={disabled}
+          tabIndex={disabled ? -1 : undefined}
+        >
           {children}
         </a>
       );
     }
     return (
-      <Link href={href} onClick={onClick} className={className}>
+      <Link
+        href={href}
+        onClick={handleLinkClick}
+        className={linkClassName}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : undefined}
+      >
         {children}
       </Link>
     );
   }
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={disabled ? `${className} ${DISABLED_CLASS}` : className}
+    >
       {children}
     </button>
   );
@@ -83,7 +111,7 @@ export function BrandButton({
   onClick,
   full,
   preset = "silver",
-  greenRing = false,
+  disabled,
 }: BrandButtonProps) {
   const width = full ? "w-full" : "w-fit";
   const isTouch = useIsTouch();
@@ -93,7 +121,32 @@ export function BrandButton({
       <Inner
         href={href}
         onClick={onClick}
-        className={`${BASE} ${width} ${RADIUS_CLASS} border-[1.5px] border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
+        disabled={disabled}
+        className={`${BASE} ${width} ${RADIUS_CLASS} border-2 border-emerald bg-white text-emerald transition-colors hover:bg-emerald/5 ${className ?? ""}`}
+      >
+        {children}
+      </Inner>
+    );
+  }
+
+  // Flat, solid filled button — no metal shader, no glow. Used in the CTA
+  // banners where a plain high-contrast action reads cleaner than the metal
+  // ring. Tone picks the fill + a text colour with enough contrast on it.
+  if (variant === "solid") {
+    let solidFill: string;
+    if (tone === "light") {
+      solidFill = "bg-[#eef0ee] text-[#0a0a0a] hover:bg-[#e3e6e2]";
+    } else if (tone === "green") {
+      solidFill = "bg-green text-[#06140e] hover:bg-[#00c973]";
+    } else {
+      solidFill = "bg-emerald text-fg-on-dark hover:bg-emerald-light";
+    }
+    return (
+      <Inner
+        href={href}
+        onClick={onClick}
+        disabled={disabled}
+        className={`${BASE} ${width} ${RADIUS_CLASS} ${solidFill} transition-colors ${className ?? ""}`}
       >
         {children}
       </Inner>
@@ -108,49 +161,59 @@ export function BrandButton({
   if (isLight) {
     fxFill = "bg-[#eef0ee]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
   } else if (isGreen) {
-    fxFill = "bg-[#00df82]! text-[#0a0a0a]! hover:bg-[#00c973]!";
+    fxFill = "bg-green! text-[#0a0a0a]! hover:bg-[#00c973]!";
   } else {
     fxFill = "bg-emerald! text-fg-on-dark! hover:bg-emerald-light!";
   }
 
-  // metal variant — emerald (default) / light-grey (Nav) / bright-green (See AIOS) fill
-  const ringOverride = greenRing
-    ? "before:ring-[#00df82]/70! before:ring-[1.5px]!"
-    : "";
+  // metal variant — emerald (default) / light-grey (Nav) / bright-green (See AIOS) fill.
+  // The liquid-metal shader ring IS the effect; no outer glow.
 
   // MetalFx renders an animated liquid-metal shader behind every button. On
   // touch devices that's a continuous effect nobody can interact with (no
   // cursor to reflect), so render a flat static button with the same brand
   // fill/colors instead.
   if (isTouch) {
-    const ringColor = greenRing ? "border-[#00df82]/70" : "border-border/70";
     return (
       <Inner
         href={href}
         onClick={onClick}
-        className={`${BASE} ${width} ${RADIUS_CLASS} border ${ringColor} ${fxFill} ${className ?? ""}`}
+        disabled={disabled}
+        className={`${BASE} ${width} ${RADIUS_CLASS} border-2 border-border ${fxFill} ${className ?? ""}`}
       >
         {children}
       </Inner>
     );
   }
 
+  // For href-rendered metal buttons there's no native `disabled`; block
+  // navigation explicitly the same way Inner does for links.
+  const handleMetalLinkClick: React.MouseEventHandler = (e) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.();
+  };
+
   return (
     <MetalButton
       preset={isGreen ? "silver" : preset}
       theme={isGreen ? "dark" : isLight ? "light" : "auto"}
       borderRadius={RADIUS_PX}
-      metalFxClassName={`${full ? "w-full" : ""} ${fxFill} ${ringOverride}`}
-      className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""}`}
+      metalFxClassName={`${full ? "w-full" : ""} ${fxFill}`}
+      className={`${BASE} ${width} ${RADIUS_CLASS} ${onDark ? "text-fg-on-dark" : "text-[#0a0a0a]"} ${className ?? ""} ${disabled ? DISABLED_CLASS : ""}`}
       render={
         href ? (
           href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:") ? (
-            <a href={href} onClick={onClick} />
+            <a href={disabled ? undefined : href} onClick={handleMetalLinkClick} aria-disabled={disabled} tabIndex={disabled ? -1 : undefined} />
           ) : (
-            <Link href={href} onClick={onClick} />
+            <Link href={href} onClick={handleMetalLinkClick} aria-disabled={disabled} tabIndex={disabled ? -1 : undefined} />
           )
         ) : undefined
       }
+      nativeButton={!href}
+      disabled={!href ? disabled : undefined}
       onClick={!href ? onClick : undefined}
     >
       {children}

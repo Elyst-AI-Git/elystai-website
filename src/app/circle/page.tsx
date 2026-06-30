@@ -3,7 +3,6 @@ import CircleHero from "@/components/circle/CircleHero";
 import CircleAbout from "@/components/circle/CircleAbout";
 import CircleForWho from "@/components/circle/CircleForWho";
 import CirclePricing from "@/components/circle/CirclePricing";
-import CircleJoin from "@/components/circle/CircleJoin";
 import CircleFaq from "@/components/circle/CircleFaq";
 import CircleCta from "@/components/circle/CircleCta";
 
@@ -24,7 +23,6 @@ export default function CirclePage() {
       <CircleAbout />
       <CircleForWho />
       <CirclePricing />
-      {/* <CircleJoin />, How it works, commented out for now */}
       <CircleFaq />
       <CircleCta />
     </main>

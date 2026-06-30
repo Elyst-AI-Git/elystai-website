@@ -52,7 +52,7 @@ function TimelineNode({ node, index }: { node: Node; index: number }) {
         <Icon size={20} variant="line" />
       </IconTile>
       <div className="flex flex-col gap-1.5">
-        <span className="eyebrow text-emerald" style={{ fontSize: "0.88rem" }}>
+        <span className="eyebrow text-emerald" style={{ fontSize: "var(--text-eyebrow)" }}>
           {String(index + 1).padStart(2, "0")} · {label}
         </span>
         <p

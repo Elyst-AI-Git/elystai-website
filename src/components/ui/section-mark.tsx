@@ -26,7 +26,7 @@ export function SectionMark({
       <span
         className="font-display"
         style={{
-          fontSize: "0.78rem",
+          fontSize: "0.9rem",
           fontWeight: 700,
           textTransform: "uppercase",
           letterSpacing: "0.18em",

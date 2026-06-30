@@ -1,19 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { SectionMark } from "./SectionMark";
 import { AnimatePresence, motion } from "framer-motion";
-import { BackgroundLines } from "@/components/ui/background-lines";
+import { BrandButton } from "@/components/ui/brand-button";
 import { useIsTouch } from "@/lib/use-touch";
 
 /**
- * Accelerator hero — the warm tonal pole opposite the AIOS hero.
- *
- * Centred, generous whitespace, a soft WITHIN-EMERALD gradient wash, and the
- * Aceternity animated background-lines (recoloured to brand greens) drifting
- * behind the copy. One kinetic element of its own: a single cycling word that
- * names the transformation. The community (Circle) carries the primary action
- * since the Flagship has no waitlist.
+ * Accelerator hero — a large rounded card (not full-bleed) sitting just below
+ * the nav, set on the light-green halftone background. Copy is centred on
+ * top of the card; six brand-recoloured icon chips hang off threads past the
+ * card's bottom edge, the trust signal for what the Accelerator actually
+ * teaches (AI tools, workflows, the brain behind it all).
  */
 
 const CYCLE = ["confident", "relevant", "competitive", "irreplaceable"];
@@ -21,9 +20,6 @@ const CYCLE = ["confident", "relevant", "competitive", "irreplaceable"];
 function CyclingWord() {
   const [i, setI] = useState(0);
   const [reduce, setReduce] = useState(false);
-  // The word swap fires every 2s forever via setInterval — a permanent
-  // background timer + re-render. Touch devices get the static first word,
-  // same as prefers-reduced-motion.
   const isTouch = useIsTouch();
 
   useEffect(() => {
@@ -37,7 +33,7 @@ function CyclingWord() {
   return (
     <span
       className="relative inline-block whitespace-nowrap align-baseline"
-      style={{ color: "var(--elyst-green)" }}
+      style={{ color: "var(--elyst-emerald)" }}
     >
       {reduce || isTouch ? (
         <span>{CYCLE[0]}</span>
@@ -59,42 +55,89 @@ function CyclingWord() {
   );
 }
 
+type Charm = { src: string; alt: string; len: number; rotate: number; pos: string; size: number };
+
+const charms: Charm[] = [
+  { src: "/accel-hero/chatgpt.png", alt: "AI tools", len: 34, rotate: -6, pos: "left-[25%]", size: 44 },
+  { src: "/accel-hero/brain.png", alt: "Sharper thinking", len: 50, rotate: 4, pos: "left-[35%]", size: 52 },
+  { src: "/accel-hero/workflow.png", alt: "Automated workflows", len: 26, rotate: -3, pos: "left-[45%]", size: 46 },
+  { src: "/accel-hero/soundwave.png", alt: "Voice & audio AI", len: 44, rotate: 5, pos: "left-[55%]", size: 46 },
+  { src: "/accel-hero/sparkle.png", alt: "Generative AI", len: 30, rotate: -4, pos: "left-[65%]", size: 44 },
+  { src: "/accel-hero/stars.png", alt: "5-star outcomes", len: 52, rotate: 6, pos: "left-[75%]", size: 50 },
+];
+
+function HangingCharms() {
+  const isTouch = useIsTouch();
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-x-0 top-full z-20 hidden h-0 sm:block"
+    >
+      {charms.map((c, i) => (
+        <motion.div
+          key={c.alt}
+          className={`absolute ${c.pos} -translate-x-1/2`}
+          style={{ top: 0 }}
+          initial={isTouch ? false : { opacity: 0, y: -16 }}
+          whileInView={isTouch ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1], delay: 0.08 * i }}
+        >
+          {/* Thread */}
+          <span
+            className="mx-auto block w-px"
+            style={{ height: c.len, background: "rgba(3,98,76,0.28)" }}
+          />
+          {/* Charm chip */}
+          <span
+            className="-mt-px flex items-center justify-center rounded-md bg-white p-2.5 shadow-card"
+            style={{ transform: `rotate(${c.rotate}deg)`, width: c.size + 20, height: c.size + 20 }}
+          >
+            <Image src={c.src} alt={c.alt} width={c.size} height={c.size} className="h-full w-full object-contain" />
+          </span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 export default function AccelHero() {
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative"
       style={{
-        paddingTop: "clamp(26px, 4vw, 58px)",
-        paddingBottom: "clamp(40px, 6vw, 96px)",
-        paddingLeft: "var(--section-px)",
-        paddingRight: "var(--section-px)",
-        background:
-          "radial-gradient(ellipse 80% 60% at 50% 0%, var(--green-tint-07), transparent 70%), linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 88%, var(--emerald-tint-10)))",
+        paddingTop: "clamp(14px, 2vw, 28px)",
+        paddingBottom: "clamp(120px, 13vw, 190px)",
+        paddingLeft: "clamp(10px, 2.4vw, 28px)",
+        paddingRight: "clamp(10px, 2.4vw, 28px)",
+        background: "var(--bg)",
       }}
     >
-      <BackgroundLines
-        className="relative flex items-center justify-center !h-auto md:!h-auto min-h-[34rem] bg-transparent md:min-h-[40rem]"
-        svgOptions={{ duration: 12 }}
+      <div className="relative mx-auto max-w-[1480px]">
+      <div
+        className="relative overflow-hidden rounded-md"
+        style={{ boxShadow: "0 24px 64px rgba(3,98,76,0.18), 0 4px 16px rgba(3,98,76,0.1)" }}
       >
-        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
+        <Image
+          src="/accel-hero/hero-bg.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="relative z-10 flex min-h-[30rem] flex-col items-center justify-center px-6 py-20 text-center sm:min-h-[36rem] md:min-h-[40rem]">
           <SectionMark>The Accelerator</SectionMark>
 
           <h1
             className="mt-7 text-fg"
             style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", lineHeight: 1.1 }}
           >
-            <span className="relative inline-block whitespace-nowrap align-baseline">
-              {/* Invisible sizer: fixes the box to the width of "Stay confident"
-                  (our median reference word), so the line centres exactly as it
-                  would when showing "confident" — regardless of which word is
-                  currently live. */}
-              <span aria-hidden className="invisible">
+            <span className="relative inline-block align-baseline sm:whitespace-nowrap">
+              <span aria-hidden className="invisible hidden sm:inline-block sm:whitespace-nowrap">
                 Stay confident
               </span>
-              {/* The real content overlays the box, anchored to its left edge —
-                  "Stay" never moves; only the word to its right grows/shrinks
-                  (and may overflow the box on longer words like "irreplaceable"). */}
-              <span className="absolute inset-y-0 left-0 flex items-baseline whitespace-nowrap">
+              <span className="flex flex-wrap items-baseline justify-center sm:absolute sm:inset-y-0 sm:left-0 sm:flex-nowrap sm:whitespace-nowrap">
                 <span>Stay&nbsp;</span>
                 <CyclingWord />
               </span>
@@ -103,15 +146,24 @@ export default function AccelHero() {
           </h1>
 
           <p
-            className="mx-auto mt-7 max-w-xl text-fg-2"
-            style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}
+            className="mx-auto mt-7 max-w-xl text-fg"
+            style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.6 }}
           >
             Programs for people who want to use AI in their work,
             <br />
             not just hear about it.
           </p>
+
+          <div className="mt-8">
+            <BrandButton href="/circle" tone="emerald">
+              Join the Circle
+            </BrandButton>
+          </div>
         </div>
-      </BackgroundLines>
+      </div>
+
+      <HangingCharms />
+      </div>
     </section>
   );
 }

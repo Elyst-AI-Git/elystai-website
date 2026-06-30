@@ -3,7 +3,8 @@ import AiosHero from "@/components/aios/AiosHero";
 import AiosProblem from "@/components/aios/AiosProblem";
 import AiosHowItWorks from "@/components/aios/AiosHowItWorks";
 import AiosCapabilities from "@/components/aios/AiosCapabilities";
-import AiosUseCases from "@/components/aios/AiosUseCases";
+// Temporarily hidden — "Build for your industry" section. Bring back later.
+// import AiosUseCases from "@/components/aios/AiosUseCases";
 import AiosModel from "@/components/aios/AiosModel";
 import AiosPricing from "@/components/aios/AiosPricing";
 import AiosFaq from "@/components/aios/AiosFaq";
@@ -21,12 +22,12 @@ export const metadata = {
 
 export default function AiosPage() {
   return (
-    <main id="main" className="flex-1 pt-24">
+    <main id="main" className="aios-sharp flex-1 pt-24">
       <AiosHero />
       <AiosProblem />
       <AiosHowItWorks />
       <AiosCapabilities />
-      <AiosUseCases />
+      {/* <AiosUseCases /> — "Build for your industry", temporarily hidden */}
       <AiosModel />
       <AiosPricing />
       <AiosFaq />

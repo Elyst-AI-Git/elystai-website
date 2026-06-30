@@ -93,7 +93,7 @@ export default function AiJuniorAbout() {
                 <p className="font-display font-bold text-fg" style={{ fontSize: "var(--text-small)" }}>
                   No technical knowledge needed, we start from scratch
                 </p>
-                <p className="text-fg-3" style={{ fontSize: "0.82rem" }}>Grades 5–10</p>
+                <p className="text-fg-3" style={{ fontSize: "var(--text-label)" }}>Grades 5–10</p>
               </div>
             </div>
           </motion.div>

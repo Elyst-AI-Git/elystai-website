@@ -1,106 +1,23 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Boxes } from "@/components/ui/background-boxes";
 import { BrandButton } from "@/components/ui/brand-button";
-import { useIsTouch } from "@/lib/use-touch";
+import { CtaBanner } from "@/components/ui/cta-banner";
 
 /**
- * Direction B — solid emerald band, the page's brightest, most saturated
- * moment (the opposite pole to the dark aios-problem section: the page
- * travels from dark chaos to bright resolution). One headline, one
- * reassurance line, one action — resolves the hero's single "Book a call"
- * CTA as a clean bookend. The global footer follows immediately.
- *
- * The interactive Boxes grid (same effect as the home Proof section) sits
- * behind the copy; the content layer is pointer-transparent so hovering the
- * card lights up the grid, while the button itself re-enables pointer events.
- *
- * OPEN DECISION (NOTES.md): the scheduler tool (Cal.com recommended) isn't
- * locked yet, so this ships as a single button → /contact. The marked slot
- * below is exactly where an inline embed drops in once the tool is chosen.
+ * AIOS close — a deep dark-green panel (the dark tone of the shared CtaBanner)
+ * with sharp corners, matching the AIOS page's sharp-edged language. The
+ * action is a bright-green button that pops against the dark panel.
  */
-
 export default function AiosCta() {
-  // The 15,000-element hover-reactive grid is a desktop-only flourish — on
-  // touch a tap can leave a box "stuck" lit (sticky :hover), and there's no
-  // payoff for the cost of mounting it. Skip it entirely on touch.
-  const isTouch = useIsTouch();
-
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{ background: "var(--bg)" }}
-    >
-      {/* Interactive boxes grid — same effect as the home Proof section, tuned
-          for a white surface: dark-green grid lines + dark-green hover fills. */}
-      {!isTouch && (
-        <div
-          className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
-          style={{
-            maskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
-            WebkitMaskImage: "radial-gradient(ellipse at center, white, transparent 80%)",
-          }}
-        >
-          <div className="relative h-[44rem] w-[72rem] shrink-0">
-            <Boxes
-              lineColor="rgba(3,98,76,0.14)"
-              plusColor="rgba(3,98,76,0.18)"
-              colors={["#03624C", "#024A39", "#04855F", "#02402F", "#013A2C"]}
-            />
-          </div>
-        </div>
-      )}
-      <div
-        className="pointer-events-none absolute inset-0 z-[1]"
-        style={{ background: "radial-gradient(ellipse at center, transparent 30%, var(--bg) 86%)" }}
-      />
-
-      <div
-        className="pointer-events-none relative z-10 mx-auto max-w-5xl"
-        style={{
-          // Tighten the gap down to the footer (smaller bottom padding).
-          paddingTop: "var(--section-py)",
-          paddingBottom: "calc(var(--section-py) * 0.64)",
-          paddingLeft: "var(--section-px)",
-          paddingRight: "var(--section-px)",
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="pointer-events-none mx-auto flex max-w-xl flex-col items-center gap-5 text-center"
-        >
-          <h2
-            style={{ fontSize: "var(--text-h2)", color: "var(--fg)", lineHeight: 1.15 }}
-          >
-            See AIOS running in your business.
-          </h2>
-          <p
-            style={{
-              fontSize: "var(--text-body)",
-              color: "var(--fg-2)",
-              maxWidth: "32ch",
-            }}
-          >
-            We will show you exactly what it would do for your team.
-          </p>
-
-          <div className="pointer-events-auto mt-2">
-            <BrandButton href="https://cal.com/elyst-ai/30min" tone="green">
-              Book a call
-            </BrandButton>
-          </div>
-
-          {/*
-            [Scheduler embed slot — drop the chosen tool's inline widget
-            here once locked (Cal.com recommended). Replaces the button
-            above; keep the headline + reassurance copy as-is.]
-          */}
-        </motion.div>
-      </div>
-    </section>
+    <CtaBanner
+      sharp
+      tone="dark"
+      heading="See AIOS running in your business."
+      sub="We will show you exactly what it would do for your team."
+      actions={
+        <BrandButton href="https://cal.com/elyst-ai/30min" variant="solid" tone="green">
+          Book a call
+        </BrandButton>
+      }
+    />
   );
 }

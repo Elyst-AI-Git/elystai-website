@@ -5,7 +5,7 @@ import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 import Image from "next/image";
 
-const REPLY_TEXT = "Done!\n\nJune invoice for Al Noor Trading is ready.\n\nI have totalled 14 line items and generated the PDF.";
+const REPLY_TEXT = "Done!\n\nJune invoice for Al Noor Trading is ready.\nI have totalled 14 line items and generated the PDF.";
 
 function renderTyped(text: string) {
   return text.split("\n").map((line, i, arr) => (
@@ -47,10 +47,10 @@ function PdfBubble() {
             className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg"
             style={{ background: "#E53935" }}
           >
-            <span className="font-bold text-white" style={{ fontSize: "0.72rem", letterSpacing: "0.02em" }}>PDF</span>
+            <span className="font-bold text-white" style={{ fontSize: "var(--text-micro)", letterSpacing: "0.02em" }}>PDF</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate font-semibold" style={{ fontSize: "0.82rem", color: "#111", lineHeight: 1.3 }}>
+            <p className="truncate font-semibold" style={{ fontSize: "var(--text-label)", color: "#111", lineHeight: 1.3 }}>
               Al Noor Invoice (June).pdf
             </p>
             <p style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.45)", marginTop: "2px" }}>
@@ -63,7 +63,7 @@ function PdfBubble() {
           className="flex items-center justify-between px-4 py-2"
           style={{ background: "#ffffff" }}
         >
-          <span style={{ fontSize: "0.72rem", color: "rgba(0,0,0,0.55)" }}>Open</span>
+          <span style={{ fontSize: "var(--text-micro)", color: "rgba(0,0,0,0.55)" }}>Open</span>
           <p style={{ fontSize: "0.68rem", color: "rgba(0,0,0,0.55)", textAlign: "right" }}>
             12:47
           </p>
@@ -77,6 +77,7 @@ function ChatMockup() {
   const ref = useRef<HTMLDivElement>(null);
   const [typed, setTyped] = useState("");
   const [done, setDone] = useState(false);
+  const [showPdf, setShowPdf] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -88,6 +89,7 @@ function ChatMockup() {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           setTyped(REPLY_TEXT);
           setDone(true);
+          setShowPdf(true);
           return;
         }
         let i = 0;
@@ -97,6 +99,9 @@ function ChatMockup() {
           if (i >= REPLY_TEXT.length) {
             clearInterval(id);
             setDone(true);
+            // A beat after the reply finishes typing, before the attachment lands —
+            // reads as the assistant actually generating the file, not instant.
+            setTimeout(() => setShowPdf(true), 700);
           }
         }, 18);
       },
@@ -140,7 +145,7 @@ function ChatMockup() {
             <p className="font-bold" style={{ fontSize: "1.05rem" }}>
               AIOS
             </p>
-            <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.75)" }}>
+            <p style={{ fontSize: "var(--text-label)", color: "rgba(255,255,255,0.75)" }}>
               online
             </p>
           </div>
@@ -205,8 +210,8 @@ function ChatMockup() {
             </div>
           </div>
 
-          {/* PDF attachment — left, appears after reply is done */}
-          {done && <PdfBubble />}
+          {/* PDF attachment — left, appears a beat after the reply finishes */}
+          {showPdf && <PdfBubble />}
         </div>
       </div>
     </div>
@@ -239,19 +244,19 @@ export default function AiosTeaser() {
           </h2>
           <p
             className="mt-4 max-w-prose text-fg-2"
-            style={{ fontSize: "clamp(1.3rem, 1.65vw, 1.45rem)" }}
+            style={{ fontSize: "calc(var(--text-body) + 2px)" }}
           >
             AIOS is the AI employee for your team, that does the manual time consuming work, freeing up your team for more creative works.
           </p>
 
           <div className="mt-8">
             <BrandButton href="/aios">
-              See how AIOS works
+              <span style={{ fontSize: "calc(var(--text-small) + 1px)" }}>See how AIOS works</span>
             </BrandButton>
           </div>
         </div>
 
-        <div className="md:mt-8">
+        <div className="md:-mt-2 md:ml-6">
           <ChatMockup />
         </div>
       </div>

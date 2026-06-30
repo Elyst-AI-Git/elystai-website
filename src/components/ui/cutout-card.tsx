@@ -101,9 +101,11 @@ export function CutoutCardPin({
 export function CutoutCorner({
   size = 32,
   className,
+  style,
 }: {
   size?: number;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <svg
@@ -113,6 +115,7 @@ export function CutoutCorner({
       fill="currentColor"
       aria-hidden
       className={cn("pointer-events-none absolute", className)}
+      style={style}
     >
       <path d={`M0 0 H${size} A ${size} ${size} 0 0 1 0 ${size} Z`} />
     </svg>

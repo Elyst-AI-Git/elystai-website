@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
+import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { Analytics } from "@vercel/analytics/next";
+import ScrollToTop from "@/components/site/ScrollToTop";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -50,7 +52,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      // Note: the old /favicon.svg was a 2 MB base64 raster wrapped in <svg>
+      // (no vector benefit) that was fetched on every page. Dropped in favour
+      // of the 12 KB PNG + ICO below.
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
       { url: "/favicon.ico" },
     ],
@@ -70,6 +74,7 @@ export default function RootLayout({
         <JsonLd data={[organizationSchema, websiteSchema]} />
       </head>
       <body className="min-h-full flex flex-col bg-bg text-fg">
+        <ScrollToTop />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-emerald focus:px-4 focus:py-2 focus:text-fg-on-dark"
@@ -78,6 +83,7 @@ export default function RootLayout({
         </a>
         <Nav />
         {children}
+        <PreFooter />
         <Footer />
         <Analytics />
       </body>

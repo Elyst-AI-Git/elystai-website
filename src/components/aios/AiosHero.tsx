@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 import { renderCanvas } from "@/components/ui/canvas";
-import { useIsTouch } from "@/lib/use-touch";
+import { useReducedEffects } from "@/lib/use-reduced-effects";
 
 /** Decorative L-bracket that frames a corner of the centered content box. */
 function Corner({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
@@ -19,16 +19,18 @@ function Corner({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
 }
 
 export default function AiosHero() {
-  // The flowing-line canvas is a continuous RAF loop with mousemove-reactive
-  // trails. On phones there's no cursor to react to and the loop just burns
-  // CPU forever, so we skip mounting it entirely on touch devices and show a
-  // static background instead.
-  const isTouch = useIsTouch();
+  // The flowing-line canvas is a continuous RAF loop (80 trails × 50 nodes per
+  // frame) with mousemove-reactive trails. On phones there's no cursor to react
+  // to, and on low-powered desktops it's the single heaviest thing on the page,
+  // so we skip mounting it entirely there and show a static background instead.
+  // renderCanvas returns a teardown that stops the loop and detaches its global
+  // listeners when we navigate away.
+  const reducedEffects = useReducedEffects();
 
   useEffect(() => {
-    if (isTouch) return;
-    renderCanvas();
-  }, [isTouch]);
+    if (reducedEffects) return;
+    return renderCanvas();
+  }, [reducedEffects]);
 
   return (
     <section
@@ -44,8 +46,9 @@ export default function AiosHero() {
       }}
     >
       {/* Cursor-reactive flowing-line canvas — deep-emerald trail on white.
-          Desktop only; phones get a plain background (see isTouch above). */}
-      {!isTouch && (
+          Capable desktops only; phones and low-powered machines get a plain
+          background (see reducedEffects above). */}
+      {!reducedEffects && (
         <canvas
           id="canvas"
           className="pointer-events-none absolute inset-0 h-full w-full"
@@ -67,7 +70,7 @@ export default function AiosHero() {
         >
           <span className="block">It&rsquo;s time to work,</span>
           <span className="block">
-            the <span style={{ color: "#03624c" }}>AI way</span>
+            the <span style={{ color: "var(--elyst-emerald)" }}>AI way</span>
           </span>
         </h1>
 
