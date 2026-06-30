@@ -33,12 +33,12 @@ type Fact = { label: string; tone: Tone; rotate: number; pos: string };
 
 // Six facts, floated around the copy on lg (laptop occupies the top-right).
 const facts: Fact[] = [
-  { label: "2 Weeks", tone: "emerald", rotate: -7, pos: "left-[14%] top-[22%]" },
-  { label: "Live Classes", tone: "light", rotate: 5, pos: "left-[10%] top-[50%]" },
-  { label: "Work Faster", tone: "light", rotate: 6, pos: "left-[14%] top-[78%]" },
-  { label: "Live Q&A", tone: "light", rotate: -4, pos: "right-[14%] top-[22%]" },
-  { label: "Free Recordings", tone: "light", rotate: 4, pos: "right-[10%] top-[50%]" },
-  { label: "Certificate", tone: "emerald", rotate: -6, pos: "right-[14%] top-[78%]" },
+  { label: "Live Sessions", tone: "emerald", rotate: -7, pos: "left-[14%] top-[22%]" },
+  { label: "Work Faster", tone: "light", rotate: 5, pos: "left-[10%] top-[50%]" },
+  { label: "Ready Made AI", tone: "light", rotate: 6, pos: "left-[14%] top-[78%]" },
+  { label: "Work Smarter", tone: "light", rotate: -4, pos: "right-[14%] top-[22%]" },
+  { label: "Learn Together", tone: "light", rotate: 4, pos: "right-[10%] top-[50%]" },
+  { label: "Be AI Native", tone: "emerald", rotate: -6, pos: "right-[14%] top-[78%]" },
 ];
 
 function Tile({ label, tone, rotate }: { label: string; tone: Tone; rotate: number }) {
