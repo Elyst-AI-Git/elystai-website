@@ -12,9 +12,9 @@ export default function FinalCta() {
       headingSize="calc(var(--text-h2) - 3px)"
       heading={
         <>
-          You&rsquo;re already behind. Two weeks
+          You are already behind.
           <br />
-          is all it takes to catch up.
+          Change that in two weeks.
         </>
       }
       actions={

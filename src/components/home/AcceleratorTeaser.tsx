@@ -127,8 +127,8 @@ function ProgramFace({ p }: { p: Program }) {
         <div
           className="absolute right-0 top-5 z-10 rounded-l-md px-3 py-1.5 font-bold uppercase tracking-wide"
           style={{
-            background: "#ffffff",
-            color: p.live ? "var(--elyst-emerald)" : "rgba(3,98,76,0.55)",
+            background: p.live ? "#c2edcb" : "#ffffff",
+            color: p.live ? "#0A0F0C" : "rgba(3,98,76,0.55)",
             fontSize: "var(--text-micro)",
             boxShadow: "-2px 2px 8px rgba(0,0,0,0.18)",
           }}

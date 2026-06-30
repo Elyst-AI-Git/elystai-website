@@ -63,7 +63,7 @@ export default function RegisterForm() {
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-  const [validationErrors, setValidationErrors] = useState<{ phone?: string }>({});
+  const [validationErrors, setValidationErrors] = useState<{ phone?: string; city?: string; country?: string }>({});
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
 
@@ -177,15 +177,19 @@ export default function RegisterForm() {
     setCheckoutError("");
     setValidationErrors({});
 
-    // Validate phone input on submit
-    if (!phone) {
-      setValidationErrors({ phone: "Phone number is required." });
-      return;
-    }
-
+    // Validate all required fields on submit (phone, city, country)
     const cleanPhone = phone.replace(/\s+/g, "");
-    if (cleanPhone.length < 10) {
-      setValidationErrors({ phone: "Please enter a valid phone number (at least 10 digits)." });
+    const nextErrors: { phone?: string; city?: string; country?: string } = {};
+    if (!phone) {
+      nextErrors.phone = "Phone number is required.";
+    } else if (cleanPhone.length < 10) {
+      nextErrors.phone = "Please enter a valid phone number (at least 10 digits).";
+    }
+    if (!city.trim()) nextErrors.city = "City is required.";
+    if (!country.trim()) nextErrors.country = "Country is required.";
+
+    if (Object.keys(nextErrors).length > 0) {
+      setValidationErrors(nextErrors);
       return;
     }
 
@@ -280,8 +284,8 @@ export default function RegisterForm() {
           <h1 className="text-fg font-display font-bold leading-none tracking-display mb-3" style={{ fontSize: "var(--text-h2)" }}>
             AI for Work Registration
           </h1>
-          <p className="text-fg-2 text-[15px]">
-            Join the 2-week live program. Secure your cohort seat below.
+          <p className="text-fg-2 text-[17px]">
+            Secure your cohort seat below.
           </p>
         </div>
 
@@ -314,9 +318,6 @@ export default function RegisterForm() {
                 </svg>
                 <span>Continue with Google</span>
               </button>
-              <p className="mt-2 text-center text-[13px] text-fg-3">
-                Recommended. Pulls name and email automatically.
-              </p>
             </div>
 
             {/* Separator */}
@@ -341,7 +342,7 @@ export default function RegisterForm() {
                     type="email"
                     required
                     disabled={authLoading}
-                    placeholder="e.g. name@company.com"
+                    placeholder="e.g. name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
@@ -390,22 +391,22 @@ export default function RegisterForm() {
           <Card className="p-8 bg-[#c2edcb] rounded-card shadow-card">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-muted">
               <div>
-                <p className="text-[13px] font-bold uppercase tracking-wider text-fg-3">Logged in as</p>
-                <p className="text-[16px] font-bold text-fg truncate max-w-[200px]" title={user.email}>
+                <p className="text-[14px] font-bold uppercase tracking-wider text-fg-3">Logged in as</p>
+                <p className="text-[17px] font-bold text-fg truncate max-w-[200px]" title={user.email}>
                   {user.email}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="text-[13px] font-bold uppercase tracking-wider text-destructive hover:underline"
+                className="text-[14px] font-bold uppercase tracking-wider text-destructive hover:underline"
               >
                 Sign Out
               </button>
             </div>
 
-            <h2 className="text-fg font-display font-bold text-[21px] mb-6">
-              Step 2: Delivery & Contact details
+            <h2 className="text-fg font-display font-bold text-[23px] mb-6">
+              Step 2: Contact details
             </h2>
 
             {checkoutError && (
@@ -417,7 +418,7 @@ export default function RegisterForm() {
             <form onSubmit={handleCheckout} className="space-y-5">
               {/* Phone Field */}
               <div>
-                <label htmlFor="phone" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                <label htmlFor="phone" className="block text-[15px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
                   Phone / WhatsApp number <span className="text-destructive font-normal">*</span>
                 </label>
                 <input
@@ -451,49 +452,67 @@ export default function RegisterForm() {
 
               {/* City Field */}
               <div>
-                <label htmlFor="city" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
-                  City <span className="text-fg-3 font-normal">(Optional)</span>
+                <label htmlFor="city" className="block text-[15px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                  City <span className="text-destructive font-normal">*</span>
                 </label>
                 <input
                   id="city"
                   type="text"
+                  required
                   disabled={checkoutLoading}
                   placeholder="e.g. Kozhikode / Dubai"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                  onBlur={() =>
+                    setValidationErrors((prev) => ({ ...prev, city: city.trim() ? undefined : "City is required." }))
+                  }
+                  className={`w-full rounded-md border bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 ${
+                    validationErrors.city ? "border-destructive focus:ring-destructive" : "border-muted"
+                  }`}
                 />
+                {validationErrors.city && (
+                  <p className="mt-1 text-[13px] text-destructive font-medium">{validationErrors.city}</p>
+                )}
               </div>
 
               {/* Country Field */}
               <div>
-                <label htmlFor="country" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
-                  Country <span className="text-fg-3 font-normal">(Optional)</span>
+                <label htmlFor="country" className="block text-[15px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">
+                  Country <span className="text-destructive font-normal">*</span>
                 </label>
                 <input
                   id="country"
                   type="text"
+                  required
                   disabled={checkoutLoading}
                   placeholder="e.g. India / UAE"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
-                  className="w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3"
+                  onBlur={() =>
+                    setValidationErrors((prev) => ({ ...prev, country: country.trim() ? undefined : "Country is required." }))
+                  }
+                  className={`w-full rounded-md border bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg-3 ${
+                    validationErrors.country ? "border-destructive focus:ring-destructive" : "border-muted"
+                  }`}
                 />
+                {validationErrors.country && (
+                  <p className="mt-1 text-[13px] text-destructive font-medium">{validationErrors.country}</p>
+                )}
               </div>
 
               {/* Price outline */}
               <div className="mt-6 p-4 rounded-md bg-surface-muted border border-muted/50">
                 <div className="flex justify-between items-baseline mb-1">
-                  <span className="text-[16px] font-bold text-fg-2">Course Price</span>
+                  <span className="text-[17px] font-bold text-fg-2">Course Price</span>
                   <span className="text-h3 font-display font-bold text-fg">₹2,999</span>
                 </div>
-                <p className="text-[14px] text-fg-3 leading-relaxed">
-                  Circle members automatically receive 20% discount (₹2,399 charged) computed server-side for eligible emails.
+                <p className="text-[15px] text-fg-3 leading-relaxed">
+                  Circle members automatically receive 20% discount (₹2,399 charged) for eligible emails.
                 </p>
               </div>
 
               {/* Submit CTA */}
-              <BrandButton variant="solid" tone="green" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading} full>
+              <BrandButton variant="solid" tone="emerald" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading} full>
                 {checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
               </BrandButton>
             </form>

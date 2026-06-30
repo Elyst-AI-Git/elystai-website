@@ -121,8 +121,7 @@ export default function Hero() {
         </h1>
 
         <p className="max-w-xl text-fg-2" style={{ fontSize: "calc(var(--text-body) + 2px)" }}>
-          No guesswork, no overwhelm. In two weeks you&rsquo;ll use AI with real
-          confidence in your everyday work.
+          In two weeks you will use AI with real confidence in your everyday work.
         </p>
 
         <div className="mt-3 flex flex-col items-center gap-3">

@@ -16,7 +16,7 @@ type Reason = { title: string; body: string; bg: string };
 const reasons: Reason[] = [
   {
     title: "Taught by people who build it",
-    body: "Our AI agency builds AI. You learn what actually works, not what sounds good for a course.",
+    body: "Our AI agency builds AI systems. You learn what actually works there, not what sounds good for a course.",
     bg: "#eaf8ef",
   },
   {
@@ -25,13 +25,13 @@ const reasons: Reason[] = [
     bg: "#d7f0df",
   },
   {
-    title: "Backed by a community",
+    title: "Backed by an AI Community",
     body: "Learning doesn't stop when the session ends. The Circle keeps you sharp between them.",
     bg: "#c2edcb",
   },
   {
-    title: "We do one thing: AI",
-    body: "We don't run hundreds of courses across domains. We do one domain, and we go deep.",
+    title: "We do just one domain - AI",
+    body: "We don't run hundreds of courses across domains. We do one domain, that's AI.",
     bg: "#a9e2ba",
   },
 ];
@@ -94,8 +94,7 @@ export default function AccelWhy() {
             Learning that doesn&rsquo;t feel like a lecture
           </h2>
           <p className="mx-auto mt-4 max-w-prose text-fg-2" style={{ fontSize: "var(--text-body)" }}>
-            Taught by people who build AI, focused on what actually helps you,
-            backed by a community that keeps you sharp.
+            Taught by people who build real AI systems
           </p>
         </div>
 

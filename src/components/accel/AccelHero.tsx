@@ -146,7 +146,7 @@ export default function AccelHero() {
           </h1>
 
           <p
-            className="mx-auto mt-7 max-w-xl text-fg-2"
+            className="mx-auto mt-7 max-w-xl text-fg"
             style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.6 }}
           >
             Programs for people who want to use AI in their work,

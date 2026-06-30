@@ -81,9 +81,6 @@ export default function AiosFaq() {
             <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
               Questions teams ask before they start.
             </h2>
-            <p className="mt-12 text-fg-muted-dark" style={{ fontSize: "var(--text-small)" }}>
-              Still have a question? Ask us on the call.
-            </p>
           </div>
 
           {/* Right — all rows inside one tinted panel, divided by hairlines */}

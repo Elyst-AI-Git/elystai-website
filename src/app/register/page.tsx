@@ -1,9 +1,16 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import RegisterForm from "./RegisterForm";
 
-export const metadata = {
-  title: "Register for AI for Work | Elyst AI",
-  description: "Secure your cohort seat for the 2-week live AI program by Elyst AI.",
+export const metadata: Metadata = {
+  ...pageMeta({
+    path: "/register",
+    title: "AI for Work",
+    description: "Reserve your seat in the 2-week live program AI for Work by Elyst AI.",
+  }),
+  title: { absolute: "AI for Work by Elyst AI" },
+  robots: { index: false, follow: true },
 };
 
 export default function RegisterPage() {

@@ -22,7 +22,7 @@ import {
  * included list below.
  */
 
-const included = VALUE_STACK.filter((item) => item !== "Ready-to-use Claude skills").slice(0, 4);
+const included = VALUE_STACK.slice(0, 4);
 
 /** Metallic ribbon chip — identical treatment to the How It Works
     "4 to 5 hours a week" time-commitment strip. */
@@ -31,7 +31,7 @@ function MetalChip({ children, className, style }: { children: ReactNode; classN
     <span
       className={`inline-flex items-center rounded-md px-4 py-1.5 font-bold ${className ?? ""}`}
       style={{
-        background: "linear-gradient(180deg, #f8faf9 0%, #dde4e0 55%, #ebefed 100%)",
+        background: "#ffffff",
         color: "#0A0F0C",
         borderTop: "1px solid rgba(255,255,255,0.95)",
         borderBottom: "1px solid rgba(3,98,76,0.18)",
@@ -75,13 +75,13 @@ function Perforation() {
 export default function PriceEnrol() {
   return (
     <section id="enrol" className="scroll-mt-24 bg-white" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div className="mx-auto max-w-sm">
+      <div className="mx-auto max-w-md">
         <div className="text-center">
           <SectionMark>Pricing</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
             One price.
             <br />
-            Everything included.
+            <span className="whitespace-nowrap">Everything included.</span>
           </h2>
         </div>
 
@@ -117,7 +117,7 @@ export default function PriceEnrol() {
                 </span>
               </div>
               <p className="mt-3 font-semibold" style={{ fontSize: "var(--text-small)", color: "var(--elyst-green)" }}>
-                Save 40% &mdash; exclusive for Batch 1
+                Save 40% &mdash; Exclusive for Batch 1
               </p>
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function PriceEnrol() {
               <BrandButton href="/register" tone="green" full>
                 Join now
               </BrandButton>
-              <BrandButton href="#site-footer" variant="outline" tone="emerald" className="border-white! bg-transparent! text-white! hover:bg-white/10!" full>
+              <BrandButton href="https://wa.me/919633288931" variant="outline" tone="emerald" className="border-white! bg-transparent! text-white! hover:bg-white/10!" full>
                 Enquire first
               </BrandButton>
             </div>

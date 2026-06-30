@@ -244,7 +244,7 @@ export default function AiosTeaser() {
           </h2>
           <p
             className="mt-4 max-w-prose text-fg-2"
-            style={{ fontSize: "clamp(1.35rem, 1.75vw, 1.5rem)" }}
+            style={{ fontSize: "calc(var(--text-body) + 2px)" }}
           >
             AIOS is the AI employee for your team, that does the manual time consuming work, freeing up your team for more creative works.
           </p>

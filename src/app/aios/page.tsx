@@ -3,7 +3,8 @@ import AiosHero from "@/components/aios/AiosHero";
 import AiosProblem from "@/components/aios/AiosProblem";
 import AiosHowItWorks from "@/components/aios/AiosHowItWorks";
 import AiosCapabilities from "@/components/aios/AiosCapabilities";
-import AiosUseCases from "@/components/aios/AiosUseCases";
+// Temporarily hidden — "Build for your industry" section. Bring back later.
+// import AiosUseCases from "@/components/aios/AiosUseCases";
 import AiosModel from "@/components/aios/AiosModel";
 import AiosPricing from "@/components/aios/AiosPricing";
 import AiosFaq from "@/components/aios/AiosFaq";
@@ -26,7 +27,7 @@ export default function AiosPage() {
       <AiosProblem />
       <AiosHowItWorks />
       <AiosCapabilities />
-      <AiosUseCases />
+      {/* <AiosUseCases /> — "Build for your industry", temporarily hidden */}
       <AiosModel />
       <AiosPricing />
       <AiosFaq />
