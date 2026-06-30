@@ -7,39 +7,44 @@ import { SectionMark } from "@/components/ui/section-mark";
 /**
  * Instructor video — Shirin explaining the program. Loads the YouTube iframe
  * only once the section scrolls into view (no wasted load on page mount),
- * autoplaying muted (the only way browsers allow autoplay), with a tap-to-
- * unmute control since a silently autoplaying video is easy to miss.
+ * autoplaying unmuted. Note: most browsers (Chrome, Safari, Firefox) block
+ * unmuted autoplay unless the visitor has already interacted with the page or
+ * the site has a high per-browser "media engagement" score — so on a cold
+ * first visit this commonly arrives paused rather than erroring, which is why
+ * there's still a play button overlay below as a fallback, sent through the
+ * postMessage API so it doesn't reload (and restart) the iframe.
  */
 
 const YOUTUBE_VIDEO_ID = "_g9XH0ArBng";
 
-// Static — autoplay always starts muted (the only way browsers allow it).
-// Unmuting afterwards goes through the postMessage API below instead of
-// changing this src, which would otherwise reload the iframe and restart
-// the video from 0:00 every time the viewer taps "unmute".
-const SRC = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&rel=0&playsinline=1&enablejsapi=1`;
+const SRC = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&rel=0&playsinline=1&enablejsapi=1`;
 
 export default function InstructorVideo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [showPlayFallback, setShowPlayFallback] = useState(false);
 
   useEffect(() => {
     if (isInView) setShouldLoad(true);
   }, [isInView]);
 
-  const handleUnmute = () => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: "command", func: "unMute", args: [] }),
-      "*",
-    );
+  // If the browser silently blocked unmuted autoplay, the iframe sits there
+  // paused — offer a visible "Play" control after a beat instead of leaving
+  // a frozen frame with no way to tell anything is wrong.
+  useEffect(() => {
+    if (!shouldLoad) return;
+    const id = setTimeout(() => setShowPlayFallback(true), 1200);
+    return () => clearTimeout(id);
+  }, [shouldLoad]);
+
+  const handlePlay = () => {
     iframeRef.current?.contentWindow?.postMessage(
       JSON.stringify({ event: "command", func: "playVideo", args: [] }),
       "*",
     );
-    setMuted(false);
+    setShowPlayFallback(false);
   };
 
   return (
@@ -80,13 +85,13 @@ export default function InstructorVideo() {
             </div>
           )}
 
-          {shouldLoad && muted && (
+          {shouldLoad && showPlayFallback && (
             <button
               type="button"
-              onClick={handleUnmute}
+              onClick={handlePlay}
               className="absolute bottom-4 right-4 rounded-md bg-[#0A0F0C]/85 px-4 py-2 text-[13px] font-bold uppercase tracking-wider text-white transition hover:bg-[#0A0F0C]"
             >
-              Tap to unmute
+              Play
             </button>
           )}
         </div>

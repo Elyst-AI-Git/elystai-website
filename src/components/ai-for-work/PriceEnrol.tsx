@@ -7,8 +7,6 @@ import { BrandButton } from "@/components/ui/brand-button";
 import {
   PRICE,
   ORIGINAL_PRICE,
-  SEATS_TOTAL,
-  SEATS_LEFT,
   CIRCLE_PRICE,
   START_DATE,
   VALUE_STACK,
@@ -137,20 +135,6 @@ export default function PriceEnrol() {
                 </li>
               ))}
             </ul>
-
-            {/* Seats remaining */}
-            <div className="mt-7">
-              <div className="mb-2 flex items-center justify-between text-fg-on-dark/70" style={{ fontSize: "var(--text-label)" }}>
-                <span>{SEATS_LEFT} of {SEATS_TOTAL} seats left</span>
-                <span>Filling up</span>
-              </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full" style={{ background: "rgba(255,255,255,0.14)" }}>
-                <div
-                  className="h-full rounded-full"
-                  style={{ width: `${((SEATS_TOTAL - SEATS_LEFT) / SEATS_TOTAL) * 100}%`, background: "var(--elyst-green)" }}
-                />
-              </div>
-            </div>
 
             <div className="mt-7 flex flex-col gap-3">
               <BrandButton href="/register" tone="green" full>

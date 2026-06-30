@@ -29,13 +29,11 @@ export const VALUE_STACK = [
 ];
 
 /**
- * Scarcity & urgency on the pricing card. Real values go here just before
- * launch so the bar and deadline stay honest and easy to update.
+ * Urgency on the pricing card. Real value goes here just before launch so
+ * the deadline stays honest and easy to update.
  *
- * TODO(launch): set real seat counts and the actual launch-price deadline.
+ * TODO(launch): set the actual launch-price deadline.
  */
-export const SEATS_TOTAL = 20;
-export const SEATS_LEFT = 12;
 /** Human-readable deadline for the launch price. */
 export const PRICE_DEADLINE = "this Sunday";
 
