@@ -44,6 +44,26 @@ type RazorpayConstructor = new (options: RazorpayOptions) => RazorpayInstance;
 const INPUT_CLASS =
   "w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg/35";
 
+// The checkout API returns precise, developer-facing error strings (useful in
+// logs/support). Map the ones a real user can hit to friendlier copy instead
+// of showing them the raw backend message verbatim.
+function friendlyCheckoutError(rawMessage: string): string {
+  const message = rawMessage.toLowerCase();
+  if (message.includes("already enrolled")) {
+    return "You're already enrolled in this cohort. Check your email for your confirmation.";
+  }
+  if (message.includes("no active cohort") || message.includes("not found")) {
+    return "Registration for this cohort isn't open right now. Please check back soon or contact us.";
+  }
+  if (message.includes("discount eligibility")) {
+    return "We couldn't verify your discount right now. Please try again in a moment.";
+  }
+  if (message.includes("failed to update profile") || message.includes("failed to upsert enrollment") || message.includes("failed to record payment")) {
+    return "Something went wrong on our end while setting up your payment. Please try again.";
+  }
+  return "Something went wrong while starting checkout. Please try again, or contact us if it keeps happening.";
+}
+
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -296,7 +316,15 @@ export default function RegisterForm() {
       rzp.open();
     } catch (err: unknown) {
       const error = err as Error;
-      setCheckoutError(error.message || "An error occurred while launching checkout.");
+      const message = error.message || "";
+      // The Razorpay-not-loaded message is already user-facing copy we wrote
+      // ourselves — pass it through as-is. Anything else came from the
+      // backend's precise/technical error strings, so map it to friendlier copy.
+      setCheckoutError(
+        message.includes("Razorpay script not loaded")
+          ? message
+          : friendlyCheckoutError(message || "unknown error")
+      );
       setCheckoutLoading(false);
     }
   };

@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", priority: 1.0, changeFrequency: "weekly" },
     { path: "/aios", priority: 0.9, changeFrequency: "monthly" },
     { path: "/learn", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/ai-for-work", priority: 0.9, changeFrequency: "weekly" },
     { path: "/circle", priority: 0.8, changeFrequency: "monthly" },
     { path: "/juniors", priority: 0.8, changeFrequency: "monthly" },
   ];

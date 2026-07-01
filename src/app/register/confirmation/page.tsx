@@ -20,14 +20,17 @@ export default function ConfirmationPage() {
         return;
       }
 
-      // Session alone only proves who's asking — also require an enrollment
-      // row before showing the success screen, so a logged-in user who never
-      // checked out can't reach this page just by typing the URL.
+      // Session alone only proves who's asking — also require an ACTIVE
+      // enrollment before showing the success screen. Checking for "any
+      // enrollment" would show the success screen to someone who started
+      // checkout but never paid (status stays 'pending' until the webhook
+      // confirms payment).
       const { data: enrollment } = await supabase
         .schema("app")
         .from("enrollments")
         .select("id")
         .eq("profile_id", session.user.id)
+        .eq("status", "active")
         .limit(1)
         .maybeSingle();
 

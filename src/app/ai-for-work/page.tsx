@@ -1,5 +1,7 @@
 import { pageMeta } from "@/lib/seo";
-import { PRICE } from "@/components/ai-for-work/config";
+import JsonLd from "@/components/seo/JsonLd";
+import { courseSchema } from "@/lib/schema";
+import { PRICE, PRICE_AMOUNT } from "@/components/ai-for-work/config";
 import Hero from "@/components/ai-for-work/Hero";
 import Marquee from "@/components/ai-for-work/Marquee";
 import Pain from "@/components/ai-for-work/Pain";
@@ -19,6 +21,7 @@ export const metadata = {
     title: "AI for Work: 2-Week Live AI Program",
     description:
       `AI for Work is a 2-week live program by Elyst AI for professionals and founders who want to use AI with confidence in their everyday work. Live classes, live Q&A, free recordings, and a certificate. ${PRICE}.`,
+    image: "/images/og/ai-for-work.png",
   }),
   title: { absolute: "AI for Work by Elyst AI" },
 };
@@ -26,6 +29,15 @@ export const metadata = {
 export default function AiForWorkPage() {
   return (
     <main id="main" className="flex-1">
+      <JsonLd
+        data={courseSchema({
+          path: "/ai-for-work",
+          name: "AI for Work",
+          description:
+            "A 2-week live cohort-based program teaching working professionals, business owners, and freelancers to use AI with confidence in their everyday work.",
+          offer: { price: PRICE_AMOUNT, priceCurrency: "INR" },
+        })}
+      />
       <Hero />
       <Marquee />
       <Pain />

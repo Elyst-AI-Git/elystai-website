@@ -29,11 +29,33 @@ export default function OnboardingPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!session) {
         // Redirect to register if not authenticated
         router.push("/register");
+        return;
       }
+
+      // Session alone only proves who's asking. The API (POST /api/onboarding)
+      // already rejects a submit with no enrollment row, but that only surfaces
+      // as an error AFTER the user fills out the whole survey. Check here too,
+      // so someone who never started checkout is redirected before seeing the
+      // form at all. Deliberately checking for ANY enrollment, not "active" —
+      // the webhook that activates it runs async after Razorpay's client-side
+      // success callback, and a fast user can land here before it completes.
+      const { data: enrollment } = await supabase
+        .schema("app")
+        .from("enrollments")
+        .select("id")
+        .eq("profile_id", session.user.id)
+        .limit(1)
+        .maybeSingle();
+
+      if (!enrollment) {
+        router.push("/register");
+        return;
+      }
+
       setLoadingSession(false);
     });
   }, [supabase, router]);

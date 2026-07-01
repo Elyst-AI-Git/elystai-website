@@ -12,6 +12,9 @@ export const RAZORPAY_URL = "#"; // TODO(launch): paste Razorpay payment link
 /** Current one-time price, shown in the hero CTA, the pricing card and the FAQ. */
 export const PRICE = "₹2,999";
 
+/** Same price as PRICE, as a bare number (rupees) for structured data (Course/Offer JSON-LD). */
+export const PRICE_AMOUNT = 2999;
+
 /** Original price — struck through next to the offer price on the pricing card. */
 export const ORIGINAL_PRICE = "₹4,999";
 

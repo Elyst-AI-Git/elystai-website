@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     locale: "en_US",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Elyst AI" }],
+    images: [{ url: "/images/og/site.png", width: 1200, height: 630, alt: "Elyst AI" }],
   },
   twitter: {
     card: "summary_large_image",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
-    images: ["/og-image.png"],
+    images: ["/images/og/site.png"],
   },
 };
 

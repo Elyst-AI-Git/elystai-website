@@ -9,5 +9,10 @@ We build AI tools that fit into the way teams already work, and we run live prog
 - [Home](https://elystai.com/): What Elyst AI does and who we help.
 - [AIOS](https://elystai.com/aios): An AI helper for businesses that works inside the WhatsApp your team already uses. It answers questions, writes documents, and handles small tasks. No new software and no technical staff needed.
 - [Learn](https://elystai.com/learn): AI programs and courses for working people across India and the GCC. Taught by people who build AI for real businesses, with a community that helps you stay up to date.
+- [AI for Work](https://elystai.com/ai-for-work): A 2-week live cohort-based program that teaches working professionals, business owners, and freelancers to use AI with confidence in their everyday work. Live classes, live Q&A, recordings, and a certificate on completion.
 - [Juniors](https://elystai.com/juniors): A 5 day live program where students in Grades 5 to 10 learn to use AI to think, design, and build real things. No coding or tech background needed.
 - [Circle](https://elystai.com/circle): A community for working people who want to use AI in their actual work. Weekly AI updates, monthly live meetups, and peers across India and the GCC.
+
+## Enrolling
+
+- [Register](https://elystai.com/register): Sign-up and payment page for AI for Work. Requires an account (Google or email) and leads to a short onboarding survey after payment.
