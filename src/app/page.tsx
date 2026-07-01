@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/seo";
 import Hero from "@/components/home/Hero";
 import ProofBar from "@/components/home/ProofBar";
 import AiosTeaser from "@/components/home/AiosTeaser";
@@ -21,13 +22,13 @@ export const metadata: Metadata = {
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     locale: "en_US",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Elyst AI" }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Elyst AI" }],
   },
   twitter: {
     card: "summary_large_image",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
-    images: ["/og-image.png"],
+    images: [OG_IMAGE],
   },
 };
 

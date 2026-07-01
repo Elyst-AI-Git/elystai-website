@@ -145,12 +145,15 @@ export async function POST(request: Request) {
       // The amount/currency Razorpay says was captured must match what we
       // told Razorpay to charge when the order was created — otherwise a
       // tampered or mismatched event could activate an enrollment for less
-      // than the real price.
+      // than the real price. Checked for BOTH event types: order.paid's
+      // payload also carries payload.payment.entity.amount/currency, and
+      // skipping the check there would let an order.paid delivery activate
+      // an enrollment without ever being amount-verified.
       const eventAmount = payload.payload?.payment?.entity?.amount;
       const eventCurrency = payload.payload?.payment?.entity?.currency;
       if (
-        eventType === "payment.captured" &&
-        (eventAmount !== payment.amount || (eventCurrency && eventCurrency !== payment.currency))
+        eventAmount !== undefined &&
+        (eventCurrency == null || eventAmount !== payment.amount || eventCurrency !== payment.currency)
       ) {
         await supabaseAdmin
           .schema("app")

@@ -6,6 +6,7 @@ import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
+import { OG_IMAGE } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
 import ScrollToTop from "@/components/site/ScrollToTop";
 
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/og-image.png",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Elyst AI",
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/og-image.png"],
+    images: [OG_IMAGE],
   },
   icons: {
     icon: [
