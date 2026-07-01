@@ -59,5 +59,11 @@ left join lateral (
 ) pay on true
 order by e.created_at desc;
 
+-- Belt-and-suspenders: this view bundles email/phone/LinkedIn/UTM data, so
+-- don't rely on "we just never granted it" — revoke explicitly in case a
+-- future default-privilege change (e.g. a PUBLIC grant on the app schema)
+-- would otherwise expose it.
+revoke all privileges on table app.enrollment_overview from anon, authenticated;
+
 comment on view app.enrollment_overview is
   'Read-only, human-readable rollup of enrollments for browsing in Supabase Studio. One row per enrollment: identity + course/batch + latest payment + onboarding survey. Not exposed to anon/authenticated.';

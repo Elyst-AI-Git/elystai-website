@@ -153,7 +153,7 @@ export async function POST(request: Request) {
       const eventCurrency = payload.payload?.payment?.entity?.currency;
       if (
         eventAmount !== undefined &&
-        (eventAmount !== payment.amount || (eventCurrency && eventCurrency !== payment.currency))
+        (eventCurrency == null || eventAmount !== payment.amount || eventCurrency !== payment.currency)
       ) {
         await supabaseAdmin
           .schema("app")

@@ -9,11 +9,13 @@
 /** Razorpay payment link — the primary "Pay & enrol now" destination. */
 export const RAZORPAY_URL = "#"; // TODO(launch): paste Razorpay payment link
 
-/** Current one-time price, shown in the hero CTA, the pricing card and the FAQ. */
-export const PRICE = "₹2,999";
-
-/** Same price as PRICE, as a bare number (rupees) for structured data (Course/Offer JSON-LD). */
+/** Current one-time price, as a bare number (rupees) — the single source of
+ * truth for both the display string below and structured data (Course/Offer
+ * JSON-LD), so they can never drift apart. */
 export const PRICE_AMOUNT = 2999;
+
+/** Current one-time price, shown in the hero CTA, the pricing card and the FAQ. */
+export const PRICE = `₹${PRICE_AMOUNT.toLocaleString("en-IN")}`;
 
 /** Original price — struck through next to the offer price on the pricing card. */
 export const ORIGINAL_PRICE = "₹4,999";
@@ -45,3 +47,6 @@ export const CIRCLE_PRICE = "₹2,399";
 
 /** Cohort start date — shown as a ribbon on the pricing card. */
 export const START_DATE = "July 13";
+
+/** Same date as START_DATE, in ISO 8601, for structured data (Course/Offer JSON-LD). */
+export const START_DATE_ISO = "2026-07-13"; // TODO(launch): keep in sync with START_DATE

@@ -130,9 +130,25 @@ export default function RegisterForm() {
     (c) => c.dial_code === phoneCountryCode && c.code === phoneCountryIso
   ) || COUNTRIES.find((c) => c.dial_code === phoneCountryCode) || COUNTRIES.find((c) => c.code === "IN") || COUNTRIES[0];
 
+  // Resets every field that's specific to the previously signed-in person —
+  // contact details, validation state, and Circle pricing — so a second
+  // person signing in on the same tab (or the same person switching Google
+  // accounts) never inherits the last user's data.
+  const resetUserScopedState = () => {
+    setPhone("");
+    setCity("");
+    setCountry("");
+    setValidationErrors({});
+    setCheckoutError("");
+    setIsCircleMember(false);
+  };
+
   // Monitor auth state changes
   useEffect(() => {
+    let currentUserId: string | null = null;
+
     supabase.auth.getSession().then(({ data: { session } }) => {
+      currentUserId = session?.user?.id ?? null;
       setUser(session?.user ?? null);
       setLoadingSession(false);
     });
@@ -140,6 +156,11 @@ export default function RegisterForm() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      const nextUserId = session?.user?.id ?? null;
+      if (nextUserId !== currentUserId) {
+        resetUserScopedState();
+      }
+      currentUserId = nextUserId;
       setUser(session?.user ?? null);
       setLoadingSession(false);
     });
@@ -235,12 +256,16 @@ export default function RegisterForm() {
     // Validate all required fields on submit (phone, city, country)
     const cleanPhoneDigits = phone.replace(/\D/g, "");
     const cleanPhone = `${phoneCountryCode}${cleanPhoneDigits}`;
+    // E.164 caps the FULL dialed number (country code + local number) at 15
+    // digits — checking only the local digits lets a long country code push
+    // the combined number past that limit undetected.
+    const totalPhoneDigits = cleanPhone.replace(/\D/g, "").length;
     const nextErrors: { phone?: string; city?: string; country?: string } = {};
     if (!phone) {
       nextErrors.phone = "Phone number is required.";
     } else if (phoneCountryCode === "+91" && cleanPhoneDigits.length !== 10) {
       nextErrors.phone = "Please enter a valid 10-digit phone number.";
-    } else if (cleanPhoneDigits.length < 7 || cleanPhoneDigits.length > 15) {
+    } else if (totalPhoneDigits < 8 || totalPhoneDigits > 15) {
       nextErrors.phone = "Please enter a valid phone number.";
     }
     if (!city.trim()) nextErrors.city = "City is required.";
@@ -580,6 +605,9 @@ export default function RegisterForm() {
                     onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 15))}
                     onBlur={() => {
                       const phoneDigits = phone.replace(/\D/g, "");
+                      // Same total-digit rule as the submit-time check: E.164
+                      // caps country code + local number combined at 15 digits.
+                      const totalDigits = phoneCountryCode.replace(/\D/g, "").length + phoneDigits.length;
                       if (!phoneDigits) {
                         setValidationErrors((prev) => ({ ...prev, phone: "Phone number is required." }));
                       } else if (phoneCountryCode === "+91" && phoneDigits.length !== 10) {
@@ -587,7 +615,7 @@ export default function RegisterForm() {
                           ...prev,
                           phone: "Phone number must be 10 digits.",
                         }));
-                      } else if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+                      } else if (totalDigits < 8 || totalDigits > 15) {
                         setValidationErrors((prev) => ({
                           ...prev,
                           phone: "Please enter a valid phone number.",

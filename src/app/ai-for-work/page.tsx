@@ -1,7 +1,7 @@
 import { pageMeta } from "@/lib/seo";
 import JsonLd from "@/components/seo/JsonLd";
 import { courseSchema } from "@/lib/schema";
-import { PRICE, PRICE_AMOUNT } from "@/components/ai-for-work/config";
+import { PRICE, PRICE_AMOUNT, START_DATE_ISO } from "@/components/ai-for-work/config";
 import Hero from "@/components/ai-for-work/Hero";
 import Marquee from "@/components/ai-for-work/Marquee";
 import Pain from "@/components/ai-for-work/Pain";
@@ -35,7 +35,7 @@ export default function AiForWorkPage() {
           name: "AI for Work",
           description:
             "A 2-week live cohort-based program teaching working professionals, business owners, and freelancers to use AI with confidence in their everyday work.",
-          offer: { price: PRICE_AMOUNT, priceCurrency: "INR" },
+          offer: { price: PRICE_AMOUNT, priceCurrency: "INR", startDate: START_DATE_ISO },
         })}
       />
       <Hero />

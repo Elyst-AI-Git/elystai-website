@@ -8,7 +8,10 @@ type InputOTPContextValue = {
   maxLength: number;
   setSlotRef: (index: number, node: HTMLInputElement | null) => void;
   updateValue: (index: number, value: string) => void;
-  value: string;
+  // Fixed-width per-slot chars (index i = slot i), NOT a collapsed string —
+  // joining would lose empty-slot positions and shift rendering out of sync
+  // with what updateValue writes by index.
+  slots: string[];
   focusSlot: (index: number) => void;
 };
 
@@ -32,6 +35,14 @@ type InputOTPProps = {
   value?: string;
 };
 
+// Build a fixed-width array of `maxLength` slots from a plain digit string,
+// e.g. ("12", 6) -> ["1", "2", "", "", "", ""]. Index i of the array always
+// corresponds to slot i, so per-slot edits never shift a neighboring digit.
+function toSlots(source: string, maxLength: number): string[] {
+  const digits = source.replace(/\D/g, "").slice(0, maxLength);
+  return Array.from({ length: maxLength }, (_, i) => digits[i] ?? "");
+}
+
 export function InputOTP({
   children,
   className,
@@ -41,43 +52,51 @@ export function InputOTP({
   onChange,
   value,
 }: InputOTPProps) {
-  const [internalValue, setInternalValue] = React.useState(defaultValue.slice(0, maxLength));
+  // Per-slot state is the source of truth for rendering, kept ALWAYS at a
+  // fixed width. Serializing to a plain string (for onChange / the `value`
+  // prop) only happens at the edges, never mid-edit — that's what previously
+  // let editing an arbitrary slot compact the string and shift every digit
+  // after it left by one position.
+  const [slots, setSlots] = React.useState<string[]>(() => toSlots(value ?? defaultValue, maxLength));
   const slotRefs = React.useRef<Array<HTMLInputElement | null>>([]);
-  const currentValue = (value ?? internalValue).slice(0, maxLength);
 
-  const setValue = React.useCallback(
-    (nextValue: string) => {
-      const cleanValue = nextValue.replace(/\D/g, "").slice(0, maxLength);
-      if (value === undefined) setInternalValue(cleanValue);
-      onChange?.(cleanValue);
-    },
-    [maxLength, onChange, value]
-  );
+  // Resync when the parent replaces `value` from outside this component
+  // (e.g. clearing it back to "" on "Back" / sign-out). Comparing against
+  // the joined slots (not a ref to the last prop) means this only fires on
+  // real external changes, not on the round-trip from our own onChange.
+  React.useEffect(() => {
+    if (value !== undefined && value !== slots.join("")) {
+      setSlots(toSlots(value, maxLength));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, maxLength]);
 
   const updateValue = React.useCallback(
     (index: number, rawValue: string) => {
       const cleanValue = rawValue.replace(/\D/g, "");
-      const nextValue = currentValue.padEnd(maxLength, " ").split("");
+      const nextSlots = [...slots];
 
       if (cleanValue.length > 1) {
         cleanValue
           .slice(0, maxLength - index)
           .split("")
           .forEach((char, offset) => {
-            nextValue[index + offset] = char;
+            nextSlots[index + offset] = char;
           });
-        setValue(nextValue.join("").replace(/\s/g, ""));
+        setSlots(nextSlots);
+        onChange?.(nextSlots.join(""));
         slotRefs.current[Math.min(index + cleanValue.length, maxLength - 1)]?.focus();
         return;
       }
 
-      nextValue[index] = cleanValue;
-      setValue(nextValue.join("").replace(/\s/g, ""));
+      nextSlots[index] = cleanValue;
+      setSlots(nextSlots);
+      onChange?.(nextSlots.join(""));
       if (cleanValue && index < maxLength - 1) {
         slotRefs.current[index + 1]?.focus();
       }
     },
-    [currentValue, maxLength, setValue]
+    [slots, maxLength, onChange]
   );
 
   const setSlotRef = React.useCallback((index: number, node: HTMLInputElement | null) => {
@@ -94,7 +113,7 @@ export function InputOTP({
   );
 
   return (
-    <InputOTPContext.Provider value={{ disabled, maxLength, setSlotRef, updateValue, value: currentValue, focusSlot }}>
+    <InputOTPContext.Provider value={{ disabled, maxLength, setSlotRef, updateValue, slots, focusSlot }}>
       <div className={cn("flex items-center justify-center", className)}>{children}</div>
     </InputOTPContext.Provider>
   );
@@ -117,8 +136,8 @@ export function InputOTPSlot({
   className?: string;
   index: number;
 }) {
-  const { disabled, setSlotRef, updateValue, value, focusSlot } = useInputOTP();
-  const char = value[index] ?? "";
+  const { disabled, setSlotRef, updateValue, slots, focusSlot } = useInputOTP();
+  const char = slots[index] ?? "";
 
   return (
     <input

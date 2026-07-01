@@ -158,7 +158,10 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* noValidate: validation is centralized in handleSubmit (fieldErrors) —
+              without this, native browser constraint validation on the `required`
+              fields can block onSubmit before our own error messages ever render. */}
+          <form onSubmit={handleSubmit} noValidate className="space-y-6">
             {/* Audience Type Dropdown */}
             <div>
               <label htmlFor="audienceType" className="block text-[13px] font-bold uppercase tracking-wider text-fg-2 mb-1.5">

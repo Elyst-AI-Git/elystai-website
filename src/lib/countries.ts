@@ -943,12 +943,6 @@ export const COUNTRIES: Country[] = [
     "dial_code": "+31"
   },
   {
-    "name": "Netherlands Antilles",
-    "flag": "",
-    "code": "AN",
-    "dial_code": "+599"
-  },
-  {
     "name": "New Caledonia",
     "flag": "🇳🇨",
     "code": "NC",
@@ -1274,7 +1268,7 @@ export const COUNTRIES: Country[] = [
   },
   {
     "name": "Svalbard and Jan Mayen",
-    "flag": "🇸����",
+    "flag": "🇸🇯",
     "code": "SJ",
     "dial_code": "+47"
   },
