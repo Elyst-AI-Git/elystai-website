@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { createAdminSupabaseClient } from "@/lib/supabase/server";
+import { logEvent, normalizeCorrelationId } from "@/lib/logging";
+import { claimAndSendConfirmation } from "@/lib/email";
 
 export async function POST(request: Request) {
   try {
@@ -39,8 +41,8 @@ export async function POST(request: Request) {
       id?: string;
       event?: string;
       payload?: {
-        order?: { entity?: { id?: string } };
-        payment?: { entity?: { id?: string; order_id?: string; amount?: number; currency?: string } };
+        order?: { entity?: { id?: string; notes?: Record<string, unknown> } };
+        payment?: { entity?: { id?: string; order_id?: string; amount?: number; currency?: string; notes?: Record<string, unknown> } };
       };
     };
     let payload: RazorpayWebhookPayload;
@@ -57,6 +59,24 @@ export async function POST(request: Request) {
     if (!eventId) {
       return NextResponse.json({ error: "Missing event ID" }, { status: 400 });
     }
+
+    // Recover the journey id we stitched into the order's `notes` at creation,
+    // so the webhook leg joins the same trace as the client + order-create legs.
+    const notes =
+      payload.payload?.order?.entity?.notes || payload.payload?.payment?.entity?.notes;
+    const correlationId = normalizeCorrelationId(
+      notes && typeof notes.correlation_id === "string" ? notes.correlation_id : null
+    );
+    const webhookOrderId =
+      payload.payload?.order?.entity?.id || payload.payload?.payment?.entity?.order_id || null;
+
+    await logEvent({
+      event: "webhook.received",
+      source: "webhook",
+      correlationId,
+      orderId: webhookOrderId,
+      payload: { eventType, eventId },
+    });
 
     const supabaseAdmin = createAdminSupabaseClient();
 
@@ -208,11 +228,54 @@ export async function POST(request: Request) {
           // the event row at "received" and return 500 so Razorpay retries;
           // the payment-status guard above makes the retry idempotent (it'll
           // skip re-updating payment and just retry this enrollment update).
+          await logEvent({
+            event: "webhook.failed",
+            source: "webhook",
+            correlationId,
+            orderId: razorpayOrderId,
+            httpStatus: 500,
+            payload: { stage: "activate_enrollment", reason: enrollmentUpdateError.message },
+          });
           return NextResponse.json(
             { error: `Failed to activate enrollment: ${enrollmentUpdateError.message}` },
             { status: 500 }
           );
         }
+
+        await logEvent({
+          event: "webhook.activated",
+          source: "webhook",
+          correlationId,
+          orderId: razorpayOrderId,
+          httpStatus: 200,
+          payload: { enrollmentId: payment.enrollment_id, amount: payment.amount, currency: payment.currency },
+        });
+
+        // Confirmation email (Issue 1). Single-fire: claims the slot atomically,
+        // so a retry or the verify route won't double-send. Look up the buyer's
+        // email from their profile (the webhook has no session).
+        const { data: enrollmentRow } = await supabaseAdmin
+          .schema("app")
+          .from("enrollments")
+          .select("profile_id")
+          .eq("id", payment.enrollment_id)
+          .maybeSingle();
+
+        const { data: profile } = enrollmentRow?.profile_id
+          ? await supabaseAdmin
+              .from("profiles")
+              .select("email")
+              .eq("id", enrollmentRow.profile_id)
+              .maybeSingle()
+          : { data: null };
+
+        await claimAndSendConfirmation(supabaseAdmin, {
+          enrollmentId: payment.enrollment_id,
+          email: profile?.email ?? null,
+          amountPaise: payment.amount,
+          correlationId,
+          orderId: razorpayOrderId,
+        });
       }
     } else if (eventType === "payment.failed") {
       const razorpayOrderId = payload.payload?.payment?.entity?.order_id;
