@@ -42,15 +42,20 @@ export function computeCheckoutQuote(
     segmentId = segment.id;
     if (segment.kind === "percent") {
       const percent = Number(segment.value);
-      const rawDiscount = basePriceAmount * (percent / 100);
-      const finalAmountRupees = Math.round((basePriceAmount - rawDiscount) / 100);
-      discountAmount = basePriceAmount - finalAmountRupees * 100;
+      if (!isNaN(percent) && percent > 0) {
+        const rawDiscount = basePriceAmount * (percent / 100);
+        const finalAmountRupees = Math.round((basePriceAmount - rawDiscount) / 100);
+        discountAmount = basePriceAmount - finalAmountRupees * 100;
+      }
     } else if (segment.kind === "fixed") {
-      const discountVal = Number(segment.value); // paise
-      const finalAmountRupees = Math.round((basePriceAmount - discountVal) / 100);
-      discountAmount = basePriceAmount - finalAmountRupees * 100;
+      const discountVal = Number(segment.value);
+      if (!isNaN(discountVal) && discountVal > 0) {
+        const finalAmountRupees = Math.round((basePriceAmount - discountVal) / 100);
+        discountAmount = basePriceAmount - finalAmountRupees * 100;
+      }
     }
-    discountAmount = Math.min(Math.max(discountAmount, 0), basePriceAmount);
+    // Clamp: never zero or negative charge, never more than base price
+    discountAmount = Math.min(Math.max(discountAmount, 0), basePriceAmount - 100);
   }
 
   return {

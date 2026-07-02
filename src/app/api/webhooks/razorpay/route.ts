@@ -186,9 +186,8 @@ export async function POST(request: Request) {
         );
       }
 
-      // Out-of-order tolerance: check if payment is already marked 'paid'
+      // 1. Mark payment paid if not already (idempotent on retry).
       if (payment.status !== "paid") {
-        // Update payment row to 'paid'
         const { error: paymentUpdateError } = await supabaseAdmin
           .schema("app")
           .from("payments")
@@ -210,24 +209,28 @@ export async function POST(request: Request) {
             { status: 500 }
           );
         }
+      }
 
-        // Update enrollment row to 'active'
+      // 2. Activate enrollment if not already active. Gated on enrollment
+      // status (not payment status) so a retry where payment is already 'paid'
+      // but enrollment is still 'pending' (crashed mid-flight last time) still
+      // completes the activation instead of being silently skipped.
+      const { data: currentEnrollment } = await supabaseAdmin
+        .schema("app")
+        .from("enrollments")
+        .select("status, profile_id")
+        .eq("id", payment.enrollment_id)
+        .maybeSingle();
+
+      if (currentEnrollment?.status !== "active") {
         const { error: enrollmentUpdateError } = await supabaseAdmin
           .schema("app")
           .from("enrollments")
-          .update({
-            status: "active",
-          })
+          .update({ status: "active" })
           .eq("id", payment.enrollment_id);
 
         if (enrollmentUpdateError) {
           console.error("Failed to activate enrollment:", enrollmentUpdateError);
-          // Do NOT mark the webhook event "processed" — the payment is paid
-          // but the enrollment never went active, which would otherwise look
-          // identical to a successful delivery and never get retried. Leave
-          // the event row at "received" and return 500 so Razorpay retries;
-          // the payment-status guard above makes the retry idempotent (it'll
-          // skip re-updating payment and just retry this enrollment update).
           await logEvent({
             event: "webhook.failed",
             source: "webhook",
@@ -251,21 +254,15 @@ export async function POST(request: Request) {
           payload: { enrollmentId: payment.enrollment_id, amount: payment.amount, currency: payment.currency },
         });
 
-        // Confirmation email (Issue 1). Single-fire: claims the slot atomically,
-        // so a retry or the verify route won't double-send. Look up the buyer's
-        // email from their profile (the webhook has no session).
-        const { data: enrollmentRow } = await supabaseAdmin
-          .schema("app")
-          .from("enrollments")
-          .select("profile_id")
-          .eq("id", payment.enrollment_id)
-          .maybeSingle();
-
-        const { data: profile } = enrollmentRow?.profile_id
+        // Confirmation email (Issue 1). Single-fire: claimAndSendConfirmation
+        // claims the slot atomically, so a retry or the verify route won't
+        // double-send. Look up the buyer's email from their profile.
+        const profileId = currentEnrollment?.profile_id;
+        const { data: profile } = profileId
           ? await supabaseAdmin
               .from("profiles")
               .select("email")
-              .eq("id", enrollmentRow.profile_id)
+              .eq("id", profileId)
               .maybeSingle()
           : { data: null };
 

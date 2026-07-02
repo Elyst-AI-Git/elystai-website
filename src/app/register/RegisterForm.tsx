@@ -134,9 +134,12 @@ export default function RegisterForm() {
           setIsCircleMember(!!data.isCircleMember);
           setPriceAmount(typeof data.amount === "number" ? data.amount : null);
           setOriginalAmount(typeof data.originalAmount === "number" ? data.originalAmount : null);
+        } else {
+          setCheckoutError("Unable to load the current price. Please refresh and try again.");
         }
       } catch (err) {
         console.error("Error checking circle membership:", err);
+        setCheckoutError("Unable to load the current price. Please refresh and try again.");
       }
     };
     checkCircleMember();
@@ -343,25 +346,30 @@ export default function RegisterForm() {
         name: "Elyst AI",
         description: "AI for Work Cohort Registration",
         order_id: orderId,
-        handler: function (response) {
+        handler: async function (response) {
           logClientEvent("razorpay_handler_success", {
             orderId: response.razorpay_order_id,
             payload: { paymentId: response.razorpay_payment_id },
           });
-          // Verify the payment signature server-side BEFORE moving on, so the
-          // enrollment is confirmed synchronously instead of waiting on the
-          // async webhook (Issue 4 fix). Fire-and-forget: we redirect either
-          // way, and the confirmation page + webhook are the backstops.
-          void fetch("/api/checkout/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              correlationId,
-            }),
-          }).catch(() => {});
+          // Verify the payment signature server-side BEFORE navigating so the
+          // enrollment is confirmed synchronously (Issue 4 fix). Await the
+          // call so the confirmation page sees the enrollment as active without
+          // relying solely on the async webhook.
+          try {
+            await fetch("/api/checkout/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                correlationId,
+              }),
+            });
+          } catch (e) {
+            // Best-effort: the confirmation page + webhook are backstops.
+            console.error("verify call failed:", e);
+          }
           // Redirect to onboarding with parameters (Moment 2 starts here)
           router.push(
             `/register/onboarding?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}`
@@ -757,8 +765,8 @@ export default function RegisterForm() {
               </p>
 
               {/* Submit CTA */}
-              <BrandButton variant="solid" tone="emerald" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading} full>
-                {checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
+              <BrandButton variant="solid" tone="emerald" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading || priceAmount == null} full>
+                {priceAmount == null ? "Loading price..." : checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
               </BrandButton>
             </form>
           </Card>

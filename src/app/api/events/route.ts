@@ -52,16 +52,28 @@ export async function POST(request: Request) {
       return new NextResponse(null, { status: 204 });
     }
 
+    // Sanitize client payload: allow only a small set of scalar keys so the
+    // open endpoint can't be used to store arbitrary data.
+    const ALLOWED_PAYLOAD_KEYS = new Set(["paymentId", "reason"]);
+    let safePayload: Record<string, unknown> | null = null;
+    if (body.payload && typeof body.payload === "object" && !Array.isArray(body.payload)) {
+      const raw = body.payload as Record<string, unknown>;
+      const filtered: Record<string, unknown> = {};
+      for (const key of ALLOWED_PAYLOAD_KEYS) {
+        if (key in raw && (typeof raw[key] === "string" || typeof raw[key] === "number" || typeof raw[key] === "boolean")) {
+          filtered[key] = raw[key];
+        }
+      }
+      safePayload = Object.keys(filtered).length > 0 ? filtered : null;
+    }
+
     await logEvent({
       event,
       source: "client",
       correlationId: normalizeCorrelationId(body.correlationId),
       profileId: user.id,
       orderId: typeof body.orderId === "string" ? body.orderId : null,
-      payload:
-        body.payload && typeof body.payload === "object"
-          ? (body.payload as Record<string, unknown>)
-          : null,
+      payload: safePayload,
     });
 
     return new NextResponse(null, { status: 204 });

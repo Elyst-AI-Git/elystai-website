@@ -20,7 +20,10 @@ export function getCorrelationId(): string {
     const cid =
       typeof crypto !== "undefined" && crypto.randomUUID
         ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => {
+            const n = parseInt(c);
+            return (n ^ (Math.random() * 16 >> (n / 4))).toString(16);
+          });
     window.sessionStorage.setItem(CID_KEY, cid);
     return cid;
   } catch {

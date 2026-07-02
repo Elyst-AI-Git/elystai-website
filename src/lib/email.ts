@@ -23,7 +23,10 @@ async function sendViaResend(to: string, amountPaise: number | null): Promise<bo
   if (!apiKey) return false; // not configured — caller logs the skip
 
   const priceLine = amountPaise != null ? ` of ${formatPaise(amountPaise)}` : "";
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
   const res = await fetch(RESEND_ENDPOINT, {
+    signal: controller.signal,
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -54,6 +57,7 @@ async function sendViaResend(to: string, amountPaise: number | null): Promise<bo
 </div>`,
     }),
   });
+  clearTimeout(timeout);
   if (!res.ok) {
     throw new Error(`Resend responded ${res.status}: ${await res.text()}`);
   }
@@ -76,7 +80,7 @@ export async function claimAndSendConfirmation(
   const { enrollmentId, email, amountPaise, correlationId, orderId } = params;
   try {
     // Claim: flip NULL -> now(), returning the row only if WE set it.
-    const { data: claimed } = await admin
+    const { data: claimed, error: claimError } = await admin
       .schema("app")
       .from("enrollments")
       .update({ confirmation_sent_at: new Date().toISOString() })
@@ -85,6 +89,7 @@ export async function claimAndSendConfirmation(
       .select("id")
       .maybeSingle();
 
+    if (claimError) throw new Error(`Claim failed: ${claimError.message}`);
     if (!claimed) return; // someone already claimed/sent — skip silently
 
     if (!email) {

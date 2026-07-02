@@ -94,17 +94,27 @@ export async function POST(request: Request) {
     // 3. Idempotent activation. If the webhook already flipped it to paid, skip
     // straight to the confirmed response.
     if (payment.status !== "paid") {
-      await admin
+      const { error: paymentUpdateError } = await admin
         .schema("app")
         .from("payments")
         .update({ status: "paid", razorpay_payment_id: razorpayPaymentId, paid_at: new Date().toISOString() })
         .eq("id", payment.id);
 
-      await admin
+      if (paymentUpdateError) {
+        console.error("verify: payment update failed:", paymentUpdateError);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+      }
+
+      const { error: enrollmentUpdateError } = await admin
         .schema("app")
         .from("enrollments")
         .update({ status: "active" })
         .eq("id", payment.enrollment_id);
+
+      if (enrollmentUpdateError) {
+        console.error("verify: enrollment update failed:", enrollmentUpdateError);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+      }
 
       await logEvent({
         event: "verify.activated",
@@ -128,8 +138,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ status: "active" }, { status: 200 });
   } catch (error: unknown) {
-    const err = error as Error;
-    console.error("Verify error:", err);
-    return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });
+    console.error("Verify error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

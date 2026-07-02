@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       source: "server",
       correlationId,
       profileId: user.id,
-      payload: { courseSlug: courseSlug || "ai-for-work", hasPhone: !!phone, city: city || null, country: country || null },
+      payload: { courseSlug: courseSlug || "ai-for-work", hasPhone: !!phone, hasCity: !!city, hasCountry: !!country },
     });
 
     if (!phone) {
@@ -172,11 +172,18 @@ export async function POST(request: Request) {
 
         // Stale price — supersede the old order so the one-open-per-enrollment
         // constraint (migration 0006) doesn't block the fresh insert below.
-        await supabaseAdmin
+        const { error: supersedeError } = await supabaseAdmin
           .schema("app")
           .from("payments")
           .update({ status: "failed" })
           .eq("id", existingPayment.id);
+
+        if (supersedeError) {
+          return NextResponse.json(
+            { error: "Failed to update stale payment, please try again" },
+            { status: 500 }
+          );
+        }
 
         await logEvent({
           event: "order.supersede",

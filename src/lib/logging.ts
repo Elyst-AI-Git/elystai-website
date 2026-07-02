@@ -45,6 +45,14 @@ function redact(payload: Record<string, unknown> | null | undefined): Record<str
   for (const [key, value] of Object.entries(payload)) {
     if (REDACT_KEYS.has(key.toLowerCase())) {
       out[key] = "[redacted]";
+    } else if (value && typeof value === "object" && !Array.isArray(value)) {
+      out[key] = redact(value as Record<string, unknown>);
+    } else if (Array.isArray(value)) {
+      out[key] = value.map((item) =>
+        item && typeof item === "object" && !Array.isArray(item)
+          ? redact(item as Record<string, unknown>)
+          : item
+      );
     } else {
       out[key] = value;
     }
