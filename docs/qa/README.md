@@ -10,6 +10,8 @@ Reviewed on branch `dev` @ `7a245d4`. These docs are a findings report and plan 
 6. [`06-learning-path.md`](06-learning-path.md) — **plain-language walkthrough** of everything done: the four bugs, the fixes, the logging system, the staging setup, testing method, and what's left.
 7. [`07-manual-testing-guide.md`](07-manual-testing-guide.md) — **step-by-step manual test guide** with the staging URL, login accounts, Razorpay test instruments, and every flow to run yourself.
 
+8. [`08-production-checklist.md`](08-production-checklist.md) — **what to configure before prod** (Vercel Production is missing `RESEND_API_KEY`/`EMAIL_FROM`; production Supabase needs migrations + SMTP + templates; Razorpay live mode + webhook).
+
 Status (2026-07-02): all four issues fixed and verified live on staging — confirmation email delivered via Resend, OTP delivered with a 6-digit code, pricing display==charge, synchronous payment confirmation. 23/23 automated matrix passes.
 
 ## TL;DR of the four issues
