@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient, createAdminSupabaseClient } from "@/lib/supabase/server";
+import { logEvent, normalizeCorrelationId } from "@/lib/logging";
 
 export async function POST(request: Request) {
   try {
@@ -51,7 +52,10 @@ export async function POST(request: Request) {
       goal_other,
       heard_about_us,
       linkedin_url,
+      correlationId: rawCorrelationId,
     } = body;
+
+    const correlationId = normalizeCorrelationId(rawCorrelationId);
 
     // 3. Upsert onboarding data for the user profile
     const { data, error } = await supabaseAdmin
@@ -80,6 +84,15 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    await logEvent({
+      event: "onboarding.saved",
+      source: "server",
+      correlationId,
+      profileId: user.id,
+      httpStatus: 200,
+      payload: { audienceType: audience_type || null, primaryGoal: primary_goal || null, heardAboutUs: heard_about_us || null },
+    });
 
     return NextResponse.json({ status: "ok", data }, { status: 200 });
   } catch (error: unknown) {

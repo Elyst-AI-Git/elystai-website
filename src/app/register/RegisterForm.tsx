@@ -9,6 +9,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { useRouter, useSearchParams } from "next/navigation";
 import type { User } from "@supabase/supabase-js";
 import { COUNTRIES } from "@/lib/countries";
+import { getCorrelationId, logClientEvent } from "@/lib/log-client";
 
 interface RazorpayOptions {
   key: string;
@@ -40,6 +41,11 @@ interface RazorpayInstance {
 }
 
 type RazorpayConstructor = new (options: RazorpayOptions) => RazorpayInstance;
+
+// Render a paise integer as an Indian-rupee string, e.g. 239900 -> "₹2,399".
+function formatPaise(paise: number): string {
+  return `₹${Math.round(paise / 100).toLocaleString("en-IN")}`;
+}
 
 const INPUT_CLASS =
   "w-full rounded-md border border-muted bg-[#FDFEFC] px-4 py-2.5 text-[16px] text-fg focus:outline-none focus:ring-1 focus:ring-emerald placeholder:text-fg/35";
@@ -96,6 +102,10 @@ export default function RegisterForm() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
   const [isCircleMember, setIsCircleMember] = useState(false);
+  // Authoritative prices (paise) from the server — the SAME numbers the order
+  // route will charge. Rendered instead of hardcoded literals (Issue-3 fix).
+  const [priceAmount, setPriceAmount] = useState<number | null>(null);
+  const [originalAmount, setOriginalAmount] = useState<number | null>(null);
 
   // Track UTM and Referrer (Moment 3 metadata)
   const [utmSource] = useState(() => searchParams.get("utm_source"));
@@ -104,6 +114,11 @@ export default function RegisterForm() {
   const [referrer] = useState(() =>
     typeof document !== "undefined" ? document.referrer || null : null
   );
+
+  // Log that an authenticated user reached the checkout step (journey start).
+  useEffect(() => {
+    if (user) logClientEvent("checkout_viewed");
+  }, [user]);
 
   // Check Circle segment membership
   useEffect(() => {
@@ -117,9 +132,14 @@ export default function RegisterForm() {
         if (res.ok) {
           const data = await res.json();
           setIsCircleMember(!!data.isCircleMember);
+          setPriceAmount(typeof data.amount === "number" ? data.amount : null);
+          setOriginalAmount(typeof data.originalAmount === "number" ? data.originalAmount : null);
+        } else {
+          setCheckoutError("Unable to load the current price. Please refresh and try again.");
         }
       } catch (err) {
         console.error("Error checking circle membership:", err);
+        setCheckoutError("Unable to load the current price. Please refresh and try again.");
       }
     };
     checkCircleMember();
@@ -141,6 +161,8 @@ export default function RegisterForm() {
     setValidationErrors({});
     setCheckoutError("");
     setIsCircleMember(false);
+    setPriceAmount(null);
+    setOriginalAmount(null);
   };
 
   // Monitor auth state changes
@@ -197,15 +219,19 @@ export default function RegisterForm() {
     setAuthLoading(true);
     setAuthError("");
     try {
+      // Deliberately NO emailRedirectTo: setting it biases Supabase toward the
+      // magic-LINK flow, but this UI collects a 6-digit code (verifyOtp). With
+      // it omitted Supabase sends the numeric {{ .Token }} code the form expects
+      // (Issue 2 fix — pair with the email template using {{ .Token }}).
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent("/register")}`,
           shouldCreateUser: true,
         },
       });
       if (error) throw error;
       setOtpSent(true);
+      logClientEvent("otp_requested");
     } catch (err: unknown) {
       const error = err as Error;
       setAuthError(error.message || "Failed to send OTP code.");
@@ -231,6 +257,7 @@ export default function RegisterForm() {
       if (error) throw error;
       if (data?.user) {
         setUser(data.user);
+        logClientEvent("otp_verified");
       }
     } catch (err: unknown) {
       const error = err as Error;
@@ -277,6 +304,8 @@ export default function RegisterForm() {
     }
 
     setCheckoutLoading(true);
+    const correlationId = getCorrelationId();
+    logClientEvent("checkout_submitted");
 
     try {
       // 1. Call checkout order API route
@@ -293,6 +322,7 @@ export default function RegisterForm() {
           utm_medium: utmMedium,
           utm_campaign: utmCampaign,
           referrer,
+          correlationId,
         }),
       });
 
@@ -316,7 +346,30 @@ export default function RegisterForm() {
         name: "Elyst AI",
         description: "AI for Work Cohort Registration",
         order_id: orderId,
-        handler: function (response) {
+        handler: async function (response) {
+          logClientEvent("razorpay_handler_success", {
+            orderId: response.razorpay_order_id,
+            payload: { paymentId: response.razorpay_payment_id },
+          });
+          // Verify the payment signature server-side BEFORE navigating so the
+          // enrollment is confirmed synchronously (Issue 4 fix). Await the
+          // call so the confirmation page sees the enrollment as active without
+          // relying solely on the async webhook.
+          try {
+            await fetch("/api/checkout/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                correlationId,
+              }),
+            });
+          } catch (e) {
+            // Best-effort: the confirmation page + webhook are backstops.
+            console.error("verify call failed:", e);
+          }
           // Redirect to onboarding with parameters (Moment 2 starts here)
           router.push(
             `/register/onboarding?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}`
@@ -333,12 +386,14 @@ export default function RegisterForm() {
         modal: {
           ondismiss: function () {
             setCheckoutLoading(false);
+            logClientEvent("razorpay_dismissed", { orderId });
           },
         },
       };
 
       const rzp = new Razorpay(options);
       rzp.open();
+      logClientEvent("razorpay_opened", { orderId });
     } catch (err: unknown) {
       const error = err as Error;
       const message = error.message || "";
@@ -684,30 +739,34 @@ export default function RegisterForm() {
                 )}
               </div>
 
-              {/* Price outline */}
+              {/* Price outline — the amount shown is the server's authoritative
+                  quote (same number the order route charges), never a literal. */}
               <div className="mt-6 p-4 rounded-md bg-surface-muted border border-muted/50">
                 <div className="flex justify-between items-baseline">
                   <span className="text-[17px] font-bold text-fg-2">Course Price</span>
-                  <span className="text-h3 font-display font-bold text-fg">
-                    {isCircleMember ? "₹2,399" : "₹2,999"}
+                  <span className="text-h3 font-display font-bold text-fg flex items-baseline gap-2">
+                    {isCircleMember && originalAmount != null && priceAmount != null && originalAmount !== priceAmount && (
+                      <span className="text-[15px] font-semibold text-fg-3 line-through">{formatPaise(originalAmount)}</span>
+                    )}
+                    <span>{priceAmount != null ? formatPaise(priceAmount) : "…"}</span>
                   </span>
                 </div>
               </div>
               <p className="-mt-2 text-[14px] font-medium leading-relaxed text-fg">
-                {isCircleMember ? (
+                {isCircleMember && priceAmount != null ? (
                   <span>
-                    Circle membership verified! You automatically receive 20% discount (₹2,399 charged) for your eligible email.*
+                    Circle membership verified! Your eligible email gets the member price ({formatPaise(priceAmount)} charged).*
                   </span>
                 ) : (
                   <span>
-                    Circle members automatically receive 20% discount (₹2,399 charged) for eligible emails.*
+                    Circle members automatically get the member price for eligible emails.*
                   </span>
                 )}
               </p>
 
               {/* Submit CTA */}
-              <BrandButton variant="solid" tone="emerald" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading} full>
-                {checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
+              <BrandButton variant="solid" tone="emerald" className="w-full mt-6" onClick={handleCheckout} disabled={checkoutLoading || priceAmount == null} full>
+                {priceAmount == null ? "Loading price..." : checkoutLoading ? "Opening Checkout..." : "Proceed to Payment"}
               </BrandButton>
             </form>
           </Card>
