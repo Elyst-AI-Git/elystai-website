@@ -32,21 +32,21 @@ async function sendViaResend(to: string, amountPaise: number | null): Promise<bo
     body: JSON.stringify({
       from,
       to,
-      subject: "You're enrolled — AI for Work by Elyst AI",
+      subject: "You're enrolled — AI for Work by elyst AI",
       html: `<style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap');</style>
 <div style="margin:0;padding:0;background:#f4f6f5;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f5;padding:32px 0;">
     <tr><td align="center">
       <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="width:480px;max-width:92%;background:#ffffff;border-radius:16px;border:1px solid #e6ebe8;">
         <tr><td style="padding:32px 40px 0;">
-          <div style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:700;letter-spacing:-0.075em;font-size:19px;color:#03624c;">Elyst AI</div>
+          <div style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:700;letter-spacing:-0.075em;font-size:19px;color:#03624c;">elyst AI</div>
           <h1 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:700;color:#0A0F0C;margin:20px 0 8px;">You&rsquo;re officially enrolled</h1>
           <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#404944;margin:0 0 20px;">Thanks for registering for <strong>AI for Work</strong>. Your payment${priceLine} is confirmed and your seat in the cohort is reserved.</p>
           <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#404944;margin:0 0 24px;">Our team will reach out on WhatsApp with the next steps and joining details.</p>
         </td></tr>
         <tr><td style="padding:0 40px 28px;">
           <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#6b746f;margin:0 0 20px;">If you didn&rsquo;t make this payment, reply to this email right away.</p>
-          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#9aa39d;margin:0;border-top:1px solid #eef2f0;padding-top:16px;"><span style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:700;letter-spacing:-0.075em;color:#03624c;">Elyst AI</span> &middot; Kozhikode, Kerala, India</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#9aa39d;margin:0;border-top:1px solid #eef2f0;padding-top:16px;"><span style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:700;letter-spacing:-0.075em;color:#03624c;">elyst AI</span> &middot; Kerala, India</p>
         </td></tr>
       </table>
     </td></tr>
