@@ -54,10 +54,14 @@ So issue 2 is **only fully fixable with a custom SMTP provider** (Resend/SES/Pos
 
 ---
 
-## Net status
-| Issue | Code | Config/infra needed | Verified |
+## Net status (updated 2026-07-02 — email + OTP now live)
+| Issue | Code | Config/infra | Verified |
 |-------|------|---------------------|----------|
 | 3 pricing | ✅ done | none | ✅ |
-| 4 payment confirm | ✅ done | correct webhook registration | ✅ |
-| 1 email | ✅ done | `RESEND_API_KEY` + domain | ✅ (single-fire logic) |
-| 2 OTP | ✅ done | **custom SMTP in Supabase** | code ✅; delivery blocked on SMTP |
+| 4 payment confirm | ✅ done | webhook registered (secret set) | ✅ |
+| 1 email | ✅ done | Resend key + verified domain `auth.elystai.com` | ✅ **delivered live** (`email.confirmation.sent`) |
+| 2 OTP | ✅ done | custom SMTP (Resend) + `{{ .Token }}` template + rate limit 30/h | ✅ **code delivered live** |
+
+Custom SMTP was connected in the staging Supabase (`smtp.resend.com`, sender `login@auth.elystai.com`), the OTP template was switched to `{{ .Token }}`, and a real confirmation email + a real OTP were both sent successfully on staging. The 23/23 edge-case matrix passes including the real Razorpay webhook secret.
+
+Remaining is production parity only: set `RESEND_API_KEY` + `EMAIL_FROM` on Vercel, replicate the SMTP + template config on the production Supabase project, run migrations 0009+0010 on production, then merge.
