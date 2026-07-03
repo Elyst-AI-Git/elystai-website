@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { createAdminSupabaseClient } from "@/lib/supabase/server";
+import { logEvent, normalizeCorrelationId } from "@/lib/logging";
+import { claimAndSendConfirmation } from "@/lib/email";
 
 export async function POST(request: Request) {
   try {
@@ -39,8 +41,8 @@ export async function POST(request: Request) {
       id?: string;
       event?: string;
       payload?: {
-        order?: { entity?: { id?: string } };
-        payment?: { entity?: { id?: string; order_id?: string; amount?: number; currency?: string } };
+        order?: { entity?: { id?: string; notes?: Record<string, unknown> } };
+        payment?: { entity?: { id?: string; order_id?: string; amount?: number; currency?: string; notes?: Record<string, unknown> } };
       };
     };
     let payload: RazorpayWebhookPayload;
@@ -57,6 +59,24 @@ export async function POST(request: Request) {
     if (!eventId) {
       return NextResponse.json({ error: "Missing event ID" }, { status: 400 });
     }
+
+    // Recover the journey id we stitched into the order's `notes` at creation,
+    // so the webhook leg joins the same trace as the client + order-create legs.
+    const notes =
+      payload.payload?.order?.entity?.notes || payload.payload?.payment?.entity?.notes;
+    const correlationId = normalizeCorrelationId(
+      notes && typeof notes.correlation_id === "string" ? notes.correlation_id : null
+    );
+    const webhookOrderId =
+      payload.payload?.order?.entity?.id || payload.payload?.payment?.entity?.order_id || null;
+
+    await logEvent({
+      event: "webhook.received",
+      source: "webhook",
+      correlationId,
+      orderId: webhookOrderId,
+      payload: { eventType, eventId },
+    });
 
     const supabaseAdmin = createAdminSupabaseClient();
 
@@ -166,9 +186,8 @@ export async function POST(request: Request) {
         );
       }
 
-      // Out-of-order tolerance: check if payment is already marked 'paid'
+      // 1. Mark payment paid if not already (idempotent on retry).
       if (payment.status !== "paid") {
-        // Update payment row to 'paid'
         const { error: paymentUpdateError } = await supabaseAdmin
           .schema("app")
           .from("payments")
@@ -190,29 +209,70 @@ export async function POST(request: Request) {
             { status: 500 }
           );
         }
+      }
 
-        // Update enrollment row to 'active'
+      // 2. Activate enrollment if not already active. Gated on enrollment
+      // status (not payment status) so a retry where payment is already 'paid'
+      // but enrollment is still 'pending' (crashed mid-flight last time) still
+      // completes the activation instead of being silently skipped.
+      const { data: currentEnrollment } = await supabaseAdmin
+        .schema("app")
+        .from("enrollments")
+        .select("status, profile_id")
+        .eq("id", payment.enrollment_id)
+        .maybeSingle();
+
+      if (currentEnrollment?.status !== "active") {
         const { error: enrollmentUpdateError } = await supabaseAdmin
           .schema("app")
           .from("enrollments")
-          .update({
-            status: "active",
-          })
+          .update({ status: "active" })
           .eq("id", payment.enrollment_id);
 
         if (enrollmentUpdateError) {
           console.error("Failed to activate enrollment:", enrollmentUpdateError);
-          // Do NOT mark the webhook event "processed" — the payment is paid
-          // but the enrollment never went active, which would otherwise look
-          // identical to a successful delivery and never get retried. Leave
-          // the event row at "received" and return 500 so Razorpay retries;
-          // the payment-status guard above makes the retry idempotent (it'll
-          // skip re-updating payment and just retry this enrollment update).
+          await logEvent({
+            event: "webhook.failed",
+            source: "webhook",
+            correlationId,
+            orderId: razorpayOrderId,
+            httpStatus: 500,
+            payload: { stage: "activate_enrollment", reason: enrollmentUpdateError.message },
+          });
           return NextResponse.json(
             { error: `Failed to activate enrollment: ${enrollmentUpdateError.message}` },
             { status: 500 }
           );
         }
+
+        await logEvent({
+          event: "webhook.activated",
+          source: "webhook",
+          correlationId,
+          orderId: razorpayOrderId,
+          httpStatus: 200,
+          payload: { enrollmentId: payment.enrollment_id, amount: payment.amount, currency: payment.currency },
+        });
+
+        // Confirmation email (Issue 1). Single-fire: claimAndSendConfirmation
+        // claims the slot atomically, so a retry or the verify route won't
+        // double-send. Look up the buyer's email from their profile.
+        const profileId = currentEnrollment?.profile_id;
+        const { data: profile } = profileId
+          ? await supabaseAdmin
+              .from("profiles")
+              .select("email")
+              .eq("id", profileId)
+              .maybeSingle()
+          : { data: null };
+
+        await claimAndSendConfirmation(supabaseAdmin, {
+          enrollmentId: payment.enrollment_id,
+          email: profile?.email ?? null,
+          amountPaise: payment.amount,
+          correlationId,
+          orderId: razorpayOrderId,
+        });
       }
     } else if (eventType === "payment.failed") {
       const razorpayOrderId = payload.payload?.payment?.entity?.order_id;

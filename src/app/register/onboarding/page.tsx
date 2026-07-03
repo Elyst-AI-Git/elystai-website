@@ -6,6 +6,7 @@ import { BrandButton } from "@/components/ui/brand-button";
 import { Card } from "@/components/ui/card";
 import { SectionMark } from "@/components/ui/section-mark";
 import { useRouter } from "next/navigation";
+import { getCorrelationId, logClientEvent } from "@/lib/log-client";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -57,6 +58,7 @@ export default function OnboardingPage() {
       }
 
       setLoadingSession(false);
+      logClientEvent("onboarding_viewed");
     });
   }, [supabase, router]);
 
@@ -98,6 +100,7 @@ export default function OnboardingPage() {
           goal_other: primaryGoal === "other" ? goalOther : null,
           heard_about_us: heardAboutUs || null,
           linkedin_url: linkedinUrl || null,
+          correlationId: getCorrelationId(),
         }),
       });
 
@@ -106,6 +109,7 @@ export default function OnboardingPage() {
         throw new Error(errorData.error || "Failed to submit survey.");
       }
 
+      logClientEvent("onboarding_submitted");
       // On successful submission, redirect to confirmation page
       router.push("/register/confirmation");
     } catch (err: unknown) {

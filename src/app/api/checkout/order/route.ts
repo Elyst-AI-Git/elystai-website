@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient, createAdminSupabaseClient } from "@/lib/supabase/server";
+import { logEvent, normalizeCorrelationId } from "@/lib/logging";
+import { computeCheckoutQuote, segmentFromJoin } from "@/lib/pricing";
 import Razorpay from "razorpay";
 
 export async function POST(request: Request) {
@@ -25,7 +27,18 @@ export async function POST(request: Request) {
       utm_campaign,
       referrer,
       courseSlug,
+      correlationId: rawCorrelationId,
     } = body;
+
+    const correlationId = normalizeCorrelationId(rawCorrelationId);
+
+    await logEvent({
+      event: "order.create.request",
+      source: "server",
+      correlationId,
+      profileId: user.id,
+      payload: { courseSlug: courseSlug || "ai-for-work", hasPhone: !!phone, hasCity: !!city, hasCountry: !!country },
+    });
 
     if (!phone) {
       return NextResponse.json({ error: "Phone number is required" }, { status: 400 });
@@ -86,36 +99,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // If a payment is already 'created' (pending) for this enrollment, reuse
-    // that Razorpay order instead of minting a new one on every click/retry.
-    if (existingEnrollment) {
-      const { data: existingPayment } = await supabaseAdmin
-        .schema("app")
-        .from("payments")
-        .select("razorpay_order_id, amount, currency, status")
-        .eq("enrollment_id", existingEnrollment.id)
-        .eq("status", "created")
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-
-      if (existingPayment?.razorpay_order_id) {
-        // Still update the profile fields (phone/city/country) on retry.
-        await supabaseAdmin
-          .from("profiles")
-          .update({ phone, city: city || null, country: country || null })
-          .eq("id", user.id);
-
-        return NextResponse.json({
-          orderId: existingPayment.razorpay_order_id,
-          amount: existingPayment.amount,
-          currency: existingPayment.currency,
-          keyId: process.env.RAZORPAY_KEY_ID,
-        });
-      }
-    }
-
     // 5. Look up discount segment membership (Circle segment - case-insensitive)
+    // MUST run before any order reuse so the reuse check compares against the
+    // price for the user's CURRENT membership, not whatever it was when an old
+    // order was minted (this is the Issue-3 fix).
     const { data: segmentMember, error: segmentMemberError } = await supabaseAdmin
       .from("discount_segment_members")
       .select("segment_id, discount_segments:segment_id (id, name, kind, value, active)")
@@ -133,35 +120,81 @@ export async function POST(request: Request) {
       );
     }
 
-    let discountApplied = false;
-    let discountAmount = 0; // in paise
-    let segmentId: string | null = null;
+    const quote = computeCheckoutQuote(
+      batch.base_price_amount,
+      segmentMember ? segmentFromJoin(segmentMember.discount_segments) : null
+    );
+    const { amount: computedAmount, discountAmount, discountApplied, segmentId } = quote;
 
-    if (segmentMember) {
-      const rawSegment = segmentMember.discount_segments;
-      const segment = (Array.isArray(rawSegment) ? rawSegment[0] : rawSegment) as { id: string; name: string; kind: string; value: number; active: boolean } | null;
-      if (segment && segment.active && segment.name.toLowerCase() === "circle") {
-        discountApplied = true;
-        segmentId = segment.id;
-        if (segment.kind === "percent") {
-          const percent = Number(segment.value);
-          const rawDiscount = batch.base_price_amount * (percent / 100);
-          const finalAmountRupees = Math.round((batch.base_price_amount - rawDiscount) / 100);
-          const finalAmountPaise = finalAmountRupees * 100;
-          discountAmount = batch.base_price_amount - finalAmountPaise;
-        } else if (segment.kind === "fixed") {
-          const discountVal = Number(segment.value); // value in paise
-          const finalAmountRupees = Math.round((batch.base_price_amount - discountVal) / 100);
-          const finalAmountPaise = finalAmountRupees * 100;
-          discountAmount = batch.base_price_amount - finalAmountPaise;
+    // If a payment is already 'created' (pending) for this enrollment, reuse
+    // that Razorpay order — but ONLY if its amount still matches the price for
+    // the user's current membership. If membership changed since the order was
+    // minted (e.g. they joined the Circle after a full-price order), the old
+    // amount is stale: supersede it (mark 'failed') and fall through to mint a
+    // fresh order at the correct price. This is the Issue-3 fix — the amount we
+    // hand back can never disagree with what the page shows for their status.
+    if (existingEnrollment) {
+      const { data: existingPayment } = await supabaseAdmin
+        .schema("app")
+        .from("payments")
+        .select("id, razorpay_order_id, amount, currency, status")
+        .eq("enrollment_id", existingEnrollment.id)
+        .eq("status", "created")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (existingPayment?.razorpay_order_id) {
+        // Always refresh profile fields (phone/city/country) on retry.
+        await supabaseAdmin
+          .from("profiles")
+          .update({ phone, city: city || null, country: country || null })
+          .eq("id", user.id);
+
+        if (existingPayment.amount === computedAmount) {
+          await logEvent({
+            event: "order.create.response",
+            source: "server",
+            correlationId,
+            profileId: user.id,
+            orderId: existingPayment.razorpay_order_id,
+            httpStatus: 200,
+            payload: { reusedOrder: true, amount: existingPayment.amount, currency: existingPayment.currency },
+          });
+
+          return NextResponse.json({
+            orderId: existingPayment.razorpay_order_id,
+            amount: existingPayment.amount,
+            currency: existingPayment.currency,
+            keyId: process.env.RAZORPAY_KEY_ID,
+          });
         }
-        // Clamp: bad segment data (percent > 100, fixed > price) must never
-        // be able to drop the charged amount to zero or negative.
-        discountAmount = Math.min(Math.max(discountAmount, 0), batch.base_price_amount);
+
+        // Stale price — supersede the old order so the one-open-per-enrollment
+        // constraint (migration 0006) doesn't block the fresh insert below.
+        const { error: supersedeError } = await supabaseAdmin
+          .schema("app")
+          .from("payments")
+          .update({ status: "failed" })
+          .eq("id", existingPayment.id);
+
+        if (supersedeError) {
+          return NextResponse.json(
+            { error: "Failed to update stale payment, please try again" },
+            { status: 500 }
+          );
+        }
+
+        await logEvent({
+          event: "order.supersede",
+          source: "server",
+          correlationId,
+          profileId: user.id,
+          orderId: existingPayment.razorpay_order_id,
+          payload: { reason: "stale_amount", oldAmount: existingPayment.amount, newAmount: computedAmount },
+        });
       }
     }
-
-    const computedAmount = batch.base_price_amount - discountAmount;
 
     // 6. Update user's profile with checkout info (Moment 1)
     const { error: profileError } = await supabaseAdmin
@@ -219,6 +252,26 @@ export async function POST(request: Request) {
       amount: computedAmount, // in paise
       currency: "INR",
       receipt: enrollment.id,
+      // Stitch the journey id into the order so the webhook (which only sees
+      // Razorpay's payload) can recover the correlation_id and continue the trace.
+      notes: correlationId ? { correlation_id: correlationId } : undefined,
+    });
+
+    await logEvent({
+      event: "order.create.response",
+      source: "server",
+      correlationId,
+      profileId: user.id,
+      orderId: order.id,
+      httpStatus: 200,
+      payload: {
+        reusedOrder: false,
+        amount: computedAmount,
+        currency: "INR",
+        discountApplied,
+        discountAmount,
+        basePriceAmount: batch.base_price_amount,
+      },
     });
 
     // 9. Record payment row (status: 'created')

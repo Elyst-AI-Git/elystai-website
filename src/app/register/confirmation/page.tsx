@@ -6,6 +6,7 @@ import { BrandButton } from "@/components/ui/brand-button";
 import { Card } from "@/components/ui/card";
 import { SectionMark } from "@/components/ui/section-mark";
 import { useRouter } from "next/navigation";
+import { logClientEvent } from "@/lib/log-client";
 
 // How long to keep polling for the enrollment to flip to 'active' before
 // concluding the user doesn't belong here. The Razorpay webhook that does
@@ -66,6 +67,7 @@ export default function ConfirmationPage() {
 
         if (activeEnrollment) {
           setPageState("confirmed");
+          logClientEvent("confirmation_confirmed");
           return;
         }
 
@@ -77,7 +79,10 @@ export default function ConfirmationPage() {
       // Enrollment exists but never went active within the poll window —
       // most likely the webhook is still catching up. Tell the user to wait
       // rather than bouncing them back to a page that says "register".
-      if (!cancelled) setPageState("pending");
+      if (!cancelled) {
+        setPageState("pending");
+        logClientEvent("confirmation_pending");
+      }
     }
 
     run();
