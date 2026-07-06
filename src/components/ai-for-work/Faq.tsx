@@ -22,40 +22,40 @@ type Faq = { q: string; a: string };
 
 const faqs: Faq[] = [
   {
-    q: "I'm not technical, can I still do this?",
-    a: "Yes, that's exactly who this is for. You don't need any coding or tech background. We start from zero and keep everything in plain language. If you can use WhatsApp and email, you can do this.",
+    q: "I'm not technical, can I still join?",
+    a: "Yes, that's exactly who this is for. You don't need any coding or tech background. We start from zero and keep everything in plain language.",
   },
   {
     q: "What if I miss a session?",
-    a: "No problem. Every live session is recorded and shared with you, so you can catch up anytime. And if anything is unclear, you can bring your doubts to the next live Q&A or ask in the community.",
+    a: "Every session is recorded and uploaded to your learning portal the same day. Watch anytime, and bring your questions to the next live Q&A.",
   },
   {
-    q: "How much time per week?",
+    q: "How much time do I have to spend per week?",
     a: "Plan for about 4 to 5 hours a week. That includes the live sessions plus a little practice time, so you actually use what you learn instead of just watching.",
   },
   {
     q: "Is it live or recorded?",
-    a: "Both. The classes are taught live so you can ask questions and learn in real time, and you also get the recordings to keep and revisit whenever you want.",
+    a: "Both. The classes are taught live so you can ask questions and learn in real time, you also get a curated collection of recordings to go one level deeper and revisit whenever you want.",
   },
   {
-    q: "Do I get a certificate?",
-    a: "Yes. You'll receive a certificate once you complete the course, something you can add to your CV or LinkedIn to show you've got real, practical AI skills.",
+    q: "Do I need paid AI tools?",
+    a: "No. Everything in the program can be done on free versions. We'll tell you exactly which paid upgrades are worth it for your job and which are not.",
   },
   {
-    q: "Is this only for people in India?",
-    a: "Not at all. The sessions are online and open to anyone, anywhere. The price is in rupees, but you can join from any country and the recordings work in every timezone.",
+    q: "Is this useful for my specific job?",
+    a: "Yes. The skills like prompting, choosing tools, automating repeat work — apply to marketing, HR, sales, teaching, founding, operations. In sessions you work on your tasks, not generic examples.",
   },
   {
-    q: "What tools will I need, and are any of them paid?",
-    a: "You can do the whole course on free tools. We'll show you the best free options first, and where a paid tool is worth it, we'll be upfront so you can decide. All you really need is a laptop and an internet connection.",
+    q: "How is this different from YouTube tutorials?",
+    a: "Primarily three things: it's live, it's structured (7 areas in the right order, not random videos), and it's taught by a team that builds AI systems for real businesses, you learn what works, not what trends.",
   },
   {
-    q: "What happens after the course ends?",
-    a: "You keep the recordings and resources for life, get 3 months in the Elyst AI Circle community, and a month of follow-up support to help everything stick. You won't be left on your own once the two weeks are up.",
+    q: "What do I walk away with?",
+    a: "The ability to hand real work to AI confidently, a resource vault of prompts and skills, a certificate, 3 months of Circle access, and 1 month of follow-up support.",
   },
   {
-    q: "How do I pay and join?",
-    a: "Just click the join button on this page and complete the payment. You'll get a confirmation with all the details on how to access your sessions. If you get stuck, reach out and we'll help you get in.",
+    q: "What happens after it ends?",
+    a: "You keep the portal and vault, get 1 month of follow-up support, and 3 months in the Circle so your learning doesn't stop when sessions do.",
   },
 ];
 
