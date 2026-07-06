@@ -12,6 +12,7 @@ import ValueStack from "@/components/ai-for-work/ValueStack";
 import Instructor from "@/components/ai-for-work/Instructor";
 import Testimonials from "@/components/ai-for-work/Testimonials";
 import Faq from "@/components/ai-for-work/Faq";
+import WebinarStrip from "@/components/ai-for-work/WebinarStrip";
 import PriceEnrol from "@/components/ai-for-work/PriceEnrol";
 import FinalCta from "@/components/ai-for-work/FinalCta";
 
@@ -48,6 +49,7 @@ export default function AiForWorkPage() {
       <Instructor />
       <Testimonials />
       <Faq />
+      <WebinarStrip />
       <PriceEnrol />
       <FinalCta />
     </main>
