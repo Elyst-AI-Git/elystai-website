@@ -45,7 +45,7 @@ const footerNav: { label: string; href: string; children?: FooterLink[] }[] = [
     href: "/learn",
     children: [
       { label: "Elyst AI Circle", href: "/circle" },
-      { label: "AI for Work", href: "/ai-for-work", badge: "Open now" },
+      { label: "AI for Work", href: "/ai-for-work", badge: "Closed" },
     ],
   },
 ];
