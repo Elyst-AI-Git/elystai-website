@@ -4,8 +4,8 @@ import { CtaBanner } from "@/components/ui/cta-banner";
 /**
  * Accelerator close — mirrors the AIOS page's closing band via the shared
  * green CtaBanner so both arms resolve their hero's promise the same way.
- * The community (Circle) is the primary action; the AI for Work waitlist is
- * the secondary. Rounded corners (the Accelerator's softer language).
+ * The community (Circle) is the primary action; AI for Work is currently
+ * closed. Rounded corners (the Accelerator's softer language).
  */
 export default function AccelCta() {
   return (
@@ -25,10 +25,10 @@ export default function AccelCta() {
       actions={
         <>
           <BrandButton href="/circle" variant="solid" tone="emerald">
-            Join the community
+            Join the Circle
           </BrandButton>
-          <BrandButton href="/waitlist" tone="light">
-            AI for Work waitlist
+          <BrandButton tone="light" disabled>
+            Check out AI for Work
           </BrandButton>
         </>
       }

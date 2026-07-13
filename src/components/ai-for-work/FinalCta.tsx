@@ -3,7 +3,7 @@ import { CtaBanner } from "@/components/ui/cta-banner";
 
 /**
  * AI for Work close — the shared green CtaBanner with one last push and the
- * enrol action, matching the AIOS and Accelerator closes. The light pre-footer
+ * closed-state action, matching the AIOS and Accelerator closes. The light pre-footer
  * follows, so no dark footer-blend is needed here.
  */
 export default function FinalCta() {
@@ -18,8 +18,8 @@ export default function FinalCta() {
         </>
       }
       actions={
-        <BrandButton href="#enrol" tone="emerald">
-          Join AI for Work
+        <BrandButton tone="emerald" disabled>
+          Batch 2 coming soon
         </BrandButton>
       }
     />

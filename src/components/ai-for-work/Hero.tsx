@@ -125,8 +125,8 @@ export default function Hero() {
         </p>
 
         <div className="mt-3 flex flex-col items-center gap-3">
-          <BrandButton href="#enrol" tone="green">
-            Join now
+          <BrandButton tone="green" disabled>
+            Batch one closed now
           </BrandButton>
         </div>
 

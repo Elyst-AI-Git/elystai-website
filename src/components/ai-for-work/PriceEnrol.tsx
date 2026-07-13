@@ -8,7 +8,6 @@ import {
   PRICE,
   ORIGINAL_PRICE,
   CIRCLE_PRICE,
-  START_DATE,
   VALUE_STACK,
 } from "./config";
 
@@ -96,7 +95,7 @@ export default function PriceEnrol() {
           {/* Top stub — edge ribbons + price */}
           <div className="relative overflow-hidden px-8 pt-9 pb-12 text-center">
             {/* Edge ribbons — top-left cohort start, top-right Circle price */}
-            <MetalChip className="absolute left-0 top-6 z-10 rounded-l-none">Starts {START_DATE}</MetalChip>
+            <MetalChip className="absolute left-0 top-6 z-10 rounded-l-none">Started on July 13</MetalChip>
             <MetalChip className="absolute right-0 top-6 z-10 rounded-r-none">{CIRCLE_PRICE} for Circle members</MetalChip>
 
             <div className="relative z-[5] mt-16">
@@ -137,8 +136,8 @@ export default function PriceEnrol() {
             </ul>
 
             <div className="mt-7 flex flex-col gap-3">
-              <BrandButton href="/register" tone="green" full>
-                Join now
+              <BrandButton tone="green" full disabled>
+                Closed for now
               </BrandButton>
               <BrandButton href="https://wa.me/919633288931" variant="outline" tone="emerald" className="border-white! bg-transparent! text-white! hover:bg-white/10!" full>
                 Enquire first

@@ -20,7 +20,7 @@ const learnItems: LearnItem[] = [
   { label: "Overview", href: "/learn" },
   { label: "Elyst AI Circle", href: "/circle" },
   { label: "AI for Juniors", href: "/juniors" },
-  { label: "AI for Work", href: "/ai-for-work", badge: "Open now" },
+  { label: "AI for Work", href: "/ai-for-work", badge: "Closed" },
 ];
 
 const joinPrefixes = ["/learn", "/circle", "/ai-yathra"];

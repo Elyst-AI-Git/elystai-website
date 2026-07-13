@@ -28,7 +28,7 @@ const programs: Program[] = [
     blurb: "A 2 week live program to make AI your everyday working assistant. Prompts, automations and agents that save you hours every week, taught live by the team that builds AI for real businesses.",
     titleBg: "var(--elyst-emerald)",
     titleColor: "#eafff2",
-    ribbon: "Open now",
+    ribbon: "Batch 1 Closed",
   },
   {
     name: "The Circle",
