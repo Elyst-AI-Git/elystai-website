@@ -12,9 +12,9 @@ import { Typewriter } from "@/components/ui/typewriter";
  */
 
 const PHRASES = [
+  "work for your team.",
   "genuinely useful.",
   "worth your time.",
-  "work for everyone.",
 ];
 
 export default function PreFooter() {
@@ -27,7 +27,7 @@ export default function PreFooter() {
         <h2
           className="text-fg"
           style={{
-            fontSize: "clamp(1.5rem, 3.75vw, 3rem)",
+            fontSize: "var(--text-prefooter)",
             lineHeight: 1.12,
             fontWeight: 700,
           }}

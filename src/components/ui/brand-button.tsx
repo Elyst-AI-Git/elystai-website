@@ -28,7 +28,7 @@ type BrandButtonProps = {
   tone?: BrandTone;
   className?: string;
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   full?: boolean;
   preset?: "chromatic" | "silver" | "gold";
   /** Disables the button (and, for href-rendered links, blocks navigation). */
@@ -48,7 +48,7 @@ const RADIUS_PX = 6;
 
 function Inner({ href, onClick, className, children, disabled }: {
   href?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   className: string;
   children: React.ReactNode;
   disabled?: boolean;
@@ -58,12 +58,12 @@ function Inner({ href, onClick, className, children, disabled }: {
     // Links have no native `disabled`; block navigation explicitly and mark
     // it for assistive tech instead of just dimming the style.
     const linkClassName = disabled ? `${className} ${DISABLED_CLASS}` : className;
-    const handleLinkClick: React.MouseEventHandler = (e) => {
+    const handleLinkClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
       if (disabled) {
         e.preventDefault();
         return;
       }
-      onClick?.();
+      onClick?.(e);
     };
     if (external) {
       return (
@@ -93,7 +93,7 @@ function Inner({ href, onClick, className, children, disabled }: {
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={(event) => onClick?.(event)}
       disabled={disabled}
       className={disabled ? `${className} ${DISABLED_CLASS}` : className}
     >
@@ -188,12 +188,12 @@ export function BrandButton({
 
   // For href-rendered metal buttons there's no native `disabled`; block
   // navigation explicitly the same way Inner does for links.
-  const handleMetalLinkClick: React.MouseEventHandler = (e) => {
+  const handleMetalLinkClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     if (disabled) {
       e.preventDefault();
       return;
     }
-    onClick?.();
+    onClick?.(e);
   };
 
   return (
@@ -214,7 +214,7 @@ export function BrandButton({
       }
       nativeButton={!href}
       disabled={!href ? disabled : undefined}
-      onClick={!href ? onClick : undefined}
+      onClick={!href ? (event) => onClick?.(event) : undefined}
     >
       {children}
     </MetalButton>

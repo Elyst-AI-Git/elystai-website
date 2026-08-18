@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { OG_IMAGE } from "@/lib/seo";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
+import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/home/Hero";
-import ProofBar from "@/components/home/ProofBar";
-import AiosTeaser from "@/components/home/AiosTeaser";
-import AcceleratorTeaser from "@/components/home/AcceleratorTeaser";
-import Founders from "@/components/home/Founders";
+import ProblemSequence from "@/components/home/ProblemSequence";
+import HowWeWork from "@/components/home/AiosTeaser";
+import { Principles } from "@/components/ui/features-8";
+import TrainingStrip from "@/components/home/TrainingStrip";
 import FinalCta from "@/components/home/FinalCta";
 
-const HOME_TITLE = "Elyst AI | AI System for Businesses & AI Programs for Professionals";
+const HOME_TITLE = "Elyst AI | AI Strategy, Implementation & Custom AI Development.";
 const HOME_DESCRIPTION =
-  "Elyst AI builds an AI employee that small business teams use on WhatsApp and runs AI programs and courses for professionals across India and the GCC. No technical background needed for either.";
+  "We audit how your company work, identify ways which AI can elevate the business, build the right AI system, and train your team to run it.";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
@@ -35,11 +37,12 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main id="main" className="flex-1 pt-24">
+      <JsonLd data={[organizationSchema, websiteSchema]} />
       <Hero />
-      <ProofBar />
-      <AiosTeaser />
-      <AcceleratorTeaser />
-      <Founders />
+      <ProblemSequence />
+      <HowWeWork />
+      <Principles />
+      <TrainingStrip />
       <FinalCta />
     </main>
   );

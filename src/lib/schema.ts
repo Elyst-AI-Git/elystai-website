@@ -1,6 +1,6 @@
 import { SITE_URL } from "@/lib/seo";
 
-const ORG_ID = `${SITE_URL}/#organization`;
+export const ORG_ID = `${SITE_URL}/#organization`;
 
 /**
  * Sitewide Organization + LocalBusiness entity. Establishes "Elyst AI" as a
@@ -17,7 +17,7 @@ export const organizationSchema: Record<string, unknown> = {
   logo: `${SITE_URL}/web-app-manifest-512x512.png`,
   image: `${SITE_URL}/images/og/site.png`,
   description:
-    "Elyst AI builds an AI employee that changes how you run your business, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.",
+    "We audit how your company work, identify ways which AI can elevate the business, build the right AI system, and train your team to run it.",
   foundingDate: "2026",
   email: "info@elystai.com",
   telephone: "+91-9633288931",
@@ -38,8 +38,8 @@ export const organizationSchema: Record<string, unknown> = {
     { "@type": "Place", name: "GCC" },
   ],
   founder: [
-    { "@type": "Person", name: "Fathima Shirin P", jobTitle: "CEO", sameAs: "https://www.linkedin.com/in/fathimashirin-p/" },
-    { "@type": "Person", name: "Nihal Anas", jobTitle: "Chief AI Officer", sameAs: "https://www.linkedin.com/in/nihalanas/" },
+    { "@type": "Person", name: "Fathima Shirin P", jobTitle: "Co-founder and CEO", sameAs: "https://www.linkedin.com/in/fathimashirin-p/" },
+    { "@type": "Person", name: "Nihal Anas", jobTitle: "Co-founder and Chief AI Officer", sameAs: "https://www.linkedin.com/in/nihalanas/" },
   ],
   contactPoint: {
     "@type": "ContactPoint",
@@ -64,6 +64,66 @@ export const websiteSchema: Record<string, unknown> = {
   publisher: { "@id": ORG_ID },
   inLanguage: "en",
 };
+
+export function breadcrumbSchema(items: { name: string; path: string }[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.path}`,
+    })),
+  };
+}
+
+export function serviceSchema({
+  path,
+  name,
+  description,
+}: {
+  path: string;
+  name: string;
+  description: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}${path}#service`,
+    name,
+    serviceType: name,
+    description,
+    url: `${SITE_URL}${path}`,
+    provider: { "@id": ORG_ID, "@type": "Organization", name: "Elyst AI" },
+    areaServed: [
+      { "@type": "Country", name: "India" },
+      { "@type": "Place", name: "GCC" },
+    ],
+  };
+}
+
+export function personSchema({
+  name,
+  jobTitle,
+  description,
+  sameAs,
+}: {
+  name: string;
+  jobTitle: string;
+  description: string;
+  sameAs: string[];
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name,
+    jobTitle,
+    description,
+    sameAs,
+    worksFor: { "@id": ORG_ID },
+  };
+}
 
 /**
  * EducationalOccupationalProgram / Course for a program page. `offer` is

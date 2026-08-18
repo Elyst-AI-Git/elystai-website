@@ -1,0 +1,225 @@
+import { pageMeta } from "@/lib/seo";
+import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
+import AccelHero from "@/components/accel/AccelHero";
+import AiosCta from "@/components/aios/AiosCta";
+import AiosFaq from "@/components/aios/AiosFaq";
+import { SectionMark } from "@/components/ui/section-mark";
+import { VisualCard } from "@/components/ui/visual-card";
+import TrackedBookingButton from "@/components/marketing/TrackedBookingButton";
+import { ServicesFitStrip } from "@/components/marketing/ServicesFitStrip";
+import ServicesProcess from "@/components/marketing/ServicesProcess";
+import JsonLd from "@/components/seo/JsonLd";
+
+const SERVICES_DESCRIPTION =
+  "We audit how your team works, build the right AI system, and train your team to run it.";
+
+export const metadata = {
+  ...pageMeta({
+    path: "/services",
+    title: "How We Build AI Into Your Business",
+    description: SERVICES_DESCRIPTION,
+  }),
+  title: { absolute: "How We Build AI Into Your Business | Elyst AI" },
+  robots: { index: true, follow: true },
+};
+
+const fitPairs = [
+  {
+    no: "We want to add AI to the business.",
+    yes: "Follow-ups keep slipping and we lose leads.",
+  },
+  {
+    no: "Nobody really owns this process.",
+    yes: "One person owns it and wants it fixed.",
+  },
+  {
+    no: "We want AI to decide with nobody checking.",
+    yes: "A person still signs off on the calls that matter.",
+  },
+];
+
+const serviceFaqs = [
+  {
+    q: "How long does it take?",
+    a: "It depends on the workflow. We commit to timelines after the audit, not before.",
+  },
+  {
+    q: "What data access do you need?",
+    a: "Only what the workflow requires, agreed in writing first.",
+  },
+  {
+    q: "What if AI is not the answer?",
+    a: "We say so, and tell you what would help instead.",
+  },
+  {
+    q: "Who owns it afterwards?",
+    a: "You do. Accounts and admin transfer at handover.",
+  },
+  {
+    q: "What support is included?",
+    a: "An agreed period, defined in the proposal.",
+  },
+  {
+    q: "How is it priced?",
+    a: "Per project, paid in phases. Never one upfront sum.",
+  },
+  {
+    q: "How are scope changes handled?",
+    a: "Written down and agreed before anything changes. Nothing moves on a verbal note.",
+  },
+  {
+    q: "How do we share credentials?",
+    a: "Through secure channels only. Never by email or web form.",
+  },
+  {
+    q: "Can you guarantee a result?",
+    a: "No. We do not promise an outcome before discovery and testing. We promise what the system will do, not what it will earn you.",
+  },
+];
+
+const bringLists = {
+  you: [
+    "A decision owner",
+    "Access to the workflow",
+    "Honest answers about what has already failed",
+    "Time from the people who actually do the work",
+  ],
+  we: [
+    "Discovery and mapping",
+    "The build",
+    "Training and documentation",
+    "A named owner at handover",
+  ],
+};
+
+export default function ServicesPage() {
+  return (
+    <main id="main" className="flex-1 pt-24">
+      <JsonLd
+        data={[
+          serviceSchema({
+            path: "/services",
+            name: "AI workflow audit, implementation and training",
+            description: SERVICES_DESCRIPTION,
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+          ]),
+        ]}
+      />
+
+      <AccelHero
+        eyebrow="Services"
+        cycleWords={["automations.", "chatbots.", "subscriptions."]}
+        headlinePrefix="We don't sell AI "
+        headlineSuffix=""
+        secondLine="We change how the work gets done."
+        subline="We work out what is worth building, build it, then teach your team to run it."
+        headlineSize="clamp(2.35rem, 4.3vw, 3.55rem)"
+        layout="split"
+        showCharms={false}
+        cta={
+          <TrackedBookingButton intent="audit" tone="green">
+            Book an audit call
+          </TrackedBookingButton>
+        }
+      />
+
+      <ServicesProcess />
+
+      <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+        <div className="mx-auto max-w-7xl">
+          <SectionMark>Fit</SectionMark>
+          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
+            Is this for you?
+          </h2>
+
+          <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
+            <div>
+              <h3 className="text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                This won&apos;t work if
+              </h3>
+              <div className="mt-7 grid gap-4">
+                {fitPairs.map((pair, index) => (
+                  <ServicesFitStrip key={pair.no} kind="no" rotation={[-2.4, -1.7, -2.8][index]}>
+                    {pair.no}
+                  </ServicesFitStrip>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                This will work if
+              </h3>
+              <div className="mt-7 grid gap-4">
+                {fitPairs.map((pair, index) => (
+                  <ServicesFitStrip key={pair.yes} kind="yes" rotation={[2.2, 2.8, 1.9][index]}>
+                    {pair.yes}
+                  </ServicesFitStrip>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
+        <div className="mx-auto max-w-7xl">
+          <h2 className="text-fg" style={{ fontSize: "var(--text-h2)" }}>
+            What we need from you.
+          </h2>
+
+          <div className="mt-10 grid items-stretch gap-4 md:grid-cols-2">
+            <VisualCard decorated={false} className="h-full p-6 sm:p-8">
+              <h3 className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                You bring
+              </h3>
+              <ul className="mt-6 list-none divide-y divide-border border-t border-border p-0">
+                {bringLists.you.map((item) => (
+                  <li key={item} className="py-4 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.4 }}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </VisualCard>
+
+            <VisualCard
+              decorated={false}
+              className="h-full border-green/60 bg-[color-mix(in_srgb,var(--elyst-green)_5%,white)] p-6 sm:p-8"
+            >
+              <h3 className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                We bring
+              </h3>
+              <ul className="mt-6 list-none divide-y divide-border border-t border-border p-0">
+                {bringLists.we.map((item) => (
+                  <li key={item} className="py-4 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.4 }}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </VisualCard>
+          </div>
+        </div>
+      </section>
+
+      <AiosFaq
+        faqs={serviceFaqs}
+        heading="Questions clients ask before they start."
+      />
+
+      <AiosCta
+        heading={
+          <>
+            Pick the task your team complains about most.
+            <span className="block">That is where we start.</span>
+          </>
+        }
+        sub=""
+        buttonLabel="Book an audit call"
+        intent="audit"
+      />
+    </main>
+  );
+}

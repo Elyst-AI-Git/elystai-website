@@ -1,8 +1,8 @@
 "use client";
 
 import MarkDither from "@/components/site/MarkDither";
-import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { BrandButton } from "@/components/ui/brand-button";
+import TrackedBookingButton from "@/components/marketing/TrackedBookingButton";
 import { CometCard } from "@/components/ui/comet-card";
 
 export default function Hero() {
@@ -11,41 +11,25 @@ export default function Hero() {
       <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[3fr_2fr]">
         {/* Left — copy */}
         <div>
-          <h1 className="text-fg" style={{ fontSize: "var(--text-hero)", lineHeight: 1.08 }}>
-            <span className="block">
-              AI that <span className="runs-word">runs</span>
-            </span>
-            <span className="block" style={{ marginTop: "calc(var(--text-hero) * -0.27)" }}>
-              your business
-            </span>
-            {/* Extra breathing room between the two phrases */}
-            <span className="block" style={{ height: "clamp(8px, 1.2vw, 18px)" }} />
-            <span className="block">AI programs that</span>
-            <span className="block" style={{ marginTop: "calc(var(--text-hero) * -0.27)" }}>
-              make you{" "}
-              <PointerHighlight
-                containerClassName="inline-block align-baseline"
-                rectangleClassName="border-[4px] !border-green translate-y-[0.17em]"
-                pointerClassName="text-green"
-              >
-                <span className="relative z-10 block py-0 pl-1 pr-2.5 leading-[1.15]">grow</span>
-              </PointerHighlight>
-            </span>
+          <h1 className="text-fg" style={{ fontSize: "clamp(2.6rem, 5.7vw, 5.25rem)", lineHeight: 1.08 }}>
+            Don&apos;t just use AI, we <span className="hero-accent-word">change</span> how your team work with it.
           </h1>
 
           <p
-            className="mt-5 max-w-md text-fg-2 md:max-w-none md:whitespace-nowrap"
-            style={{ fontSize: "calc(var(--text-body) + 2px)" }}
+            className="mt-5 max-w-2xl text-fg-2"
+            style={{ fontSize: "var(--text-body)" }}
           >
-            We set up AI for your business and teach you how to use it.
+            We audit how your company work, identify ways which AI can elevate
+            the business, build the right AI system, and train your team to run
+            it.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BrandButton href="/aios" tone="green">
-              <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>See AIOS</span>
-            </BrandButton>
-            <BrandButton href="/learn" variant="outline">
-              <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>Explore programs</span>
+            <TrackedBookingButton intent="audit" tone="green">
+              Book an audit call
+            </TrackedBookingButton>
+            <BrandButton href="#how-we-work" variant="outline">
+              See how we work
             </BrandButton>
           </div>
         </div>

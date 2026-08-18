@@ -32,6 +32,30 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/aios",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/learn",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/ai-for-work",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/juniors",
+        destination: "/training",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -79,11 +79,29 @@
   /* sub-small labels: sub-eyebrows (Week 1), captions, and tiny meta text */
   --text-label: 0.85rem;
   --text-micro: 0.72rem;
+  --text-lead: clamp(1.3rem, 2vw, 1.65rem);
+  --text-card: clamp(1.35rem, 2.2vw, 1.8rem);
+  --text-process-tab: clamp(1.15rem, 4.8vw, 3rem);
+  --text-display: clamp(1.8rem, 3.5vw, 3.2rem);
+  --text-stat: clamp(3rem, 6vw, 5rem);
+  --text-stat-compact: clamp(2.4rem, 4vw, 3.6rem);
+  --text-process-number: clamp(2.8rem, 5vw, 4.5rem);
+  --text-training-step: clamp(2.5rem, 4.5vw, 4rem);
+  --text-process-number-large: clamp(4.5rem, 9vw, 7.75rem);
+  --text-proof-number: clamp(2.8rem, 5vw, 4.5rem);
+  --text-prefooter: clamp(1.5rem, 3.75vw, 3rem);
+  --text-founder: clamp(1.45rem, 2.8vw, 2.35rem);
+  --text-founder-copy: clamp(1.35rem, 2.4vw, 2rem);
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.042em;
   --tracking-body: -0.05em;
   --tracking-wide: 0.084em;
+  --tracking-label: 0.16em;
+  --tracking-subtle: 0.14em;
+  --tracking-stat: -0.07em;
+  --tracking-stat-large: -0.08em;
+  --tracking-stat-compact: -0.055em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: 20px;
@@ -102,11 +120,15 @@
 }
 
 :root {
+  /* Runtime type aliases used directly by component styles. */
+  --text-training-step: clamp(2.5rem, 4.5vw, 4rem);
+
   /* Brand (LOCKED — DESIGN.md §2) */
   --elyst-emerald: #03624c;
   --elyst-emerald-light: #04855f;
   --elyst-green: #00df82;
   --elyst-green-mid: #2ec866;
+  --elyst-red-muted: hsl(4 42% 48%);
   --elyst-ink: #060d09;
   --elyst-carbon: #1a1a1a;
 
@@ -301,8 +323,8 @@
     color: transparent;
     animation: wordmark-shift 8s ease-in-out infinite;
   }
-  /* Hero "runs" — heavy, clearly-visible animated gradient word */
-  .runs-word {
+  /* Homepage hero accent — the same treatment previously used on "runs". */
+  .hero-accent-word {
     background-image: linear-gradient(
       100deg,
       var(--elyst-emerald) 0%,
@@ -317,19 +339,98 @@
     color: transparent;
     font-weight: 800;
     display: inline-block;
+    line-height: 1.16;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    vertical-align: baseline;
     animation: wordmark-shift 5s ease-in-out infinite;
     filter: drop-shadow(0 2px 10px rgba(0, 223, 130, 0.28));
   }
+
+  .scroll-read-line {
+    color: var(--elyst-green);
+    transition: color 400ms ease-out;
+  }
+
+  .scroll-read-enhanced .scroll-read-line:not(.is-read) {
+    color: var(--fg-muted-dark);
+  }
+
+  .text-gradient-scroll {
+    color: var(--elyst-emerald);
+  }
+
+  .text-gradient-scroll--enhanced {
+    color: color-mix(in srgb, var(--fg-3) 18%, var(--bg));
+  }
+
+  .text-gradient-scroll__base {
+    color: inherit;
+  }
+
+  .text-gradient-scroll__active {
+    color: var(--elyst-emerald);
+  }
+
+  .problem-sequence-gradient {
+    gap: clamp(24px, 3vw, 46px);
+  }
+
+  .services-fit-strip {
+    transform: rotate(var(--services-fit-rotation, 0deg));
+    transition: transform 200ms ease-out;
+  }
+
+  .services-fit-strip:hover,
+  .services-fit-strip:focus-visible {
+    transform: rotate(0deg);
+  }
+
+  @keyframes border-beam {
+    to {
+      offset-distance: 100%;
+    }
+  }
+
+  .border-beam-motion {
+    animation-name: border-beam;
+  }
+
+  .border-beam-paused .border-beam-motion {
+    animation-play-state: paused;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .runs-word {
+    .hero-accent-word {
+      animation: none;
+    }
+
+    .scroll-read-line,
+    .scroll-read-enhanced .scroll-read-line:not(.is-read) {
+      color: var(--elyst-green);
+      transition: none;
+    }
+
+    .text-gradient-scroll__active {
+      opacity: 1 !important;
+    }
+
+    .services-fit-strip,
+    .services-fit-strip:hover,
+    .services-fit-strip:focus-visible {
+      transform: none;
+      transition: none;
+    }
+
+    .border-beam-motion {
       animation: none;
     }
   }
 
   /* On touch devices the shifting gradient is just a continuous repaint
-     nobody can interact with — render "runs" as flat solid emerald. */
+     nobody can interact with — render the accent as flat solid emerald. */
   @media (hover: none) {
-    .runs-word {
+    .hero-accent-word {
       animation: none;
       background: none;
       -webkit-background-clip: initial;
@@ -378,7 +479,7 @@
   radius (zeroed even over inline border-radius via !important). Genuinely
   circular elements (rounded-full dots, bars, avatars, pills) are preserved.
 */
-.aios-sharp [class*="rounded"]:not([class*="rounded-full"]):not(.metal-fx-root):not(.metal-fx-root *),
+.aios-sharp [class*="rounded"]:not([class*="rounded-full"]):not(.metal-fx-root):not(.metal-fx-root *):not(.aios-faq-panel),
 .aios-sharp [style*="border-radius"]:not(.metal-fx-root):not(.metal-fx-root *),
 .aios-sharp [style*="borderRadius"]:not(.metal-fx-root):not(.metal-fx-root *),
 .aios-sharp .card {

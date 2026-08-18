@@ -20,6 +20,7 @@ const cardVariants = cva("relative w-full overflow-hidden", {
   variants: {
     variant: {
       gradient: [],
+      plain: [],
     },
   },
   defaultVariants: {
@@ -56,7 +57,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         className={cn(cardVariants({ variant, className }))}
         {...props}
       >
-        <GradientLines />
+        {variant !== "plain" && <GradientLines />}
         {title && <h3 className="mb-1 text-lg font-bold text-fg">{title}</h3>}
         {description && <p className="text-fg-2">{description}</p>}
         {children}
@@ -66,4 +67,18 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 )
 Card.displayName = "Card"
 
-export { Card, cardVariants }
+const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  ),
+)
+CardContent.displayName = "CardContent"
+
+const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
+  ),
+)
+CardHeader.displayName = "CardHeader"
+
+export { Card, CardContent, CardHeader, cardVariants }

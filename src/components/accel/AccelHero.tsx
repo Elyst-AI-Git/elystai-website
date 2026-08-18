@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { SectionMark } from "./SectionMark";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 import { useIsTouch } from "@/lib/use-touch";
 
@@ -15,20 +15,18 @@ import { useIsTouch } from "@/lib/use-touch";
  * teaches (AI tools, workflows, the brain behind it all).
  */
 
-const CYCLE = ["confident", "relevant", "competitive", "irreplaceable"];
+const DEFAULT_CYCLE = ["confident", "relevant", "competitive", "irreplaceable"];
 
-function CyclingWord() {
+function CyclingWord({ options }: { options: readonly string[] }) {
   const [i, setI] = useState(0);
-  const [reduce, setReduce] = useState(false);
   const isTouch = useIsTouch();
+  const reduce = useReducedMotion() === true;
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduce(mq.matches);
-    if (mq.matches || isTouch) return;
-    const id = setInterval(() => setI((n) => (n + 1) % CYCLE.length), 2000);
+    if (reduce || isTouch) return;
+    const id = setInterval(() => setI((n) => (n + 1) % options.length), 2000);
     return () => clearInterval(id);
-  }, [isTouch]);
+  }, [isTouch, options, reduce]);
 
   return (
     <span
@@ -36,7 +34,7 @@ function CyclingWord() {
       style={{ color: "var(--elyst-emerald)" }}
     >
       {reduce || isTouch ? (
-        <span>{CYCLE[0]}</span>
+        <span>{options[0]}</span>
       ) : (
         <AnimatePresence mode="popLayout">
           <motion.span
@@ -47,7 +45,7 @@ function CyclingWord() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="inline-block whitespace-nowrap"
           >
-            {CYCLE[i]}
+            {options[i]}
           </motion.span>
         </AnimatePresence>
       )}
@@ -101,13 +99,93 @@ function HangingCharms() {
   );
 }
 
-export default function AccelHero() {
+type AccelHeroProps = {
+  eyebrow?: React.ReactNode;
+  cycleWords?: readonly string[];
+  headlinePrefix?: string;
+  headlineSuffix?: string;
+  secondLine?: React.ReactNode;
+  subline?: React.ReactNode;
+  cta?: React.ReactNode;
+  headlineSize?: string;
+  layout?: "center" | "split";
+  showCharms?: boolean;
+};
+
+export default function AccelHero({
+  eyebrow = "The Accelerator",
+  cycleWords = DEFAULT_CYCLE,
+  headlinePrefix = "Stay ",
+  headlineSuffix = "",
+  secondLine = "With AI.",
+  subline = (
+    <>
+      Programs for people who want to use AI in their work,
+      <br />
+      not just hear about it.
+    </>
+  ),
+  cta,
+  headlineSize = "clamp(2.6rem, 6vw, 5rem)",
+  layout = "center",
+  showCharms = true,
+}: AccelHeroProps) {
+  const longestWord = cycleWords.reduce((longest, word) => (word.length > longest.length ? word : longest), cycleWords[0]);
+  const splitLayout = layout === "split";
+
+  const headline = (
+    <h1
+      className={`text-fg ${splitLayout ? "mt-6 text-left" : "mt-7 text-center"}`}
+      style={{ fontSize: headlineSize, lineHeight: 1.1 }}
+    >
+      <span>
+        <span>{headlinePrefix}</span>
+        <span className="relative inline-block whitespace-nowrap align-baseline">
+          <span aria-hidden className="invisible inline-block whitespace-nowrap">
+            {longestWord}
+          </span>
+          <span className="absolute inset-0 flex items-baseline justify-start whitespace-nowrap">
+            <CyclingWord options={cycleWords} />
+          </span>
+        </span>
+        <span>{headlineSuffix}</span>
+      </span>
+      <span className="block">{secondLine}</span>
+    </h1>
+  );
+
+  const supportingCopy = (
+    <>
+      <p
+        className="mx-auto mt-7 max-w-xl text-center text-fg"
+        style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.6 }}
+      >
+        {subline}
+      </p>
+
+      <div className="mt-8 flex justify-center">
+        {cta ?? (
+          <BrandButton href="/circle" tone="emerald">
+            Join the Circle
+          </BrandButton>
+        )}
+      </div>
+    </>
+  );
+
+  const copy = (
+    <>
+      {headline}
+      {supportingCopy}
+    </>
+  );
+
   return (
     <section
       className="relative"
       style={{
         paddingTop: "clamp(14px, 2vw, 28px)",
-        paddingBottom: "clamp(120px, 13vw, 190px)",
+        paddingBottom: showCharms ? "clamp(120px, 13vw, 190px)" : "clamp(40px, 6vw, 84px)",
         paddingLeft: "clamp(10px, 2.4vw, 28px)",
         paddingRight: "clamp(10px, 2.4vw, 28px)",
         background: "var(--bg)",
@@ -124,45 +202,36 @@ export default function AccelHero() {
           fill
           priority
           sizes="100vw"
+          style={{ objectPosition: splitLayout ? "left center" : "center" }}
           className="object-cover"
         />
-        <div className="relative z-10 flex min-h-[30rem] flex-col items-center justify-center px-6 py-20 text-center sm:min-h-[36rem] md:min-h-[40rem]">
-          <SectionMark>The Accelerator</SectionMark>
-
-          <h1
-            className="mt-7 text-fg"
-            style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", lineHeight: 1.1 }}
+        <div
+          className={
+            splitLayout
+              ? "relative z-10 flex min-h-[30rem] flex-col justify-center gap-10 px-6 py-16 md:grid md:min-h-[36rem] md:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] md:items-center md:gap-12 md:px-12 lg:px-20 lg:py-20"
+              : "relative z-10 flex min-h-[30rem] flex-col items-center justify-center px-6 py-20 text-center sm:min-h-[36rem] md:min-h-[40rem]"
+          }
+        >
+          {splitLayout ? (
+            <div className="flex flex-col justify-center md:h-full">
+              <SectionMark>{eyebrow}</SectionMark>
+              {headline}
+            </div>
+          ) : null}
+          <div
+            className={
+              splitLayout
+                ? "flex w-full flex-col justify-center md:translate-x-4 md:justify-self-end"
+                : "contents"
+            }
           >
-            <span className="relative inline-block align-baseline sm:whitespace-nowrap">
-              <span aria-hidden className="invisible hidden sm:inline-block sm:whitespace-nowrap">
-                Stay confident
-              </span>
-              <span className="flex flex-wrap items-baseline justify-center sm:absolute sm:inset-y-0 sm:left-0 sm:flex-nowrap sm:whitespace-nowrap">
-                <span>Stay&nbsp;</span>
-                <CyclingWord />
-              </span>
-            </span>
-            <span className="block">With AI.</span>
-          </h1>
-
-          <p
-            className="mx-auto mt-7 max-w-xl text-fg"
-            style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.6 }}
-          >
-            Programs for people who want to use AI in their work,
-            <br />
-            not just hear about it.
-          </p>
-
-          <div className="mt-8">
-            <BrandButton href="/circle" tone="emerald">
-              Join the Circle
-            </BrandButton>
+            {!splitLayout ? <SectionMark>{eyebrow}</SectionMark> : null}
+            {splitLayout ? supportingCopy : copy}
           </div>
         </div>
       </div>
 
-      <HangingCharms />
+      {showCharms ? <HangingCharms /> : null}
       </div>
     </section>
   );
