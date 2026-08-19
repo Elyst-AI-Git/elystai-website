@@ -1,5 +1,6 @@
 import BookingButton from "@/components/marketing/BookingButton";
 import { SectionMark } from "@/components/ui/section-mark";
+import { TextGradientScroll } from "@/components/ui/text-gradient-scroll";
 import ClosingCta from "@/components/marketing/ClosingCta";
 import FaqSection from "@/components/marketing/FaqSection";
 import ProgramsHistory from "@/components/training/ProgramsHistory";
@@ -94,7 +95,7 @@ function SessionInputs({ className = "" }: { className?: string }) {
       style={{ borderColor: "rgba(255,255,255,0.13)", background: "rgba(255,255,255,0.035)" }}
     >
       <div className="flex items-center justify-between gap-4">
-        <span className="font-display font-bold uppercase text-fg-muted-dark" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-label)" }}>
+        <span className="font-display font-bold uppercase text-fg-muted-dark" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
           Every session starts with
         </span>
         <span aria-hidden className="h-px w-10 bg-white/20" />
@@ -104,24 +105,18 @@ function SessionInputs({ className = "" }: { className?: string }) {
         {["Your role", "Your tools", "Your real work"].map((item, index) => (
           <li
             key={item}
-            className="grid grid-cols-[2.7rem_1fr_auto] items-center gap-3 border-b py-4 last:border-b-0 sm:py-5"
+            className="grid grid-cols-[2.7rem_1fr] items-center gap-3 border-b py-4 last:border-b-0 sm:py-5"
             style={{ borderColor: "rgba(255,255,255,0.13)" }}
           >
-            <span className="font-display text-fg-muted-dark" style={{ fontSize: "var(--text-label)" }}>
+            <span className="font-display text-fg-muted-dark" style={{ fontSize: "var(--text-small)" }}>
               0{index + 1}
             </span>
-            <strong className="font-display whitespace-nowrap text-fg-on-dark" style={{ fontSize: "var(--text-h3)" }}>
+            <strong className="font-display whitespace-nowrap text-fg-on-dark" style={{ fontSize: "calc(var(--text-h3) + 2px)" }}>
               {item}
             </strong>
-            <span aria-hidden className="h-px w-8 bg-white/20 sm:w-12" />
           </li>
         ))}
       </ol>
-
-      <div className="mt-7 flex items-center gap-3" aria-hidden>
-        <span className="h-px flex-1 bg-white/20" />
-        <span className="size-3 rounded-full bg-green" />
-      </div>
     </aside>
   );
 }
@@ -145,7 +140,7 @@ function AudiencePanel() {
           >
             0{index + 1}
           </span>
-          <p className="mt-3 max-w-sm text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.2 }}>
+          <p className="mt-3 max-w-sm text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
             {audience.title}
           </p>
         </VisualCard>
@@ -174,10 +169,11 @@ function OutcomesBoard() {
           </li>
         ))}
       </ol>
-      <div className="mt-4 rounded-md bg-surface-dark px-6 py-6 sm:px-8 sm:py-7">
-        <p className="max-w-3xl font-display font-bold text-green" style={{ fontSize: "var(--text-card)", lineHeight: 1.25 }}>
-          Anyone promising you a percentage after one session is guessing.
-        </p>
+      <div className="training-honesty-gradient mt-10">
+        <TextGradientScroll
+          text="Anyone promising you a percentage after one session is guessing."
+          className="mx-auto max-w-4xl justify-center text-center font-display font-bold text-[length:var(--text-card)] leading-[1.15] tracking-[var(--tracking-display)]"
+        />
       </div>
     </div>
   );
@@ -191,7 +187,7 @@ function TrainingProof() {
           <div className="grid gap-7 px-6 py-7 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-10 lg:py-8">
             <div>
               <SectionMark tone="dark">Proof</SectionMark>
-              <h2 className="mt-6 max-w-2xl text-balance text-fg-on-dark" style={{ fontSize: "var(--text-h3)", lineHeight: 1.12 }}>
+              <h2 className="mt-6 max-w-2xl text-balance text-fg-on-dark" style={{ fontSize: "calc(var(--text-h3) + 2px)", lineHeight: 1.12 }}>
                 The sessions are built to be used,
                 <span className="lg:block"> not just attended.</span>
               </h2>

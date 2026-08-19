@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import BookingButton from "@/components/marketing/BookingButton";
+import { BrandButton } from "@/components/ui/brand-button";
 import Wordmark from "@/components/site/Wordmark";
 
 const navLinks = [
@@ -19,14 +19,15 @@ function Logo() {
 
 function AuditButton({ full = false }: { full?: boolean }) {
   return (
-    <BookingButton
-      intent="audit"
+    <BrandButton
+      href="/services"
       full={full}
+      variant="metal"
       tone="light"
       className="min-h-10 px-5 text-[length:var(--text-small)]"
     >
-      Book an audit call
-    </BookingButton>
+      See how we work
+    </BrandButton>
   );
 }
 

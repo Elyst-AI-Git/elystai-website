@@ -1,6 +1,5 @@
 import MarkDither from "@/components/site/MarkDither";
 import { BrandButton } from "@/components/ui/brand-button";
-import BookingButton from "@/components/marketing/BookingButton";
 import { CometCard } from "@/components/ui/comet-card";
 
 export default function Hero() {
@@ -23,9 +22,9 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BookingButton intent="audit" tone="green">
-              Book an audit call
-            </BookingButton>
+            <BrandButton href="/services" variant="solid" tone="green">
+              See how we work
+            </BrandButton>
             <BrandButton href="#how-we-work" variant="outline">
               See how we work
             </BrandButton>

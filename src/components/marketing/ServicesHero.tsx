@@ -1,5 +1,5 @@
 import Image from "next/image";
-import BookingButton from "@/components/marketing/BookingButton";
+import { BrandButton } from "@/components/ui/brand-button";
 import { SectionMark } from "@/components/ui/section-mark";
 
 const CYCLE_WORDS = ["automations.", "chatbots.", "subscriptions."] as const;
@@ -49,9 +49,9 @@ export default function ServicesHero() {
               We work out what is worth building, build it, then teach your team to run it.
             </p>
             <div className="mt-8">
-              <BookingButton intent="audit" tone="green">
-                Book an audit call
-              </BookingButton>
+              <BrandButton href="/services#our-process" variant="solid" tone="green">
+                See how we work
+              </BrandButton>
             </div>
           </div>
         </div>

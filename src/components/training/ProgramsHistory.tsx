@@ -1,42 +1,45 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SectionMark } from "@/components/ui/section-mark";
-import { ArchiveVisual, type ArchiveVisualId } from "@/components/training/TrainingVisuals";
 
 const programs = [
   {
     name: "Elyst AI Circle",
     who: "For professionals who want to stay ahead of AI",
     href: "/circle",
-    visual: "circle" as ArchiveVisualId,
+    image: "/images/programs/circle.webp",
   },
   {
     name: "AI for Work",
     who: "A practical AI program for working professionals",
-    visual: "work" as ArchiveVisualId,
+    image: "/images/programs/ai-for-work.webp",
   },
   {
     name: "AI Yathra",
     who: "For working professionals and career switchers",
-    visual: "yathra" as ArchiveVisualId,
+    image: "/images/programs/ai-yathra.webp",
   },
   {
     name: "AI for Juniors",
     who: "For school students in Classes 5 to 10",
-    visual: "juniors" as ArchiveVisualId,
+    image: "/images/programs/ai-junior.webp",
   },
 ] as const;
 
-function ProgramCard({ program, index }: { program: (typeof programs)[number]; index: number }) {
+function ProgramCard({ program }: { program: (typeof programs)[number] }) {
   const content = (
     <>
-      <div className="flex h-40 items-center justify-center border-b border-border bg-surface-muted px-6 sm:h-44">
-        <ArchiveVisual id={program.visual} className="max-w-[10rem]" />
+      <div className="relative aspect-[4/3] overflow-hidden rounded-t-md bg-surface-muted">
+        <Image
+          src={program.image}
+          alt=""
+          fill
+          className="object-cover"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+        />
       </div>
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <span className="font-display font-semibold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-          Archive 0{index + 1}
-        </span>
+      <div className="flex flex-1 flex-col p-5">
         <h3 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>
           {program.name}
         </h3>
@@ -44,16 +47,16 @@ function ProgramCard({ program, index }: { program: (typeof programs)[number]; i
           {program.who}
         </p>
         {"href" in program ? (
-        <span className="mt-5 inline-flex items-center gap-2 font-display font-semibold text-emerald" style={{ fontSize: "var(--text-small)" }}>
-          View the Circle <ArrowUpRight className="size-4" aria-hidden />
-        </span>
+          <span className="mt-5 inline-flex items-center gap-2 font-bold text-emerald">
+            View the Circle <ArrowUpRight className="size-4" aria-hidden />
+          </span>
         ) : null}
       </div>
     </>
   );
 
   const className =
-    "group flex h-full min-h-[20rem] flex-col overflow-hidden rounded-md border border-border bg-white transition-colors hover:border-emerald/45";
+    "flex h-full flex-col overflow-hidden rounded-md border border-border bg-white transition-colors hover:border-emerald/45";
 
   return "href" in program ? (
     <Link href={program.href} className={className}>
@@ -73,7 +76,7 @@ export default function ProgramsHistory() {
           Programs we have run.
         </h2>
         <div className="mt-10 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {programs.map((program, index) => <ProgramCard key={program.name} program={program} index={index} />)}
+          {programs.map((program) => <ProgramCard key={program.name} program={program} />)}
         </div>
       </div>
     </section>

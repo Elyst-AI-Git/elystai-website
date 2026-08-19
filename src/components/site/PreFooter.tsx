@@ -1,5 +1,5 @@
 const PHRASES = [
-  "work for your team.",
+  "work for everyone.",
   "genuinely useful.",
   "worth your time.",
 ] as const;

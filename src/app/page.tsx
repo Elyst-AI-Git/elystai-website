@@ -6,7 +6,6 @@ import Hero from "@/components/home/Hero";
 import ProblemSequence from "@/components/home/ProblemSequence";
 import ProcessSection from "@/components/home/ProcessSection";
 import { PrinciplesGrid } from "@/components/home/PrinciplesGrid";
-import TrainingStrip from "@/components/home/TrainingStrip";
 import ClosingCta from "@/components/marketing/ClosingCta";
 
 const HOME_TITLE = "Elyst AI | AI Strategy, Implementation & Custom AI Development.";
@@ -42,7 +41,6 @@ export default function Home() {
       <ProblemSequence />
       <ProcessSection />
       <PrinciplesGrid />
-      <TrainingStrip />
       <ClosingCta />
     </main>
   );

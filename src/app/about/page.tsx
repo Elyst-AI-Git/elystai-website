@@ -9,7 +9,7 @@ const ABOUT_META_TITLE = "The Team Behind Elyst AI";
 const ABOUT_DESCRIPTION =
   "The team behind Elyst AI, and how we audit, build, and hand over AI systems.";
 const ABOUT_HERO_COPY =
-  "The hard part of AI is not opening another tool. It is choosing what to change, fitting it into how the business already runs, and getting people to actually use it. That is the part we do.";
+  "The hard part of AI is not opening another tool. It is choosing what to change, fitting it into how the business already runs, and getting people to actually use it.";
 const COMPANY_COPY =
   "We work closely with the people who know the workflow best, make the trade-offs visible, and leave your team with a system they can own.";
 
@@ -50,7 +50,7 @@ export default function AboutPage() {
           </h1>
 
           <p className="mt-7 max-w-4xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5 }}>
-            {ABOUT_HERO_COPY}
+            {ABOUT_HERO_COPY} <strong className="font-bold text-fg">That is the part we do.</strong>
           </p>
         </div>
       </section>
