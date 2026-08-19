@@ -4,14 +4,14 @@ import { organizationSchema, websiteSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/home/Hero";
 import ProblemSequence from "@/components/home/ProblemSequence";
-import HowWeWork from "@/components/home/AiosTeaser";
-import { Principles } from "@/components/ui/features-8";
+import ProcessSection from "@/components/home/ProcessSection";
+import { PrinciplesGrid } from "@/components/home/PrinciplesGrid";
 import TrainingStrip from "@/components/home/TrainingStrip";
-import FinalCta from "@/components/home/FinalCta";
+import ClosingCta from "@/components/marketing/ClosingCta";
 
 const HOME_TITLE = "Elyst AI | AI Strategy, Implementation & Custom AI Development.";
 const HOME_DESCRIPTION =
-  "We audit how your company work, identify ways which AI can elevate the business, build the right AI system, and train your team to run it.";
+  "We audit how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
@@ -40,10 +40,10 @@ export default function Home() {
       <JsonLd data={[organizationSchema, websiteSchema]} />
       <Hero />
       <ProblemSequence />
-      <HowWeWork />
-      <Principles />
+      <ProcessSection />
+      <PrinciplesGrid />
       <TrainingStrip />
-      <FinalCta />
+      <ClosingCta />
     </main>
   );
 }

@@ -1,8 +1,4 @@
-"use client";
-
 import * as React from "react";
-import { motion } from "framer-motion";
-import { useIsTouch } from "@/lib/use-touch";
 
 /**
  * CtaBanner — a self-contained, horizontal call-to-action card: a bright
@@ -74,7 +70,6 @@ function WaveTexture({ tone }: { tone: CtaTone }) {
 }
 
 export function CtaBanner({ heading, sub, actions, sharp = false, tone = "light", radius: radiusProp, bordered = false, wide = false, stackedActions = false, headingSize }: CtaBannerProps) {
-  const isTouch = useIsTouch();
   const radius = sharp ? "0px" : radiusProp ?? "var(--radius-card)";
   const isDark = tone === "dark";
 
@@ -86,61 +81,39 @@ export function CtaBanner({ heading, sub, actions, sharp = false, tone = "light"
   const headingColor = isDark ? "var(--fg-on-dark)" : "var(--elyst-ink)";
   const subColor = isDark ? "var(--elyst-green)" : "var(--elyst-emerald)";
 
-  const inner = (
-    <div
-      className={`relative overflow-hidden ${bordered ? "ring-1 ring-black/25" : ""}`}
-      style={{
-        borderRadius: radius,
-        background,
-        boxShadow: "var(--shadow-glow)",
-      }}
-    >
-      <WaveTexture tone={tone} />
-      <div className="relative z-10 flex flex-col gap-7 px-7 py-10 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-14 lg:py-14">
-        <div className={wide ? "max-w-2xl" : "max-w-xl"}>
-          <h2
-            className="font-display font-bold"
-            style={{ fontSize: headingSize ?? "var(--text-h2)", color: headingColor, lineHeight: 1.1 }}
-          >
-            {heading}
-          </h2>
-          {sub && (
-            <p
-              className="mt-3"
-              style={{ fontSize: "var(--text-body)", color: subColor }}
-            >
-              {sub}
-            </p>
-          )}
-        </div>
-        <div
-          className={
-            stackedActions
-              ? "flex flex-col items-stretch gap-3 sm:items-center"
-              : "flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap lg:justify-end"
-          }
-        >
-          {actions}
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <section style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-6xl">
-        {isTouch ? (
-          inner
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
-          >
-            {inner}
-          </motion.div>
-        )}
+        <div
+          className={`relative overflow-hidden ${bordered ? "ring-1 ring-black/25" : ""}`}
+          style={{ borderRadius: radius, background, boxShadow: "var(--shadow-glow)" }}
+        >
+          <WaveTexture tone={tone} />
+          <div className="relative z-10 flex flex-col gap-7 px-7 py-10 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-14 lg:py-14">
+            <div className={wide ? "max-w-2xl" : "max-w-xl"}>
+              <h2
+                className="font-display font-bold"
+                style={{ fontSize: headingSize ?? "var(--text-h2)", color: headingColor, lineHeight: 1.1 }}
+              >
+                {heading}
+              </h2>
+              {sub ? (
+                <p className="mt-3" style={{ fontSize: "var(--text-body)", color: subColor }}>
+                  {sub}
+                </p>
+              ) : null}
+            </div>
+            <div
+              className={
+                stackedActions
+                  ? "flex flex-col items-stretch gap-3 sm:items-center"
+                  : "flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap lg:justify-end"
+              }
+            >
+              {actions}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,24 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import {
-  trackBookingComplete,
-  trackTrainingEnquiry,
-} from "@/lib/marketing-analytics";
+import type { BookingIntent } from "@/lib/booking";
+import { trackBookingComplete } from "@/lib/marketing-analytics";
 
-export default function BookingCompleteTracker() {
+export default function BookingCompleteTracker({ intent }: { intent: BookingIntent }) {
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (!params.get("uid")) return;
-
-    const isTraining =
-      params.get("utm_content")?.includes("training") ||
-      params.get("title")?.toLowerCase().includes("training");
-    const intent = isTraining ? "training" : "audit";
-
+    const marker = `elyst_booking_complete_${intent}`;
+    if (window.sessionStorage.getItem(marker)) return;
+    window.sessionStorage.setItem(marker, "1");
     trackBookingComplete(intent);
-    if (isTraining) trackTrainingEnquiry();
-  }, []);
+  }, [intent]);
 
   return null;
 }

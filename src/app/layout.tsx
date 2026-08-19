@@ -1,24 +1,15 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 import { OG_IMAGE } from "@/lib/seo";
 import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
-import ScrollToTop from "@/components/site/ScrollToTop";
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
 
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "We audit how your company work, identify ways which AI can elevate the business, build the right AI system, and train your team to run it.";
+  "We audit how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -68,9 +59,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} h-full`}>
+    <html lang="en" className="h-full">
       <body className="min-h-full flex flex-col bg-bg text-fg">
-        <ScrollToTop />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-emerald focus:px-4 focus:py-2 focus:text-fg-on-dark"

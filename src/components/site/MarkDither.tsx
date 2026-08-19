@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { isLowPerfDevice } from "@/lib/use-reduced-effects";
+import { isLowPerfDevice } from "@/lib/performance";
 
 // Elyst wordmark glyph paths (same source as the Wordmark component). Each
 // glyph shares the baseline translate ty; tx positions it along the line.

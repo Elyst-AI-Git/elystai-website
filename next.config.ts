@@ -21,6 +21,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  outputFileTracingRoot: process.cwd(),
   images: {
     formats: ["image/avif", "image/webp"],
   },
@@ -51,6 +52,21 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/juniors",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/waitlist",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/register/onboarding",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/register/confirmation",
         destination: "/training",
         permanent: true,
       },

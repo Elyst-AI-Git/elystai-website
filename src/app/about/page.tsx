@@ -3,7 +3,7 @@ import { breadcrumbSchema, organizationSchema, personSchema } from "@/lib/schema
 import { SectionMark } from "@/components/ui/section-mark";
 import JsonLd from "@/components/seo/JsonLd";
 import Founders, { founders } from "@/components/home/Founders";
-import FinalCta from "@/components/home/FinalCta";
+import ClosingCta from "@/components/marketing/ClosingCta";
 
 const ABOUT_META_TITLE = "The Team Behind Elyst AI";
 const ABOUT_DESCRIPTION =
@@ -68,7 +68,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <FinalCta />
+      <ClosingCta />
     </main>
   );
 }

@@ -1,9 +1,5 @@
-"use client";
-
 import { Check, X } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
 import type { CSSProperties } from "react";
-import { useIsTouch } from "@/lib/use-touch";
 import { BorderBeam } from "@/components/ui/border-beam";
 import DotPattern from "@/components/ui/dot-pattern";
 
@@ -16,8 +12,6 @@ export function ServicesFitStrip({
   rotation: number;
   kind: "no" | "yes";
 }) {
-  const isTouch = useIsTouch();
-  const reducedMotion = useReducedMotion();
   const isYes = kind === "yes";
   const style = {
     "--services-fit-rotation": `${rotation}deg`,
@@ -31,9 +25,7 @@ export function ServicesFitStrip({
 
   return (
     <div
-      tabIndex={0}
-      role="note"
-      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald"
+      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card"
       style={style}
     >
       {!isYes ? (
@@ -53,7 +45,6 @@ export function ServicesFitStrip({
         borderWidth={1}
         colorFrom={isYes ? "var(--elyst-green)" : "var(--elyst-red-muted)"}
         colorTo={isYes ? "var(--elyst-green)" : "var(--elyst-red-muted)"}
-        paused={isTouch || reducedMotion === true}
       />
       {isYes ? (
         <Check className="relative z-10 size-5 shrink-0 text-emerald" strokeWidth={2.2} aria-hidden />

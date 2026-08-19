@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef } from "react";
 import { motion, type MotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -49,7 +49,6 @@ function TextGradientScroll({
   textOpacity = "soft",
 }: TextGradientScrollProps) {
   const ref = useRef<HTMLParagraphElement>(null);
-  const [enhanced, setEnhanced] = useState(false);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -58,7 +57,7 @@ function TextGradientScroll({
   const words = text.split(" ");
 
   useEffect(() => {
-    setEnhanced(true);
+    ref.current?.classList.add("text-gradient-scroll--enhanced");
   }, []);
 
   return (
@@ -68,7 +67,6 @@ function TextGradientScroll({
         aria-label={text}
         className={cn(
           "text-gradient-scroll relative m-0 flex flex-wrap justify-center",
-          enhanced && "text-gradient-scroll--enhanced",
           className,
         )}
       >

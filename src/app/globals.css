@@ -4,6 +4,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* DM Sans — self-hosted to keep builds and page loads independent of Google Fonts. */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/dm-sans/DM-Sans-Latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/dm-sans/DM-Sans-Latin-Ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* Manrope — self-hosted from public/fonts/manrope/ */
 @font-face {
   font-family: 'Manrope';
@@ -55,6 +74,7 @@
   --color-ink: var(--elyst-ink);
   --color-bg: var(--bg);
   --color-surface-muted: var(--surface-muted);
+  --color-surface-accent-soft: var(--surface-accent-soft);
   --color-fg: var(--fg);
   --color-fg-2: var(--fg-2);
   --color-fg-3: var(--fg-3);
@@ -77,8 +97,8 @@
   --text-small: 1rem;
   --text-eyebrow: 0.95rem;
   /* sub-small labels: sub-eyebrows (Week 1), captions, and tiny meta text */
-  --text-label: 0.85rem;
-  --text-micro: 0.72rem;
+  --text-label: 0.875rem;
+  --text-micro: 0.75rem;
   --text-lead: clamp(1.3rem, 2vw, 1.65rem);
   --text-card: clamp(1.35rem, 2.2vw, 1.8rem);
   --text-process-tab: clamp(1.15rem, 4.8vw, 3rem);
@@ -87,42 +107,27 @@
   --text-stat-compact: clamp(2.4rem, 4vw, 3.6rem);
   --text-process-number: clamp(2.8rem, 5vw, 4.5rem);
   --text-training-step: clamp(2.5rem, 4.5vw, 4rem);
-  --text-process-number-large: clamp(4.5rem, 9vw, 7.75rem);
   --text-proof-number: clamp(2.8rem, 5vw, 4.5rem);
   --text-prefooter: clamp(1.5rem, 3.75vw, 3rem);
   --text-founder: clamp(1.45rem, 2.8vw, 2.35rem);
-  --text-founder-copy: clamp(1.35rem, 2.4vw, 2rem);
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.042em;
-  --tracking-body: -0.05em;
+  --tracking-body: -0.012em;
   --tracking-wide: 0.084em;
   --tracking-label: 0.16em;
-  --tracking-subtle: 0.14em;
   --tracking-stat: -0.07em;
-  --tracking-stat-large: -0.08em;
-  --tracking-stat-compact: -0.055em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
-  --radius-card: 20px;
-  --radius-pill: 999px;
+  --radius-card: var(--radius);
 
   /* shadows (utilities: shadow-card, shadow-card-hover, shadow-glow) */
   --shadow-card: 0 4px 24px rgba(3, 98, 76, 0.08);
   --shadow-card-hover: 0 12px 40px rgba(3, 98, 76, 0.16);
   --shadow-glow: 0 0 40px rgba(0, 223, 130, 0.2);
-  --color-brand: var(----brand);
-  --color-color-5: var(----color-5);
-  --color-color-4: var(----color-4);
-  --color-color-3: var(----color-3);
-  --color-color-2: var(----color-2);
-  --color-color-1: var(----color-1);
 }
 
 :root {
-  /* Runtime type aliases used directly by component styles. */
-  --text-training-step: clamp(2.5rem, 4.5vw, 4rem);
-
   /* Brand (LOCKED — DESIGN.md §2) */
   --elyst-emerald: #03624c;
   --elyst-emerald-light: #04855f;
@@ -130,7 +135,7 @@
   --elyst-green-mid: #2ec866;
   --elyst-red-muted: hsl(4 42% 48%);
   --elyst-ink: #060d09;
-  --elyst-carbon: #1a1a1a;
+  --font-dm-sans: 'DM Sans';
 
   /* Surfaces — light is default */
   --bg: hsl(140 18% 97%);
@@ -143,15 +148,14 @@
   --fg-on-dark: hsl(150 50% 96%);
   --fg-muted-dark: hsl(155 24% 62%);
 
-  /* Lines & tints */
-  --green-tint-07: rgba(0, 223, 130, 0.07);
-  --green-tint-15: rgba(0, 223, 130, 0.15);
-  --emerald-tint-10: rgba(3, 98, 76, 0.1);
-
   /* Legacy dark — deliberate single sections only */
   --surface-dark: hsl(160 38% 9%);
   --surface-dark-2: hsl(157 32% 13%);
   --surface-dark-hover: hsl(155 32% 17%);
+  --surface-card: hsl(0 0% 100%);
+  --surface-light: hsl(140 18% 96%);
+  --surface-accent-soft: hsl(133 55% 85%);
+  --ink-strong: hsl(150 25% 5%);
 
   /* Spacing rhythm */
   --section-py: clamp(80px, 10vw, 140px);
@@ -160,9 +164,9 @@
   /* shadcn semantic tokens → brand values */
   --background: var(--bg);
   --foreground: var(--fg);
-  --card: #ffffff;
+  --card: var(--surface-card);
   --card-foreground: var(--fg);
-  --popover: #ffffff;
+  --popover: var(--surface-card);
   --popover-foreground: var(--fg);
   --primary: var(--elyst-emerald);
   --primary-foreground: var(--fg-on-dark);
@@ -176,9 +180,7 @@
   --border: hsl(155 18% 88%);
   --input: hsl(155 18% 88%);
   --ring: var(--elyst-emerald);
-  --radius: 0.75rem; /* 12px — button radius */
-  /* GradientText animated-glow palette — brand greens (not the installer's rainbow). */
-  --color-1: hsl(157 100% 44%); --color-2: hsl(160 92% 27%); --color-3: hsl(142 62% 48%); --color-4: hsl(154 76% 71%); --color-5: hsl(165 94% 20%); --brand: hsl(157 100% 44%);
+  --radius: 0.75rem;
 }
 
 @layer base {
@@ -210,77 +212,6 @@
 
 /* Component primitives (DESIGN.md §5) — build once, reuse everywhere */
 @layer components {
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 48px;
-    padding: 0 24px;
-    border-radius: 12px;
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    font-weight: 700;
-    font-size: var(--text-small);
-    letter-spacing: var(--tracking-body);
-    line-height: 1;
-    cursor: pointer;
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease,
-      background-color 0.18s ease,
-      color 0.18s ease,
-      opacity 0.18s ease;
-    white-space: nowrap;
-  }
-  .btn:active {
-    transform: translateY(1px);
-  }
-  .btn-primary {
-    background: var(--elyst-emerald);
-    color: var(--fg-on-dark);
-  }
-  .btn-primary:hover {
-    background: var(--elyst-emerald-light);
-  }
-  .btn-onlight {
-    background: #ffffff;
-    color: var(--elyst-emerald);
-  }
-  .btn-onlight:hover {
-    box-shadow: var(--shadow-card);
-  }
-  .btn-accent {
-    background: var(--elyst-green-mid);
-    color: var(--elyst-ink);
-  }
-  .btn-accent:hover {
-    filter: brightness(1.05);
-  }
-  .btn-ghost {
-    background: transparent;
-    color: var(--elyst-emerald);
-  }
-  .btn-ghost:hover {
-    background: var(--emerald-tint-10);
-  }
-  .btn-pill {
-    border-radius: var(--radius-pill);
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: var(--radius-pill);
-    background: var(--emerald-tint-10);
-    color: var(--elyst-emerald);
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0;
-  }
-
   .eyebrow {
     font-family: var(--font-dm-sans), system-ui, sans-serif;
     font-weight: 700;
@@ -290,39 +221,6 @@
     color: var(--fg-2);
   }
 
-  .card {
-    background: #ffffff;
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-  .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
-  }
-  .card-tint {
-    background: var(--green-tint-07);
-    border: 1px solid var(--green-tint-15);
-    border-radius: var(--radius-card);
-  }
-
-  /* Footer Zone 2 — giant wordmark filled with a slow-shifting emerald
-     gradient via background-clip:text (DESIGN.md footer NOTES). */
-  .wordmark-fill {
-    background-image: linear-gradient(
-      100deg,
-      var(--elyst-emerald) 0%,
-      var(--elyst-green) 50%,
-      var(--elyst-emerald) 100%
-    );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: wordmark-shift 8s ease-in-out infinite;
-  }
   /* Homepage hero accent — the same treatment previously used on "runs". */
   .hero-accent-word {
     background-image: linear-gradient(
@@ -347,15 +245,6 @@
     filter: drop-shadow(0 2px 10px rgba(0, 223, 130, 0.28));
   }
 
-  .scroll-read-line {
-    color: var(--elyst-green);
-    transition: color 400ms ease-out;
-  }
-
-  .scroll-read-enhanced .scroll-read-line:not(.is-read) {
-    color: var(--fg-muted-dark);
-  }
-
   .text-gradient-scroll {
     color: var(--elyst-emerald);
   }
@@ -374,6 +263,102 @@
 
   .problem-sequence-gradient {
     gap: clamp(24px, 3vw, 46px);
+  }
+
+  .brand-button-metal {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid color-mix(in srgb, currentColor 26%, transparent);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 24%, transparent),
+      0 5px 16px color-mix(in srgb, var(--elyst-emerald) 14%, transparent);
+  }
+
+  .brand-button-metal::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from 180deg,
+      transparent 0deg,
+      color-mix(in srgb, white 80%, var(--elyst-green)) 70deg,
+      transparent 140deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.7;
+    transition: transform 220ms ease-out, opacity 220ms ease-out;
+  }
+
+  .brand-button-metal:hover::before,
+  .brand-button-metal:focus-visible::before {
+    transform: rotate(12deg);
+    opacity: 1;
+  }
+
+  .nav-shell {
+    background: linear-gradient(180deg, hsl(160 38% 12%) 0%, var(--surface-dark) 58%, hsl(160 38% 11%) 100%);
+    border-block: 1px solid color-mix(in srgb, white 8%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, white 7%, transparent), 0 8px 28px rgb(0 0 0 / 26%);
+    backdrop-filter: blur(16px);
+  }
+
+  .mobile-nav-panel {
+    background: var(--surface-dark);
+  }
+
+  .footer-starfield {
+    background-image:
+      radial-gradient(circle at 8% 24%, rgb(255 255 255 / 45%) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 30% 68%, rgb(255 255 255 / 34%) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 58% 18%, rgb(255 255 255 / 38%) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 82% 74%, rgb(255 255 255 / 42%) 0 1px, transparent 1.5px);
+    background-size: 94px 94px, 137px 137px, 173px 173px, 211px 211px;
+  }
+
+  .prefooter-cycle {
+    display: inline-grid;
+    min-width: 11.5ch;
+    color: var(--elyst-emerald);
+  }
+
+  .prefooter-cycle > span {
+    grid-area: 1 / 1;
+    opacity: 0;
+    animation: prefooter-cycle 9s steps(1, end) infinite;
+  }
+
+  .prefooter-cycle > span:nth-child(2) { animation-delay: 3s; }
+  .prefooter-cycle > span:nth-child(3) { animation-delay: 6s; }
+
+  .service-cycle {
+    display: inline-grid;
+    color: var(--elyst-emerald);
+  }
+
+  .service-cycle > span {
+    grid-area: 1 / 1;
+    opacity: 0;
+    animation: service-cycle 6s ease-in-out infinite;
+  }
+
+  .service-cycle > span:nth-child(2) { animation-delay: 2s; }
+  .service-cycle > span:nth-child(3) { animation-delay: 4s; }
+
+  @keyframes prefooter-cycle {
+    0%, 32% { opacity: 1; }
+    33%, 100% { opacity: 0; }
+  }
+
+  @keyframes service-cycle {
+    0%, 28% { opacity: 1; transform: translateY(0); }
+    33%, 95% { opacity: 0; transform: translateY(-0.2em); }
+    96%, 100% { opacity: 0; transform: translateY(0.2em); }
   }
 
   .services-fit-strip {
@@ -405,12 +390,6 @@
       animation: none;
     }
 
-    .scroll-read-line,
-    .scroll-read-enhanced .scroll-read-line:not(.is-read) {
-      color: var(--elyst-green);
-      transition: none;
-    }
-
     .text-gradient-scroll__active {
       opacity: 1 !important;
     }
@@ -424,6 +403,22 @@
 
     .border-beam-motion {
       animation: none;
+    }
+
+    .brand-button-metal::before {
+      transition: none;
+    }
+
+    .prefooter-cycle > span,
+    .service-cycle > span {
+      animation: none;
+      opacity: 0;
+      transform: none;
+    }
+
+    .prefooter-cycle > span:first-child,
+    .service-cycle > span:first-child {
+      opacity: 1;
     }
   }
 
@@ -451,56 +446,4 @@
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .wordmark-fill {
-      animation: none;
-    }
-  }
-
-  /* CosmicButton border animations (from @cult-ui/cosmic-button) */
-  @keyframes cosmic-spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-  @keyframes cosmic-spin-slow {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(-360deg); }
-  }
-
-  /* GradientButtonGroup active-ring animation */
-  @keyframes gold-spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-}
-
-/*
-  AIOS page — sharp-edged language. Every card/box on /aios drops its corner
-  radius (zeroed even over inline border-radius via !important). Genuinely
-  circular elements (rounded-full dots, bars, avatars, pills) are preserved.
-*/
-.aios-sharp [class*="rounded"]:not([class*="rounded-full"]):not(.metal-fx-root):not(.metal-fx-root *):not(.aios-faq-panel),
-.aios-sharp [style*="border-radius"]:not(.metal-fx-root):not(.metal-fx-root *),
-.aios-sharp [style*="borderRadius"]:not(.metal-fx-root):not(.metal-fx-root *),
-.aios-sharp .card {
-  border-radius: 0 !important;
-}
-
-@utility animate-cosmic-spin {
-  animation: cosmic-spin 3s linear infinite;
-}
-@utility animate-cosmic-spin-slow {
-  animation: cosmic-spin-slow 5s linear infinite;
-}
-@utility animate-gold-spin {
-  animation: gold-spin 4s linear infinite;
-}
-
-.dark {
-  --color-1: hsl(157 100% 44%);
-  --color-2: hsl(160 92% 27%);
-  --color-3: hsl(142 62% 48%);
-  --color-4: hsl(154 76% 71%);
-  --color-5: hsl(165 94% 20%);
-  --brand: hsl(157 100% 44%);
 }

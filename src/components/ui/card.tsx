@@ -1,5 +1,4 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 /**
@@ -16,21 +15,9 @@ import { cn } from "@/lib/utils"
  * frame can drop onto any existing card shape.
  */
 
-const cardVariants = cva("relative w-full overflow-hidden", {
-  variants: {
-    variant: {
-      gradient: [],
-      plain: [],
-    },
-  },
-  defaultVariants: {
-    variant: "gradient",
-  },
-})
-
 export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "gradient" | "plain"
   title?: string
   description?: string
 }
@@ -50,11 +37,11 @@ const GradientLines = () => (
 )
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, title, description, children, ...props }, ref) => {
+  ({ className, variant = "gradient", title, description, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn(cardVariants({ variant, className }))}
+        className={cn("relative w-full overflow-hidden", className)}
         {...props}
       >
         {variant !== "plain" && <GradientLines />}
@@ -81,4 +68,4 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 )
 CardHeader.displayName = "CardHeader"
 
-export { Card, CardContent, CardHeader, cardVariants }
+export { Card, CardContent, CardHeader }

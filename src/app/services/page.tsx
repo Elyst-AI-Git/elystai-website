@@ -1,11 +1,10 @@
 import { pageMeta } from "@/lib/seo";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
-import AccelHero from "@/components/accel/AccelHero";
-import AiosCta from "@/components/aios/AiosCta";
-import AiosFaq from "@/components/aios/AiosFaq";
+import ServicesHero from "@/components/marketing/ServicesHero";
+import ClosingCta from "@/components/marketing/ClosingCta";
+import FaqSection from "@/components/marketing/FaqSection";
 import { SectionMark } from "@/components/ui/section-mark";
 import { VisualCard } from "@/components/ui/visual-card";
-import TrackedBookingButton from "@/components/marketing/TrackedBookingButton";
 import { ServicesFitStrip } from "@/components/marketing/ServicesFitStrip";
 import ServicesProcess from "@/components/marketing/ServicesProcess";
 import JsonLd from "@/components/seo/JsonLd";
@@ -88,7 +87,7 @@ const bringLists = {
     "Discovery and mapping",
     "The build",
     "Training and documentation",
-    "A named owner at handover",
+    "A named Elyst delivery lead through handover",
   ],
 };
 
@@ -109,22 +108,7 @@ export default function ServicesPage() {
         ]}
       />
 
-      <AccelHero
-        eyebrow="Services"
-        cycleWords={["automations.", "chatbots.", "subscriptions."]}
-        headlinePrefix="We don't sell AI "
-        headlineSuffix=""
-        secondLine="We change how the work gets done."
-        subline="We work out what is worth building, build it, then teach your team to run it."
-        headlineSize="clamp(2.35rem, 4.3vw, 3.55rem)"
-        layout="split"
-        showCharms={false}
-        cta={
-          <TrackedBookingButton intent="audit" tone="green">
-            Book an audit call
-          </TrackedBookingButton>
-        }
-      />
+      <ServicesHero />
 
       <ServicesProcess />
 
@@ -204,12 +188,12 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <AiosFaq
+      <FaqSection
         faqs={serviceFaqs}
         heading="Questions clients ask before they start."
       />
 
-      <AiosCta
+      <ClosingCta
         heading={
           <>
             Pick the task your team complains about most.

@@ -1,10 +1,10 @@
 import { pageMeta } from "@/lib/seo";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
-import TrainingPage from "@/components/marketing/TrainingPage";
+import TrainingPage from "@/components/training/TrainingPage";
 import JsonLd from "@/components/seo/JsonLd";
 
 const TRAINING_DESCRIPTION =
-  "Role specific AI training for businesses and institutions, built around real work.";
+  "Role-specific AI training for businesses and institutions, built around real work.";
 
 export const metadata = {
   ...pageMeta({
