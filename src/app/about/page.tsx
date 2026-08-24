@@ -11,7 +11,7 @@ const ABOUT_DESCRIPTION =
 const ABOUT_HERO_COPY =
   "The hard part of AI is not opening another tool. It is choosing what to change, fitting it into how the business already runs, and getting people to actually use it.";
 const COMPANY_COPY =
-  "We work closely with the people who know the workflow best, make the trade-offs visible, and leave your team with a system they can own.";
+  "Elyst AI exists because most AI projects stop at a demo. We start by understanding how a business actually runs, not by pitching a tool. We make the trade-offs visible before anything gets built, so every decision is made with open eyes rather than in the dark. What we hand back is not a black box someone has to maintain forever, but a working system, fully explained, that keeps running.";
 
 export const metadata = {
   ...pageMeta({

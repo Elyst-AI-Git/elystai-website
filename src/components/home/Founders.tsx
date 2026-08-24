@@ -38,7 +38,7 @@ export const founders: Founder[] = [
     linkedin: "https://www.linkedin.com/in/fathimashirin-p/",
     instagram: "https://www.instagram.com/fathimashirin.ai/",
     description:
-      "One of the first AI engineers in Kerala, at a point when nobody was quite sure what that meant. Worked across five disciplines in AI, from machine learning and computer vision to NLP, generative AI and automation, before co-founding Elyst at 23. Handles technical scoping, implementation and handover, which means she is the one who has to make it actually work.",
+      "Fathima Shirin P is Co-founder and CEO of Elyst AI. Her focus for over six years has been the same: turning AI from an abstract idea into a practical skill for people who aren't technical, from founders to functional leads across India and the Middle East. She has trained more than 2,000 people through 50+ live sessions, and now leads discovery, training, and adoption for every client Elyst works with.",
     identitySide: "right",
     fill: "var(--elyst-green)",
   },

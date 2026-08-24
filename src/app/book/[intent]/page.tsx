@@ -41,7 +41,7 @@ export default async function BookingPage({
               {isIdentify ? "Book an AI workflow call." : "Plan a team AI training session."}
             </h1>
             <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-body)" }}>
-              Choose a suitable time below. The booking calendar is provided by Cal.com.
+              Choose a suitable time below.
             </p>
           </div>
           <BookingScheduler intent={intent} src={calendarHref(intent, campaignParameters)} />
