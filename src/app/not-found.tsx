@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Page not found",
   description: "This page doesn't exist.",
+  robots: { index: false, follow: false },
 };
 
 export default function NotFound() {
@@ -50,8 +51,8 @@ export default function NotFound() {
         <BrandButton href="/" variant="metal" tone="emerald">
           Go to Home
         </BrandButton>
-        <BrandButton href="/aios" variant="outline" tone="emerald">
-          AIOS for Business
+        <BrandButton href="/services" variant="outline" tone="emerald">
+          Explore Services
         </BrandButton>
       </div>
     </main>

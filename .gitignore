@@ -47,6 +47,8 @@ next-env.d.ts
 /.claude/
 /.agents/
 /.playwright-mcp/
+/.playwright-cli/
+/output/
 skills-lock.json
 
 # working docs, reference assets & raw source material (kept local, not deployed)

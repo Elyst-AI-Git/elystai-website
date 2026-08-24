@@ -54,7 +54,7 @@ export default function CircleForWho() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}
-              className={c.dark ? "rounded-md bg-emerald p-8" : "card rounded-md p-8"}
+              className={c.dark ? "rounded-md bg-emerald p-8" : "rounded-md bg-white p-8 shadow-card"}
               style={c.dark ? { boxShadow: "0 12px 40px rgba(3,98,76,0.25)" } : undefined}
             >
               <h3

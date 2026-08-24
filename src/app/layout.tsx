@@ -1,26 +1,15 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
-import JsonLd from "@/components/seo/JsonLd";
-import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { OG_IMAGE } from "@/lib/seo";
-import { Analytics } from "@vercel/analytics/next";
-import ScrollToTop from "@/components/site/ScrollToTop";
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
+import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
 
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "AI system for small businesses and AI programs for professionals. Based in Kerala, serving India and the GCC.";
+  "We understand how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -70,12 +59,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} h-full`}>
-      <head>
-        <JsonLd data={[organizationSchema, websiteSchema]} />
-      </head>
+    <html lang="en" className="h-full">
       <body className="min-h-full flex flex-col bg-bg text-fg">
-        <ScrollToTop />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-emerald focus:px-4 focus:py-2 focus:text-fg-on-dark"
@@ -86,7 +71,7 @@ export default function RootLayout({
         {children}
         <PreFooter />
         <Footer />
-        <Analytics />
+        <MarketingAnalytics enableWebAnalytics={Boolean(process.env.VERCEL)} />
       </body>
     </html>
   );

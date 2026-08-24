@@ -1,11 +1,33 @@
 import type { NextConfig } from "next";
 
-// Security headers applied to every route. CSP is intentionally omitted here
-// because the site uses inline styles + a WebGL/canvas pipeline that a strict
-// CSP would break without nonce plumbing; the headers below cover the
-// high-value protections (clickjacking, MIME sniffing, referrer leakage,
-// HSTS, and locking down powerful browser features).
+const scriptSources = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(process.env.NODE_ENV === "development" ? ["'unsafe-eval'"] : []),
+  "https://va.vercel-scripts.com",
+].join(" ");
+
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'self'",
+  "form-action 'self'",
+  `script-src ${scriptSources}`,
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "img-src 'self' data: blob:",
+  "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "frame-src 'self' https://cal.com",
+  "worker-src 'self' blob:",
+  "upgrade-insecure-requests",
+].join("; ");
+
+// Security headers applied to every route. Inline script/style allowances are
+// currently required by Next.js hydration and the metallic button renderer;
+// every other resource type is restricted to the minimum origins in use.
 const securityHeaders = [
+  { key: "Content-Security-Policy", value: contentSecurityPolicy },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -21,6 +43,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  outputFileTracingRoot: process.cwd(),
   images: {
     formats: ["image/avif", "image/webp"],
   },
@@ -29,6 +52,45 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: securityHeaders,
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/aios",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/learn",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/ai-for-work",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/juniors",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/waitlist",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/register/onboarding",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/register/confirmation",
+        destination: "/training",
+        permanent: true,
       },
     ];
   },

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://elystai.com";
-// All Open Graph / Twitter share images live under /images/og/ so the asset
-// type is obvious from the path alone. `site.png` is the sitewide fallback;
-// pages with their own preview image pass `image` to pageMeta() instead.
+// Sitewide social preview. A page can override it through pageMeta().
 export const OG_IMAGE = "/images/og/site.png";
 
 /**
@@ -12,9 +10,7 @@ export const OG_IMAGE = "/images/og/site.png";
  * template appends " | Elyst AI", so do NOT include the brand here (avoids
  * "… | Elyst AI | Elyst AI" double-branding).
  *
- * `image` lets a page (e.g. /ai-for-work) override the sitewide og-image with
- * its own 1200x630 preview — required for WhatsApp/social previews to show
- * page-specific art instead of the generic brand image.
+ * `image` lets a page override the sitewide preview when it has specific art.
  */
 export function pageMeta({
   path,
