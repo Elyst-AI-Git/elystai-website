@@ -11,7 +11,7 @@ import {
 } from "@/lib/marketing-analytics";
 import { isBookingIntent } from "@/lib/booking";
 
-export default function MarketingAnalytics() {
+export default function MarketingAnalytics({ enableWebAnalytics = true }: { enableWebAnalytics?: boolean }) {
   useEffect(() => {
     captureArrivalUtm();
     captureInternalTrafficMarker();
@@ -49,5 +49,5 @@ export default function MarketingAnalytics() {
   const beforeSend = (event: BeforeSendEvent) =>
     isInternalTraffic() ? null : event;
 
-  return <Analytics beforeSend={beforeSend} />;
+  return enableWebAnalytics ? <Analytics beforeSend={beforeSend} /> : null;
 }

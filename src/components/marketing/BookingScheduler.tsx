@@ -17,7 +17,7 @@ export default function BookingScheduler({
 
   return (
     <iframe
-      title={intent === "audit" ? "Book an AI Workflow Audit Call" : "Plan a team AI training session"}
+      title={intent === "identify" ? "Book an AI workflow call" : "Plan a team AI training session"}
       src={src}
       className="min-h-[760px] w-full rounded-md border border-border bg-white"
       allow="payment"

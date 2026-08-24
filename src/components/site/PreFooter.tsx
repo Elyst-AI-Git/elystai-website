@@ -1,23 +1,31 @@
+"use client";
+
+import { Typewriter } from "@/components/ui/typewriter";
+
 const PHRASES = [
-  "work for everyone.",
+  "work for your team.",
   "genuinely useful.",
   "worth your time.",
-] as const;
+];
 
 export default function PreFooter() {
   return (
     <section className="bg-bg" style={{ padding: "clamp(36px, 5.5vw, 75px) var(--section-px)" }}>
       <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-        <p
-          className="font-display font-bold text-fg"
-          style={{ fontSize: "var(--text-prefooter)", lineHeight: 1.12 }}
+        <h2
+          className="text-fg"
+          style={{ fontSize: "clamp(1.5rem, 3.75vw, 3rem)", lineHeight: 1.12, fontWeight: 700 }}
         >
           Making AI{" "}
-          <span className="prefooter-cycle" aria-hidden>
-            {PHRASES.map((phrase) => <span key={phrase}>{phrase}</span>)}
-          </span>
-          <span className="sr-only">{PHRASES[0]}</span>
-        </p>
+          <Typewriter
+            text={PHRASES}
+            speed={55}
+            deleteSpeed={28}
+            waitTime={2200}
+            className="text-emerald"
+            cursorClassName="ml-0.5 text-green"
+          />
+        </h2>
       </div>
     </section>
   );

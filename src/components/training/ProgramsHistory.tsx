@@ -1,70 +1,74 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { SectionMark } from "@/components/ui/section-mark";
 
 const programs = [
   {
-    name: "Elyst AI Circle",
-    who: "For professionals who want to stay ahead of AI",
-    href: "/circle",
-    image: "/images/programs/circle.webp",
-  },
-  {
-    name: "AI for Work",
-    who: "A practical AI program for working professionals",
-    image: "/images/programs/ai-for-work.webp",
-  },
-  {
     name: "AI Yathra",
     who: "For working professionals and career switchers",
     image: "/images/programs/ai-yathra.webp",
+    surface: "bg-surface-accent-soft",
+    dark: false,
   },
   {
     name: "AI for Juniors",
-    who: "For school students in Classes 5 to 10",
+    who: "For school students, Classes 5 to 10",
     image: "/images/programs/ai-junior.webp",
+    surface: "bg-surface-light",
+    dark: false,
+  },
+  {
+    name: "Elyst AI Circle",
+    who: "For professionals who want to stay ahead of AI",
+    image: "/images/programs/circle.webp",
+    href: "/circle",
+    surface: "bg-emerald",
+    dark: true,
+  },
+  {
+    name: "AI for Work",
+    who: "The deep-dive program for professionals",
+    image: "/images/programs/ai-for-work.webp",
+    surface: "bg-surface-dark-2",
+    dark: true,
   },
 ] as const;
 
+const fanPositions = [
+  { x: "-258px", y: "30px", rotate: "-10deg" },
+  { x: "-90px", y: "-8px", rotate: "-4deg" },
+  { x: "90px", y: "-8px", rotate: "4deg" },
+  { x: "258px", y: "30px", rotate: "10deg" },
+];
+
 function ProgramCard({ program }: { program: (typeof programs)[number] }) {
-  const content = (
-    <>
-      <div className="relative aspect-[4/3] overflow-hidden rounded-t-md bg-surface-muted">
+  const card = (
+    <article
+      className={`program-history-card group relative w-full overflow-hidden rounded-[28px] shadow-card ring-1 ring-black/10 ${program.surface} ${program.dark ? "text-fg-on-dark" : "text-fg"}`}
+    >
+      <div className="relative aspect-square overflow-hidden">
         <Image
           src={program.image}
-          alt=""
+          alt={program.name}
           fill
-          className="object-cover"
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          sizes="230px"
         />
       </div>
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+      <div className="flex min-h-36 flex-col gap-2 p-5">
+        <h3 className="font-display font-extrabold leading-tight" style={{ fontSize: "var(--text-h3)" }}>
           {program.name}
         </h3>
-        <p className="mt-2 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
+        <div className={`h-px w-full ${program.dark ? "bg-white/20" : "bg-emerald/20"}`} />
+        <p className={program.dark ? "text-fg-on-dark/75" : "text-fg-2"} style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}>
           {program.who}
         </p>
-        {"href" in program ? (
-          <span className="mt-5 inline-flex items-center gap-2 font-bold text-emerald">
-            View the Circle <ArrowUpRight className="size-4" aria-hidden />
-          </span>
-        ) : null}
       </div>
-    </>
+    </article>
   );
 
-  const className =
-    "flex h-full flex-col overflow-hidden rounded-md border border-border bg-white transition-colors hover:border-emerald/45";
-
-  return "href" in program ? (
-    <Link href={program.href} className={className}>
-      {content}
-    </Link>
-  ) : (
-    <article className={className}>{content}</article>
-  );
+  return "href" in program ? <Link href={program.href} className="block">{card}</Link> : card;
 }
 
 export default function ProgramsHistory() {
@@ -75,8 +79,32 @@ export default function ProgramsHistory() {
         <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
           Programs we have run.
         </h2>
-        <div className="mt-10 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {programs.map((program) => <ProgramCard key={program.name} program={program} />)}
+
+        <div className="relative mx-auto mt-10 hidden h-[38rem] w-full max-w-5xl items-center justify-center sm:flex">
+          {programs.map((program, index) => (
+            <div
+              key={program.name}
+              className="absolute left-1/2 top-1/2 w-[230px] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                marginLeft: fanPositions[index].x,
+                marginTop: fanPositions[index].y,
+                zIndex: index,
+              }}
+            >
+              <div
+                className="rotate-[var(--fan-rotate)] transition-transform duration-200 ease-out hover:-translate-y-10 hover:rotate-0 hover:scale-[1.06] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100"
+                style={{ "--fan-rotate": fanPositions[index].rotate } as CSSProperties}
+              >
+                <ProgramCard program={program} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-4 sm:hidden">
+          {programs.map((program) => (
+            <ProgramCard key={program.name} program={program} />
+          ))}
         </div>
       </div>
     </section>

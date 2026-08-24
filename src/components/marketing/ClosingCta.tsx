@@ -8,7 +8,7 @@ export default function ClosingCta({
   heading = "Change how your team uses AI at work.",
   sub = "Bring tasks that take too long and we will tell you if AI is the answer.",
   buttonLabel = "See how we work",
-  intent = "audit",
+  intent = "identify",
   href = "/services",
 }: {
   heading?: ReactNode;

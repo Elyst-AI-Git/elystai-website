@@ -4,7 +4,7 @@ import { TextGradientScroll } from "@/components/ui/text-gradient-scroll";
 
 const problemLines = [
   "You bought AI subscriptions for the team.",
-  "But the tools are only somewhat used and the work output is almost the same.",
+  "But the work output has not changed much.",
   "You are not the problem.",
   "A subscription is not an AI system.",
   "That is the gap we built Elyst AI to close.",
@@ -22,7 +22,7 @@ export default function ProblemSequence() {
           <TextGradientScroll
             key={line}
             text={line}
-            className="w-full font-display font-semibold text-[length:var(--text-body)] leading-[1.15] tracking-[var(--tracking-display)] sm:text-[length:var(--text-lead)] lg:text-[length:var(--text-display)]"
+            className="problem-sequence-line w-full font-display font-semibold leading-[1.15] tracking-[var(--tracking-display)]"
           />
         ))}
       </div>

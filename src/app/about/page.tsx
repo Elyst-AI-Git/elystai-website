@@ -7,7 +7,7 @@ import ClosingCta from "@/components/marketing/ClosingCta";
 
 const ABOUT_META_TITLE = "The Team Behind Elyst AI";
 const ABOUT_DESCRIPTION =
-  "The team behind Elyst AI, and how we audit, build, and hand over AI systems.";
+  "The team behind Elyst AI, and how we identify, build, and hand over AI systems.";
 const ABOUT_HERO_COPY =
   "The hard part of AI is not opening another tool. It is choosing what to change, fitting it into how the business already runs, and getting people to actually use it.";
 const COMPANY_COPY =

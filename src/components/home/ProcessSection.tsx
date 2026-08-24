@@ -12,9 +12,9 @@ export type ProcessStep = {
 
 export const processSteps: ProcessStep[] = [
   {
-    label: "Audit",
-    href: "/services#audit",
-    description: "We map how your team works now and find the one thing worth fixing first.",
+    label: "Identify",
+    href: "/services#identify",
+    description: "We understand how your team works now and find the one thing worth fixing first.",
   },
   {
     label: "Build",
@@ -80,11 +80,11 @@ type HomepageProcessStep = {
 const homepageProcess: HomepageProcessStep[] = [
   {
     number: "01",
-    label: "Audit",
+    label: "Identify",
     headline: "Find the one area worth doing first.",
-    description: "We map the workflow, the friction, and the cost before anything gets built.",
-    href: "/services#audit",
-    symbol: "audit",
+    description: "We understand the workflow, the friction, and the cost before anything gets built.",
+    href: "/services#identify",
+    symbol: "identify",
   },
   {
     number: "02",
@@ -133,7 +133,7 @@ export default function ProcessSection() {
                   <ProcessSymbol id={step.symbol} size="large" />
                 </div>
 
-                <h3 className="mt-4 min-h-[4.4rem] max-w-sm font-display font-semibold text-fg" style={{ fontSize: "calc(var(--text-card) * 1.1)", lineHeight: 1.08, letterSpacing: "var(--tracking-display)" }}>
+                <h3 className="homepage-process-card-title mt-4 min-h-[4.4rem] max-w-sm font-display font-semibold text-fg" style={{ lineHeight: 1.08, letterSpacing: "var(--tracking-display)" }}>
                   {step.headline}
                 </h3>
                 <p className="mt-5 min-h-[5.3rem] max-w-sm text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>

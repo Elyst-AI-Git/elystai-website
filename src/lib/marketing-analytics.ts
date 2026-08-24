@@ -70,7 +70,7 @@ export function appendStoredUtm(href: string): string {
 }
 
 export function trackBookingCta(intent: BookingIntent): void {
-  track(intent === "audit" ? "audit_cta_click" : "training_cta_click", {
+  track(intent === "identify" ? "identify_cta_click" : "training_cta_click", {
     booking_type: intent,
   });
 }

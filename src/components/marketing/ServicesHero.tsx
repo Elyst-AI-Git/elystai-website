@@ -37,7 +37,9 @@ export default function ServicesHero() {
                 </span>
                 <span className="sr-only">automations.</span>
               </span>
-              <span className="block">We change how the work gets done.</span>
+              <span className="block">
+                We make your team <span className="lg:block">AI-Native.</span>
+              </span>
             </h1>
           </div>
 
@@ -49,7 +51,7 @@ export default function ServicesHero() {
               We work out what is worth building, build it, then teach your team to run it.
             </p>
             <div className="mt-8">
-              <BrandButton href="/services#our-process" variant="solid" tone="green">
+              <BrandButton href="/services#our-process" variant="metal" tone="light" preset="silver">
                 See how we work
               </BrandButton>
             </div>

@@ -1,6 +1,6 @@
 # Elyst AI website
 
-Marketing site for Elyst AI's audit, implementation, custom AI development, and team training services.
+Marketing site for Elyst AI's workflow identification, implementation, custom AI development, and team training services.
 
 ## Stack
 
@@ -34,12 +34,12 @@ The preview runs at [http://localhost:3000](http://localhost:3000).
 | Path | Purpose | Indexing |
 | --- | --- | --- |
 | `/` | Company overview | Index |
-| `/services` | Audit, build, and handover | Index |
+| `/services` | Identify, build, and handover | Index |
 | `/training` | Team training and program history | Index |
 | `/about` | Company and founders | Index |
 | `/circle` | Paid Elyst AI Circle | Index |
 | `/register` | Closed legacy cohort notice | Noindex |
-| `/book/audit` | Audit scheduler | Noindex |
+| `/book/identify` | Identify scheduler | Noindex |
 | `/book/training` | Training scheduler | Noindex |
 
 Retired routes redirect directly to their current destination in `next.config.ts`.
@@ -49,11 +49,11 @@ Retired routes redirect directly to their current destination in `next.config.ts
 The known live Cal.com event is retained as the safe fallback. Once the two dedicated Cal events exist, set:
 
 ```bash
-NEXT_PUBLIC_CAL_AUDIT_URL=https://cal.com/elyst-ai/your-audit-event
+NEXT_PUBLIC_CAL_IDENTIFY_URL=https://cal.com/elyst-ai/your-identify-event
 NEXT_PUBLIC_CAL_TRAINING_URL=https://cal.com/elyst-ai/your-training-event
 ```
 
-Configure each Cal event's success redirect to `/booking-complete?intent=audit` or `/booking-complete?intent=training`. No other environment variables are required.
+Configure each Cal event's success redirect to `/booking-complete?intent=identify` or `/booking-complete?intent=training`. No other environment variables are required.
 
 ## Deployment
 

@@ -12,7 +12,7 @@ export const organizationSchema: Record<string, unknown> = {
   logo: `${SITE_URL}/web-app-manifest-512x512.png`,
   image: `${SITE_URL}/images/og/site.png`,
   description:
-    "We audit how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.",
+    "We understand how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.",
   email: "info@elystai.com",
   telephone: "+91-9633288931",
   address: {

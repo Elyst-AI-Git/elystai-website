@@ -10,7 +10,7 @@ import ClosingCta from "@/components/marketing/ClosingCta";
 
 const HOME_TITLE = "Elyst AI | AI Strategy, Implementation & Custom AI Development.";
 const HOME_DESCRIPTION =
-  "We audit how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
+  "We understand how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },

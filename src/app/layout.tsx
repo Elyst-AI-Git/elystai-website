@@ -9,7 +9,7 @@ import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "We audit how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
+  "We understand how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -71,7 +71,7 @@ export default function RootLayout({
         {children}
         <PreFooter />
         <Footer />
-        <MarketingAnalytics />
+        <MarketingAnalytics enableWebAnalytics={Boolean(process.env.VERCEL)} />
       </body>
     </html>
   );

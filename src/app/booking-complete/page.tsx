@@ -14,7 +14,7 @@ export default async function BookingCompletePage({
   searchParams: Promise<{ intent?: string }>;
 }) {
   const { intent: requestedIntent } = await searchParams;
-  const intent = requestedIntent && isBookingIntent(requestedIntent) ? requestedIntent : "audit";
+  const intent = requestedIntent && isBookingIntent(requestedIntent) ? requestedIntent : "identify";
   const isTraining = intent === "training";
 
   return (

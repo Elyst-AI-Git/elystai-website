@@ -9,19 +9,19 @@ import {
 } from "../src/lib/booking.ts";
 
 test("services and training use separate booking funnels", () => {
-  assert.ok(CALENDAR_URLS.audit.startsWith("https://cal.com/"));
+  assert.ok(CALENDAR_URLS.identify.startsWith("https://cal.com/"));
   assert.ok(CALENDAR_URLS.training.startsWith("https://cal.com/"));
-  assert.equal(bookingPageHref("audit"), "/book/audit");
+  assert.equal(bookingPageHref("identify"), "/book/identify");
   assert.equal(bookingPageHref("training"), "/book/training");
   assert.notEqual(
-    new URL(calendarHref("audit")).searchParams.get("utm_campaign"),
+    new URL(calendarHref("identify")).searchParams.get("utm_campaign"),
     new URL(calendarHref("training")).searchParams.get("utm_campaign"),
   );
 });
 
 test("calendar links preserve campaign attribution and reject unrelated parameters", () => {
   const url = new URL(
-    calendarHref("audit", {
+    calendarHref("identify", {
       utm_source: "linkedin",
       utm_campaign: "kerala_ops",
       referral_code: "should-not-leak",
@@ -35,7 +35,7 @@ test("calendar links preserve campaign attribution and reject unrelated paramete
 });
 
 test("booking intent validation is explicit", () => {
-  assert.equal(isBookingIntent("audit"), true);
+  assert.equal(isBookingIntent("identify"), true);
   assert.equal(isBookingIntent("training"), true);
   assert.equal(isBookingIntent("sales"), false);
 });

@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import type { MouseEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { MetalButton } from "@/components/ui/metal-button";
 
 export type BrandVariant = "metal" | "outline" | "solid";
 export type BrandTone = "emerald" | "light" | "green";
@@ -14,7 +17,8 @@ export type BrandButtonProps = {
   onClick?: (event: MouseEvent<HTMLElement>) => void;
   full?: boolean;
   disabled?: boolean;
-  analyticsIntent?: "audit" | "training";
+  analyticsIntent?: "identify" | "training";
+  preset?: "chromatic" | "silver" | "gold";
 };
 
 const baseClassName =
@@ -66,7 +70,29 @@ export function BrandButton({
   full = false,
   disabled = false,
   analyticsIntent,
+  preset = "silver",
 }: BrandButtonProps) {
+  if (variant === "metal") {
+    return (
+      <MetalButton
+        href={href}
+        full={full}
+        disabled={disabled}
+        onClick={onClick}
+        preset={tone === "green" ? "silver" : preset}
+        theme={tone === "light" ? "light" : "dark"}
+        dataBookingIntent={analyticsIntent}
+        className={cn(
+          "text-[length:var(--text-small)]",
+          toneClasses[tone],
+          className,
+        )}
+      >
+        {children}
+      </MetalButton>
+    );
+  }
+
   const classes = getButtonClassName({ variant, tone, full, disabled, className });
   const dataAttributes = analyticsIntent
     ? { "data-booking-intent": analyticsIntent }

@@ -106,7 +106,7 @@ function HandoverVisual() {
 const principles: Principle[] = [
   {
     title: "Custom by design",
-    description: "We start with your workflow, not a tool.",
+    description: "We build the system to work around your team, not around another AI tool.",
     visual: CustomVisual,
     className: "lg:col-span-2",
   },
@@ -124,13 +124,13 @@ const principles: Principle[] = [
   },
   {
     title: "Tested on real work",
-    description: "We test against the work the system is meant to improve.",
+    description: "We test against the work the system is meant to improve, and iterate before it goes live.",
     visual: RealWorkVisual,
     className: "lg:col-span-3",
   },
   {
     title: "Your team owns the handover",
-    description: "Training, documentation, limits, and access transfer to your team.",
+    description: "We train your team to run it, document everything, and hand over full access.",
     visual: HandoverVisual,
     className: "lg:col-span-3",
   },
@@ -144,7 +144,7 @@ function PrincipleCard({ principle }: { principle: Principle }) {
       <div className="flex h-44 shrink-0 items-center justify-center px-2 py-5">
         <Visual />
       </div>
-      <h3 className="mt-6 font-display font-semibold text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.12 }}>
+      <h3 className="homepage-principle-title mt-6 font-display font-semibold text-fg" style={{ lineHeight: 1.12 }}>
         {principle.title}
       </h3>
       <p className="mt-2 max-w-xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>

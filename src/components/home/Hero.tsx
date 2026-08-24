@@ -1,4 +1,5 @@
 import MarkDither from "@/components/site/MarkDither";
+import BookingButton from "@/components/marketing/BookingButton";
 import { BrandButton } from "@/components/ui/brand-button";
 import { CometCard } from "@/components/ui/comet-card";
 
@@ -8,7 +9,7 @@ export default function Hero() {
       <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[3fr_2fr]">
         {/* Left — copy */}
         <div>
-          <h1 className="text-fg" style={{ fontSize: "clamp(2.6rem, 5.7vw, 5.25rem)", lineHeight: 1.08 }}>
+          <h1 className="home-hero-title text-fg" style={{ lineHeight: 1.08 }}>
             Don&apos;t just use AI, we <span className="hero-accent-word">change</span> how your team works with it.
           </h1>
 
@@ -16,17 +17,17 @@ export default function Hero() {
             className="mt-5 max-w-2xl text-fg-2"
             style={{ fontSize: "var(--text-body)" }}
           >
-            We audit how your company works, identify where AI can elevate
+            We understand how your company works, identify where AI can elevate
             the business, build the right AI system, and train your team to run
             it.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BrandButton href="/services" variant="solid" tone="green">
-              See how we work
-            </BrandButton>
+            <BookingButton intent="identify" variant="metal" tone="emerald" preset="silver">
+              Book a call
+            </BookingButton>
             <BrandButton href="#how-we-work" variant="outline">
-              See how we work
+              See the process
             </BrandButton>
           </div>
         </div>

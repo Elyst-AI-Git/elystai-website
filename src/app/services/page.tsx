@@ -9,7 +9,7 @@ import ServicesProcess from "@/components/marketing/ServicesProcess";
 import JsonLd from "@/components/seo/JsonLd";
 
 const SERVICES_DESCRIPTION =
-  "We audit how your team works, build the right AI system, and train your team to run it.";
+  "We understand how your team works, build the right AI system, and train your team to run it.";
 
 export const metadata = {
   ...pageMeta({
@@ -24,22 +24,22 @@ export const metadata = {
 const fitPairs = [
   {
     no: "We want to add AI to the business.",
-    yes: "Follow-ups keep slipping and we lose leads.",
+    yes: "A specific task is costing us time or leads.",
   },
   {
     no: "Nobody really owns this process.",
     yes: "One person owns it and wants it fixed.",
   },
   {
-    no: "We want AI to decide with nobody checking.",
-    yes: "A person still signs off on the calls that matter.",
+    no: "We want AI to decide and nobody checks.",
+    yes: "I want to make my team AI-Native",
   },
 ];
 
 const serviceFaqs = [
   {
     q: "How long does it take?",
-    a: "It depends on the workflow. We commit to timelines after the audit, not before.",
+    a: "It depends on the workflow. We commit to timelines after we understand it, not before.",
   },
   {
     q: "What data access do you need?",
@@ -86,7 +86,7 @@ const bringLists = {
     "Discovery and mapping",
     "The build",
     "Training and documentation",
-    "A named Elyst delivery lead through handover",
+    "A named owner at handover",
   ],
 };
 
@@ -97,7 +97,7 @@ export default function ServicesPage() {
         data={[
           serviceSchema({
             path: "/services",
-            name: "AI workflow audit, implementation and training",
+            name: "AI workflow identification, implementation and training",
             description: SERVICES_DESCRIPTION,
           }),
           breadcrumbSchema([
@@ -148,6 +148,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Working together is intentionally held out of the page for now. */}
+      {false && (
       <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-center lg:gap-16">
           <div>
@@ -188,6 +190,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+      )}
 
       <FaqSection
         faqs={serviceFaqs}
@@ -203,7 +206,7 @@ export default function ServicesPage() {
         }
         sub=""
         buttonLabel="See how we work"
-        intent="audit"
+        intent="identify"
         href="/services#our-process"
       />
     </main>

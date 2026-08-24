@@ -4,9 +4,9 @@ import { TextGradientScroll } from "@/components/ui/text-gradient-scroll";
 import ClosingCta from "@/components/marketing/ClosingCta";
 import FaqSection from "@/components/marketing/FaqSection";
 import ProgramsHistory from "@/components/training/ProgramsHistory";
-import TrainingTestimonials from "@/components/training/TrainingTestimonials";
 import { AudienceVisual, OutcomeVisual, type OutcomeVisualId } from "@/components/training/TrainingVisuals";
 import { VisualCard } from "@/components/ui/visual-card";
+import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
 
 type TrainingStep = {
   label: string;
@@ -101,7 +101,7 @@ function SessionInputs({ className = "" }: { className?: string }) {
         <span aria-hidden className="h-px w-10 bg-white/20" />
       </div>
 
-      <ol className="mt-7 border-y" style={{ borderColor: "rgba(255,255,255,0.13)" }}>
+      <ol className="mt-7 border-t" style={{ borderColor: "rgba(255,255,255,0.13)" }}>
         {["Your role", "Your tools", "Your real work"].map((item, index) => (
           <li
             key={item}
@@ -151,30 +151,33 @@ function AudiencePanel() {
 
 function OutcomesBoard() {
   return (
-    <div>
-      <ol className="grid gap-4 md:grid-cols-3">
-        {trainingOutcomes.map((outcome, index) => (
-          <li key={outcome.title}>
-            <VisualCard decorated={false} className="flex min-h-80 h-full flex-col p-6 sm:p-7">
-              <div className="flex h-32 items-center justify-center">
-                <OutcomeVisual id={outcome.visual} className="max-w-[14rem]" />
-              </div>
-              <span className="mt-6 font-display font-semibold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                0{index + 1}
-              </span>
-              <h3 className="mt-3 max-w-sm text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.2 }}>
-                {outcome.title}
-              </h3>
-            </VisualCard>
-          </li>
-        ))}
-      </ol>
-      <div className="training-honesty-gradient mt-10">
-        <TextGradientScroll
-          text="Anyone promising you a percentage after one session is guessing."
-          className="mx-auto max-w-4xl justify-center text-center font-display font-bold text-[length:var(--text-card)] leading-[1.15] tracking-[var(--tracking-display)]"
-        />
-      </div>
+    <ol className="grid gap-4 md:grid-cols-3">
+      {trainingOutcomes.map((outcome, index) => (
+        <li key={outcome.title}>
+          <VisualCard decorated={false} className="flex min-h-80 h-full flex-col p-6 sm:p-7">
+            <div className="flex h-32 items-center justify-center">
+              <OutcomeVisual id={outcome.visual} className="max-w-[14rem]" />
+            </div>
+            <span className="mt-6 font-display font-semibold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+              0{index + 1}
+            </span>
+            <h3 className="mt-3 max-w-sm text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.2 }}>
+              {outcome.title}
+            </h3>
+          </VisualCard>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function TrainingHonesty() {
+  const className = "mx-auto max-w-5xl justify-center text-center font-display font-bold text-[length:calc(var(--text-card)+2px)] leading-[1.15] tracking-[var(--tracking-display)]";
+
+  return (
+    <div className="training-honesty-gradient mx-auto mt-12 max-w-5xl text-center sm:mt-14 lg:col-span-2">
+      <TextGradientScroll text="Anyone promising you a percentage" className={className} />
+      <TextGradientScroll text="After one session is guessing." className={`${className} mt-2`} />
     </div>
   );
 }
@@ -212,14 +215,15 @@ function TrainingProof() {
 
       <div className="mt-16 sm:mt-20">
         <div className="mx-auto mb-5 max-w-2xl px-[var(--section-px)] text-center">
-          <SectionMark>From the room</SectionMark>
+          <SectionMark>Already delivered</SectionMark>
           <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            The useful bits people remembered.
+            Hear it from the people themselves.
           </h2>
+          <p className="mx-auto mt-4 max-w-prose text-fg-2" style={{ fontSize: "var(--text-body)" }}>
+            Not a forced 5 star review, it&apos;s what they actually felt.
+          </p>
         </div>
-        <div className="mx-auto max-w-7xl px-[var(--section-px)]">
-          <TrainingTestimonials />
-        </div>
+        <StaggerTestimonials />
       </div>
     </section>
   );
@@ -232,7 +236,7 @@ export default function TrainingPage() {
         <div className="mx-auto grid max-w-7xl gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.62fr)] xl:items-center xl:gap-16">
           <div className="max-w-3xl">
             <SectionMark tone="dark">Training</SectionMark>
-            <h1 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-display)", lineHeight: 1.04 }}>
+            <h1 className="training-hero-title mt-6 text-fg-on-dark" style={{ lineHeight: 1.04 }}>
               <span className="block">AI training built around the</span>
               <span className="block">work your team already does.</span>
             </h1>
@@ -274,14 +278,17 @@ export default function TrainingPage() {
       </section>
 
       <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16">
-          <div>
-            <SectionMark>What you get</SectionMark>
-            <h2 className="mt-6 max-w-lg text-fg" style={{ fontSize: "var(--text-h2)" }}>
-              What your team walks out with.
-            </h2>
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16">
+            <div>
+              <SectionMark>What you get</SectionMark>
+              <h2 className="mt-6 max-w-lg text-fg" style={{ fontSize: "var(--text-h2)" }}>
+                What your team walks out with.
+              </h2>
+            </div>
+            <OutcomesBoard />
           </div>
-          <OutcomesBoard />
+          <TrainingHonesty />
         </div>
       </section>
 

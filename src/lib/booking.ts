@@ -1,16 +1,17 @@
-export const BOOKING_INTENTS = ["audit", "training"] as const;
+export const BOOKING_INTENTS = ["identify", "training"] as const;
 
 export type BookingIntent = (typeof BOOKING_INTENTS)[number];
 
 const DEFAULT_CALENDAR_URLS: Record<BookingIntent, string> = {
   // Preserve the verified live event until the two dedicated Cal events are
   // configured. Environment variables can switch each funnel independently.
-  audit: "https://cal.com/elyst-ai/30min",
+  identify: "https://cal.com/elyst-ai/30min",
   training: "https://cal.com/elyst-ai/30min",
 };
 
 export const CALENDAR_URLS: Record<BookingIntent, string> = {
-  audit: process.env.NEXT_PUBLIC_CAL_AUDIT_URL || DEFAULT_CALENDAR_URLS.audit,
+  identify:
+    process.env.NEXT_PUBLIC_CAL_IDENTIFY_URL || DEFAULT_CALENDAR_URLS.identify,
   training:
     process.env.NEXT_PUBLIC_CAL_TRAINING_URL || DEFAULT_CALENDAR_URLS.training,
 };
@@ -39,7 +40,7 @@ export function calendarHref(
   url.searchParams.set(
     "utm_campaign",
     url.searchParams.get("utm_campaign") ??
-      (intent === "audit" ? "ai_workflow_audit_call" : "team_ai_training_session"),
+      (intent === "identify" ? "ai_workflow_identify_call" : "team_ai_training_session"),
   );
 
   return url.toString();

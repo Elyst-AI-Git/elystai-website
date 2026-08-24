@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ProcessSymbol } from "@/components/marketing/ProcessSymbols";
 import { SectionMark } from "@/components/ui/section-mark";
 
-type ProcessId = "audit" | "build" | "handover";
+type ProcessId = "identify" | "build" | "handover";
 
 type ProcessGroup = {
   title: string;
@@ -22,16 +22,16 @@ type ProcessStep = {
 
 const processSteps: ProcessStep[] = [
   {
-    id: "audit",
+    id: "identify",
     number: "1",
-    title: "Audit",
-    lead: "We work out what is worth building, before anything gets built.",
+    title: "Identify",
+    lead: "We understand how your team operates, find where AI can help, and share that with you before we start building.",
     groups: [
       {
         title: "What we look at",
         items: [
-          "How often the workflow runs",
-          "Who touches it and where it stalls",
+          "How the team works now",
+          "Where AI can help",
           "What data exists and how clean it is",
           "What it costs in time and errors",
           "What you have already tried",
@@ -68,7 +68,7 @@ const processSteps: ProcessStep[] = [
         title: "Every proposal defines",
         items: [
           "Scope and exclusions",
-          "Milestones",
+          "Milestones, by phase",
           "How success is measured",
           "A phased payment schedule",
         ],
@@ -88,7 +88,6 @@ const processSteps: ProcessStep[] = [
           "A runbook and a named owner",
           "Known limits and an escalation path",
           "Transfer of accounts and access",
-          "An agreed support period",
         ],
       },
     ],
@@ -96,13 +95,18 @@ const processSteps: ProcessStep[] = [
 ];
 
 function isProcessId(value: string): value is ProcessId {
-  return value === "audit" || value === "build" || value === "handover";
+  return value === "identify" || value === "build" || value === "handover";
 }
 
-function ProcessDetails({ step }: { step: ProcessStep }) {
+function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" | "light" }) {
+  const isLight = surface === "light";
+
   return (
     <div className="flex min-w-0 flex-col justify-center">
-      <p className="max-w-3xl text-fg-on-dark/90" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+      <p
+        className={`max-w-3xl ${isLight ? "text-fg" : "text-fg-on-dark/90"}`}
+        style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}
+      >
         {step.lead}
       </p>
 
@@ -110,16 +114,16 @@ function ProcessDetails({ step }: { step: ProcessStep }) {
         {step.groups.map((group) => (
           <div key={group.title}>
             <h3
-              className="font-display font-semibold uppercase text-green"
+              className={`font-display font-semibold uppercase ${isLight ? "text-emerald" : "text-green"}`}
               style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}
             >
               {group.title}
             </h3>
-            <ul className="mt-3 list-none divide-y divide-white/10 border-t border-white/10 p-0">
+            <ul className={`mt-3 list-none divide-y p-0 ${isLight ? "divide-border border-t border-border" : "divide-white/10 border-t border-white/10"}`}>
               {group.items.map((item) => (
                 <li
                   key={item}
-                  className="py-3 text-fg-on-dark/75"
+                  className={`py-3 ${isLight ? "text-fg" : "text-fg-on-dark/75"}`}
                   style={{ fontSize: "var(--text-body)", lineHeight: 1.35 }}
                 >
                   {item}
@@ -133,23 +137,31 @@ function ProcessDetails({ step }: { step: ProcessStep }) {
   );
 }
 
-function ProcessPanel({ step }: { step: ProcessStep }) {
+function ProcessPanel({ step, surface = "dark" }: { step: ProcessStep; surface?: "dark" | "light" }) {
   return (
     <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[0.68fr_1.32fr] lg:items-center lg:gap-12 lg:p-12">
-      <ProcessSymbol id={step.id} />
-      <ProcessDetails step={step} />
+      <ProcessSymbol id={step.id} surface={surface} />
+      <ProcessDetails step={step} surface={surface} />
     </div>
   );
 }
 
 export default function ServicesProcess() {
-  const [activeId, setActiveId] = useState<ProcessId>("audit");
+  const [activeId, setActiveId] = useState<ProcessId>("identify");
   const activeStep = processSteps.find((step) => step.id === activeId) ?? processSteps[0];
 
   useEffect(() => {
     const syncFromHash = () => {
       const hash = window.location.hash.slice(1);
-      if (isProcessId(hash)) setActiveId(hash);
+      if (!isProcessId(hash)) return;
+
+      setActiveId(hash);
+
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        window.requestAnimationFrame(() => {
+          document.getElementById(`mobile-process-${hash}`)?.scrollIntoView({ block: "start" });
+        });
+      }
     };
 
     syncFromHash();
@@ -172,7 +184,7 @@ export default function ServicesProcess() {
           </h2>
         </div>
 
-        <div className="mt-12 sm:mt-14" role="tablist" aria-label="Our process">
+        <div className="mt-12 hidden sm:mt-14 md:block" role="tablist" aria-label="Our process">
           <div className="mx-auto flex w-fit max-w-full items-start justify-center gap-4 sm:gap-8 lg:gap-10">
             {processSteps.map((step) => {
               const isActive = step.id === activeId;
@@ -211,20 +223,33 @@ export default function ServicesProcess() {
           role="tabpanel"
           aria-labelledby={activeStep.id}
           tabIndex={0}
-          className="mt-5 overflow-hidden rounded-md border border-white/10 bg-surface-dark-2 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-green sm:mt-6"
+          className="mt-5 hidden overflow-hidden rounded-md border border-border bg-surface-card outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-green sm:mt-6 md:block"
         >
-          <ProcessPanel step={activeStep} />
+          <ProcessPanel step={activeStep} surface="light" />
+        </div>
+
+        <div className="mt-10 space-y-10 md:hidden">
+          {processSteps.map((step) => (
+            <article key={step.id} id={`mobile-process-${step.id}`} className="scroll-mt-24">
+              <h3 className="mobile-process-heading mb-4 font-display font-semibold text-fg-on-dark">
+                {step.number}. {step.title}
+              </h3>
+              <div className="overflow-hidden rounded-md border border-border bg-surface-card">
+                <ProcessPanel step={step} surface="light" />
+              </div>
+            </article>
+          ))}
         </div>
 
         <noscript>
           <div className="mt-6 grid gap-4">
             {processSteps.map((step) => (
-              <article key={step.id} className="overflow-hidden rounded-md border border-white/10 bg-surface-dark-2 p-5 sm:p-8">
-                <div className="mb-6 flex items-baseline gap-2 font-display text-fg-on-dark">
+              <article key={step.id} className="overflow-hidden rounded-md border border-border bg-surface-card p-5 sm:p-8">
+                <div className="mb-6 flex items-baseline gap-2 font-display text-fg">
                   <span style={{ fontSize: "var(--text-label)" }}>{step.number}.</span>
                   <h3 style={{ fontSize: "var(--text-h3)" }}>{step.title}</h3>
                 </div>
-                <ProcessPanel step={step} />
+                <ProcessPanel step={step} surface="light" />
               </article>
             ))}
           </div>
