@@ -33,41 +33,11 @@ const socials = [
   { label: "WhatsApp community", href: "https://wa.me/919633288931", Icon: WhatsappIcon },
 ];
 
-// Trimmed to the destinations that matter. The Accelerator carries two
-// sub-programs (Circle + AI for Work) nested beneath it as compact indented
-// links, so the footer surfaces them without growing taller.
-type FooterLink = { label: string; href: string; badge?: string };
-const footerNav: { label: string; href: string; children?: FooterLink[] }[] = [
-  { label: "Home", href: "/" },
-  { label: "AIOS for Business", href: "/aios" },
-  {
-    label: "AI Accelerator",
-    href: "/learn",
-    children: [
-      { label: "Elyst AI Circle", href: "/circle" },
-      { label: "AI for Work", href: "/ai-for-work", badge: "Closed" },
-    ],
-  },
+const footerNav = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Training", href: "/training" },
 ];
-
-/** Rectangular metallic badge — same liquid-silver treatment as the social
-    buttons, used to flag the live AI for Work enrolment. */
-function MetalBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="shrink-0 rounded px-1.5 py-0.5 text-[0.58rem] font-bold uppercase tracking-wide"
-      style={{
-        background: "linear-gradient(180deg, #f8faf9 0%, #dde4e0 55%, #ebefed 100%)",
-        color: "#0A0F0C",
-        borderTop: "1px solid rgba(255,255,255,0.95)",
-        borderBottom: "1px solid rgba(3,98,76,0.18)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 1px 4px rgba(3,98,76,0.10)",
-      }}
-    >
-      {children}
-    </span>
-  );
-}
 
 export default function Footer() {
   return (
@@ -78,12 +48,12 @@ export default function Footer() {
       <div
         className="overflow-hidden"
         style={{
-          paddingTop: "160px",
+          paddingTop: "clamp(88px, 10vw, 128px)",
           background:
             "linear-gradient(to bottom, var(--bg) 0%, color-mix(in srgb, var(--bg) 65%, var(--surface-dark) 35%) 35%, color-mix(in srgb, var(--bg) 22%, var(--surface-dark) 78%) 70%, var(--surface-dark) 160px)",
         }}
       >
-        <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pt-14 pb-0">
+        <div className="relative overflow-hidden bg-surface-dark px-[var(--section-px)] pt-12 pb-0">
           <FooterStarfield />
 
           <div className="relative z-10 mx-auto max-w-6xl">
@@ -119,33 +89,18 @@ export default function Footer() {
                   right); on desktop the wrapper dissolves (sm:contents) so the
                   3-up justify-between row is preserved. */}
               <div className="flex justify-between gap-8 sm:contents">
-                {/* Middle — the three links that matter */}
+                {/* Middle — the current site links */}
                 <nav aria-label="Footer">
                   <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
                   <ul className="flex flex-col gap-1.5">
-                    {footerNav.map((l) => (
-                      <li key={l.label}>
+                    {footerNav.map((link) => (
+                      <li key={link.label}>
                         <Link
-                          href={l.href}
+                          href={link.href}
                           className="inline-flex items-center py-1 text-small text-fg-on-dark/80 transition-colors hover:text-green"
                         >
-                          {l.label}
+                          {link.label}
                         </Link>
-                        {l.children && (
-                          <ul className="mt-1 flex flex-col gap-1 border-l border-white/10 pl-3">
-                            {l.children.map((c) => (
-                              <li key={c.label}>
-                                <Link
-                                  href={c.href}
-                                  className="inline-flex items-center gap-2 py-0.5 text-[0.82rem] text-fg-on-dark/65 transition-colors hover:text-green"
-                                >
-                                  {c.label}
-                                  {c.badge && <MetalBadge>{c.badge}</MetalBadge>}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
                       </li>
                     ))}
                   </ul>
@@ -184,7 +139,7 @@ export default function Footer() {
           <div className="relative z-10 mt-2 flex justify-center">
             <Wordmark
               title="Elyst AI"
-              className="block h-auto w-full max-w-[975px] text-fg-on-dark"
+              className="block h-auto w-[88vw] max-w-[880px] text-fg-on-dark"
             />
           </div>
 

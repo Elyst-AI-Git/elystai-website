@@ -1,5 +1,4 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 /**
@@ -16,20 +15,9 @@ import { cn } from "@/lib/utils"
  * frame can drop onto any existing card shape.
  */
 
-const cardVariants = cva("relative w-full overflow-hidden", {
-  variants: {
-    variant: {
-      gradient: [],
-    },
-  },
-  defaultVariants: {
-    variant: "gradient",
-  },
-})
-
 export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "gradient" | "plain"
   title?: string
   description?: string
 }
@@ -49,14 +37,14 @@ const GradientLines = () => (
 )
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, title, description, children, ...props }, ref) => {
+  ({ className, variant = "gradient", title, description, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn(cardVariants({ variant, className }))}
+        className={cn("relative w-full overflow-hidden", className)}
         {...props}
       >
-        <GradientLines />
+        {variant !== "plain" && <GradientLines />}
         {title && <h3 className="mb-1 text-lg font-bold text-fg">{title}</h3>}
         {description && <p className="text-fg-2">{description}</p>}
         {children}
@@ -66,4 +54,18 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 )
 Card.displayName = "Card"
 
-export { Card, cardVariants }
+const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  ),
+)
+CardContent.displayName = "CardContent"
+
+const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
+  ),
+)
+CardHeader.displayName = "CardHeader"
+
+export { Card, CardContent, CardHeader }

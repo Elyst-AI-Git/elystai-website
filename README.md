@@ -1,61 +1,60 @@
-# Elyst AI — Website
+# Elyst AI website
 
-Marketing site for Elyst AI: AIOS (an AI employee for businesses) and the Accelerator (AI programs for people). Based in Kozhikode, Kerala, serving India and the GCC.
+Marketing site for Elyst AI's workflow identification, implementation, custom AI development, and team training services.
 
 ## Stack
 
-- **Next.js 16** (App Router) + **React 19** + **TypeScript**
-- **Tailwind CSS v4**
-- **Framer Motion** for animation
-- Self-hosted fonts, statically rendered (SSG) on every route
+- Next.js 16, React 19, and TypeScript
+- Tailwind CSS v4
+- Self-hosted DM Sans and Manrope fonts
+- Vercel Analytics
+- Framer Motion only for the homepage scroll sequence and the existing Circle page
 
-## Getting started
+## Local development
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+npm run dev
 ```
 
-## Scripts
+The preview runs at [http://localhost:3000](http://localhost:3000).
 
-| Command | What it does |
-|---------|--------------|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+## Checks
 
-Requires **Node 20+** (see `.nvmrc`).
+| Command | Purpose |
+| --- | --- |
+| `npm run lint` | Lint source and tests |
+| `npm run typecheck` | Regenerate route types and run TypeScript |
+| `npm test` | Run booking and redirect regression tests |
+| `npm run build` | Create the production build with webpack |
+| `npm run check` | Run every check above |
 
-## Routes
+## Current routes
 
-| Path | Page |
-|------|------|
-| `/` | Home |
-| `/aios` | AIOS for Business |
-| `/learn` | The Accelerator |
-| `/circle` | The AI Circle |
-| `/juniors` | AI for Juniors |
+| Path | Purpose | Indexing |
+| --- | --- | --- |
+| `/` | Company overview | Index |
+| `/services` | Identify, build, and handover | Index |
+| `/training` | Team training and program history | Index |
+| `/about` | Company and founders | Index |
+| `/circle` | Paid Elyst AI Circle | Index |
+| `/register` | Closed legacy cohort notice | Noindex |
+| `/book/identify` | Identify scheduler | Noindex |
+| `/book/training` | Training scheduler | Noindex |
 
-## Structure
+Retired routes redirect directly to their current destination in `next.config.ts`.
 
+## Booking configuration
+
+The known live Cal.com event is retained as the safe fallback. Once the two dedicated Cal events exist, set:
+
+```bash
+NEXT_PUBLIC_CAL_IDENTIFY_URL=https://cal.com/elyst-ai/your-identify-event
+NEXT_PUBLIC_CAL_TRAINING_URL=https://cal.com/elyst-ai/your-training-event
 ```
-src/
-  app/         # routes, layout, metadata, robots.ts, sitemap.ts
-  components/  # section + UI components
-  lib/         # seo + schema helpers, utils
-public/        # fonts, images, favicons, og-image
-```
 
-SEO/AEO basics (metadata, Open Graph, JSON-LD schema, robots, sitemap) live in
-`src/app/layout.tsx`, `src/lib/seo.ts`, and `src/lib/schema.ts`.
+Configure each Cal event's success redirect to `/booking-complete?intent=identify` or `/booking-complete?intent=training`. No other environment variables are required.
 
 ## Deployment
 
-Hosted on **Vercel** — connect the repo and it builds on push. No environment
-variables are required.
-
-## Branches
-
-- `main` — production
-- `dev` — active development (Vercel preview deploys)
+Vercel runs the same `npm run build` command. Metadata, schema, robots, and sitemap logic live under `src/app`, `src/lib/seo.ts`, and `src/lib/schema.ts`.

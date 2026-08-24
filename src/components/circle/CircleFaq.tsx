@@ -1,10 +1,5 @@
 import { SectionMark } from "@/components/ui/section-mark";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ChevronDownIcon } from "lucide-react";
 
 type Faq = { q: string; a: string };
 
@@ -43,7 +38,10 @@ const jsonLd = {
 
 export default function CircleFaq() {
   return (
-    <section style={{ padding: "var(--section-py) var(--section-px)", background: "#c2edcb" }}>
+    <section
+      className="bg-surface-accent-soft"
+      style={{ padding: "var(--section-py) var(--section-px)" }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -57,28 +55,26 @@ export default function CircleFaq() {
           </h2>
         </div>
 
-        <div className="mt-12">
-          <Accordion className="gap-2.5">
-            {faqs.map((f) => (
-              <AccordionItem
-                key={f.q}
-                value={f.q}
-                className="overflow-hidden rounded-md border bg-white px-6 shadow-sm"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <AccordionTrigger className="!border-0 py-5">
-                  <span className="font-semibold text-fg" style={{ fontSize: "var(--text-body)" }}>
-                    {f.q}
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
-                    {f.a}
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div className="mt-12 grid gap-2.5">
+          {faqs.map((faq) => (
+            <details
+              key={faq.q}
+              className="group overflow-hidden rounded-md border border-border bg-white px-6 shadow-sm"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald [&::-webkit-details-marker]:hidden">
+                <span className="font-semibold text-fg" style={{ fontSize: "var(--text-body)" }}>
+                  {faq.q}
+                </span>
+                <ChevronDownIcon
+                  aria-hidden
+                  className="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <p className="pb-5 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
+                {faq.a}
+              </p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
