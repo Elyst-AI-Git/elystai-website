@@ -83,6 +83,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/circle",
+        destination: "/training",
+        permanent: true,
+      },
+      {
+        source: "/register",
+        destination: "/training",
+        permanent: true,
+      },
+      {
         source: "/register/onboarding",
         destination: "/training",
         permanent: true,

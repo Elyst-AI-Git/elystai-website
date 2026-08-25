@@ -25,6 +25,8 @@ test("retired routes redirect directly to their current destination", async () =
     "/ai-for-work",
     "/juniors",
     "/waitlist",
+    "/circle",
+    "/register",
     "/register/onboarding",
     "/register/confirmation",
   ]) {
