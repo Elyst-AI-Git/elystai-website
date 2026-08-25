@@ -144,8 +144,12 @@ export default function Footer() {
           </div>
 
           {/* Copyright — tucked to the bottom-right, under the giant wordmark */}
-          <div className="relative z-10 mx-auto max-w-6xl pb-6 text-right text-small text-fg-muted-dark">
+          <div className="relative z-10 mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 pb-6 text-small text-fg-muted-dark">
             <p>© 2026 Elyst AI · All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <Link className="transition-colors hover:text-green" href="/privacy">Privacy</Link>
+              <Link className="transition-colors hover:text-green" href="/terms">Terms</Link>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { SectionMark } from "@/components/ui/section-mark";
 
 const programs = [
@@ -20,9 +19,8 @@ const programs = [
   },
   {
     name: "Elyst AI Circle",
-    who: "For professionals who want to stay ahead of AI",
+    who: "A past community for professionals applying AI at work",
     image: "/images/programs/circle.webp",
-    href: "/circle",
     surface: "bg-emerald",
     dark: true,
   },
@@ -43,7 +41,7 @@ const fanPositions = [
 ];
 
 function ProgramCard({ program }: { program: (typeof programs)[number] }) {
-  const card = (
+  return (
     <article
       className={`program-history-card group relative w-full overflow-hidden rounded-[28px] shadow-card ring-1 ring-black/10 ${program.surface} ${program.dark ? "text-fg-on-dark" : "text-fg"}`}
     >
@@ -67,8 +65,6 @@ function ProgramCard({ program }: { program: (typeof programs)[number] }) {
       </div>
     </article>
   );
-
-  return "href" in program ? <Link href={program.href} className="block">{card}</Link> : card;
 }
 
 export default function ProgramsHistory() {

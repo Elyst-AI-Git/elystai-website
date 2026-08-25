@@ -23,7 +23,7 @@ export function pageMeta({
   description: string;
   image?: string;
 }): Metadata {
-  const ogTitle = `${title} | Elyst AI`;
+  const ogTitle = title.endsWith("Elyst AI") ? title : `${title} | Elyst AI`;
   return {
     title,
     description,

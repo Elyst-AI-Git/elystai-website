@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from "lucide-react";
 import { SectionMark } from "@/components/ui/section-mark";
+import JsonLd from "@/components/seo/JsonLd";
 
 export type Faq = { q: string; a: string };
 
@@ -22,10 +23,7 @@ export default function FaqSection({
 
   return (
     <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-14">
         <div className="md:self-start">

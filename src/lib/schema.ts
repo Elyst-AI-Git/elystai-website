@@ -78,22 +78,28 @@ export function serviceSchema({
 }
 
 export function personSchema({
+  id,
   name,
   jobTitle,
   description,
+  image,
   sameAs,
 }: {
+  id: string;
   name: string;
   jobTitle: string;
   description: string;
+  image: string;
   sameAs: string[];
 }): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": `${SITE_URL}/about#${id}`,
     name,
     jobTitle,
     description,
+    image: `${SITE_URL}${image}`,
     sameAs,
     worksFor: { "@id": ORG_ID },
   };

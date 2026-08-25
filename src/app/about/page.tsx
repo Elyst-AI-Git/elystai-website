@@ -7,7 +7,7 @@ import ClosingCta from "@/components/marketing/ClosingCta";
 
 const ABOUT_META_TITLE = "The Team Behind Elyst AI";
 const ABOUT_DESCRIPTION =
-  "The team behind Elyst AI, and how we identify, build, and hand over AI systems.";
+  "Meet the Elyst AI team helping businesses identify, build, adopt, and take ownership of practical AI systems designed around how their teams work.";
 const ABOUT_HERO_COPY =
   "The hard part of AI is not opening another tool. It is choosing what to change, fitting it into how the business already runs, and getting people to actually use it.";
 const COMPANY_COPY =
@@ -16,8 +16,9 @@ const COMPANY_COPY =
 export const metadata = {
   ...pageMeta({
     path: "/about",
-    title: "The Team Behind",
+    title: ABOUT_META_TITLE,
     description: ABOUT_DESCRIPTION,
+    image: "/about/opengraph-image",
   }),
   title: { absolute: ABOUT_META_TITLE },
   robots: { index: true, follow: true },
@@ -25,9 +26,11 @@ export const metadata = {
 
 const aboutPeople = founders.map((founder) =>
   personSchema({
+    id: founder.name === "Fathima Shirin P" ? "fathima-shirin-p" : "nihal-anas",
     name: founder.name,
     jobTitle: `${founder.role} and ${founder.title}`,
     description: founder.description,
+    image: founder.photo,
     sameAs: [founder.linkedin, founder.instagram],
   })
 );
