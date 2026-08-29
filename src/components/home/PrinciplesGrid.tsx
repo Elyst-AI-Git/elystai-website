@@ -1,13 +1,12 @@
 import type { ReactNode } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
-import { VisualCard } from "@/components/ui/visual-card";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { cn } from "@/lib/utils";
 
 type Principle = {
   title: string;
   description: string;
   visual: () => ReactNode;
-  className: string;
 };
 
 function CustomVisual() {
@@ -108,49 +107,114 @@ const principles: Principle[] = [
     title: "Custom by design",
     description: "We build the system to work around your team, not around another AI tool.",
     visual: CustomVisual,
-    className: "lg:col-span-2",
   },
   {
     title: "Secure by default",
     description: "Data, access, and limits are agreed before we build.",
     visual: SecureVisual,
-    className: "lg:col-span-2",
   },
   {
     title: "Built around your tools",
     description: "We fit the system into the tools your team already runs.",
     visual: ToolsVisual,
-    className: "lg:col-span-2",
   },
   {
     title: "Tested on real work",
     description: "We test against the work the system is meant to improve, and iterate before it goes live.",
     visual: RealWorkVisual,
-    className: "lg:col-span-3",
   },
   {
     title: "Your team owns the handover",
     description: "We train your team to run it, document everything, and hand over full access.",
     visual: HandoverVisual,
-    className: "lg:col-span-3",
   },
 ];
 
-function PrincipleCard({ principle }: { principle: Principle }) {
-  const Visual = principle.visual;
-
+function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
   return (
-    <VisualCard decorated={false} className={cn("flex h-full flex-col p-6 sm:p-8", principle.className)}>
-      <div className="flex h-44 shrink-0 items-center justify-center px-2 py-5">
-        <Visual />
+    <article
+      className={cn(
+        "principle-card-architectural group relative flex h-full min-h-[21rem] flex-col overflow-hidden border border-white/20 bg-[#171819] text-[#f3f2ef] transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none",
+      )}
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 18% 24%, rgba(255,255,255,0.075) 0 1px, transparent 1px), radial-gradient(circle at 78% 68%, rgba(0,0,0,0.28) 0 1px, transparent 1px), linear-gradient(145deg, rgba(255,255,255,0.035), transparent 46%)",
+        backgroundSize: "7px 7px, 11px 11px, 100% 100%",
+      }}
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-90 transition-opacity duration-500 group-hover:opacity-100">
+        <span className="absolute left-6 right-0 top-0 h-px bg-white/30" />
+        <span className="absolute bottom-0 left-0 right-6 h-px bg-white/30" />
+        <span className="absolute bottom-0 left-0 top-6 w-px bg-white/30" />
+        <span className="absolute bottom-6 right-0 top-0 w-px bg-white/30" />
       </div>
-      <h3 className="homepage-principle-title mt-6 font-display font-semibold text-fg" style={{ lineHeight: 1.12 }}>
-        {principle.title}
-      </h3>
-      <p className="mt-2 max-w-xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-        {principle.description}
-      </p>
-    </VisualCard>
+      <div className="relative z-10 flex min-h-full flex-1 flex-col p-7 sm:p-9">
+        <span
+          className="font-mono font-bold text-[#ff5b45]"
+          style={{ fontSize: "0.82rem", letterSpacing: "0.24em" }}
+        >
+          [{` ${String(index + 1).padStart(2, "0")} `}]
+        </span>
+        <h3
+          className="mt-7 max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
+          style={{ fontSize: "clamp(1.65rem, 2.7vw, 2.35rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
+        >
+          {principle.title}
+        </h3>
+        <p
+          className="mt-6 max-w-2xl text-[#c5c3c0]"
+          style={{ fontSize: "clamp(1.05rem, 1.6vw, 1.32rem)", lineHeight: 1.55 }}
+        >
+          {principle.description}
+        </p>
+      </div>
+    </article>
+  );
+}
+
+function ShaderPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+  return (
+    <article
+      className={cn(
+        "principle-card-shader group relative flex h-full min-h-[21rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
+      )}
+    >
+      <CanvasRevealEffect
+        animationSpeed={0.55}
+        colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
+        containerClassName="absolute inset-0"
+        dotSize={2}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--surface-dark)]/35 via-transparent to-[var(--surface-dark)]/90" />
+      <div className="relative z-10 flex min-h-full flex-1 flex-col p-7 sm:p-9">
+        <span
+          className="font-mono font-bold text-green"
+          style={{ fontSize: "0.82rem", letterSpacing: "0.24em" }}
+        >
+          [{` ${String(index + 1).padStart(2, "0")} `}]
+        </span>
+        <h3
+          className="mt-7 max-w-[18ch] font-display font-semibold text-fg-on-dark"
+          style={{ fontSize: "clamp(1.65rem, 2.7vw, 2.35rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
+        >
+          {principle.title}
+        </h3>
+        <p
+          className="mt-6 max-w-2xl text-fg-muted-dark"
+          style={{ fontSize: "clamp(1.05rem, 1.6vw, 1.32rem)", lineHeight: 1.55 }}
+        >
+          {principle.description}
+        </p>
+      </div>
+    </article>
+  );
+}
+
+function PrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+  return index < 3 ? (
+    <ArchitecturalPrincipleCard principle={principle} index={index} />
+  ) : (
+    <ShaderPrincipleCard principle={principle} index={index} />
   );
 }
 
@@ -166,10 +230,17 @@ export function PrinciplesGrid() {
           The system has to fit the work, the tools, and the people who will run it.
         </p>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
-          {principles.map((principle) => (
-            <PrincipleCard key={principle.title} principle={principle} />
-          ))}
+        <div className="mt-10 space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {principles.slice(0, 3).map((principle, index) => (
+              <PrincipleCard key={principle.title} principle={principle} index={index} />
+            ))}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+            {principles.slice(3).map((principle, index) => (
+              <PrincipleCard key={principle.title} principle={principle} index={index + 3} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
