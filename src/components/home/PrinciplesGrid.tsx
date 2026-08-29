@@ -108,7 +108,7 @@ const principles: Principle[] = [
   },
 ];
 
-function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+function ArchitecturalPrincipleCard({ principle }: { principle: Principle }) {
   const Visual = principle.visual;
 
   return (
@@ -129,17 +129,8 @@ function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle
         <span className="absolute bottom-6 right-0 top-0 w-px bg-white/30" />
       </div>
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
-        <span
-          className="font-mono font-bold text-[#ff5b45]"
-          style={{ fontSize: "0.82rem", letterSpacing: "0.24em" }}
-        >
-          [{` ${String(index + 1).padStart(2, "0")} `}]
-        </span>
-        <div className="mt-3 flex h-28 shrink-0 items-center justify-center px-1">
-          <Visual />
-        </div>
         <h3
-          className="mt-2 max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
+          className="max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
           style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
         >
           {principle.title}
@@ -150,12 +141,15 @@ function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle
         >
           {principle.description}
         </p>
+        <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
+          <Visual />
+        </div>
       </div>
     </article>
   );
 }
 
-function ShaderPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+function ShaderPrincipleCard({ principle }: { principle: Principle }) {
   const Visual = principle.visual;
 
   return (
@@ -171,17 +165,8 @@ function ShaderPrincipleCard({ principle, index }: { principle: Principle; index
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--surface-dark)]/35 via-transparent to-[var(--surface-dark)]/90" />
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
-        <span
-          className="font-mono font-bold text-green"
-          style={{ fontSize: "0.82rem", letterSpacing: "0.24em" }}
-        >
-          [{` ${String(index + 1).padStart(2, "0")} `}]
-        </span>
-        <div className="mt-3 flex h-28 shrink-0 items-center justify-center px-1">
-          <Visual />
-        </div>
         <h3
-          className="mt-2 max-w-[18ch] font-display font-semibold text-fg-on-dark"
+          className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
           style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
         >
           {principle.title}
@@ -192,35 +177,38 @@ function ShaderPrincipleCard({ principle, index }: { principle: Principle; index
         >
           {principle.description}
         </p>
+        <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
+          <Visual />
+        </div>
       </div>
     </article>
   );
 }
 
 function PrincipleCard({ principle, index }: { principle: Principle; index: number }) {
-  return index < 3 ? (
-    <ArchitecturalPrincipleCard principle={principle} index={index} />
+  return index === 0 ? (
+    <ArchitecturalPrincipleCard principle={principle} />
   ) : (
-    <ShaderPrincipleCard principle={principle} index={index} />
+    <ShaderPrincipleCard principle={principle} />
   );
 }
 
 export function PrinciplesGrid() {
   return (
-    <section id="principles" className="relative overflow-hidden bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-white/10" />
+    <section id="principles" className="relative overflow-hidden bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/15" />
       <div className="relative z-10 mx-auto max-w-7xl">
         <header className="mx-auto max-w-4xl text-center">
-          <SectionMark tone="dark">Delivery Principles</SectionMark>
-        <h2 className="mx-auto mt-6 max-w-4xl text-balance text-center text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
-          Built around your business, not around a demo.
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
-          The system has to fit the work, the tools, and the people who will run it.
-        </p>
+          <SectionMark>Delivery Principles</SectionMark>
+          <h2 className="mx-auto mt-6 max-w-4xl text-balance text-center text-fg" style={{ fontSize: "var(--text-h2)" }}>
+            Built around your business, not around a demo.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+            The system has to fit the work, the tools, and the people who will run it.
+          </p>
         </header>
 
-        <div className="mt-12 grid gap-4 border-t border-white/10 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-4 border-t border-emerald/15 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {principles.map((principle, index) => (
             <PrincipleCard key={principle.title} principle={principle} index={index} />
           ))}

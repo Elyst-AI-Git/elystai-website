@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import BookingButton from "@/components/marketing/BookingButton";
 import { BrandButton } from "@/components/ui/brand-button";
@@ -11,7 +10,7 @@ const Dithering = lazy(() =>
 );
 
 const CTA_BUTTON_CLASS =
-  "group relative inline-flex h-14 items-center justify-center gap-3 overflow-hidden rounded-full! bg-green! px-12! text-base! font-medium! text-ink! transition-all! duration-300! hover:bg-green-mid! hover:scale-105! active:scale-95! hover:ring-4! hover:ring-green/20!";
+  "min-h-[40px]! rounded-md! bg-[#eef0ee]! px-5! text-[length:calc(var(--text-small)+1px)]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
 
 function CtaButton({
   intent,
@@ -22,23 +21,18 @@ function CtaButton({
   href: string;
   buttonLabel: string;
 }) {
-  const content = (
-    <>
-      <span className="relative z-10">{buttonLabel}</span>
-      <ArrowRight className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-    </>
-  );
+  const content = <span>{buttonLabel}</span>;
 
   if (intent === "training") {
     return (
-      <BookingButton intent={intent} variant="solid" tone="green" className={CTA_BUTTON_CLASS}>
+      <BookingButton intent={intent} variant="solid" tone="light" className={CTA_BUTTON_CLASS}>
         {content}
       </BookingButton>
     );
   }
 
   return (
-    <BrandButton href={href} variant="solid" tone="green" className={CTA_BUTTON_CLASS}>
+    <BrandButton href={href} variant="solid" tone="light" className={CTA_BUTTON_CLASS}>
       {content}
     </BrandButton>
   );
@@ -69,13 +63,17 @@ export default function ClosingCta({
   }, []);
 
   return (
-    <section className="w-full bg-surface-dark py-12 flex justify-center items-center px-4 md:px-6">
+    <section
+      className="relative w-full overflow-hidden bg-bg"
+      style={{ padding: "var(--section-py) var(--section-px)" }}
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/15" />
       <div
-        className="w-full max-w-7xl relative"
+        className="relative z-10 mx-auto w-full max-w-7xl"
         onMouseEnter={() => isDesktop && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative overflow-hidden rounded-[48px] border border-white/10 bg-[var(--surface-dark-2)] shadow-sm min-h-[600px] md:min-h-[600px] flex flex-col items-center justify-center duration-500">
+        <div className="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden rounded-[48px] border border-white/10 bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[600px]">
           {isDesktop ? (
             <Suspense fallback={<div className="absolute inset-0 bg-white/[0.03]" />}>
               <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
@@ -92,21 +90,13 @@ export default function ClosingCta({
             </Suspense>
           ) : null}
 
-          <div className="relative z-10 px-6 max-w-4xl mx-auto text-center flex flex-col items-center">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-green/25 bg-green/5 px-4 py-1.5 text-[length:var(--text-small)] font-medium text-green backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-green opacity-75 md:animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green" />
-              </span>
-              One workflow at a time
-            </div>
-
-            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-fg-on-dark mb-8 leading-[1.05]">
+          <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
+            <h2 className="mb-8 font-display text-[2.4rem] font-medium leading-[1.05] tracking-[-0.04em] text-fg-on-dark md:text-[3.6rem] lg:text-[4.8rem]">
               {heading}
             </h2>
 
             {sub ? (
-              <p className="text-fg-muted-dark text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
+              <p className="mb-12 max-w-2xl text-lg leading-relaxed text-fg-on-dark md:text-xl">
                 {sub}
               </p>
             ) : null}
