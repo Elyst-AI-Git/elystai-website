@@ -1,18 +1,13 @@
 const numbers = [
   {
-    label: "Years in practice",
-    value: "6+",
-    description: "Making AI practical for people who are not technical.",
+    label: "Businesses advised",
+    value: "10+",
+    description: "AI workflows shaped around how teams actually work.",
   },
   {
     label: "People trained",
     value: "3,000+",
     description: "Founders and functional leads across India and the Middle East.",
-  },
-  {
-    label: "Live sessions",
-    value: "50+",
-    description: "Sessions built around real work, not generic demos.",
   },
   {
     label: "Industries",
@@ -34,7 +29,7 @@ export default function NumbersSection() {
         <h2 id="numbers-heading" className="sr-only">
           Elyst AI by the numbers
         </h2>
-        <div className="grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {numbers.map((number, index) => (
             <article
               key={number.label}

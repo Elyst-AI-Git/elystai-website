@@ -5,6 +5,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/home/Hero";
 import NumbersSection from "@/components/home/NumbersSection";
 import ProblemSequence from "@/components/home/ProblemSequence";
+import SystemActuallyIs from "@/components/home/SystemActuallyIs";
 import ProcessSection from "@/components/home/ProcessSection";
 import { PrinciplesGrid } from "@/components/home/PrinciplesGrid";
 import ClosingCta from "@/components/marketing/ClosingCta";
@@ -41,9 +42,10 @@ export default function Home() {
       <Hero />
       <NumbersSection />
       <ProblemSequence />
+      <SystemActuallyIs />
       <ProcessSection />
       <PrinciplesGrid />
-      <ClosingCta />
+      <ClosingCta buttonLabel="Book a Call" href="https://cal.com/elyst-ai/30min" />
     </main>
   );
 }
