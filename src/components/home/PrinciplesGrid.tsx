@@ -131,10 +131,12 @@ const principles: Principle[] = [
 ];
 
 function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+  const Visual = principle.visual;
+
   return (
     <article
       className={cn(
-        "principle-card-architectural group relative flex h-full min-h-[21rem] flex-col overflow-hidden border border-white/20 bg-[#171819] text-[#f3f2ef] transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none",
+        "principle-card-architectural group relative flex h-full min-h-[27rem] flex-col overflow-hidden border border-white/20 bg-[#171819] text-[#f3f2ef] transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none",
       )}
       style={{
         backgroundImage:
@@ -155,8 +157,11 @@ function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle
         >
           [{` ${String(index + 1).padStart(2, "0")} `}]
         </span>
+        <div className="mt-3 flex h-36 shrink-0 items-center justify-center px-2">
+          <Visual />
+        </div>
         <h3
-          className="mt-7 max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
+          className="mt-2 max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
           style={{ fontSize: "clamp(1.65rem, 2.7vw, 2.35rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
         >
           {principle.title}
@@ -173,14 +178,15 @@ function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle
 }
 
 function ShaderPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+  const Visual = principle.visual;
+
   return (
     <article
       className={cn(
-        "principle-card-shader group relative flex h-full min-h-[21rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
+        "principle-card-shader group relative flex h-full min-h-[27rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
       )}
     >
       <CanvasRevealEffect
-        animationSpeed={0.55}
         colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
         containerClassName="absolute inset-0"
         dotSize={2}
@@ -193,8 +199,11 @@ function ShaderPrincipleCard({ principle, index }: { principle: Principle; index
         >
           [{` ${String(index + 1).padStart(2, "0")} `}]
         </span>
+        <div className="mt-3 flex h-36 shrink-0 items-center justify-center px-2">
+          <Visual />
+        </div>
         <h3
-          className="mt-7 max-w-[18ch] font-display font-semibold text-fg-on-dark"
+          className="mt-2 max-w-[18ch] font-display font-semibold text-fg-on-dark"
           style={{ fontSize: "clamp(1.65rem, 2.7vw, 2.35rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
         >
           {principle.title}

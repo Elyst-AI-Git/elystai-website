@@ -415,6 +415,16 @@
     transform: rotate(0deg);
   }
 
+  .operating-model-progress {
+    transform-origin: top;
+    animation: operating-model-progress 7.2s linear forwards;
+  }
+
+  @keyframes operating-model-progress {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
   @keyframes border-beam {
     to {
       offset-distance: 100%;
@@ -443,6 +453,11 @@
     .services-fit-strip:focus-visible {
       transform: none;
       transition: none;
+    }
+
+    .operating-model-progress {
+      animation: none;
+      transform: scaleY(1);
     }
 
     .border-beam-motion {

@@ -1,8 +1,8 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { cn } from "@/lib/utils";
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import * as THREE from "three";
 
 type UniformValue = number | number[] | number[][];
@@ -16,8 +16,6 @@ type UniformDefinition = {
 type Uniforms = Record<string, UniformDefinition>;
 
 type CanvasRevealEffectProps = {
-  /** 0.1 is slower; 1.0 is faster. */
-  animationSpeed?: number;
   opacities?: number[];
   colors?: number[][];
   containerClassName?: string;
@@ -26,7 +24,6 @@ type CanvasRevealEffectProps = {
 };
 
 export function CanvasRevealEffect({
-  animationSpeed = 0.4,
   opacities = [0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 1],
   colors = [[0, 223, 130], [3, 98, 76], [255, 255, 255]],
   containerClassName,
@@ -41,22 +38,19 @@ export function CanvasRevealEffect({
         containerClassName,
       )}
     >
-      <Canvas className="absolute inset-0 h-full w-full" dpr={[1, 2]} gl={{ antialias: false }}>
+      <Canvas className="absolute inset-0 h-full w-full" dpr={[1, 2]} frameloop="demand" gl={{ antialias: false }}>
         <DotMatrix
           colors={colors}
           dotSize={dotSize}
           opacities={opacities}
-          shader={`
-            float animation_speed_factor = ${animationSpeed.toFixed(1)};
-            float intro_offset = distance(u_resolution / 2.0 / u_total_size, st2) * 0.01 + (random(st2) * 0.15);
-            opacity *= step(intro_offset, u_time * animation_speed_factor);
-            opacity *= clamp((1.0 - step(intro_offset + 0.1, u_time * animation_speed_factor)) * 1.25, 1.0, 1.25);
-          `}
           center={["x", "y"]}
         />
       </Canvas>
       {showGradient ? (
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--surface-dark)] via-[var(--surface-dark)]/70 to-transparent" />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "linear-gradient(to top, var(--surface-dark) 0%, var(--surface-dark) 75%, transparent 100%)" }}
+        />
       ) : null}
     </div>
   );
@@ -67,7 +61,6 @@ type DotMatrixProps = {
   opacities: number[];
   totalSize?: number;
   dotSize: number;
-  shader: string;
   center: ("x" | "y")[];
 };
 
@@ -76,7 +69,6 @@ function DotMatrix({
   opacities,
   totalSize = 4,
   dotSize,
-  shader,
   center,
 }: DotMatrixProps) {
   const uniforms = useMemo<Uniforms>(() => {
@@ -104,7 +96,6 @@ function DotMatrix({
       precision mediump float;
       in vec2 fragCoord;
 
-      uniform float u_time;
       uniform float u_opacities[10];
       uniform vec3 u_colors[6];
       uniform float u_total_size;
@@ -127,48 +118,39 @@ function DotMatrix({
         opacity *= step(0.0, st.y);
 
         vec2 st2 = vec2(int(st.x / u_total_size), int(st.y / u_total_size));
-        float frequency = 5.0;
         float show_offset = random(st2);
-        float rand = random(st2 * floor((u_time / frequency) + show_offset + frequency) + 1.0);
+        float rand = random(st2 + 1.0);
         opacity *= u_opacities[int(rand * 10.0)];
         opacity *= 1.0 - step(u_dot_size / u_total_size, fract(st.x / u_total_size));
         opacity *= 1.0 - step(u_dot_size / u_total_size, fract(st.y / u_total_size));
 
         vec3 color = u_colors[int(show_offset * 6.0)];
-        ${shader}
-
         fragColor = vec4(color, opacity);
         fragColor.rgb *= fragColor.a;
       }
     `,
-    [center, shader],
+    [center],
   );
 
-  return <Shader source={source} uniforms={uniforms} maxFps={60} />;
+  return <Shader source={source} uniforms={uniforms} />;
 }
 
 type PreparedUniform = {
   value: number | number[] | THREE.Vector2 | THREE.Vector3[];
 };
 
-function Shader({ source, uniforms, maxFps }: { source: string; uniforms: Uniforms; maxFps: number }) {
-  return (
-    <ShaderMaterial source={source} uniforms={uniforms} maxFps={maxFps} />
-  );
+function Shader({ source, uniforms }: { source: string; uniforms: Uniforms }) {
+  return <ShaderMaterial source={source} uniforms={uniforms} />;
 }
 
 function ShaderMaterial({
   source,
   uniforms,
-  maxFps,
 }: {
   source: string;
   uniforms: Uniforms;
-  maxFps: number;
 }) {
   const { size } = useThree();
-  const meshRef = useRef<THREE.Mesh | null>(null);
-  const lastFrameTime = useRef(0);
 
   const preparedUniforms = useMemo<Record<string, PreparedUniform>>(() => {
     const result: Record<string, PreparedUniform> = {};
@@ -194,7 +176,6 @@ function ShaderMaterial({
       }
     }
 
-    result.u_time = { value: 0 };
     result.u_resolution = { value: new THREE.Vector2(size.width * 2, size.height * 2) };
     return result;
   }, [size.height, size.width, uniforms]);
@@ -224,19 +205,8 @@ function ShaderMaterial({
     [preparedUniforms, source],
   );
 
-  useFrame(({ clock }) => {
-    if (!meshRef.current) return;
-
-    const timestamp = clock.getElapsedTime();
-    if (timestamp - lastFrameTime.current < 1 / maxFps) return;
-    lastFrameTime.current = timestamp;
-
-    const shaderMaterial = meshRef.current.material as THREE.ShaderMaterial;
-    shaderMaterial.uniforms.u_time.value = timestamp;
-  });
-
   return (
-    <mesh ref={meshRef}>
+    <mesh>
       <planeGeometry args={[2, 2]} />
       <primitive object={material} attach="material" />
     </mesh>
