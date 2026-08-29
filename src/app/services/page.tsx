@@ -1,4 +1,5 @@
 import { pageMeta } from "@/lib/seo";
+import Link from "next/link";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import ServicesHero from "@/components/marketing/ServicesHero";
 import ClosingCta from "@/components/marketing/ClosingCta";
@@ -6,6 +7,7 @@ import FaqSection from "@/components/marketing/FaqSection";
 import { SectionMark } from "@/components/ui/section-mark";
 import { ServicesFitStrip } from "@/components/marketing/ServicesFitStrip";
 import ServicesProcess from "@/components/marketing/ServicesProcess";
+import ServicesProofSection from "@/components/marketing/ServicesProofSection";
 import JsonLd from "@/components/seo/JsonLd";
 
 const SERVICES_DESCRIPTION =
@@ -33,6 +35,10 @@ const fitPairs = [
   {
     no: "We want AI to decide and nobody checks.",
     yes: "I want to make my team AI-Native",
+  },
+  {
+    no: "We just want to try something and see.",
+    yes: "We can describe what good looks like.",
   },
 ];
 
@@ -111,6 +117,8 @@ export default function ServicesPage() {
 
       <ServicesProcess />
 
+      <ServicesProofSection />
+
       <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
         <div className="mx-auto max-w-7xl">
           <SectionMark>Fit</SectionMark>
@@ -118,32 +126,51 @@ export default function ServicesPage() {
             Is this for you?
           </h2>
 
-          <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
-            <div>
-              <h3 className="text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
-                This won&apos;t work if
-              </h3>
-              <div className="mt-7 grid gap-4">
-                {fitPairs.map((pair, index) => (
-                  <ServicesFitStrip key={pair.no} kind="no" rotation={[-2.4, -1.7, -2.8][index]}>
+          <div className="mt-12 grid gap-8 md:grid-cols-2 md:gap-6">
+            <div className="border-y border-border bg-surface-muted/50 p-4 sm:p-6">
+              <div className="flex items-baseline justify-between gap-4 border-b border-border pb-4">
+                <h3 className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                  This won&apos;t work yet
+                </h3>
+                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-fg-3">Not yet</span>
+              </div>
+              <div className="mt-4 grid gap-3">
+                {fitPairs.map((pair) => (
+                  <ServicesFitStrip key={pair.no} kind="no" rotation={0}>
                     {pair.no}
                   </ServicesFitStrip>
                 ))}
               </div>
             </div>
 
-            <div>
-              <h3 className="text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
-                This will work if
-              </h3>
-              <div className="mt-7 grid gap-4">
-                {fitPairs.map((pair, index) => (
-                  <ServicesFitStrip key={pair.yes} kind="yes" rotation={[2.2, 2.8, 1.9][index]}>
+            <div className="border-y border-border bg-surface-muted/50 p-4 sm:p-6">
+              <div className="flex items-baseline justify-between gap-4 border-b border-border pb-4">
+                <h3 className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                  This will work if
+                </h3>
+                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">Ready</span>
+              </div>
+              <div className="mt-4 grid gap-3">
+                {fitPairs.map((pair) => (
+                  <ServicesFitStrip key={pair.yes} kind="yes" rotation={0}>
                     {pair.yes}
                   </ServicesFitStrip>
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="mt-10 flex flex-col gap-4 border-t border-emerald/20 pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-3xl font-display font-semibold text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+              Not ready to build yet? We run practical AI sessions for teams.
+            </p>
+            <Link
+              href="/training"
+              className="shrink-0 font-display font-bold text-emerald underline decoration-emerald/40 underline-offset-4 transition-colors hover:text-emerald-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
+              style={{ fontSize: "var(--text-small)" }}
+            >
+              Explore training →
+            </Link>
           </div>
         </div>
       </section>

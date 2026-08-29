@@ -17,6 +17,7 @@ type ProcessStep = {
   number: string;
   title: string;
   lead: string;
+  closing: string;
   groups: ProcessGroup[];
 };
 
@@ -26,6 +27,7 @@ const processSteps: ProcessStep[] = [
     number: "1",
     title: "Identify",
     lead: "We understand how your team operates, find where AI can help, and share that with you before we start building.",
+    closing: "Not every audit ends in a build. Sometimes the answer is a process fix — and we'll say so.",
     groups: [
       {
         title: "What we look at",
@@ -53,6 +55,7 @@ const processSteps: ProcessStep[] = [
     number: "2",
     title: "Build",
     lead: "We build the chosen system around the tools you already run.",
+    closing: "You will know what's in scope, what isn't, and what each phase costs before we start.",
     groups: [
       {
         title: "What we do",
@@ -80,6 +83,7 @@ const processSteps: ProcessStep[] = [
     number: "3",
     title: "Handover",
     lead: "We train your team, document it, and step back.",
+    closing: "We build it so you don't need us. We can stick around if the system needs maintenance.",
     groups: [
       {
         title: "What you get",
@@ -87,7 +91,14 @@ const processSteps: ProcessStep[] = [
           "Training for the people who use it",
           "A runbook and a named owner",
           "Known limits and an escalation path",
-          "Transfer of accounts and access",
+        ],
+      },
+      {
+        title: "What that means",
+        items: [
+          "You are not locked in",
+          "Your team can run it without us",
+          "Support continues only if you want it",
         ],
       },
     ],
@@ -133,6 +144,13 @@ function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" 
           </div>
         ))}
       </div>
+
+      <p
+        className={`mt-8 border-t pt-5 font-display font-semibold ${isLight ? "border-emerald/25 text-emerald" : "border-green/25 text-green"}`}
+        style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}
+      >
+        {step.closing}
+      </p>
     </div>
   );
 }

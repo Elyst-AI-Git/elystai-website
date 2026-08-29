@@ -52,7 +52,7 @@ export default function ServicesHero() {
             </p>
             <div className="mt-8">
               <BrandButton href="/services#our-process" variant="metal" tone="light" preset="silver">
-                See how we work
+                See our process
               </BrandButton>
             </div>
           </div>

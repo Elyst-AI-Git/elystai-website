@@ -25,7 +25,7 @@ export function ServicesFitStrip({
 
   return (
     <div
-      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card"
+      className="services-fit-strip relative flex min-h-[4.75rem] w-full items-center gap-4 overflow-hidden border px-5 py-5 text-fg-2"
       style={style}
     >
       {!isYes ? (
