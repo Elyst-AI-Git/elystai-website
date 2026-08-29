@@ -17,7 +17,7 @@ function SymbolFrame({
 }) {
   return (
     <div
-      className={`flex w-full items-center justify-center ${size === "large" ? "h-56" : "h-48"}`}
+      className={`flex w-full items-center justify-center ${size === "large" ? "h-72" : "h-48"}`}
       role="img"
       aria-label={label}
     >
@@ -44,20 +44,20 @@ function IdentifySymbol({ size, surface }: { size: "default" | "large"; surface:
 
   return (
     <SymbolFrame size={size} label="One chosen opportunity among several candidates">
-      <div className={`relative ${isLarge ? "size-52" : "size-44"}`}>
+      <div className={`relative ${isLarge ? "size-64" : "size-44"}`}>
         {identifyDots.map((dot, index) =>
           dot.chosen ? (
             <span
               key={index}
-              className={`absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[5px] border-green ${isLarge ? "size-16" : "size-12"}`}
+              className={`absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[5px] border-green ${isLarge ? "size-20" : "size-12"}`}
               style={{ left: dot.left, top: dot.top }}
             >
-              <span className={isLarge ? "size-4 rounded-full bg-green" : "size-3 rounded-full bg-green"} />
+              <span className={isLarge ? "size-5 rounded-full bg-green" : "size-3 rounded-full bg-green"} />
             </span>
           ) : (
             <span
               key={index}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-current ${mutedClass} ${dot.size}`}
+              className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-current ${mutedClass} ${isLarge ? (dot.size === "size-3" ? "size-4" : "size-5") : dot.size}`}
               style={{ left: dot.left, top: dot.top }}
             />
           ),
@@ -73,12 +73,12 @@ function BuildSymbol({ size, surface }: { size: "default" | "large"; surface: "d
 
   return (
     <SymbolFrame size={size} label="One system running through three tools">
-      <div className={`relative flex items-center justify-between px-4 ${isLarge ? "size-52" : "size-44"}`}>
+      <div className={`relative flex items-center justify-between px-4 ${isLarge ? "size-64" : "size-44"}`}>
         <span
-          className={`absolute top-1/2 z-10 h-[5px] -translate-y-1/2 rounded-full bg-green ${isLarge ? "-left-3 right-0 after:absolute after:-right-2 after:top-1/2 after:size-4 after:-translate-y-1/2 after:rounded-full after:bg-green" : "-left-3 -right-3"}`}
+          className={`absolute top-1/2 z-10 h-[6px] -translate-y-1/2 rounded-full bg-green ${isLarge ? "-left-3 right-0 after:absolute after:-right-2 after:top-1/2 after:size-5 after:-translate-y-1/2 after:rounded-full after:bg-green" : "-left-3 -right-3"}`}
         />
         {[0, 1, 2].map((ring) => (
-          <span key={ring} className={`relative z-0 size-12 rounded-full border-[5px] ${mutedBorderClass}`} />
+          <span key={ring} className={`relative z-0 rounded-full border-[5px] ${mutedBorderClass} ${isLarge ? "size-16 border-[6px]" : "size-12"}`} />
         ))}
       </div>
     </SymbolFrame>
@@ -92,15 +92,15 @@ function HandoverSymbol({ size, surface }: { size: "default" | "large"; surface:
 
   return (
     <SymbolFrame size={size} label="Ownership shifts from Elyst to your team">
-      <div className={`relative ${isLarge ? "size-52" : "size-44"}`}>
+      <div className={`relative ${isLarge ? "size-64" : "size-44"}`}>
         {isLarge ? (
-          <span className={`absolute left-[3%] top-[40%] size-12 rounded-full border-[4px] ${faintClass}`} />
+          <span className={`absolute left-[3%] top-[40%] size-16 rounded-full border-[4px] ${faintClass}`} />
         ) : null}
         <span
-          className={`absolute rounded-full border-[5px] ${softClass} ${isLarge ? "left-[21%] top-[31%] size-18" : "left-[14%] top-[31%] size-16"}`}
+          className={`absolute rounded-full border-[5px] ${softClass} ${isLarge ? "left-[21%] top-[31%] size-24" : "left-[14%] top-[31%] size-16"}`}
         />
         <span
-          className={`absolute rounded-full border-[6px] border-green ${isLarge ? "right-0 top-[17%] size-24" : "right-[8%] top-[22%] size-20"}`}
+          className={`absolute rounded-full border-[6px] border-green ${isLarge ? "right-0 top-[17%] size-32 border-[7px]" : "right-[8%] top-[22%] size-20"}`}
         />
       </div>
     </SymbolFrame>

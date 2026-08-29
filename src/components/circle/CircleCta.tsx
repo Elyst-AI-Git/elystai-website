@@ -1,16 +1,11 @@
-import { BrandButton } from "@/components/ui/brand-button";
-import { CtaBanner } from "@/components/ui/cta-banner";
+import ClosingCta from "@/components/marketing/ClosingCta";
 
 /**
- * Circle close — now the shared green CtaBanner so the Circle resolves the same
- * way as the AIOS, Accelerator and AI-for-Work closes, instead of the page's
- * old bespoke dark band. Rounded + bordered, matching the Accelerator close.
+ * Circle close — uses the same CTA surface as the other marketing pages.
  */
 export default function CircleCta() {
   return (
-    <CtaBanner
-      radius="var(--radius)"
-      bordered
+    <ClosingCta
       heading={
         <>
           Everyone in this circle is moving.
@@ -19,11 +14,8 @@ export default function CircleCta() {
         </>
       }
       sub="Apply now and join the people already ahead."
-      actions={
-        <BrandButton href="https://nas.io/elystaicircle" variant="solid" tone="emerald">
-          Apply now
-        </BrandButton>
-      }
+      buttonLabel="Apply now"
+      href="https://nas.io/elystaicircle"
     />
   );
 }

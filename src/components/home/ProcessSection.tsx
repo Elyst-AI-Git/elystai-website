@@ -46,18 +46,17 @@ const AUTO_ADVANCE_MS = 7200;
 
 export default function ProcessSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const activeStep = homepageProcess[activeIndex];
 
   useEffect(() => {
-    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const timer = window.setTimeout(() => {
       setActiveIndex((currentIndex) => (currentIndex + 1) % homepageProcess.length);
     }, AUTO_ADVANCE_MS);
 
     return () => window.clearTimeout(timer);
-  }, [activeIndex, isPaused]);
+  }, [activeIndex]);
 
   return (
     <section
@@ -68,31 +67,27 @@ export default function ProcessSection() {
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto max-w-4xl text-center">
           <SectionMark tone="dark">The operating model</SectionMark>
-          <h2 className="mt-6 text-balance text-center text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
-            First we map it. Then we prove it. Then you own it.
+          <h2 className="mt-6 text-center text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
+            <span className="block">First, we map it.</span>
+            <span className="block">Then we prove it.</span>
+            <span className="block">Then you own it.</span>
           </h2>
         </header>
 
         <div
-          className="relative mt-14 overflow-hidden border border-white/15 sm:mt-16"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onFocusCapture={() => setIsPaused(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsPaused(false);
-          }}
+          className="relative mt-14 overflow-hidden border border-white/15 bg-white sm:mt-16"
         >
           <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <div role="tablist" aria-label="The operating model">
+            <div role="tablist" aria-label="The operating model" className="bg-white text-fg">
               {homepageProcess.map((step, index) => {
                 const isActive = index === activeIndex;
 
                 return (
-                  <div key={step.label} className="relative border-b border-white/10 last:border-b-0 lg:last:border-b">
+                  <div key={step.label} className="relative border-b border-border last:border-b-0">
                     {isActive ? (
                       <span
                         aria-hidden
-                        className="operating-model-progress absolute bottom-0 left-0 top-0 z-10 w-0.5 bg-[#ff5b45]"
+                        className="operating-model-progress absolute bottom-0 left-0 top-0 z-10 w-1 bg-green"
                         style={{ animationDuration: `${AUTO_ADVANCE_MS}ms` }}
                       />
                     ) : null}
@@ -103,22 +98,22 @@ export default function ProcessSection() {
                       aria-selected={isActive}
                       aria-controls="operating-model-panel"
                       onClick={() => setActiveIndex(index)}
-                      className={`group relative block w-full text-left outline-none transition-colors focus-visible:bg-white/[0.04] ${
+                      className={`group relative block w-full text-left outline-none transition-colors focus-visible:bg-surface-light ${
                         isActive ? "px-7 py-8 sm:px-10 sm:py-10" : "px-7 py-7 sm:px-10 sm:py-8"
                       }`}
                     >
                       <span
-                        className={`inline-flex items-baseline gap-3 font-mono font-bold uppercase ${
-                          isActive ? "text-[#ff5b45]" : "text-fg-muted-dark/70 group-hover:text-fg-muted-dark"
+                        className={`inline-flex items-baseline gap-3 font-display font-bold uppercase ${
+                          isActive ? "text-emerald" : "text-fg-3 group-hover:text-emerald"
                         }`}
-                        style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}
+                        style={{ fontSize: "0.9rem", letterSpacing: "0.18em" }}
                       >
                         <span>{step.number}</span>
                         <span>{step.label}</span>
                       </span>
                       <h3
                         className={`mt-4 max-w-xl font-display font-semibold transition-colors ${
-                          isActive ? "text-fg-on-dark" : "text-fg-muted-dark group-hover:text-fg-on-dark"
+                          isActive ? "text-fg" : "text-fg-3 group-hover:text-fg"
                         }`}
                         style={{ fontSize: "var(--text-card)", lineHeight: 1.12 }}
                       >
@@ -126,7 +121,7 @@ export default function ProcessSection() {
                       </h3>
                       {isActive ? (
                         <p
-                          className="mt-5 max-w-xl text-fg-muted-dark"
+                          className="mt-5 max-w-xl text-fg-2"
                           style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
                         >
                           {step.description}
@@ -137,7 +132,7 @@ export default function ProcessSection() {
                       <div className="-mt-3 px-7 pb-8 sm:px-10 sm:pb-10">
                         <Link
                           href={step.href}
-                          className="group/link inline-flex items-center gap-2 font-display font-semibold text-fg-on-dark outline-none transition-colors hover:text-green focus-visible:text-green"
+                          className="group/link inline-flex items-center gap-2 font-display font-semibold text-emerald outline-none transition-colors hover:text-emerald-light focus-visible:text-emerald-light"
                           style={{ fontSize: "var(--text-small)" }}
                         >
                           View {step.label}
@@ -158,11 +153,13 @@ export default function ProcessSection() {
               id="operating-model-panel"
               role="tabpanel"
               aria-labelledby={`operating-model-${activeStep.label.toLowerCase()}`}
-              className="relative flex min-h-[24rem] items-center justify-center border-t border-white/10 px-8 py-10 sm:min-h-[30rem] sm:px-12 sm:py-12 lg:min-h-full lg:border-l lg:border-t-0"
+              className="relative flex min-h-[24rem] items-center justify-center border-t border-border bg-white px-8 py-10 sm:min-h-[30rem] sm:px-12 sm:py-12 lg:min-h-full lg:border-l lg:border-t-0"
             >
-              <div aria-hidden className="pointer-events-none absolute inset-8 border border-white/10 sm:inset-12" />
-              <div className="relative z-10 flex w-full items-center justify-center">
-                <ProcessSymbol key={activeStep.symbol} id={activeStep.symbol} size="large" surface="dark" />
+              <div className="relative flex aspect-square w-full max-w-[34rem] items-center justify-center overflow-hidden border border-emerald/35 bg-surface-dark-2 p-4 sm:p-8">
+                <div aria-hidden className="pointer-events-none absolute inset-4 border border-white/10 sm:inset-7" />
+                <div className="relative z-10 flex w-full items-center justify-center">
+                  <ProcessSymbol key={activeStep.symbol} id={activeStep.symbol} size="large" surface="dark" />
+                </div>
               </div>
             </div>
           </div>

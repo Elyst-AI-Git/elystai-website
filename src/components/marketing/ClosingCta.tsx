@@ -1,49 +1,47 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { ArrowRight } from "lucide-react";
+import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import BookingButton from "@/components/marketing/BookingButton";
-import MarkDither from "@/components/site/MarkDither";
-import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
-import { SectionMark } from "@/components/ui/section-mark";
 import { BrandButton } from "@/components/ui/brand-button";
 import type { BookingIntent } from "@/lib/booking";
 
-function CtaAction({
+const Dithering = lazy(() =>
+  import("@paper-design/shaders-react").then((mod) => ({ default: mod.Dithering }))
+);
+
+const CTA_BUTTON_CLASS =
+  "group relative inline-flex h-14 items-center justify-center gap-3 overflow-hidden rounded-full! bg-green! px-12! text-base! font-medium! text-ink! transition-all! duration-300! hover:bg-green-mid! hover:scale-105! active:scale-95! hover:ring-4! hover:ring-green/20!";
+
+function CtaButton({
   intent,
   href,
   buttonLabel,
-  variant,
 }: {
   intent: BookingIntent;
   href: string;
   buttonLabel: string;
-  variant: "metal" | "solid";
 }) {
   const content = (
     <>
-      <span>{buttonLabel}</span>
-      <ArrowUpRight className="size-4" strokeWidth={2} aria-hidden />
+      <span className="relative z-10">{buttonLabel}</span>
+      <ArrowRight className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
     </>
   );
 
   if (intent === "training") {
     return (
-      <BookingButton intent={intent} variant={variant} tone="green" full>
+      <BookingButton intent={intent} variant="solid" tone="green" className={CTA_BUTTON_CLASS}>
         {content}
       </BookingButton>
     );
   }
 
   return (
-    <BrandButton href={href} variant={variant} tone="green" full>
+    <BrandButton href={href} variant="solid" tone="green" className={CTA_BUTTON_CLASS}>
       {content}
     </BrandButton>
   );
-}
-
-function LightweightDither({ hovered }: { hovered: boolean }) {
-  return <div aria-hidden className="cta-lightweight-dither absolute inset-0" data-hovered={hovered} />;
 }
 
 export default function ClosingCta({
@@ -59,96 +57,62 @@ export default function ClosingCta({
   intent?: BookingIntent;
   href?: string;
 }) {
-  const [shaderHovered, setShaderHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px) and (hover: hover)");
+    const update = () => setIsDesktop(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   return (
-    <section
-      className="relative overflow-hidden bg-surface-dark"
-      style={{ padding: "var(--section-py) var(--section-px)" }}
-    >
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-white/10" />
-      <div aria-hidden className="pointer-events-none absolute left-[var(--section-px)] right-[var(--section-px)] top-0 border-t border-white/10" />
-
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <header className="mx-auto max-w-4xl text-center">
-          <SectionMark tone="dark">Start with one workflow</SectionMark>
-          <h2 className="mx-auto mt-6 max-w-4xl text-balance text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
-            {heading}
-          </h2>
-          {sub ? (
-            <p className="mx-auto mt-4 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
-              {sub}
-            </p>
+    <section className="w-full bg-surface-dark py-12 flex justify-center items-center px-4 md:px-6">
+      <div
+        className="w-full max-w-7xl relative"
+        onMouseEnter={() => isDesktop && setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="relative overflow-hidden rounded-[48px] border border-white/10 bg-[var(--surface-dark-2)] shadow-sm min-h-[600px] md:min-h-[600px] flex flex-col items-center justify-center duration-500">
+          {isDesktop ? (
+            <Suspense fallback={<div className="absolute inset-0 bg-white/[0.03]" />}>
+              <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
+                <Dithering
+                  colorBack="#00000000"
+                  colorFront="#00DF82"
+                  shape="warp"
+                  type="4x4"
+                  speed={isHovered ? 0.6 : 0.2}
+                  className="size-full"
+                  minPixelRatio={1}
+                />
+              </div>
+            </Suspense>
           ) : null}
-        </header>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          <article className="group relative flex min-h-[18rem] flex-col overflow-hidden border border-white/15 bg-[#101612] p-6 sm:p-7">
-            <div className="pointer-events-none absolute inset-0 opacity-45 transition-opacity duration-500 group-hover:opacity-70">
-              <MarkDither colorFront="#00df82" colorBack="#101612" pixelSize={5} />
-            </div>
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--surface-dark)] via-[var(--surface-dark)]/55 to-transparent" />
-            <div className="relative z-10 flex min-h-full flex-1 flex-col">
-              <span className="font-mono text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                [ 01 / MARK FIELD ]
+          <div className="relative z-10 px-6 max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-green/25 bg-green/5 px-4 py-1.5 text-[length:var(--text-small)] font-medium text-green backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-green opacity-75 md:animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green" />
               </span>
-              <h3 className="mt-5 font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-card)" }}>
-                The landing-page dither.
-              </h3>
-              <p className="mt-3 text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}>
-                The existing Elyst mark effect carries the CTA in the background.
-              </p>
-              <div className="mt-auto pt-8">
-                <CtaAction intent={intent} href={href} buttonLabel={buttonLabel} variant="solid" />
-              </div>
+              One workflow at a time
             </div>
-          </article>
 
-          <article className="group relative flex min-h-[18rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] p-6 transition-colors duration-500 hover:border-green/65 sm:p-7">
-            <CanvasRevealEffect
-              colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
-              containerClassName="absolute inset-0"
-              dotSize={2}
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--surface-dark)]/30 via-transparent to-[var(--surface-dark)]/90" />
-            <div className="relative z-10 flex min-h-full flex-1 flex-col">
-              <span className="font-mono text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                [ 02 / STATIC CARD ]
-              </span>
-              <h3 className="mt-5 font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-card)" }}>
-                The card field.
-              </h3>
-              <p className="mt-3 text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}>
-                The same static dot treatment used by the experimental cards.
-              </p>
-              <div className="mt-auto pt-8">
-                <CtaAction intent={intent} href={href} buttonLabel={buttonLabel} variant="metal" />
-              </div>
-            </div>
-          </article>
+            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-fg-on-dark mb-8 leading-[1.05]">
+              {heading}
+            </h2>
 
-          <article
-            className="group relative flex min-h-[18rem] flex-col overflow-hidden border border-white/15 bg-[var(--surface-dark-2)] p-6 sm:p-7"
-            onMouseEnter={() => setShaderHovered(true)}
-            onMouseLeave={() => setShaderHovered(false)}
-          >
-            <LightweightDither hovered={shaderHovered} />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--surface-dark)]/95 via-[var(--surface-dark)]/55 to-transparent" />
-            <div className="relative z-10 flex min-h-full flex-1 flex-col">
-              <span className="font-mono text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                [ 03 / LIGHT SHADER ]
-              </span>
-              <h3 className="mt-5 font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-card)" }}>
-                The lightweight shader.
-              </h3>
-              <p className="mt-3 text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}>
-                A lower-cost warp field that only accelerates on desktop hover.
+            {sub ? (
+              <p className="text-fg-muted-dark text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
+                {sub}
               </p>
-              <div className="mt-auto pt-8">
-                <CtaAction intent={intent} href={href} buttonLabel={buttonLabel} variant="solid" />
-              </div>
-            </div>
-          </article>
+            ) : null}
+
+            <CtaButton intent={intent} href={href} buttonLabel={buttonLabel} />
+          </div>
         </div>
       </div>
     </section>

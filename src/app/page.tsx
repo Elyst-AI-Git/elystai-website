@@ -3,6 +3,7 @@ import { OG_IMAGE } from "@/lib/seo";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/home/Hero";
+import NumbersSection from "@/components/home/NumbersSection";
 import ProblemSequence from "@/components/home/ProblemSequence";
 import ProcessSection from "@/components/home/ProcessSection";
 import { PrinciplesGrid } from "@/components/home/PrinciplesGrid";
@@ -38,6 +39,7 @@ export default function Home() {
     <main id="main" className="flex-1 pt-24">
       <JsonLd data={[organizationSchema, websiteSchema]} />
       <Hero />
+      <NumbersSection />
       <ProblemSequence />
       <ProcessSection />
       <PrinciplesGrid />

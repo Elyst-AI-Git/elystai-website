@@ -1,7 +1,4 @@
-import { SectionMark } from "@/components/ui/section-mark";
-import { ChevronDownIcon } from "lucide-react";
-
-type Faq = { q: string; a: string };
+import FaqSection, { type Faq } from "@/components/marketing/FaqSection";
 
 const faqs: Faq[] = [
   {
@@ -26,57 +23,6 @@ const faqs: Faq[] = [
   },
 ];
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
-
 export default function CircleFaq() {
-  return (
-    <section
-      className="bg-surface-accent-soft"
-      style={{ padding: "var(--section-py) var(--section-px)" }}
-    >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
-      <div className="mx-auto max-w-3xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <SectionMark>FAQ</SectionMark>
-          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Questions people ask before applying.
-          </h2>
-        </div>
-
-        <div className="mt-12 grid gap-2.5">
-          {faqs.map((faq) => (
-            <details
-              key={faq.q}
-              className="group overflow-hidden rounded-md border border-border bg-white px-6 shadow-sm"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald [&::-webkit-details-marker]:hidden">
-                <span className="font-semibold text-fg" style={{ fontSize: "var(--text-body)" }}>
-                  {faq.q}
-                </span>
-                <ChevronDownIcon
-                  aria-hidden
-                  className="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
-                />
-              </summary>
-              <p className="pb-5 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
-                {faq.a}
-              </p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <FaqSection faqs={faqs} heading="Questions people ask before applying." />;
 }
