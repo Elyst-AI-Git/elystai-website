@@ -104,7 +104,7 @@ export default function ProcessSection() {
                     >
                       <span
                         className={`inline-flex items-baseline gap-3 font-display font-bold uppercase ${
-                          isActive ? "text-emerald" : "text-fg-3 group-hover:text-emerald"
+                          isActive ? "text-green" : "text-fg-3 group-hover:text-green"
                         }`}
                         style={{ fontSize: "0.9rem", letterSpacing: "0.18em" }}
                       >
@@ -132,7 +132,7 @@ export default function ProcessSection() {
                       <div className="-mt-3 px-7 pb-8 sm:px-10 sm:pb-10">
                         <Link
                           href={step.href}
-                          className="group/link inline-flex items-center gap-2 font-display font-semibold text-emerald outline-none transition-colors hover:text-emerald-light focus-visible:text-emerald-light"
+                          className="group/link inline-flex items-center gap-2 font-display font-semibold text-green outline-none transition-colors hover:text-green-mid focus-visible:text-green-mid"
                           style={{ fontSize: "var(--text-small)" }}
                         >
                           View {step.label}
