@@ -85,23 +85,6 @@ function RealWorkVisual() {
   );
 }
 
-function HandoverVisual() {
-  return (
-    <div className="flex h-full w-full max-w-[18rem] items-center justify-center" role="img" aria-label="A held system released to its owner">
-      <svg className="h-auto w-full" viewBox="0 0 240 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-        <path
-          className="text-fg-3"
-          d="M 126 31 A 42 42 0 1 0 126 89"
-          stroke="currentColor"
-          strokeWidth="8"
-          strokeLinecap="round"
-        />
-        <circle className="text-green" cx="184" cy="60" r="13" fill="currentColor" />
-      </svg>
-    </div>
-  );
-}
-
 const principles: Principle[] = [
   {
     title: "Custom by design",
@@ -123,11 +106,6 @@ const principles: Principle[] = [
     description: "We test against the work the system is meant to improve, and iterate before it goes live.",
     visual: RealWorkVisual,
   },
-  {
-    title: "Your team owns the handover",
-    description: "We train your team to run it, document everything, and hand over full access.",
-    visual: HandoverVisual,
-  },
 ];
 
 function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle; index: number }) {
@@ -136,7 +114,7 @@ function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle
   return (
     <article
       className={cn(
-        "principle-card-architectural group relative flex h-full min-h-[27rem] flex-col overflow-hidden border border-white/20 bg-[#171819] text-[#f3f2ef] transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none",
+        "principle-card-architectural group relative flex h-full min-h-[24rem] flex-col overflow-hidden border border-white/20 bg-[#171819] text-[#f3f2ef] transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none",
       )}
       style={{
         backgroundImage:
@@ -150,25 +128,25 @@ function ArchitecturalPrincipleCard({ principle, index }: { principle: Principle
         <span className="absolute bottom-0 left-0 top-6 w-px bg-white/30" />
         <span className="absolute bottom-6 right-0 top-0 w-px bg-white/30" />
       </div>
-      <div className="relative z-10 flex min-h-full flex-1 flex-col p-7 sm:p-9">
+      <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         <span
           className="font-mono font-bold text-[#ff5b45]"
           style={{ fontSize: "0.82rem", letterSpacing: "0.24em" }}
         >
           [{` ${String(index + 1).padStart(2, "0")} `}]
         </span>
-        <div className="mt-3 flex h-36 shrink-0 items-center justify-center px-2">
+        <div className="mt-3 flex h-28 shrink-0 items-center justify-center px-1">
           <Visual />
         </div>
         <h3
           className="mt-2 max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
-          style={{ fontSize: "clamp(1.65rem, 2.7vw, 2.35rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
+          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
         >
           {principle.title}
         </h3>
         <p
-          className="mt-6 max-w-2xl text-[#c5c3c0]"
-          style={{ fontSize: "clamp(1.05rem, 1.6vw, 1.32rem)", lineHeight: 1.55 }}
+          className="mt-4 max-w-2xl text-[#c5c3c0]"
+          style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.08rem)", lineHeight: 1.5 }}
         >
           {principle.description}
         </p>
@@ -183,7 +161,7 @@ function ShaderPrincipleCard({ principle, index }: { principle: Principle; index
   return (
     <article
       className={cn(
-        "principle-card-shader group relative flex h-full min-h-[27rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
+        "principle-card-shader group relative flex h-full min-h-[24rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
       )}
     >
       <CanvasRevealEffect
@@ -192,25 +170,25 @@ function ShaderPrincipleCard({ principle, index }: { principle: Principle; index
         dotSize={2}
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--surface-dark)]/35 via-transparent to-[var(--surface-dark)]/90" />
-      <div className="relative z-10 flex min-h-full flex-1 flex-col p-7 sm:p-9">
+      <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         <span
           className="font-mono font-bold text-green"
           style={{ fontSize: "0.82rem", letterSpacing: "0.24em" }}
         >
           [{` ${String(index + 1).padStart(2, "0")} `}]
         </span>
-        <div className="mt-3 flex h-36 shrink-0 items-center justify-center px-2">
+        <div className="mt-3 flex h-28 shrink-0 items-center justify-center px-1">
           <Visual />
         </div>
         <h3
           className="mt-2 max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "clamp(1.65rem, 2.7vw, 2.35rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
+          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.04em" }}
         >
           {principle.title}
         </h3>
         <p
-          className="mt-6 max-w-2xl text-fg-muted-dark"
-          style={{ fontSize: "clamp(1.05rem, 1.6vw, 1.32rem)", lineHeight: 1.55 }}
+          className="mt-4 max-w-2xl text-fg-muted-dark"
+          style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.08rem)", lineHeight: 1.5 }}
         >
           {principle.description}
         </p>
@@ -229,27 +207,23 @@ function PrincipleCard({ principle, index }: { principle: Principle; index: numb
 
 export function PrinciplesGrid() {
   return (
-    <section id="principles" className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div className="mx-auto max-w-7xl">
-        <SectionMark>Principles</SectionMark>
-        <h2 className="mt-6 max-w-4xl text-fg" style={{ fontSize: "var(--text-h2)" }}>
+    <section id="principles" className="relative overflow-hidden bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-white/10" />
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <header className="mx-auto max-w-4xl text-center">
+          <SectionMark tone="dark">Delivery Principles</SectionMark>
+        <h2 className="mx-auto mt-6 max-w-4xl text-balance text-center text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
           Built around your business, not around a demo.
         </h2>
-        <p className="mt-4 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+        <p className="mx-auto mt-4 max-w-2xl text-center text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
           The system has to fit the work, the tools, and the people who will run it.
         </p>
+        </header>
 
-        <div className="mt-10 space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {principles.slice(0, 3).map((principle, index) => (
-              <PrincipleCard key={principle.title} principle={principle} index={index} />
-            ))}
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-            {principles.slice(3).map((principle, index) => (
-              <PrincipleCard key={principle.title} principle={principle} index={index + 3} />
-            ))}
-          </div>
+        <div className="mt-12 grid gap-4 border-t border-white/10 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+          {principles.map((principle, index) => (
+            <PrincipleCard key={principle.title} principle={principle} index={index} />
+          ))}
         </div>
       </div>
     </section>
