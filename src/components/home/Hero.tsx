@@ -1,5 +1,6 @@
+import Link from "next/link";
 import MarkDither from "@/components/site/MarkDither";
-import BookingButton from "@/components/marketing/BookingButton";
+import TrackedCta from "@/components/marketing/TrackedCta";
 import { BrandButton } from "@/components/ui/brand-button";
 import { CometCard } from "@/components/ui/comet-card";
 
@@ -7,15 +8,27 @@ export default function Hero() {
   return (
     <section style={{ padding: "clamp(40px, 5vw, 72px) var(--section-px)" }}>
       <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[3fr_2fr]">
-        {/* Left — copy */}
         <div>
-          <h1 className="home-hero-title text-fg" style={{ lineHeight: 1.08 }}>
-            Don&apos;t just use AI, we <span className="hero-accent-word">change</span> how your team works with it.
+          <h1
+            className="text-fg"
+            style={{
+              fontSize: "var(--text-hero)",
+              lineHeight: 1.08,
+              letterSpacing: "var(--tracking-display)",
+            }}
+          >
+            Don&apos;t just use AI, we{" "}
+            <span className="hero-accent-word">change</span> how your team
+            works with it.
           </h1>
 
           <p
-            className="mt-5 max-w-2xl text-fg-2"
-            style={{ fontSize: "var(--text-body)" }}
+            className="mt-5 max-w-md text-fg-2 md:max-w-none"
+            style={{
+              fontSize: "calc(var(--text-body) + 2px)",
+              lineHeight: 1.5,
+              letterSpacing: "-0.05em",
+            }}
           >
             We understand how your company works, identify where AI can elevate
             the business, build the right AI system, and train your team to run
@@ -23,30 +36,42 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BookingButton intent="identify" variant="metal" tone="emerald" preset="silver">
-              Book a call
-            </BookingButton>
-            <BrandButton href="#how-we-work" variant="outline">
-              See the process
-            </BrandButton>
+            <TrackedCta label="Book a Call" intent="audit" tone="green" />
+            <span className="hidden md:inline-flex">
+              <BrandButton
+                href="/services"
+                variant="outline"
+                className="border-2! bg-white! text-emerald! hover:bg-emerald/5!"
+              >
+                <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>
+                  See how we work
+                </span>
+              </BrandButton>
+            </span>
+            <Link
+              href="/services"
+              className="inline-flex min-h-12 items-center px-1 font-semibold text-emerald underline decoration-emerald/35 underline-offset-4 hover:text-emerald-light md:hidden"
+            >
+              See how we work →
+            </Link>
           </div>
         </div>
 
-        {/* Right — mark-forming dither (desktop) */}
         <CometCard className="hidden self-stretch md:block">
           <div
-            className="overflow-hidden rounded-card"
+            className="relative overflow-hidden rounded-card"
             style={{ background: "#F5F8F6", height: "480px" }}
+            aria-label="A workflow moves from messy input through a human review gate to an owned result."
           >
             <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
           </div>
         </CometCard>
 
-        {/* Mobile band */}
         <CometCard className="md:hidden">
           <div
-            className="h-[211px] overflow-hidden rounded-card"
+            className="relative h-[260px] overflow-hidden rounded-card"
             style={{ background: "#F5F8F6" }}
+            aria-label="A workflow moves from messy input through a human review gate to an owned result."
           >
             <MarkDither colorFront="#03624C" colorBack="#F5F8F6" pixelSize={4} />
           </div>
