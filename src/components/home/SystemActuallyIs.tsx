@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { GripVertical } from "lucide-react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 
 type StateId = "tool" | "system";
@@ -104,11 +105,6 @@ const systemComparisonData: { sectors: readonly Sector[] } = {
   ],
 };
 
-const stateOptions: readonly { id: StateId; label: string }[] = [
-  { id: "tool", label: "With the tool" },
-  { id: "system", label: "With a system" },
-];
-
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;",
@@ -144,15 +140,58 @@ function noScriptFallbackMarkup() {
   </div>`;
 }
 
+function StepCopy({
+  step,
+  tone,
+}: {
+  step: WorkflowStep;
+  tone: "tool" | "system";
+}) {
+  return (
+    <div className="flex min-h-[17rem] gap-4 p-5 sm:min-h-[18rem] sm:p-6 lg:block">
+      <span
+        className={`shrink-0 border-r pr-4 font-display text-label font-bold tracking-[var(--tracking-label)] lg:block lg:border-r-0 lg:border-b lg:pb-4 lg:pr-0 ${tone === "system" ? "border-emerald/20 text-emerald" : "border-border text-fg-3"}`}
+      >
+        {step.n}
+      </span>
+      <div className="min-w-0 flex-1 lg:pt-5">
+        <h3 className="font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-h3)", lineHeight: 1.1 }}>
+          {step.title}
+        </h3>
+        <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
+          {step.body}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function StepGrid({
+  steps,
+  tone,
+}: {
+  steps: readonly WorkflowStep[];
+  tone: "tool" | "system";
+}) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((step) => (
+        <article key={`${tone}-${step.n}`} className="h-full overflow-hidden border border-emerald/20 bg-surface-light">
+          <StepCopy step={step} tone={tone} />
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export default function SystemActuallyIs() {
   const sectors = systemComparisonData.sectors;
   const [activeSectorId, setActiveSectorId] = useState("real-estate");
-  const [activeState, setActiveState] = useState<StateId>("tool");
-  const [copyVisible, setCopyVisible] = useState(true);
-  const hasMountedCopy = useRef(false);
+  const [inset, setInset] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const comparisonRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const activeSector = sectors.find((sector) => sector.id === activeSectorId) ?? sectors[0];
-  const activeWorkflow = activeSector.states[activeState];
 
   useEffect(() => {
     const activeTab = tabRefs.current[activeSectorId];
@@ -166,26 +205,18 @@ export default function SystemActuallyIs() {
     });
   }, [activeSectorId]);
 
-  useEffect(() => {
-    if (!hasMountedCopy.current) {
-      hasMountedCopy.current = true;
-      return;
-    }
+  const updateInset = useCallback((clientX: number) => {
+    const comparison = comparisonRef.current;
+    if (!comparison) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => setCopyVisible(false), 0);
-    const showTimer = window.setTimeout(() => setCopyVisible(true), 24);
-    return () => {
-      window.clearTimeout(hideTimer);
-      window.clearTimeout(showTimer);
-    };
-  }, [activeSectorId, activeState]);
+    const rect = comparison.getBoundingClientRect();
+    const percentage = ((clientX - rect.left) / rect.width) * 100;
+    setInset(Math.min(100, Math.max(0, percentage)));
+  }, []);
 
   function selectSector(sector: Sector) {
     setActiveSectorId(sector.id);
+    setInset(50);
   }
 
   function handleSectorKeyDown(event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) {
@@ -202,12 +233,40 @@ export default function SystemActuallyIs() {
     window.requestAnimationFrame(() => tabRefs.current[nextSector.id]?.focus());
   }
 
-  function handleStateKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Home" && event.key !== "End") return;
+  function startDragging(event: PointerEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    setIsDragging(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    updateInset(event.clientX);
+  }
+
+  function stopDragging(event: PointerEvent<HTMLButtonElement>) {
+    setIsDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  function moveDragging(event: PointerEvent<HTMLButtonElement>) {
+    if (isDragging) updateInset(event.clientX);
+  }
+
+  function handleComparisonPointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (isDragging) updateInset(event.clientX);
+  }
+
+  function handleSeparatorKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    const step = 5;
+    let nextInset = inset;
+
+    if (event.key === "ArrowLeft" || event.key === "ArrowDown") nextInset = inset - step;
+    if (event.key === "ArrowRight" || event.key === "ArrowUp") nextInset = inset + step;
+    if (event.key === "Home") nextInset = 0;
+    if (event.key === "End") nextInset = 100;
+    if (nextInset === inset) return;
 
     event.preventDefault();
-    const nextState = event.key === "ArrowLeft" || event.key === "Home" ? "tool" : "system";
-    setActiveState(nextState);
+    setInset(Math.min(100, Math.max(0, nextInset)));
   }
 
   return (
@@ -265,62 +324,79 @@ export default function SystemActuallyIs() {
             <p className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">
               {activeSector.workflowLabel}
             </p>
-
-            <div role="radiogroup" aria-label="Compare the workflow" className="relative grid w-full grid-cols-2 rounded-full border border-emerald/25 bg-surface-muted p-1 sm:w-auto sm:min-w-[20rem]">
-              <span
-                aria-hidden
-                className="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full bg-emerald transition-transform duration-200 ease-out motion-reduce:transition-none"
-                style={{ transform: activeState === "system" ? "translateX(100%)" : "translateX(0)" }}
-              />
-              {stateOptions.map((option) => {
-                const isActive = activeState === option.id;
-                return (
-                  <button
-                    key={option.id}
-                    type="button"
-                    role="radio"
-                    aria-checked={isActive}
-                    tabIndex={isActive ? 0 : -1}
-                    onClick={() => setActiveState(option.id)}
-                    onKeyDown={handleStateKeyDown}
-                    className={`relative z-10 min-h-11 rounded-full px-4 font-display text-small font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none ${isActive ? "text-fg-on-dark" : "text-fg-2 hover:text-emerald"}`}
-                  >
-                    {option.label}
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
-          <div id="system-comparison-panel" role="tabpanel" aria-labelledby={`system-sector-${activeSector.id}`} aria-live="polite" className="mt-8">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {activeWorkflow.steps.map((step) => (
-                <article key={step.n} className="min-h-[17rem] border border-emerald/20 bg-surface-light p-5 sm:p-6">
-                  <div className="flex h-full gap-4 lg:block">
-                    <span className="shrink-0 border-r border-emerald/20 pr-4 font-display text-label font-bold tracking-[var(--tracking-label)] text-emerald lg:block lg:border-r-0 lg:border-b lg:pb-4 lg:pr-0">
-                      {step.n}
-                    </span>
-                    <div
-                      className="flex min-w-0 flex-1 flex-col transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none lg:pt-5"
-                      style={{
-                        opacity: copyVisible ? 1 : 0,
-                        transform: copyVisible ? "translateY(0)" : "translateY(5px)",
-                      }}
-                    >
-                      <h3 className="font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-h3)", lineHeight: 1.1 }}>
-                        {step.title}
-                      </h3>
-                      <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
-                        {step.body}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              ))}
+          <div
+            id="system-comparison-panel"
+            role="tabpanel"
+            aria-labelledby={`system-sector-${activeSector.id}`}
+            className="mt-8"
+          >
+            <div className="mb-4 grid grid-cols-2 gap-x-4 gap-y-2 font-display text-label font-bold uppercase tracking-[var(--tracking-label)] sm:flex sm:items-center sm:justify-between">
+              <span className="text-fg-2 sm:order-1">With the tool</span>
+              <span className="col-span-2 row-start-2 text-center text-emerald sm:order-2">Drag to compare</span>
+              <span className="col-start-2 row-start-1 text-right text-fg-2 sm:order-3">With a system</span>
             </div>
 
-            <p className="mt-7 font-display font-semibold tracking-[var(--tracking-body)] text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}>
-              {activeWorkflow.closing}
+            <div
+              ref={comparisonRef}
+              className="relative touch-none"
+              onPointerMove={handleComparisonPointerMove}
+              onPointerUp={() => setIsDragging(false)}
+              onPointerCancel={() => setIsDragging(false)}
+            >
+              <StepGrid steps={activeSector.states.system.steps} tone="system" />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 overflow-hidden bg-surface-light"
+                style={{ clipPath: `inset(0 ${100 - inset}% 0 0)` }}
+              >
+                <StepGrid steps={activeSector.states.tool.steps} tone="tool" />
+              </div>
+
+              <div
+                className="pointer-events-none absolute inset-y-0 z-20 w-px -translate-x-1/2 bg-emerald shadow-[0_0_0_1px_rgba(0,223,130,0.08)]"
+                style={{ left: `${inset}%` }}
+              >
+                <button
+                  type="button"
+                  role="slider"
+                  aria-label="Compare the workflow with the tool and with a system"
+                  aria-orientation="vertical"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(inset)}
+                  aria-valuetext={`${Math.round(inset)} percent with the tool shown`}
+                  className="pointer-events-auto absolute left-1/2 top-1/2 flex h-12 w-7 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-sm border border-emerald bg-emerald text-fg-on-dark shadow-[0_5px_15px_rgba(0,0,0,0.2)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none touch-none"
+                  onPointerDown={startDragging}
+                  onPointerMove={moveDragging}
+                  onPointerUp={stopDragging}
+                  onPointerCancel={stopDragging}
+                  onKeyDown={handleSeparatorKeyDown}
+                >
+                  <GripVertical aria-hidden className="size-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="relative mt-7 min-h-[4.5rem] overflow-hidden border-t border-emerald/15 pt-5">
+              <p
+                className="font-display font-semibold tracking-[var(--tracking-body)] text-fg transition-opacity duration-200 motion-reduce:transition-none"
+                style={{ fontSize: "var(--text-lead)", lineHeight: 1.25, opacity: inset < 50 ? 1 : 0 }}
+              >
+                {activeSector.states.tool.closing}
+              </p>
+              <p
+                aria-hidden={inset < 50}
+                className="absolute inset-x-0 top-5 font-display font-semibold tracking-[var(--tracking-body)] text-fg transition-opacity duration-200 motion-reduce:transition-none"
+                style={{ fontSize: "var(--text-lead)", lineHeight: 1.25, opacity: inset >= 50 ? 1 : 0 }}
+              >
+                {activeSector.states.system.closing}
+              </p>
+            </div>
+
+            <p className="sr-only" aria-live="polite">
+              {inset < 50 ? "Showing more of the workflow with the tool." : "Showing more of the workflow with a system."}
             </p>
           </div>
         </div>

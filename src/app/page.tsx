@@ -8,7 +8,17 @@ import ProblemSequence from "@/components/home/ProblemSequence";
 import SystemActuallyIs from "@/components/home/SystemActuallyIs";
 import ProcessSection from "@/components/home/ProcessSection";
 import { PrinciplesGrid } from "@/components/home/PrinciplesGrid";
+import HomeProofSection from "@/components/home/HomeProofSection";
+import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 import ClosingCta from "@/components/marketing/ClosingCta";
+import FaqSection from "@/components/marketing/FaqSection";
+
+const homeFaqs = [
+  { q: "How is it priced?", a: "Per project, paid in phases." },
+  { q: "How long does it take?", a: "We commit to a timeline after the audit, not before." },
+  { q: "What if AI isn't the answer?", a: "We say so, and tell you what would help instead." },
+  { q: "Who owns it afterwards?", a: "You do. Accounts and access transfer at handover." },
+];
 
 const HOME_TITLE = "Elyst AI | AI Strategy, Implementation & Custom AI Development.";
 const HOME_DESCRIPTION =
@@ -45,6 +55,9 @@ export default function Home() {
       <SystemActuallyIs />
       <ProcessSection />
       <PrinciplesGrid />
+      <HomeProofSection />
+      <FaqSection faqs={homeFaqs} heading="Questions worth answering before we start." />
+      <TrainingRoutingStrip />
       <ClosingCta buttonLabel="Book a Call" href="https://cal.com/elyst-ai/30min" />
     </main>
   );
