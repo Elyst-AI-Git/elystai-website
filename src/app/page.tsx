@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
+import HomePage from "@/components/marketing/HomePage";
+import JsonLd from "@/components/seo/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { OG_IMAGE } from "@/lib/seo";
-import Hero from "@/components/home/Hero";
-import ProofBar from "@/components/home/ProofBar";
-import AiosTeaser from "@/components/home/AiosTeaser";
-import AcceleratorTeaser from "@/components/home/AcceleratorTeaser";
-import Founders from "@/components/home/Founders";
-import FinalCta from "@/components/home/FinalCta";
 
-const HOME_TITLE = "Elyst AI | AI System for Businesses & AI Programs for Professionals";
-const HOME_DESCRIPTION =
-  "Elyst AI builds an AI employee that small business teams use on WhatsApp and runs AI programs and courses for professionals across India and the GCC. No technical background needed for either.";
+const HOME_TITLE = "AI Workflow Audits and Implementation | Elyst AI";
+const HOME_DESCRIPTION = "Elyst AI audits how your team works, builds the right AI system, and hands it over with training and documentation.";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
@@ -24,23 +20,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Elyst AI" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: HOME_TITLE,
-    description: HOME_DESCRIPTION,
-    images: [OG_IMAGE],
-  },
+  twitter: { card: "summary_large_image", title: HOME_TITLE, description: HOME_DESCRIPTION, images: [OG_IMAGE] },
 };
 
 export default function Home() {
   return (
-    <main id="main" className="flex-1 pt-24">
-      <Hero />
-      <ProofBar />
-      <AiosTeaser />
-      <AcceleratorTeaser />
-      <Founders />
-      <FinalCta />
-    </main>
+    <>
+      <JsonLd data={[organizationSchema, websiteSchema]} />
+      <HomePage />
+    </>
   );
 }

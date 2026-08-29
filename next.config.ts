@@ -24,6 +24,14 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      { source: "/aios", destination: "/services", statusCode: 301 },
+      { source: "/learn", destination: "/training", statusCode: 301 },
+      { source: "/ai-for-work", destination: "/training", statusCode: 301 },
+      { source: "/juniors", destination: "/training", statusCode: 301 },
+    ];
+  },
   async headers() {
     return [
       {

@@ -31,7 +31,7 @@ export default function RegisterPage() {
           We have closed registrations for this cohort. The next batch will open in a few weeks — stay tuned.
         </p>
         <Link
-          href="/ai-for-work"
+          href="/training"
           className="inline-block font-bold rounded-full px-6 py-3"
           style={{ background: "var(--elyst-emerald)", color: "#fff", fontSize: "var(--text-body)" }}
         >

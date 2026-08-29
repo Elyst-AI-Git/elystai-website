@@ -158,7 +158,7 @@ export default function ConfirmationPage() {
             <BrandButton href="/" variant="outline" className="flex-1 bg-white!">
               Return Home
             </BrandButton>
-            <BrandButton href="/learn" variant="metal" tone="green" className="flex-1">
+            <BrandButton href="/training" variant="metal" tone="green" className="flex-1">
               Explore Accelerator
             </BrandButton>
           </div>

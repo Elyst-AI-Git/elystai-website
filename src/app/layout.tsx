@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
-import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
-import JsonLd from "@/components/seo/JsonLd";
-import { organizationSchema, websiteSchema } from "@/lib/schema";
+import { UtmCapture } from "@/components/marketing/TrackedCta";
 import { OG_IMAGE } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
 import ScrollToTop from "@/components/site/ScrollToTop";
@@ -20,7 +18,7 @@ const dmSans = DM_Sans({
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "AI system for small businesses and AI programs for professionals. Based in Kerala, serving India and the GCC.";
+  "Elyst AI audits how your team works, builds the right AI system, and hands it over with training and documentation.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -71,10 +69,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable} h-full`}>
-      <head>
-        <JsonLd data={[organizationSchema, websiteSchema]} />
-      </head>
       <body className="min-h-full flex flex-col bg-bg text-fg">
+        <UtmCapture />
         <ScrollToTop />
         <a
           href="#main"
@@ -84,7 +80,6 @@ export default function RootLayout({
         </a>
         <Nav />
         {children}
-        <PreFooter />
         <Footer />
         <Analytics />
       </body>

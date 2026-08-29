@@ -2,23 +2,15 @@ import { SITE_URL } from "@/lib/seo";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 
-/**
- * Sitewide Organization + LocalBusiness entity. Establishes "Elyst AI" as a
- * brand entity for search and answer engines. Address is locality-level
- * (Kozhikode, Kerala); add a street address + geo coordinates later to enrich
- * the local listing.
- */
 export const organizationSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
-  "@type": ["Organization", "LocalBusiness"],
+  "@type": "Organization",
   "@id": ORG_ID,
   name: "Elyst AI",
   url: SITE_URL,
   logo: `${SITE_URL}/web-app-manifest-512x512.png`,
   image: `${SITE_URL}/images/og/site.png`,
-  description:
-    "Elyst AI builds an AI employee that changes how you run your business, and teaches people to use it through the Accelerator. Based in Kozhikode, Kerala, working across India and the GCC.",
-  foundingDate: "2026",
+  description: "Elyst AI audits how your team works, builds the right AI system, and hands it over with training and documentation.",
   email: "info@elystai.com",
   telephone: "+91-9633288931",
   address: {
@@ -26,28 +18,6 @@ export const organizationSchema: Record<string, unknown> = {
     addressLocality: "Kozhikode",
     addressRegion: "Kerala",
     addressCountry: "IN",
-  },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    opens: "09:00",
-    closes: "18:00",
-  },
-  areaServed: [
-    { "@type": "Country", name: "India" },
-    { "@type": "Place", name: "GCC" },
-  ],
-  founder: [
-    { "@type": "Person", name: "Fathima Shirin P", jobTitle: "CEO", sameAs: "https://www.linkedin.com/in/fathimashirin-p/" },
-    { "@type": "Person", name: "Nihal Anas", jobTitle: "Chief AI Officer", sameAs: "https://www.linkedin.com/in/nihalanas/" },
-  ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer support",
-    email: "info@elystai.com",
-    telephone: "+91-9633288931",
-    areaServed: ["IN", "AE", "SA", "QA", "KW", "OM", "BH"],
-    availableLanguage: ["English", "Malayalam"],
   },
   sameAs: [
     "https://www.linkedin.com/company/elystai/",
@@ -65,13 +35,64 @@ export const websiteSchema: Record<string, unknown> = {
   inLanguage: "en",
 };
 
-/**
- * EducationalOccupationalProgram / Course for a program page. `offer` is
- * optional — pass it for a paid, dated cohort (e.g. /ai-for-work) to attach a
- * Course→hasCourseInstance→offers block, which is what lets Google show a
- * price/availability rich result instead of a bare Course card. Omit it for
- * an evergreen catalog page like /learn that has no single fixed price/date.
- */
+export const aboutPeopleSchema: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/about#fathima-shirin-p`,
+      name: "Fathima Shirin P",
+      jobTitle: "Co-founder and CEO",
+      description: "Co-founder and CEO. Discovery, solution mapping, training, adoption.",
+      worksFor: { "@id": ORG_ID },
+      sameAs: "https://www.linkedin.com/in/fathimashirin-p/",
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/about#nihal-anas`,
+      name: "Nihal Anas",
+      jobTitle: "Co-founder and Chief AI Officer",
+      description: "Co-founder and Chief AI Officer. Technical scoping, implementation, handover.",
+      worksFor: { "@id": ORG_ID },
+      sameAs: "https://www.linkedin.com/in/nihalanas/",
+    },
+  ],
+};
+
+export function breadcrumbSchema(name: string, path: string): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name, item: `${SITE_URL}${path}` },
+    ],
+  };
+}
+
+export function serviceSchema({
+  path,
+  name,
+  description,
+  serviceType,
+}: {
+  path: string;
+  name: string;
+  description: string;
+  serviceType: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}${path}#service`,
+    name,
+    serviceType,
+    url: `${SITE_URL}${path}`,
+    description,
+    provider: { "@id": ORG_ID },
+  };
+}
+
 export function courseSchema({
   path,
   name,
@@ -82,9 +103,9 @@ export function courseSchema({
   name: string;
   description: string;
   offer?: {
-    price: number; // in the given currency's major unit (e.g. rupees, not paise)
-    priceCurrency: string; // ISO 4217, e.g. "INR"
-    startDate?: string; // ISO 8601 date, e.g. "2026-07-13"
+    price: number;
+    priceCurrency: string;
+    startDate?: string;
   };
 }): Record<string, unknown> {
   return {
