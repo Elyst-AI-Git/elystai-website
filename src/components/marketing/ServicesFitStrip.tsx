@@ -19,13 +19,13 @@ export function ServicesFitStrip({
       ? "color-mix(in srgb, var(--elyst-green) 42%, var(--border))"
       : "color-mix(in srgb, var(--elyst-red-muted) 42%, var(--border))",
     background: isYes
-      ? "color-mix(in srgb, var(--elyst-green) 5%, var(--bg))"
+      ? "linear-gradient(135deg, color-mix(in srgb, var(--surface-dark) 92%, var(--elyst-emerald) 8%), var(--surface-dark))"
       : "color-mix(in srgb, var(--elyst-red-muted) 5%, var(--bg))",
   } as CSSProperties;
 
   return (
     <div
-      className="services-fit-strip relative flex min-h-[4.75rem] w-full items-center gap-4 overflow-hidden border px-5 py-5 text-fg-2"
+      className={`services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 shadow-card ${isYes ? "text-fg-on-dark" : "text-fg-2"}`}
       style={style}
     >
       {!isYes ? (

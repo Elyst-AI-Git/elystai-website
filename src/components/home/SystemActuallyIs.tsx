@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { GripVertical } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
@@ -140,33 +139,7 @@ function noScriptFallbackMarkup() {
   </div>`;
 }
 
-function StepCopy({
-  step,
-  tone,
-}: {
-  step: WorkflowStep;
-  tone: "tool" | "system";
-}) {
-  return (
-    <div className="flex min-h-[17rem] gap-4 p-5 sm:min-h-[18rem] sm:p-6 lg:block">
-      <span
-        className={`shrink-0 border-r pr-4 font-display text-label font-bold tracking-[var(--tracking-label)] lg:block lg:border-r-0 lg:border-b lg:pb-4 lg:pr-0 ${tone === "system" ? "border-emerald/20 text-emerald" : "border-border text-fg-3"}`}
-      >
-        {step.n}
-      </span>
-      <div className="min-w-0 flex-1 lg:pt-5">
-        <h3 className="font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-h3)", lineHeight: 1.1 }}>
-          {step.title}
-        </h3>
-        <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
-          {step.body}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function StepGrid({
+function WorkflowStack({
   steps,
   tone,
 }: {
@@ -174,10 +147,25 @@ function StepGrid({
   tone: "tool" | "system";
 }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="divide-y divide-emerald/15">
       {steps.map((step) => (
-        <article key={`${tone}-${step.n}`} className="h-full overflow-hidden border border-emerald/20 bg-surface-light">
-          <StepCopy step={step} tone={tone} />
+        <article
+          key={`${tone}-${step.n}`}
+          className="grid min-h-[12.5rem] gap-4 p-5 sm:min-h-[11rem] sm:grid-cols-[5rem_minmax(0,1fr)] sm:gap-7 sm:p-7"
+        >
+          <span
+            className={`pt-1 font-display text-label font-bold tracking-[var(--tracking-label)] ${tone === "system" ? "text-emerald" : "text-fg-3"}`}
+          >
+            {step.n}
+          </span>
+          <div className="max-w-4xl">
+            <h3 className="font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-h3)", lineHeight: 1.1 }}>
+              {step.title}
+            </h3>
+            <p className="mt-4 max-w-3xl text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.5 }}>
+              {step.body}
+            </p>
+          </div>
         </article>
       ))}
     </div>
@@ -285,14 +273,11 @@ export default function SystemActuallyIs() {
             <span className="block">A tool gives your team answers.</span>
             <span className="block">A system does the work.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
-            Pick your industry and watch the same workflow run twice.
-          </p>
         </header>
 
-        <div className="mt-12 border-y border-emerald/15 py-5 sm:mt-14 sm:py-6">
+        <div className="mt-12 sm:mt-14">
           <div className="-mx-1 overflow-x-auto px-1 pb-2">
-            <div role="tablist" aria-label="Choose an industry" aria-orientation="horizontal" className="flex min-w-max gap-2">
+            <div role="tablist" aria-label="Choose an industry" aria-orientation="horizontal" className="flex min-w-max justify-center gap-2">
               {sectors.map((sector, index) => {
                 const isActive = activeSector.id === sector.id;
                 return (
@@ -320,7 +305,7 @@ export default function SystemActuallyIs() {
             </div>
           </div>
 
-          <div className="mt-7 flex flex-col gap-5 border-t border-emerald/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-8 flex justify-center text-center">
             <p className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">
               {activeSector.workflowLabel}
             </p>
@@ -340,18 +325,18 @@ export default function SystemActuallyIs() {
 
             <div
               ref={comparisonRef}
-              className="relative touch-none"
+              className="relative touch-none overflow-hidden border border-emerald/20 bg-surface-light"
               onPointerMove={handleComparisonPointerMove}
               onPointerUp={() => setIsDragging(false)}
               onPointerCancel={() => setIsDragging(false)}
             >
-              <StepGrid steps={activeSector.states.system.steps} tone="system" />
+              <WorkflowStack steps={activeSector.states.system.steps} tone="system" />
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 overflow-hidden bg-surface-light"
                 style={{ clipPath: `inset(0 ${100 - inset}% 0 0)` }}
               >
-                <StepGrid steps={activeSector.states.tool.steps} tone="tool" />
+                <WorkflowStack steps={activeSector.states.tool.steps} tone="tool" />
               </div>
 
               <div
@@ -401,19 +386,6 @@ export default function SystemActuallyIs() {
           </div>
         </div>
 
-        <footer className="mt-8 flex flex-col gap-4 border-t border-emerald/15 pt-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.35 }}>
-              Same tools. Same team. The system around them is what changed.
-            </p>
-            <p className="mt-2 text-fg-3" style={{ fontSize: "var(--text-label)", lineHeight: 1.45 }}>
-              Illustrative workflows, not client work. What we&apos;d actually build gets decided in the audit.
-            </p>
-          </div>
-          <Link href="/services" className="shrink-0 font-display font-bold text-emerald underline decoration-emerald/40 underline-offset-4 transition-colors hover:text-emerald-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2" style={{ fontSize: "var(--text-small)" }}>
-            See how we build one →
-          </Link>
-        </footer>
       </div>
 
       <noscript dangerouslySetInnerHTML={{ __html: noScriptFallbackMarkup() }} />

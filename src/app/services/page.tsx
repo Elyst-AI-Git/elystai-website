@@ -126,33 +126,27 @@ export default function ServicesPage() {
             Is this for you?
           </h2>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-2 md:gap-6">
-            <div className="border-y border-border bg-surface-muted/50 p-4 sm:p-6">
-              <div className="flex items-baseline justify-between gap-4 border-b border-border pb-4">
-                <h3 className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
-                  This won&apos;t work yet
-                </h3>
-                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-fg-3">Not yet</span>
-              </div>
-              <div className="mt-4 grid gap-3">
-                {fitPairs.map((pair) => (
-                  <ServicesFitStrip key={pair.no} kind="no" rotation={0}>
+          <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
+            <div>
+              <h3 className="text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                This won&apos;t work if
+              </h3>
+              <div className="mt-7 grid gap-4">
+                {fitPairs.map((pair, index) => (
+                  <ServicesFitStrip key={pair.no} kind="no" rotation={[-2.4, -1.7, -2.8, -2.1][index]}>
                     {pair.no}
                   </ServicesFitStrip>
                 ))}
               </div>
             </div>
 
-            <div className="border-y border-border bg-surface-muted/50 p-4 sm:p-6">
-              <div className="flex items-baseline justify-between gap-4 border-b border-border pb-4">
-                <h3 className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
-                  This will work if
-                </h3>
-                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">Ready</span>
-              </div>
-              <div className="mt-4 grid gap-3">
-                {fitPairs.map((pair) => (
-                  <ServicesFitStrip key={pair.yes} kind="yes" rotation={0}>
+            <div>
+              <h3 className="text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-h3)" }}>
+                This will work if
+              </h3>
+              <div className="mt-7 grid gap-4">
+                {fitPairs.map((pair, index) => (
+                  <ServicesFitStrip key={pair.yes} kind="yes" rotation={[2.2, 2.8, 1.9, 2.5][index]}>
                     {pair.yes}
                   </ServicesFitStrip>
                 ))}
