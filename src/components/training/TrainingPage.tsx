@@ -6,12 +6,10 @@ import FaqSection from "@/components/marketing/FaqSection";
 import ProgramsHistory from "@/components/training/ProgramsHistory";
 import { AudienceVisual, OutcomeVisual, type OutcomeVisualId } from "@/components/training/TrainingVisuals";
 import { VisualCard } from "@/components/ui/visual-card";
-import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
-
-type TrainingStep = {
-  label: string;
-  description: readonly [string, string];
-};
+import SessionInputs from "@/components/training/SessionInputs";
+import TrainingProcessSteps, { type TrainingStep } from "@/components/training/TrainingProcessSteps";
+import ArvindSessionSection from "@/components/training/ArvindSessionSection";
+import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
 
 const trainingSteps: TrainingStep[] = [
   {
@@ -44,8 +42,9 @@ const trainingOutcomes: { title: string; visual: OutcomeVisualId }[] = [
 ];
 
 const trainingStats = [
-  { value: "2,500+", label: "people trained" },
-  { value: "50+", label: "sessions delivered" },
+  { value: "3,000+", label: "people trained" },
+  { value: "50+", label: "live sessions" },
+  { value: "4+", label: "industries" },
 ];
 
 const investmentStats = [
@@ -71,111 +70,31 @@ const audiences = [
   { title: "Departments needing role-specific workflows", kind: "department" as const },
 ];
 
-function TrainingProcessSteps({ steps }: { steps: TrainingStep[] }) {
-  return (
-    <ol className="grid gap-3 sm:gap-4">
-      {steps.map((step, index) => (
-        <li key={step.label}>
-          <article className="relative grid min-h-48 w-full content-center gap-6 overflow-hidden rounded-md border border-white/10 bg-surface-dark-2 px-5 py-7 sm:min-h-52 sm:grid-cols-[minmax(17rem,0.9fr)_minmax(0,1.1fr)] sm:items-center sm:gap-8 sm:px-8 sm:py-8">
-            <span aria-hidden className="absolute bottom-0 left-0 top-0 w-1 bg-green" />
-            <div className="relative flex items-baseline gap-3 text-fg-on-dark">
-              <span
-                aria-hidden
-                className="font-display font-semibold text-green"
-                style={{ fontSize: "var(--text-training-step)", lineHeight: 0.9, letterSpacing: "var(--tracking-stat)" }}
-              >
-                {index + 1}
-              </span>
-              <h3
-                className="font-display font-semibold text-fg-on-dark"
-                style={{ fontSize: "var(--text-training-step)", lineHeight: 0.9, letterSpacing: "var(--tracking-display)" }}
-              >
-                {step.label}
-              </h3>
-            </div>
-
-            <p className="relative max-w-xl justify-self-end text-right text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-              <span className="block">{step.description[0]}</span>
-              <span className="block">{step.description[1]}</span>
-            </p>
-          </article>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-function SessionInputs({ className = "" }: { className?: string }) {
-  return (
-    <aside
-      aria-label="Every session starts with your role, your tools, and your real work"
-      className={`relative w-full overflow-hidden rounded-md border p-5 sm:p-6 ${className}`}
-      style={{ borderColor: "rgba(255,255,255,0.13)", background: "rgba(255,255,255,0.035)" }}
-    >
-      <div className="flex items-center justify-between gap-4">
-        <span className="font-display font-bold uppercase text-fg-muted-dark" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-          Every session starts with
-        </span>
-        <span aria-hidden className="h-px w-10 bg-white/20" />
-      </div>
-
-      <ol className="mt-7 border-t" style={{ borderColor: "rgba(255,255,255,0.13)" }}>
-        {["Your role", "Your tools", "Your real work"].map((item, index) => (
-          <li
-            key={item}
-            className="grid grid-cols-[2.7rem_1fr] items-center gap-3 border-b py-4 last:border-b-0 sm:py-5"
-            style={{ borderColor: "rgba(255,255,255,0.13)" }}
-          >
-            <span className="font-display text-fg-muted-dark" style={{ fontSize: "var(--text-small)" }}>
-              0{index + 1}
-            </span>
-            <strong className="font-display whitespace-nowrap text-fg-on-dark" style={{ fontSize: "calc(var(--text-h3) + 2px)" }}>
-              {item}
-            </strong>
-          </li>
-        ))}
-      </ol>
-    </aside>
-  );
-}
-
 function AudiencePanel() {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {audiences.map((audience, index) => (
-        <VisualCard
-          key={audience.title}
-          decorated={false}
-          className={`min-h-80 p-6 sm:p-8 ${index === 1 ? "bg-surface-muted" : ""}`}
-        >
-          <div className="flex h-32 items-center justify-center">
-            <AudienceVisual kind={audience.kind} className="max-w-[14rem]" />
-          </div>
-          <span
-            aria-hidden
-            className="mt-6 block font-display font-semibold text-emerald"
-            style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}
-          >
-            0{index + 1}
-          </span>
-          <p className="mt-3 max-w-sm text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-            {audience.title}
-          </p>
-        </VisualCard>
-      ))}
+      {audiences.map((audience) => {
+        const principle: Principle = {
+          title: audience.title,
+          description: "Built around the roles, tools, and real work already inside the team.",
+          visual: () => <AudienceVisual kind={audience.kind} className="max-w-[14rem]" />,
+        };
+
+        return <ShaderPrincipleCard key={audience.title} principle={principle} visualFirst />;
+      })}
     </div>
   );
 }
 
 function TrainingInvestmentSection() {
   return (
-    <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section className="bg-surface-accent-soft" style={{ padding: "var(--section-py) var(--section-px)" }}>
       <div className="mx-auto max-w-7xl">
         <header className="max-w-6xl">
-          <h2 className="text-balance text-fg" style={{ fontSize: "clamp(2.8rem, 6.2vw, 6rem)", lineHeight: 0.98 }}>
+          <h2 className="text-balance text-fg" style={{ fontSize: "var(--text-h1)", lineHeight: 1.02 }}>
             The AI investment has <span className="hero-accent-word-red">not worked</span> for most companies.
           </h2>
-          <p className="mt-8 max-w-6xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+          <p className="mt-8 max-w-6xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
             Enterprises are spending heavily on AI technology, but outcomes remain inconsistent. Most AI initiatives stall at experimentation, with limited adoption, unclear ownership, and little measurable return.
           </p>
         </header>
@@ -235,47 +154,64 @@ function TrainingHonesty() {
 
 function TrainingProof() {
   return (
-    <section className="bg-surface-muted" style={{ padding: "var(--section-py) 0" }}>
-      <div className="mx-auto max-w-7xl px-[var(--section-px)]">
-        <div className="overflow-hidden rounded-md border border-white/10 bg-surface-dark">
-          <div className="grid gap-7 px-6 py-7 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-10 lg:py-8">
-            <div>
-              <SectionMark tone="dark">Proof</SectionMark>
-              <h2 className="mt-6 max-w-2xl text-balance text-fg-on-dark" style={{ fontSize: "calc(var(--text-h3) + 2px)", lineHeight: 1.12 }}>
-                The sessions are built to be used,
-                <span className="lg:block"> not just attended.</span>
-              </h2>
-            </div>
+    <section className="relative overflow-hidden bg-surface-accent-soft" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/20" />
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
+          <header className="flex flex-col justify-center">
+            <SectionMark>Proof</SectionMark>
+            <h2 className="mt-6 max-w-3xl text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
+              Training built to be used, not just attended.
+            </h2>
+          </header>
 
-            <div className="grid grid-cols-2 divide-x divide-white/10 border-y border-white/10">
-              {trainingStats.map((stat) => (
-                <div key={stat.label} className="px-4 py-5 sm:px-6 lg:px-8">
-                  <p className="font-display font-bold text-green" style={{ fontSize: "var(--text-stat-compact)", lineHeight: 0.95 }}>
-                    {stat.value}
-                  </p>
-                  <p className="mt-2 text-fg-on-dark/70" style={{ fontSize: "var(--text-body)", lineHeight: 1.25 }}>
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="flex flex-col justify-center">
+            <p className="font-display font-bold uppercase tracking-[var(--tracking-label)] text-emerald" style={{ fontSize: "var(--text-label)" }}>
+              Our solution
+            </p>
+            <p className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.05 }}>
+              Sessions shaped around the roles, tools, and work in the room.
+            </p>
+            <p className="mt-6 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+              The aim is useful practice: people leave with a realistic view of what AI can do and a next step they can take back to work.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-16 grid border-y border-emerald/20 lg:grid-cols-3">
+          {trainingStats.map((stat, index) => (
+            <article key={stat.label} className={`py-8 sm:py-9 lg:px-8 lg:py-10 ${index > 0 ? "border-t border-emerald/20 lg:border-l lg:border-t-0" : ""}`}>
+              <p className="font-display font-semibold tracking-[var(--tracking-stat)] text-emerald" style={{ fontSize: "var(--text-proof-number)", lineHeight: 0.9 }}>
+                {stat.value}
+              </p>
+              <p className="mt-5 font-display font-bold uppercase tracking-[var(--tracking-label)] text-fg" style={{ fontSize: "var(--text-label)" }}>
+                {stat.label}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-14 grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:gap-20">
+          <div>
+            <p className="font-display font-bold uppercase tracking-[var(--tracking-label)] text-emerald" style={{ fontSize: "var(--text-label)" }}>
+              Training feedback
+            </p>
+            <blockquote className="mt-5 max-w-2xl font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}>
+              “Not a forced five-star review. It is what people actually felt.”
+            </blockquote>
+            <p className="mt-5 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+              Feedback from previous Elyst AI sessions
+            </p>
           </div>
 
+          <div className="flex flex-col items-start gap-6 lg:items-end">
+            <p className="max-w-xl text-fg-2 lg:text-right" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+              The format changes with the room. The standard is that people leave knowing what to try next.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="mt-16 sm:mt-20">
-        <div className="mx-auto mb-5 max-w-2xl px-[var(--section-px)] text-center">
-          <SectionMark>Already delivered</SectionMark>
-          <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-            Hear it from the people themselves.
-          </h2>
-          <p className="mx-auto mt-4 max-w-prose text-fg-2" style={{ fontSize: "var(--text-body)" }}>
-            Not a forced 5 star review, it&apos;s what they actually felt.
-          </p>
-        </div>
-        <StaggerTestimonials />
-      </div>
     </section>
   );
 }
@@ -347,6 +283,7 @@ export default function TrainingPage() {
 
       <ProgramsHistory />
       <TrainingProof />
+      <ArvindSessionSection />
 
       <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />
       <ClosingCta

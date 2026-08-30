@@ -10,7 +10,7 @@ const Dithering = lazy(() =>
 );
 
 const CTA_BUTTON_CLASS =
-  "min-h-[40px]! rounded-md! bg-[#eef0ee]! px-5! text-[length:calc(var(--text-small)+1px)]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
+  "min-h-[40px]! bg-[#eef0ee]! px-5! text-[length:calc(var(--text-small)+1px)]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
 
 function CtaButton({
   intent,

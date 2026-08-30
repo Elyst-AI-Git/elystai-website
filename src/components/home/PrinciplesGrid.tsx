@@ -3,7 +3,7 @@ import { SectionMark } from "@/components/ui/section-mark";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { cn } from "@/lib/utils";
 
-type Principle = {
+export type Principle = {
   title: string;
   description: string;
   visual: () => ReactNode;
@@ -142,7 +142,7 @@ function ArchitecturalPrincipleCard({
         ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.04356em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.039204em" }}
         >
           {principle.title}
         </h3>
@@ -162,7 +162,7 @@ function ArchitecturalPrincipleCard({
   );
 }
 
-function ShaderPrincipleCard({
+export function ShaderPrincipleCard({
   principle,
   visualFirst,
 }: {
@@ -191,7 +191,7 @@ function ShaderPrincipleCard({
         ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.04356em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.039204em" }}
         >
           {principle.title}
         </h3>
@@ -212,7 +212,7 @@ function ShaderPrincipleCard({
 }
 
 function PrincipleCard({ principle, index }: { principle: Principle; index: number }) {
-  const visualFirst = index < 2;
+  const visualFirst = true;
 
   return index === 0 ? (
     <ArchitecturalPrincipleCard principle={principle} visualFirst={visualFirst} />

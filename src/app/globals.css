@@ -116,10 +116,10 @@
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.0462em;
-  --tracking-body: -0.013068em;
-  --tracking-wide: 0.061236em;
-  --tracking-label: 0.11664em;
-  --tracking-stat: -0.07623em;
+  --tracking-body: -0.0117612em;
+  --tracking-wide: 0.0551124em;
+  --tracking-label: 0.104976em;
+  --tracking-stat: -0.068607em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);
@@ -229,6 +229,10 @@
   .metal-button-shell {
     animation: none;
   }
+
+  .training-input-progress {
+    animation: none !important;
+  }
 }
 
 @layer base {
@@ -334,6 +338,11 @@
 
   .problem-sequence-gradient {
     gap: clamp(24px, 3vw, 46px);
+  }
+
+  @keyframes training-input-progress {
+    from { transform: scaleY(0); transform-origin: top; }
+    to { transform: scaleY(1); transform-origin: top; }
   }
 
   .home-hero-title {

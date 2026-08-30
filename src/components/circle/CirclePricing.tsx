@@ -61,7 +61,7 @@ function PriceCard({
             background: "#ffffff",
             color: "var(--elyst-emerald)",
             fontSize: "var(--text-micro)",
-            letterSpacing: "0.0729em",
+            letterSpacing: "0.06561em",
             padding: "6px 14px 6px 10px",
             borderRadius: "4px 0 0 4px",
             boxShadow: "-2px 2px 6px rgba(0,0,0,0.18)",
@@ -77,7 +77,7 @@ function PriceCard({
         className="font-bold uppercase"
         style={{
           fontSize: "var(--text-micro)",
-          letterSpacing: "0.08748em",
+          letterSpacing: "0.078732em",
           color: highlighted ? "var(--fg-muted-dark)" : "var(--elyst-emerald)",
         }}
       >
@@ -116,7 +116,7 @@ function PriceCard({
       {highlighted && (
         <div className="mt-4">
           <div className="mb-3 h-px" style={{ background: "rgba(255,255,255,0.08)" }} />
-          <p className="mb-2 font-bold uppercase" style={{ fontSize: "var(--text-micro)", letterSpacing: "0.04374em", color: "var(--fg-3)" }}>
+          <p className="mb-2 font-bold uppercase" style={{ fontSize: "var(--text-micro)", letterSpacing: "0.039366em", color: "var(--fg-3)" }}>
             Plus, exclusively:
           </p>
           <ul className="flex flex-col gap-2.5">
