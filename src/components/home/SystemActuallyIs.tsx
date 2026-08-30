@@ -157,7 +157,7 @@ function noScriptFallbackMarkup() {
     ].join("")).join("");
 
     return [
-      '<article class="rounded-[var(--radius)] border border-emerald/20 bg-surface-light p-5 sm:p-7">',
+      '<article class="rounded-md border-4 border-emerald/65 bg-surface-light p-5 sm:p-7">',
       '<p class="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">',
       escapeHtml(sector.label),
       "</p>",
@@ -184,7 +184,7 @@ function WorkflowIcon({ step, tone }: { step: WorkflowStep; tone: StateId }) {
 
   return (
     <div
-      className={["relative flex size-16 items-center justify-center rounded-full border", isTool ? "border-[#a78e63]/25 text-[#78603a]" : "border-emerald/15 text-emerald"].join(" ")}
+      className={["relative flex size-16 items-center justify-center rounded-md border-2", isTool ? "border-[#a78e63]/25 text-[#78603a]" : "border-emerald/15 text-emerald"].join(" ")}
       style={{
         background: isTool
           ? "color-mix(in srgb, var(--surface-muted) 72%, #f0dfc4)"
@@ -337,14 +337,11 @@ export default function SystemActuallyIs() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <header className="mx-auto max-w-5xl text-center">
-          <SectionMark>WHAT AN AI SYSTEM ACTUALLY IS</SectionMark>
+          <SectionMark>What is an AI system?</SectionMark>
           <h2 id="what-an-ai-system-is-heading" className="mx-auto mt-6 max-w-5xl text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.08 }}>
             <span className="block">A tool gives your team answers.</span>
             <span className="block">A system does the work.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-            Drag to compare the same workflow with and without a system.
-          </p>
         </header>
 
         <div className="mt-12 sm:mt-14">
@@ -367,7 +364,7 @@ export default function SystemActuallyIs() {
                     onClick={() => selectSector(sector)}
                     onKeyDown={(event) => handleSectorKeyDown(event, index)}
                     className={[
-                      "min-h-11 rounded-[var(--radius)] border px-5 font-display text-small font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none",
+                      "min-h-11 rounded-md border px-5 font-display text-small font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none",
                       isActive ? "border-emerald bg-emerald text-fg-on-dark" : "border-border bg-transparent text-fg-2 hover:border-emerald/50 hover:text-emerald",
                     ].join(" ")}
                   >
@@ -379,7 +376,7 @@ export default function SystemActuallyIs() {
           </div>
 
           <div className="mt-8 flex justify-center text-center">
-            <p className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">
+            <p className="relative inline-flex rotate-[-1deg] items-center border-2 border-emerald bg-surface-light px-4 py-3 font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald shadow-card before:absolute before:-left-1 before:-top-1 before:size-2 before:rounded-full before:bg-emerald after:absolute after:-bottom-1 after:-right-1 after:size-2 after:rounded-full after:bg-emerald">
               {activeSector.workflowLabel}
             </p>
           </div>
@@ -391,9 +388,9 @@ export default function SystemActuallyIs() {
             tabIndex={0}
             className="mt-8 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald focus-visible:outline-offset-4"
           >
-            <div className="relative overflow-hidden rounded-[var(--radius)] border border-emerald/20 bg-surface-light shadow-card">
+            <div className="relative overflow-hidden rounded-md border-4 border-emerald/65 bg-surface-light shadow-card">
               <div className="relative z-30 grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-emerald/15 px-5 py-5 sm:px-8">
-                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-fg-3">Without an AI system</span>
+                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-[var(--elyst-red-muted)]">Without an AI system</span>
                 <span className="flex items-center gap-2 font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">
                   <span className="hidden h-px w-8 bg-emerald/25 sm:block" />
                   <span className="whitespace-nowrap">Drag to compare</span>

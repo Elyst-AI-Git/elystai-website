@@ -89,13 +89,13 @@ export default function ClosingCta({
             </Suspense>
           ) : null}
 
-          <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
-            <h2 className="mb-8 font-display font-medium leading-[1.05] tracking-[-0.044em] text-fg-on-dark" style={{ fontSize: "var(--text-cta)" }}>
+          <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
+            <h2 className="mb-6 font-display font-medium leading-[1.05] tracking-[-0.044em] text-fg-on-dark" style={{ fontSize: "var(--text-cta)" }}>
               {heading}
             </h2>
 
             {sub ? (
-              <p className="mb-12 max-w-2xl text-lg leading-relaxed text-fg-on-dark md:text-xl">
+              <p className="mb-9 max-w-2xl text-lg leading-relaxed text-fg-on-dark md:text-xl">
                 {sub}
               </p>
             ) : null}

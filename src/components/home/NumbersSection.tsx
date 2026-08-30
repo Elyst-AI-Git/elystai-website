@@ -1,4 +1,10 @@
-const numbers = [
+export type NumberBandItem = {
+  label: string;
+  value: string;
+  description: string;
+};
+
+const numbers: readonly NumberBandItem[] = [
   {
     label: "Businesses advised",
     value: "10+",
@@ -16,7 +22,13 @@ const numbers = [
   },
 ] as const;
 
-export default function NumbersSection() {
+export function NumbersBand({
+  numbers: items,
+  heading = "Elyst AI by the numbers",
+}: {
+  numbers: readonly NumberBandItem[];
+  heading?: string;
+}) {
   return (
     <section
       aria-labelledby="numbers-heading"
@@ -27,10 +39,10 @@ export default function NumbersSection() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <h2 id="numbers-heading" className="sr-only">
-          Elyst AI by the numbers
+          {heading}
         </h2>
         <div className="grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-3">
-          {numbers.map((number, index) => (
+          {items.map((number, index) => (
             <article
               key={number.label}
               className={`px-5 py-7 sm:px-7 lg:px-8 lg:py-8 ${index > 0 ? "border-t border-white/10 sm:border-l sm:border-t-0" : ""}`}
@@ -53,4 +65,8 @@ export default function NumbersSection() {
       </div>
     </section>
   );
+}
+
+export default function NumbersSection() {
+  return <NumbersBand numbers={numbers} />;
 }

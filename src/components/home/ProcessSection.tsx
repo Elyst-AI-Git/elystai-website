@@ -106,7 +106,7 @@ export default function ProcessSection() {
                         className={`inline-flex items-baseline gap-3 font-display font-bold uppercase ${
                           isActive ? "text-emerald" : "text-fg-3 group-hover:text-emerald"
                         }`}
-                        style={{ fontSize: "0.9rem", letterSpacing: "0.1062882em" }}
+                        style={{ fontSize: "0.9rem", letterSpacing: "0.086093442em" }}
                       >
                         <span>{step.number}</span>
                         <span>{step.label}</span>
@@ -132,7 +132,7 @@ export default function ProcessSection() {
                       <div className="-mt-3 px-7 pb-8 sm:px-10 sm:pb-10">
                         <Link
                           href={step.href}
-                          className="group/link inline-flex items-center gap-2 font-display font-semibold text-emerald outline-none transition-colors hover:text-emerald-light focus-visible:text-emerald-light"
+                          className="group/link inline-flex items-center gap-2 font-display font-semibold text-emerald underline decoration-emerald/60 underline-offset-4 outline-none transition-colors hover:text-emerald-light hover:decoration-emerald-light focus-visible:text-emerald-light"
                           style={{ fontSize: "var(--text-small)" }}
                         >
                           View {step.label}

@@ -116,10 +116,10 @@
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.0462em;
-  --tracking-body: -0.01058508em;
-  --tracking-wide: 0.04960116em;
-  --tracking-label: 0.0944784em;
-  --tracking-stat: -0.0617463em;
+  --tracking-body: -0.0085739148em;
+  --tracking-wide: 0.0401769396em;
+  --tracking-label: 0.076527504em;
+  --tracking-stat: -0.050014503em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);
@@ -198,7 +198,7 @@
   position: relative;
   isolation: isolate;
   padding: 1px;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) / 2);
   background: conic-gradient(
     from var(--metal-angle),
     var(--metal-edge-base) 0 20%,
@@ -216,7 +216,7 @@
 }
 
 .metal-button-shell > * {
-  border-radius: calc(var(--radius) - 1px);
+  border-radius: calc(var(--radius) / 2 - 1px);
 }
 
 @keyframes metal-edge-spin {
@@ -354,7 +354,7 @@
   }
 
   .problem-sequence-line {
-    font-size: var(--text-lead);
+    font-size: clamp(1.495rem, 2.3vw, 1.8975rem);
   }
 
   .homepage-process-card-title {

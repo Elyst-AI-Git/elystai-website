@@ -108,66 +108,14 @@ const principles: Principle[] = [
   },
 ];
 
-function ArchitecturalPrincipleCard({
-  principle,
-  visualFirst,
-}: {
-  principle: Principle;
-  visualFirst: boolean;
-}) {
-  const Visual = principle.visual;
-
-  return (
-    <article
-      className={cn(
-        "principle-card-architectural group relative flex h-full min-h-[24rem] flex-col overflow-hidden border border-white/20 bg-[#171819] text-[#f3f2ef] transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none",
-      )}
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 18% 24%, rgba(255,255,255,0.075) 0 1px, transparent 1px), radial-gradient(circle at 78% 68%, rgba(0,0,0,0.28) 0 1px, transparent 1px), linear-gradient(145deg, rgba(255,255,255,0.035), transparent 46%)",
-        backgroundSize: "7px 7px, 11px 11px, 100% 100%",
-      }}
-    >
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-90 transition-opacity duration-500 group-hover:opacity-100">
-        <span className="absolute left-6 right-0 top-0 h-px bg-white/30" />
-        <span className="absolute bottom-0 left-0 right-6 h-px bg-white/30" />
-        <span className="absolute bottom-0 left-0 top-6 w-px bg-white/30" />
-        <span className="absolute bottom-6 right-0 top-0 w-px bg-white/30" />
-      </div>
-      <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
-        {visualFirst ? (
-          <div className="mb-7 flex h-28 shrink-0 items-center justify-center px-1">
-            <Visual />
-          </div>
-        ) : null}
-        <h3
-          className="max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.0352836em" }}
-        >
-          {principle.title}
-        </h3>
-        <p
-          className="mt-4 max-w-2xl text-[#c5c3c0]"
-          style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
-        >
-          {principle.description}
-        </p>
-        {!visualFirst ? (
-          <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
-            <Visual />
-          </div>
-        ) : null}
-      </div>
-    </article>
-  );
-}
-
 export function ShaderPrincipleCard({
   principle,
   visualFirst,
+  visualScale = "scale-[0.8]",
 }: {
   principle: Principle;
   visualFirst: boolean;
+  visualScale?: string;
 }) {
   const Visual = principle.visual;
 
@@ -186,12 +134,14 @@ export function ShaderPrincipleCard({
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         {visualFirst ? (
           <div className="mb-7 flex h-28 shrink-0 items-center justify-center px-1">
-            <Visual />
+            <div className={visualScale}>
+              <Visual />
+            </div>
           </div>
         ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.0352836em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.03175524em" }}
         >
           {principle.title}
         </h3>
@@ -203,7 +153,9 @@ export function ShaderPrincipleCard({
         </p>
         {!visualFirst ? (
           <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
-            <Visual />
+            <div className={visualScale}>
+              <Visual />
+            </div>
           </div>
         ) : null}
       </div>
@@ -212,12 +164,12 @@ export function ShaderPrincipleCard({
 }
 
 function PrincipleCard({ principle, index }: { principle: Principle; index: number }) {
-  const visualFirst = true;
-
-  return index === 0 ? (
-    <ArchitecturalPrincipleCard principle={principle} visualFirst={visualFirst} />
-  ) : (
-    <ShaderPrincipleCard principle={principle} visualFirst={visualFirst} />
+  return (
+    <ShaderPrincipleCard
+      principle={principle}
+      visualFirst
+      visualScale={index === 0 ? "scale-100" : "scale-[0.8]"}
+    />
   );
 }
 

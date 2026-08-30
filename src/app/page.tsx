@@ -58,7 +58,16 @@ export default function Home() {
       <HomeProofSection />
       <FaqSection faqs={homeFaqs} heading="Questions worth answering before we start." />
       <TrainingRoutingStrip />
-      <ClosingCta buttonLabel="Book a Call" href="https://cal.com/elyst-ai/30min" />
+      <ClosingCta
+        heading={
+          <>
+            <span className="block">Change how your team</span>
+            <span className="block">uses AI at work.</span>
+          </>
+        }
+        buttonLabel="Book a Call"
+        href="https://cal.com/elyst-ai/30min"
+      />
     </main>
   );
 }

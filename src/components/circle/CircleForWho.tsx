@@ -61,7 +61,7 @@ export default function CircleForWho() {
                 className="font-display font-bold"
                 style={{
                   fontSize: "clamp(1.5rem, 2.8vw, 1.95rem)",
-                  letterSpacing: "-0.0072171em",
+                  letterSpacing: "-0.00649539em",
                   color: c.dark ? "var(--elyst-green)" : "var(--fg)",
                 }}
               >

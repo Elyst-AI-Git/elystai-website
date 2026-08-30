@@ -7,7 +7,7 @@ export type TrainingStep = {
   description: readonly [string, string];
 };
 
-const AUTO_ADVANCE_MS = 7200;
+const AUTO_ADVANCE_MS = 6800;
 
 export default function TrainingProcessSteps({ steps }: { steps: readonly TrainingStep[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -25,17 +25,21 @@ export default function TrainingProcessSteps({ steps }: { steps: readonly Traini
   }, [activeIndex, isPaused, steps.length]);
 
   return (
-    <div onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
-      <ol role="tablist" aria-label="How we build your session" className="border-y border-white/15">
+    <div
+      className="overflow-hidden rounded-md border border-emerald/35 bg-surface-light shadow-card"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <ol role="tablist" aria-label="How we build your session">
         {steps.map((step, index) => {
           const isActive = index === activeIndex;
 
           return (
-            <li key={step.label} className="relative border-b border-white/15 last:border-b-0">
+            <li key={step.label} className="relative border-b border-emerald/20 last:border-b-0">
               {isActive ? (
                 <span
                   aria-hidden
-                  className="training-input-progress absolute bottom-0 left-0 top-0 z-10 w-1 bg-green"
+                  className="training-input-progress absolute bottom-0 left-0 top-0 z-10 w-1 bg-emerald"
                   style={{ animation: `training-input-progress ${AUTO_ADVANCE_MS}ms linear` }}
                 />
               ) : null}
@@ -47,35 +51,43 @@ export default function TrainingProcessSteps({ steps }: { steps: readonly Traini
                 aria-controls="training-process-panel"
                 onClick={() => setActiveIndex(index)}
                 onMouseEnter={() => setActiveIndex(index)}
-                className={`group block w-full text-left outline-none transition-[padding,background-color] duration-300 motion-reduce:transition-none ${
-                  isActive ? "bg-white/[0.045] px-5 py-8 sm:px-7 sm:py-9" : "px-5 py-6 sm:px-7 sm:py-7"
-                } focus-visible:bg-white/[0.08]`}
+                className={[
+                  "group relative grid w-full grid-cols-[2.6rem_minmax(0,1fr)] gap-x-3 text-left outline-none transition-[padding,background-color] duration-300 motion-reduce:transition-none sm:grid-cols-[3.6rem_minmax(0,1fr)] sm:gap-x-5",
+                  isActive ? "bg-emerald/[0.055] px-5 pb-6 pt-7 sm:px-8 sm:pb-7 sm:pt-9" : "px-5 pb-1 pt-6 sm:px-8 sm:pb-1 sm:pt-8",
+                  "focus-visible:bg-emerald/[0.08]",
+                ].join(" ")}
               >
                 <span
-                  className={`inline-flex items-baseline gap-3 font-display font-bold uppercase ${
-                    isActive ? "text-green" : "text-fg-muted-dark group-hover:text-green"
-                  }`}
-                  style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}
+                  className={[
+                    "pt-1 font-display font-bold",
+                    isActive ? "text-emerald" : "text-fg-3 group-hover:text-emerald",
+                  ].join(" ")}
+                  style={{ fontSize: "calc(var(--text-label) + 2px)", letterSpacing: "var(--tracking-label)" }}
                 >
-                  <span>0{index + 1}</span>
+                  0{index + 1}
                 </span>
-                <span
-                  className={`mt-4 block font-display font-semibold transition-colors duration-300 motion-reduce:transition-none ${
-                    isActive ? "text-fg-on-dark" : "text-fg-muted-dark group-hover:text-fg-on-dark"
-                  }`}
-                  style={{ fontSize: "var(--text-card)", lineHeight: 1.05 }}
-                >
-                  {step.label}
+                <span className="min-w-0">
+                  <span className="block h-[2.9rem] overflow-hidden sm:h-[3.4rem]">
+                    <span
+                      className={[
+                        "block translate-y-[0.08em] font-display font-semibold leading-[0.68] tracking-[var(--tracking-display)] transition-colors duration-300 motion-reduce:transition-none",
+                        isActive ? "text-fg" : "text-fg-3 group-hover:text-fg",
+                      ].join(" ")}
+                      style={{ fontSize: "clamp(3.2rem, 6.8vw, 6.5rem)" }}
+                    >
+                      {step.label}
+                    </span>
+                  </span>
+                  {isActive ? (
+                    <span
+                      className="mt-5 block max-w-[40rem] text-fg-2 transition-opacity duration-200 motion-reduce:transition-none"
+                      style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}
+                    >
+                      <span className="block">{step.description[0]}</span>
+                      <span className="block">{step.description[1]}</span>
+                    </span>
+                  ) : null}
                 </span>
-                {isActive ? (
-                  <p
-                    className="mt-5 max-w-xl text-fg-muted-dark transition-opacity duration-200 motion-reduce:transition-none"
-                    style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
-                  >
-                    <span className="block">{step.description[0]}</span>
-                    <span className="block">{step.description[1]}</span>
-                  </p>
-                ) : null}
               </button>
             </li>
           );

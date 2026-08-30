@@ -8,7 +8,7 @@ export default function HomeProofSection() {
       id="proof-in-practice"
       className="relative overflow-hidden bg-surface-accent-soft"
       aria-labelledby="proof-in-practice-heading"
-      style={{ padding: "var(--section-py) var(--section-px)" }}
+      style={{ padding: "clamp(48px, 6vw, 72px) var(--section-px) var(--section-py)" }}
     >
       <div
         aria-hidden
@@ -20,7 +20,7 @@ export default function HomeProofSection() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="relative grid gap-12 lg:grid-cols-4 lg:grid-rows-[minmax(21rem,1fr)_minmax(19rem,0.88fr)] lg:gap-0">
+        <div className="relative grid gap-12 lg:grid-cols-4 lg:grid-rows-[minmax(21rem,1fr)_minmax(20rem,0.95fr)] lg:gap-0">
           <header className="flex flex-col justify-center p-2 sm:p-6 lg:col-span-2 lg:row-start-1 lg:p-8">
             <SectionMark>Proof</SectionMark>
             <h2
@@ -32,8 +32,8 @@ export default function HomeProofSection() {
             </h2>
           </header>
 
-          <article className="flex flex-col justify-center p-2 sm:p-6 lg:col-span-2 lg:col-start-3 lg:row-start-1 lg:p-8">
-            <ProofStageMarker activeIndex={1} label="Our solution" />
+          <article className="flex flex-col justify-end p-2 sm:p-6 lg:col-span-2 lg:col-start-3 lg:row-start-1 lg:p-8 lg:pb-12">
+            <ProofStageMarker activeIndex={0} total={2} label="Our solution" />
             <p
               className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
               style={{ fontSize: "var(--text-card)", lineHeight: 1.05 }}
@@ -45,28 +45,20 @@ export default function HomeProofSection() {
             </p>
           </article>
 
-          <div className="flex items-center p-2 sm:p-6 lg:col-start-2 lg:row-start-2 lg:p-8">
-            <div>
-              <p className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-small)" }}>
-                EdTech lead qualification
-              </p>
-              <p className="mt-1 text-fg-2" style={{ fontSize: "var(--text-label)" }}>
-                Sample case study · approval pending
-              </p>
-            </div>
-          </div>
-
-          <article className="flex flex-col justify-center p-2 sm:p-6 lg:col-span-2 lg:col-start-3 lg:row-start-2 lg:p-8">
-            <ProofStageMarker activeIndex={3} label="Client feedback" />
+          <article className="flex flex-col justify-center p-2 sm:p-6 lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:p-8">
+            <ProofStageMarker activeIndex={1} total={2} label="Client feedback" />
             <blockquote
               className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
               style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}
             >
-              “Approved client feedback will replace this sample once the implementation is ready to publish.”
+              “The team can now see what needs attention and what was already handled, without chasing it across four places.”
+              <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+                Operations lead, EdTech team · sample testimonial
+              </cite>
             </blockquote>
             <div className="mt-6 flex flex-wrap items-center gap-5">
               <p className="max-w-xl text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
-                The full case study will carry the complete implementation story and approved evidence.
+                The full case study will carry the complete implementation story and approved evidence when it is ready to publish.
               </p>
               <BrandButton href="/services#proof" variant="metal" tone="emerald" className="shrink-0">
                 See the full case study

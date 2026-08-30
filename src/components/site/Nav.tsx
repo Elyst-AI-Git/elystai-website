@@ -15,20 +15,10 @@ const links = [
   { label: "About", href: "/about" },
 ];
 
-function Logo({ onClick, isTouch }: { onClick?: () => void; isTouch: boolean }) {
+function Logo({ onClick }: { onClick?: () => void }) {
   return (
     <Link href="/" onClick={onClick} aria-label="Elyst AI">
-      <Wordmark
-        className="h-7 w-auto text-fg-on-dark"
-        style={
-          isTouch
-            ? undefined
-            : {
-                filter:
-                  "drop-shadow(0 0 1px rgba(255,255,255,0.65)) drop-shadow(0 1px 2px rgba(180,210,200,0.45)) drop-shadow(0 0 8px rgba(0,223,130,0.25))",
-              }
-        }
-      />
+      <Wordmark className="h-7 w-auto text-fg-on-dark" />
     </Link>
   );
 }
@@ -91,7 +81,7 @@ export default function Nav() {
           className={`relative flex h-14 items-center justify-between rounded-md px-3 ${isTouch ? "" : "transition-all duration-300"}`}
           style={pillStyle}
         >
-          <Logo isTouch={isTouch} />
+          <Logo />
 
           <div className="hidden items-center gap-6 md:flex">
             {links.map((link) => (
@@ -117,7 +107,7 @@ export default function Nav() {
             type="button"
             aria-label="Open menu"
             onClick={() => setMobileOpen(true)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-fg-on-dark md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-fg-on-dark md:hidden"
           >
             <Menu className="h-6 w-6" />
           </button>
@@ -135,12 +125,12 @@ export default function Nav() {
             style={{ background: "var(--surface-dark)" }}
           >
             <div className="relative flex items-center justify-between px-6 py-5">
-              <Logo onClick={closeMobile} isTouch={isTouch} />
+              <Logo onClick={closeMobile} />
               <button
                 type="button"
                 aria-label="Close menu"
                 onClick={closeMobile}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-fg-on-dark"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md text-fg-on-dark"
               >
                 <X className="h-6 w-6" />
               </button>

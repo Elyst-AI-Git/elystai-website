@@ -11,6 +11,7 @@ import TrainingProcessSteps, { type TrainingStep } from "@/components/training/T
 import ArvindSessionSection from "@/components/training/ArvindSessionSection";
 import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
 import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
+import { NumbersBand, type NumberBandItem } from "@/components/home/NumbersSection";
 
 const trainingSteps: TrainingStep[] = [
   {
@@ -42,10 +43,22 @@ const trainingOutcomes: { title: string; visual: OutcomeVisualId }[] = [
   { title: "Role-specific workflows practised in the room", visual: "workflows" },
 ];
 
-const trainingStats = [
-  { value: "3,000+", label: "people trained" },
-  { value: "50+", label: "live sessions" },
-  { value: "4+", label: "industries" },
+const trainingStats: readonly NumberBandItem[] = [
+  {
+    value: "3,000+",
+    label: "People trained",
+    description: "Founders and functional leads across India and the Middle East.",
+  },
+  {
+    value: "50+",
+    label: "Live sessions",
+    description: "Practical sessions built around roles, tools, and real work.",
+  },
+  {
+    value: "4+",
+    label: "Industries",
+    description: "Different operating contexts, one practical way to learn.",
+  },
 ];
 
 const investmentStats = [
@@ -73,7 +86,7 @@ const audiences = [
 
 function AudiencePanel() {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-5 md:grid-cols-2">
       {audiences.map((audience) => {
         const principle: Principle = {
           title: audience.title,
@@ -154,67 +167,7 @@ function TrainingHonesty() {
 }
 
 function TrainingProof() {
-  return (
-    <section className="relative overflow-hidden bg-surface-accent-soft" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/20" />
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
-          <header className="flex flex-col justify-center">
-            <SectionMark>Proof</SectionMark>
-            <h2 className="mt-6 max-w-3xl text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
-              Training built to be used, not just attended.
-            </h2>
-          </header>
-
-          <div className="flex flex-col justify-center">
-            <p className="font-display font-bold uppercase tracking-[var(--tracking-label)] text-emerald" style={{ fontSize: "var(--text-label)" }}>
-              Our solution
-            </p>
-            <p className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.05 }}>
-              Sessions shaped around the roles, tools, and work in the room.
-            </p>
-            <p className="mt-6 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-              The aim is useful practice: people leave with a realistic view of what AI can do and a next step they can take back to work.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-16 grid border-y border-emerald/20 lg:grid-cols-3">
-          {trainingStats.map((stat, index) => (
-            <article key={stat.label} className={`py-8 sm:py-9 lg:px-8 lg:py-10 ${index > 0 ? "border-t border-emerald/20 lg:border-l lg:border-t-0" : ""}`}>
-              <p className="font-display font-semibold tracking-[var(--tracking-stat)] text-emerald" style={{ fontSize: "var(--text-proof-number)", lineHeight: 0.9 }}>
-                {stat.value}
-              </p>
-              <p className="mt-5 font-display font-bold uppercase tracking-[var(--tracking-label)] text-fg" style={{ fontSize: "var(--text-label)" }}>
-                {stat.label}
-              </p>
-            </article>
-          ))}
-        </div>
-
-        <div className="mt-14 grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:gap-20">
-          <div>
-            <p className="font-display font-bold uppercase tracking-[var(--tracking-label)] text-emerald" style={{ fontSize: "var(--text-label)" }}>
-              Training feedback
-            </p>
-            <blockquote className="mt-5 max-w-2xl font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}>
-              “Not a forced five-star review. It is what people actually felt.”
-            </blockquote>
-            <p className="mt-5 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
-              Feedback from previous Elyst AI sessions
-            </p>
-          </div>
-
-          <div className="flex flex-col items-start gap-6 lg:items-end">
-            <p className="max-w-xl text-fg-2 lg:text-right" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-              The format changes with the room. The standard is that people leave knowing what to try next.
-            </p>
-          </div>
-        </div>
-      </div>
-
-    </section>
-  );
+  return <NumbersBand heading="Training by the numbers" numbers={trainingStats} />;
 }
 
 export default function TrainingPage() {
@@ -244,14 +197,16 @@ export default function TrainingPage() {
       <TrainingInvestmentSection />
 
       <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:items-start lg:gap-16">
-          <div>
+        <div className="mx-auto max-w-7xl">
+          <header className="mx-auto max-w-4xl text-center">
             <SectionMark>Who it is for</SectionMark>
             <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
               Who it is for.
             </h2>
+          </header>
+          <div className="mx-auto mt-12 max-w-5xl sm:mt-14">
+            <AudiencePanel />
           </div>
-          <AudiencePanel />
         </div>
       </section>
 
@@ -266,6 +221,8 @@ export default function TrainingPage() {
           <TrainingProcessSteps steps={trainingSteps} />
         </div>
       </section>
+
+      <TrainingProof />
 
       <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
         <div className="mx-auto max-w-7xl">
@@ -283,7 +240,6 @@ export default function TrainingPage() {
       </section>
 
       <ProgramsHistory />
-      <TrainingProof />
       <ArvindSessionSection />
 
       <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />
@@ -303,7 +259,12 @@ export default function TrainingPage() {
         headingId="services-routing-heading"
       />
       <ClosingCta
-        heading="Tell us what your team is stuck on. We will build the session around it."
+        heading={
+          <>
+            <span className="block">Tell us what your team is stuck on.</span>
+            <span className="block">We will build the session around it.</span>
+          </>
+        }
         sub={null}
         buttonLabel="Plan a team session"
         intent="training"

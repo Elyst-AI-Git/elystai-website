@@ -12,14 +12,16 @@ export default function Hero() {
           <h1
             className="text-fg"
             style={{
-              fontSize: "var(--text-hero)",
+              fontSize: "clamp(2.52rem, 5.4vw, 4.95rem)",
               lineHeight: 1.08,
               letterSpacing: "var(--tracking-display)",
             }}
           >
-            Don&apos;t just use AI, we{" "}
-            <span className="hero-accent-word">change</span> how your team
-            works with it.
+            <span className="block">Don&apos;t just use AI,</span>
+            <span className="block">
+              we <span className="hero-accent-word">change</span> how your
+            </span>
+            <span className="block">team works with it.</span>
           </h1>
 
           <p
@@ -27,7 +29,7 @@ export default function Hero() {
             style={{
               fontSize: "calc(var(--text-body) + 2px)",
               lineHeight: 1.5,
-              letterSpacing: "-0.0360855em",
+              letterSpacing: "-0.029229255em",
             }}
           >
             We understand how your company works, identify where AI can elevate

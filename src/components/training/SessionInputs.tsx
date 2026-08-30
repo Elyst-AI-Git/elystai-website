@@ -67,7 +67,7 @@ export default function SessionInputs({ className = "" }: { className?: string }
       <div
         role="tablist"
         aria-label="The inputs for each training session"
-        className="border-y border-white/15"
+        className="overflow-hidden border-y border-white/15"
       >
         {sessionInputs.map((input, index) => {
           const isActive = index === activeIndex;
@@ -114,17 +114,26 @@ export default function SessionInputs({ className = "" }: { className?: string }
                 className={`font-display font-semibold transition-colors duration-300 motion-reduce:transition-none ${
                   isActive ? "text-green" : "text-fg-muted-dark group-hover:text-green"
                 }`}
-                style={{ fontSize: "var(--text-small)", lineHeight: 1.1, letterSpacing: "var(--tracking-stat)" }}
+                style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1.1, letterSpacing: "var(--tracking-stat)" }}
               >
                 {input.number}
               </span>
-              <span
-                className={`font-display font-semibold transition-colors duration-300 motion-reduce:transition-none ${
-                  isActive ? "text-fg-on-dark" : "text-fg-muted-dark group-hover:text-fg-on-dark"
-                }`}
-                style={{ fontSize: "var(--text-card)", lineHeight: 1.02 }}
-              >
-                {input.label}
+              <span className="min-w-0">
+                <span className="block h-[2.9rem] overflow-hidden sm:h-[4rem]">
+                  <span
+                    className={`block translate-y-[0.08em] whitespace-nowrap font-display font-semibold leading-[0.76] tracking-[var(--tracking-display)] transition-colors duration-300 motion-reduce:transition-none ${
+                      isActive ? "text-fg-on-dark" : "text-fg-muted-dark group-hover:text-fg-on-dark"
+                    }`}
+                    style={{
+                      fontSize:
+                        input.label.length > 10
+                          ? "clamp(1.8rem, 3.4vw, 3.5rem)"
+                          : "clamp(2.2rem, 4.1vw, 4.2rem)",
+                    }}
+                  >
+                    {input.label}
+                  </span>
+                </span>
                 {isActive ? (
                   <span
                     className="mt-3 block max-w-sm font-sans font-normal text-fg-muted-dark transition-opacity duration-200 motion-reduce:transition-none"

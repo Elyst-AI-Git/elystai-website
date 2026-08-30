@@ -50,7 +50,7 @@ export default function ServicesProofSection() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="relative">
-          <div className="relative grid gap-16 lg:grid-cols-4 lg:grid-rows-[minmax(17rem,0.75fr)_minmax(18rem,0.85fr)_minmax(25rem,1.05fr)_minmax(19rem,0.8fr)] lg:gap-0">
+          <div className="relative grid gap-16 lg:grid-cols-4 lg:grid-rows-[minmax(17rem,0.75fr)_minmax(18rem,0.85fr)_minmax(23rem,1fr)] lg:gap-0">
             <header className="lg:col-span-2 lg:row-start-1 flex flex-col justify-center p-2 sm:p-6 lg:p-8">
               <SectionMark>Proof</SectionMark>
               <h2
@@ -90,30 +90,17 @@ export default function ServicesProofSection() {
               <ResultsDiagram />
             </article>
 
-            <div className="flex items-center lg:col-start-2 lg:row-start-4 p-2 sm:p-6 lg:p-8">
-              <div className="flex items-center gap-3">
-                <div className="flex size-12 items-center justify-center rounded-full border border-emerald/30 bg-bg font-display text-[0.7rem] font-bold tracking-[var(--tracking-label)] text-emerald">
-                  ED
-                </div>
-                <div>
-                  <p className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-small)" }}>
-                    EdTech lead qualification
-                  </p>
-                  <p className="mt-1 text-fg-2" style={{ fontSize: "var(--text-label)" }}>
-                    Feedback slot · approval pending
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-3 lg:row-start-4 p-2 sm:p-6 lg:p-8">
+            <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-1 lg:row-start-3 p-2 sm:p-6 lg:p-8">
               <ProofStageMarker activeIndex={3} label="Client Feedback" />
-              <p
+              <blockquote
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
                 style={{ fontSize: "clamp(1.55rem, 2.6vw, 2.7rem)", lineHeight: 1.08 }}
               >
-                Approved client feedback will replace this sample once the implementation is ready to publish.
-              </p>
+                “The team can finally see the next action without chasing a lead across personal inboxes.”
+                <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+                  EdTech operations lead · sample testimonial
+                </cite>
+              </blockquote>
             </article>
           </div>
         </div>
