@@ -49,7 +49,7 @@ export default function Nav() {
 
   const closeMobile = () => setMobileOpen(false);
   const linkClass =
-    "font-medium text-fg-on-dark/85 transition-colors duration-200 hover:text-green";
+    "font-medium tracking-[calc(var(--tracking-body)*1.1)] text-fg-on-dark/85 transition-colors duration-200 hover:text-green";
   const linkStyle = { fontSize: "calc(var(--text-small) + 1px)" };
   const pillStyle = isTouch
     ? {
@@ -99,7 +99,7 @@ export default function Nav() {
               label={ctaLabel}
               intent={ctaIntent}
               tone="light"
-              className="min-h-[40px]! px-5! text-[length:calc(var(--text-small)+1px)]"
+              className="min-h-[40px]! px-5! text-[length:calc(var(--text-small)+1px)] tracking-[calc(var(--tracking-body)*1.1)]"
             />
           </div>
 
@@ -143,7 +143,7 @@ export default function Nav() {
                   href={link.href}
                   onClick={closeMobile}
                   aria-current={pathname === link.href ? "page" : undefined}
-                  className={`font-display text-h3 font-semibold ${pathname === link.href ? "text-green" : "text-fg-on-dark"}`}
+                  className={`font-display tracking-[calc(var(--tracking-body)*1.1)] text-h3 font-semibold ${pathname === link.href ? "text-green" : "text-fg-on-dark"}`}
                 >
                   {link.label}
                 </Link>
@@ -156,6 +156,7 @@ export default function Nav() {
                 intent={ctaIntent}
                 tone="green"
                 full
+                className="tracking-[calc(var(--tracking-body)*1.1)]"
                 onClick={closeMobile}
               />
             </div>

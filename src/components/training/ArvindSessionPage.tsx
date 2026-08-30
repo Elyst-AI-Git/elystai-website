@@ -19,27 +19,27 @@ export default function ArvindSessionPage() {
         <div className="mx-auto max-w-5xl">
           <SectionMark tone="dark">Recent session</SectionMark>
 
-          <div className="mt-7 flex items-center justify-between gap-8 border-b border-white/15 pb-7">
+          <div className="mt-7 flex items-center justify-between gap-4 border-b border-white/15 pb-7 sm:gap-8">
             <Link href="/" aria-label="Elyst AI home">
-              <Wordmark className="h-8 w-auto text-fg-on-dark sm:h-9" />
+              <Wordmark className="h-6 w-auto text-fg-on-dark sm:h-8" />
             </Link>
             <Image
-              src="/brands/arvind-fashions-wordmark-tight.png"
+              src="/brands/arvind-fashions-wordmark-white.png"
               alt="Arvind Fashions"
-              width={660}
-              height={180}
-              className="h-auto w-44 object-contain sm:w-60"
+              width={555}
+              height={67}
+              className="h-6 w-auto object-contain sm:h-8"
             />
           </div>
 
-          <div className="mt-12 max-w-4xl sm:mt-16">
+          <div className="mx-auto mt-12 max-w-4xl text-center sm:mt-16">
             <h1 className="text-balance text-fg-on-dark" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
               AI training in the room, not just on the slide.
             </h1>
-            <p className="mt-7 font-display uppercase text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-              Arvind Fashions · Team training · Session snapshot
+            <p className="mt-7 text-left font-display text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+              August 20, 2026
             </p>
-            <p className="mt-8 max-w-3xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+            <p className="mx-auto mt-8 max-w-3xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
               {arvindSession.intro}
             </p>
           </div>
