@@ -1,5 +1,4 @@
 import { pageMeta } from "@/lib/seo";
-import Link from "next/link";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import ServicesHero from "@/components/marketing/ServicesHero";
 import ClosingCta from "@/components/marketing/ClosingCta";
@@ -8,6 +7,7 @@ import { SectionMark } from "@/components/ui/section-mark";
 import { ServicesFitStrip } from "@/components/marketing/ServicesFitStrip";
 import ServicesProcess from "@/components/marketing/ServicesProcess";
 import ServicesProofSection from "@/components/marketing/ServicesProofSection";
+import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 import JsonLd from "@/components/seo/JsonLd";
 
 const SERVICES_DESCRIPTION =
@@ -154,18 +154,6 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col gap-4 border-t border-emerald/20 pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-3xl font-display font-semibold text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-              Not ready to build yet? We run practical AI sessions for teams.
-            </p>
-            <Link
-              href="/training"
-              className="shrink-0 font-display font-bold text-emerald underline decoration-emerald/40 underline-offset-4 transition-colors hover:text-emerald-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2"
-              style={{ fontSize: "var(--text-small)" }}
-            >
-              Explore training →
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -217,6 +205,8 @@ export default function ServicesPage() {
         faqs={serviceFaqs}
         heading="Questions clients ask before they start."
       />
+
+      <TrainingRoutingStrip />
 
       <ClosingCta
         heading={

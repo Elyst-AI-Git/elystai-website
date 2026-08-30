@@ -115,10 +115,10 @@
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.0462em;
-  --tracking-body: -0.0132em;
-  --tracking-wide: 0.0756em;
-  --tracking-label: 0.144em;
-  --tracking-stat: -0.077em;
+  --tracking-body: -0.01452em;
+  --tracking-wide: 0.06804em;
+  --tracking-label: 0.1296em;
+  --tracking-stat: -0.0847em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);
@@ -292,6 +292,29 @@
     filter: drop-shadow(0 2px 10px rgba(0, 223, 130, 0.28));
   }
 
+  .hero-accent-word-red {
+    background-image: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--elyst-red-muted) 78%, var(--fg)) 0%,
+      var(--elyst-red-muted) 35%,
+      color-mix(in srgb, var(--elyst-red-muted) 58%, #ff9c8e) 50%,
+      var(--elyst-red-muted) 65%,
+      color-mix(in srgb, var(--elyst-red-muted) 78%, var(--fg)) 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    display: inline-block;
+    line-height: 1.16;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    vertical-align: baseline;
+    animation: wordmark-shift 5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 10px rgba(174, 78, 71, 0.28));
+  }
+
   .text-gradient-scroll {
     color: var(--elyst-emerald);
   }
@@ -440,7 +463,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-accent-word {
+    .hero-accent-word,
+    .hero-accent-word-red {
       animation: none;
     }
 
@@ -478,7 +502,8 @@
   /* On touch devices the shifting gradient is just a continuous repaint
      nobody can interact with — render the accent as flat solid emerald. */
   @media (hover: none) {
-    .hero-accent-word {
+    .hero-accent-word,
+    .hero-accent-word-red {
       animation: none;
       background: none;
       -webkit-background-clip: initial;
@@ -486,6 +511,11 @@
       -webkit-text-fill-color: var(--elyst-emerald);
       color: var(--elyst-emerald);
       filter: none;
+    }
+
+    .hero-accent-word-red {
+      -webkit-text-fill-color: var(--elyst-red-muted);
+      color: var(--elyst-red-muted);
     }
   }
 

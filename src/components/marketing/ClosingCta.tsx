@@ -67,13 +67,12 @@ export default function ClosingCta({
       className="relative w-full overflow-hidden bg-bg"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border border-emerald/15" />
       <div
-        className="relative z-10 mx-auto w-full max-w-7xl"
+        className="relative z-10 mx-auto w-full max-w-7xl overflow-hidden rounded-md border border-emerald/15"
         onMouseEnter={() => isDesktop && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden rounded-[48px] border border-white/10 bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[600px]">
+        <div className="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[600px]">
           {isDesktop ? (
             <Suspense fallback={<div className="absolute inset-0 bg-white/[0.03]" />}>
               <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">

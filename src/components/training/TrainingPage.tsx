@@ -48,6 +48,24 @@ const trainingStats = [
   { value: "50+", label: "sessions delivered" },
 ];
 
+const investmentStats = [
+  {
+    value: "7%",
+    copy: "of AI spend goes to the workforce. 93% goes to technology.",
+    source: "Source: Deloitte, 2025",
+  },
+  {
+    value: "12%",
+    copy: "of employees say they get enough AI training to actually benefit from it.",
+    source: "Source: EY, 2025",
+  },
+  {
+    value: "88%",
+    copy: "use AI, but mostly for basic tasks like search and summarising.",
+    source: "Source: EY, 2025",
+  },
+] as const;
+
 const audiences = [
   { title: "Companies rolling out AI tools to a team", kind: "team" as const },
   { title: "Departments needing role-specific workflows", kind: "department" as const },
@@ -146,6 +164,39 @@ function AudiencePanel() {
         </VisualCard>
       ))}
     </div>
+  );
+}
+
+function TrainingInvestmentSection() {
+  return (
+    <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div className="mx-auto max-w-7xl">
+        <header className="max-w-6xl">
+          <h2 className="text-balance text-fg" style={{ fontSize: "clamp(2.8rem, 6.2vw, 6rem)", lineHeight: 0.98 }}>
+            The AI investment has <span className="hero-accent-word-red">not worked</span> for most companies.
+          </h2>
+          <p className="mt-8 max-w-6xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+            Enterprises are spending heavily on AI technology, but outcomes remain inconsistent. Most AI initiatives stall at experimentation, with limited adoption, unclear ownership, and little measurable return.
+          </p>
+        </header>
+
+        <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-16 lg:gap-12">
+          {investmentStats.map((stat) => (
+            <article key={stat.value}>
+              <p className="font-display font-bold text-[var(--elyst-red-muted)]" style={{ fontSize: "var(--text-stat)", lineHeight: 0.9 }}>
+                {stat.value}
+              </p>
+              <p className="mt-6 max-w-sm text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+                {stat.copy}
+              </p>
+              <p className="mt-4 font-display text-fg-3" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
+                {stat.source}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -252,6 +303,8 @@ export default function TrainingPage() {
           <SessionInputs />
         </div>
       </section>
+
+      <TrainingInvestmentSection />
 
       <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:items-start lg:gap-16">

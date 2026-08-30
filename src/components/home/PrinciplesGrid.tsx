@@ -131,7 +131,7 @@ function ArchitecturalPrincipleCard({ principle }: { principle: Principle }) {
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         <h3
           className="max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
-          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.044em" }}
+          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.0484em" }}
         >
           {principle.title}
         </h3>
@@ -167,7 +167,7 @@ function ShaderPrincipleCard({ principle }: { principle: Principle }) {
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         <h3
           className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.044em" }}
+          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.0484em" }}
         >
           {principle.title}
         </h3>

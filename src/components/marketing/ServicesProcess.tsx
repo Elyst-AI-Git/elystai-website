@@ -115,13 +115,13 @@ function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" 
   return (
     <div className="flex min-w-0 flex-col justify-center">
       <p
-        className={`max-w-3xl ${isLight ? "text-fg" : "text-fg-on-dark/90"}`}
+        className={`max-w-3xl font-semibold ${isLight ? "text-fg" : "text-fg-on-dark/90"}`}
         style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}
       >
         {step.lead}
       </p>
 
-      <div className={`mt-8 grid gap-8 ${step.groups.length > 1 ? "sm:grid-cols-2" : "max-w-2xl"}`}>
+      <div className={`mt-11 grid gap-10 ${step.groups.length > 1 ? "sm:grid-cols-2" : "max-w-2xl"}`}>
         {step.groups.map((group) => (
           <div key={group.title}>
             <h3
@@ -146,7 +146,7 @@ function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" 
       </div>
 
       <p
-        className={`mt-8 border-t pt-5 font-display font-semibold ${isLight ? "border-emerald/25 text-emerald" : "border-green/25 text-green"}`}
+        className={`mt-11 border-t pt-5 text-center font-display font-semibold ${isLight ? "border-emerald/25 text-emerald" : "border-green/25 text-green"}`}
         style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}
       >
         {step.closing}
@@ -157,8 +157,8 @@ function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" 
 
 function ProcessPanel({ step, surface = "dark" }: { step: ProcessStep; surface?: "dark" | "light" }) {
   return (
-    <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[0.68fr_1.32fr] lg:items-center lg:gap-12 lg:p-12">
-      <ProcessSymbol id={step.id} surface={surface} />
+    <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[0.56fr_1.44fr] lg:items-center lg:gap-8 lg:px-8 lg:py-12">
+      <ProcessSymbol id={step.id} size="large" surface={surface} />
       <ProcessDetails step={step} surface={surface} />
     </div>
   );
