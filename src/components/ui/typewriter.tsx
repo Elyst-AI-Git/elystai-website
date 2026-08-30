@@ -82,7 +82,7 @@ export function Typewriter({
   }, [currentIndex, currentTextIndex, deleteSpeed, displayText, initialDelay, isDeleting, loop, speed, texts, waitTime]);
 
   return (
-    <span className={cn("inline whitespace-pre-wrap tracking-tight", className)}>
+    <span className={cn("inline whitespace-pre-wrap tracking-[-0.0275em]", className)}>
       <span>{displayText}</span>
       {showCursor ? (
         <motion.span

@@ -1,7 +1,7 @@
 import { Check, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
-import DotPattern from "@/components/ui/dot-pattern";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 
 export function ServicesFitStrip({
   children,
@@ -19,26 +19,26 @@ export function ServicesFitStrip({
       ? "color-mix(in srgb, var(--elyst-green) 42%, var(--border))"
       : "color-mix(in srgb, var(--elyst-red-muted) 42%, var(--border))",
     background: isYes
-      ? "linear-gradient(135deg, color-mix(in srgb, var(--surface-dark) 92%, var(--elyst-emerald) 8%), var(--surface-dark))"
+      ? "color-mix(in srgb, var(--surface-accent-soft) 38%, var(--bg))"
       : "color-mix(in srgb, var(--elyst-red-muted) 5%, var(--bg))",
   } as CSSProperties;
 
   return (
     <div
-      className={`services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 shadow-card ${isYes ? "text-fg-on-dark" : "text-fg-2"}`}
+      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card"
       style={style}
     >
-      {!isYes ? (
-        <DotPattern
-          width={22}
-          height={22}
-          cx={1}
-          cy={1}
-          cr={0.65}
-          className="z-0 opacity-25"
-          style={{ color: "var(--elyst-red-muted)" }}
-        />
-      ) : null}
+      <CanvasRevealEffect
+        colors={
+          isYes
+            ? [[0, 223, 130], [3, 98, 76], [255, 255, 255]]
+            : [[174, 78, 71], [174, 78, 71], [255, 255, 255]]
+        }
+        opacities={[0.2, 0.2, 0.2, 0.35, 0.35, 0.45, 0.6, 0.7, 0.8, 0.9]}
+        containerClassName="absolute inset-y-0 right-0 z-0 w-[46%] !bg-transparent"
+        dotSize={2}
+        showGradient={false}
+      />
       <BorderBeam
         size={180}
         duration={8}

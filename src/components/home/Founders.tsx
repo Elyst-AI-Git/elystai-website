@@ -93,10 +93,10 @@ function FounderStrip({ founder }: { founder: Founder }) {
       />
       <div className={`pointer-events-none absolute inset-0 flex flex-col justify-between p-5 md:p-9 ${identityOnRight ? "items-end text-right" : "items-start text-left"}`}>
         <div className={`flex flex-col gap-1 ${identityOnRight ? "items-end" : "items-start"}`}>
-          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.08em] text-fg-2">
+          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.072em] text-fg-2">
             {founder.role}
           </span>
-          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.08em] text-fg-2">
+          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.072em] text-fg-2">
             {founder.title}
           </span>
         </div>

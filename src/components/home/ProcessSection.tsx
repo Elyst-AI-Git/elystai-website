@@ -106,7 +106,7 @@ export default function ProcessSection() {
                         className={`inline-flex items-baseline gap-3 font-display font-bold uppercase ${
                           isActive ? "text-emerald" : "text-fg-3 group-hover:text-emerald"
                         }`}
-                        style={{ fontSize: "0.9rem", letterSpacing: "0.18em" }}
+                        style={{ fontSize: "0.9rem", letterSpacing: "0.162em" }}
                       >
                         <span>{step.number}</span>
                         <span>{step.label}</span>

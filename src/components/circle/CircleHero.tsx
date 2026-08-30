@@ -67,13 +67,13 @@ export default function CircleHero() {
             </span>
             <span
               className="font-display mt-1 block font-black tracking-tight text-fg-on-dark"
-              style={{ fontSize: "clamp(3.2rem, 9vw, 7rem)", letterSpacing: "-0.03em" }}
+              style={{ fontSize: "clamp(3.2rem, 9vw, 7rem)", letterSpacing: "-0.033em" }}
             >
               are already
             </span>
             <span
               className="font-display block font-black tracking-tight text-green-mid"
-              style={{ fontSize: "clamp(3.2rem, 9vw, 7rem)", letterSpacing: "-0.03em" }}
+              style={{ fontSize: "clamp(3.2rem, 9vw, 7rem)", letterSpacing: "-0.033em" }}
             >
               ahead of you.
             </span>

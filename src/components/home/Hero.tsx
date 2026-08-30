@@ -27,7 +27,7 @@ export default function Hero() {
             style={{
               fontSize: "calc(var(--text-body) + 2px)",
               lineHeight: 1.5,
-              letterSpacing: "-0.05em",
+              letterSpacing: "-0.055em",
             }}
           >
             We understand how your company works, identify where AI can elevate

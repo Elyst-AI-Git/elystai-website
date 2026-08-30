@@ -114,11 +114,11 @@
   --text-founder: clamp(1.45rem, 2.8vw, 2.35rem);
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
-  --tracking-display: -0.042em;
-  --tracking-body: -0.012em;
-  --tracking-wide: 0.084em;
-  --tracking-label: 0.16em;
-  --tracking-stat: -0.07em;
+  --tracking-display: -0.0462em;
+  --tracking-body: -0.0132em;
+  --tracking-wide: 0.0756em;
+  --tracking-label: 0.144em;
+  --tracking-stat: -0.077em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);

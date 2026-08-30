@@ -67,7 +67,7 @@ export default function ClosingCta({
       className="relative w-full overflow-hidden bg-bg"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/15" />
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border border-emerald/15" />
       <div
         className="relative z-10 mx-auto w-full max-w-7xl"
         onMouseEnter={() => isDesktop && setIsHovered(true)}
@@ -91,7 +91,7 @@ export default function ClosingCta({
           ) : null}
 
           <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
-            <h2 className="mb-8 font-display text-[2.4rem] font-medium leading-[1.05] tracking-[-0.04em] text-fg-on-dark md:text-[3.6rem] lg:text-[4.8rem]">
+            <h2 className="mb-8 font-display text-[2.4rem] font-medium leading-[1.05] tracking-[-0.044em] text-fg-on-dark md:text-[3.6rem] lg:text-[4.8rem]">
               {heading}
             </h2>
 
