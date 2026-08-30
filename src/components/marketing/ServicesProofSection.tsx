@@ -58,24 +58,16 @@ export default function ServicesProofSection() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/20"
-      />
+        className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] mx-auto hidden max-w-7xl grid-cols-4 lg:grid"
+      >
+        {[0, 1, 2, 3].map((line) => (
+          <span key={line} className="border-l border-emerald/15 last:border-r" />
+        ))}
+      </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="relative mt-2">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 hidden grid-cols-4 lg:grid"
-          >
-            {[0, 1, 2, 3].map((line) => (
-              <span
-                key={line}
-                className="border-l border-emerald/15 last:border-r"
-              />
-            ))}
-          </div>
-
-          <div className="relative grid gap-16 lg:grid-cols-4 lg:grid-rows-[minmax(17rem,0.75fr)_minmax(21rem,0.9fr)_minmax(30rem,1.25fr)_minmax(19rem,0.8fr)] lg:gap-0">
+        <div className="relative">
+          <div className="relative grid gap-16 lg:grid-cols-4 lg:grid-rows-[minmax(17rem,0.75fr)_minmax(18rem,0.85fr)_minmax(25rem,1.05fr)_minmax(19rem,0.8fr)] lg:gap-0">
             <header className="lg:col-span-2 lg:row-start-1 flex flex-col justify-center p-2 sm:p-6 lg:p-8">
               <SectionMark>Proof</SectionMark>
               <h2
@@ -110,7 +102,7 @@ export default function ServicesProofSection() {
               </p>
             </article>
 
-            <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-3 lg:row-start-3 p-2 sm:p-6 lg:p-8">
+            <article className="flex flex-col justify-start lg:col-span-2 lg:col-start-3 lg:row-start-3 p-2 sm:p-6 lg:p-8 lg:pt-10">
               <StageMarker activeIndex={2} label="The Results" />
               <ResultsDiagram />
             </article>

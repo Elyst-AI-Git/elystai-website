@@ -112,13 +112,14 @@
   --text-proof-number: clamp(2.8rem, 5vw, 4.5rem);
   --text-prefooter: clamp(1.5rem, 3.75vw, 3rem);
   --text-founder: clamp(1.45rem, 2.8vw, 2.35rem);
+  --text-cta: clamp(2.4rem, 4.5vw, 4.8rem);
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.0462em;
-  --tracking-body: -0.01452em;
-  --tracking-wide: 0.06804em;
-  --tracking-label: 0.1296em;
-  --tracking-stat: -0.0847em;
+  --tracking-body: -0.013068em;
+  --tracking-wide: 0.061236em;
+  --tracking-label: 0.11664em;
+  --tracking-stat: -0.07623em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);

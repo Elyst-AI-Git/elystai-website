@@ -18,7 +18,7 @@ export default function RegisterPage() {
       <div className="text-center flex flex-col items-center gap-6 max-w-md">
         <span
           className="inline-block rounded-full px-4 py-1.5 font-bold uppercase"
-          style={{ background: "var(--surface-muted)", color: "var(--fg-3)", fontSize: "var(--text-label)", letterSpacing: "0.0486em" }}
+          style={{ background: "var(--surface-muted)", color: "var(--fg-3)", fontSize: "var(--text-label)", letterSpacing: "0.04374em" }}
         >
           Enrollment Closed
         </span>

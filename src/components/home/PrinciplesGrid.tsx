@@ -108,7 +108,13 @@ const principles: Principle[] = [
   },
 ];
 
-function ArchitecturalPrincipleCard({ principle }: { principle: Principle }) {
+function ArchitecturalPrincipleCard({
+  principle,
+  visualFirst,
+}: {
+  principle: Principle;
+  visualFirst: boolean;
+}) {
   const Visual = principle.visual;
 
   return (
@@ -129,27 +135,40 @@ function ArchitecturalPrincipleCard({ principle }: { principle: Principle }) {
         <span className="absolute bottom-6 right-0 top-0 w-px bg-white/30" />
       </div>
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
+        {visualFirst ? (
+          <div className="mb-7 flex h-28 shrink-0 items-center justify-center px-1">
+            <Visual />
+          </div>
+        ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
-          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.0484em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.04356em" }}
         >
           {principle.title}
         </h3>
         <p
           className="mt-4 max-w-2xl text-[#c5c3c0]"
-          style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.08rem)", lineHeight: 1.5 }}
+          style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
         >
           {principle.description}
         </p>
-        <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
-          <Visual />
-        </div>
+        {!visualFirst ? (
+          <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
+            <Visual />
+          </div>
+        ) : null}
       </div>
     </article>
   );
 }
 
-function ShaderPrincipleCard({ principle }: { principle: Principle }) {
+function ShaderPrincipleCard({
+  principle,
+  visualFirst,
+}: {
+  principle: Principle;
+  visualFirst: boolean;
+}) {
   const Visual = principle.visual;
 
   return (
@@ -165,31 +184,40 @@ function ShaderPrincipleCard({ principle }: { principle: Principle }) {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--surface-dark)]/35 via-transparent to-[var(--surface-dark)]/90" />
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
+        {visualFirst ? (
+          <div className="mb-7 flex h-28 shrink-0 items-center justify-center px-1">
+            <Visual />
+          </div>
+        ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "clamp(1.35rem, 1.8vw, 1.9rem)", lineHeight: 1.08, letterSpacing: "-0.0484em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.04356em" }}
         >
           {principle.title}
         </h3>
         <p
           className="mt-4 max-w-2xl text-fg-muted-dark"
-          style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.08rem)", lineHeight: 1.5 }}
+          style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
         >
           {principle.description}
         </p>
-        <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
-          <Visual />
-        </div>
+        {!visualFirst ? (
+          <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
+            <Visual />
+          </div>
+        ) : null}
       </div>
     </article>
   );
 }
 
 function PrincipleCard({ principle, index }: { principle: Principle; index: number }) {
+  const visualFirst = index < 2;
+
   return index === 0 ? (
-    <ArchitecturalPrincipleCard principle={principle} />
+    <ArchitecturalPrincipleCard principle={principle} visualFirst={visualFirst} />
   ) : (
-    <ShaderPrincipleCard principle={principle} />
+    <ShaderPrincipleCard principle={principle} visualFirst={visualFirst} />
   );
 }
 
@@ -203,9 +231,6 @@ export function PrinciplesGrid() {
           <h2 className="mx-auto mt-6 max-w-4xl text-balance text-center text-fg" style={{ fontSize: "var(--text-h2)" }}>
             Built around your business, not around a demo.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
-            The system has to fit the work, the tools, and the people who will run it.
-          </p>
         </header>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

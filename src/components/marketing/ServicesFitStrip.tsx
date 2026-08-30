@@ -19,13 +19,14 @@ export function ServicesFitStrip({
       ? "color-mix(in srgb, var(--elyst-green) 42%, var(--border))"
       : "color-mix(in srgb, var(--elyst-red-muted) 42%, var(--border))",
     background: isYes
-      ? "color-mix(in srgb, var(--surface-accent-soft) 38%, var(--bg))"
+      ? "var(--surface-accent-soft)"
       : "color-mix(in srgb, var(--elyst-red-muted) 5%, var(--bg))",
+    borderWidth: "1.875px",
   } as CSSProperties;
 
   return (
     <div
-      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border-[1.5px] px-5 py-5 text-fg-2 shadow-card"
+      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card"
       style={style}
     >
       <CanvasRevealEffect
@@ -35,14 +36,14 @@ export function ServicesFitStrip({
             : [[174, 78, 71], [174, 78, 71], [255, 255, 255]]
         }
         opacities={[0.2, 0.2, 0.2, 0.35, 0.35, 0.45, 0.6, 0.7, 0.8, 0.9]}
-        containerClassName="absolute inset-y-0 right-0 z-0 w-[46%] !bg-transparent"
+        containerClassName="absolute inset-y-0 right-0 z-0 w-1/4 !bg-transparent"
         dotSize={2}
         showGradient={false}
       />
       <BorderBeam
         size={180}
         duration={8}
-        borderWidth={1}
+        borderWidth={1.875}
         colorFrom={isYes ? "var(--elyst-green)" : "var(--elyst-red-muted)"}
         colorTo={isYes ? "var(--elyst-green)" : "var(--elyst-red-muted)"}
       />

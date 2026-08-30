@@ -29,7 +29,7 @@ export function SectionMark({
           fontSize: "0.9rem",
           fontWeight: 700,
           textTransform: "uppercase",
-          letterSpacing: "0.1458em",
+          letterSpacing: "0.13122em",
           color: textColor,
         }}
       >

@@ -25,14 +25,14 @@ function CtaButton({
 
   if (intent === "training") {
     return (
-      <BookingButton intent={intent} variant="solid" tone="light" className={CTA_BUTTON_CLASS}>
+      <BookingButton intent={intent} variant="metal" tone="light" className={CTA_BUTTON_CLASS}>
         {content}
       </BookingButton>
     );
   }
 
   return (
-    <BrandButton href={href} variant="solid" tone="light" className={CTA_BUTTON_CLASS}>
+    <BrandButton href={href} variant="metal" tone="light" className={CTA_BUTTON_CLASS}>
       {content}
     </BrandButton>
   );
@@ -72,7 +72,7 @@ export default function ClosingCta({
         onMouseEnter={() => isDesktop && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[600px]">
+        <div className="relative flex min-h-[450px] flex-col items-center justify-center overflow-hidden bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[450px]">
           {isDesktop ? (
             <Suspense fallback={<div className="absolute inset-0 bg-white/[0.03]" />}>
               <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
@@ -90,7 +90,7 @@ export default function ClosingCta({
           ) : null}
 
           <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
-            <h2 className="mb-8 font-display text-[2.4rem] font-medium leading-[1.05] tracking-[-0.044em] text-fg-on-dark md:text-[3.6rem] lg:text-[4.8rem]">
+            <h2 className="mb-8 font-display font-medium leading-[1.05] tracking-[-0.044em] text-fg-on-dark" style={{ fontSize: "var(--text-cta)" }}>
               {heading}
             </h2>
 

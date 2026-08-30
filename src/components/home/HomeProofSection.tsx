@@ -1,24 +1,21 @@
+import { BrandButton } from "@/components/ui/brand-button";
 import { SectionMark } from "@/components/ui/section-mark";
 
-const proofCards = [
+const proofStats = [
   {
-    eyebrow: "AI implementation",
-    title: "A client story belongs here.",
-    description:
-      "The approved implementation story will show the workflow we changed, what the team owns now, and the result that followed.",
-    quote: "Client testimonial pending approval.",
-    attribution: "Latest implementation",
-    placeholder: true,
+    value: "4",
+    label: "lead sources",
+    detail: "Ads, forms, WhatsApp, and referrals brought into one view.",
   },
   {
-    eyebrow: "AI training",
-    title: "Practical enough to use the next day.",
-    description:
-      "Hands-on sessions built around real tools, real roles, and the work people already need to do.",
-    quote:
-      "The hands on approach of showing each things practically, showing how each tool actually works, made the sessions very effective. Looking forward to what's next.",
-    attribution: "Muhammed Sinan B · AI Yathra",
-    placeholder: false,
+    value: "1",
+    label: "shared queue",
+    detail: "Every enquiry moves from intake to a qualified conversation.",
+  },
+  {
+    value: "1",
+    label: "human approval point",
+    detail: "A counsellor remains in control before any response leaves.",
   },
 ] as const;
 
@@ -26,53 +23,95 @@ export default function HomeProofSection() {
   return (
     <section
       id="proof-in-practice"
-      className="relative overflow-hidden bg-surface-dark"
+      className="relative overflow-hidden bg-surface-accent-soft"
       aria-labelledby="proof-in-practice-heading"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-white/10" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/20"
+      />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <header className="mx-auto max-w-3xl text-center">
-          <SectionMark tone="dark">Proof in practice</SectionMark>
-          <h2
-            id="proof-in-practice-heading"
-            className="mx-auto mt-6 text-balance text-fg-on-dark"
-            style={{ fontSize: "var(--text-h2)", lineHeight: 1.08 }}
-          >
-            The work should show up in the work.
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
-            Two ways we look for evidence: what changes inside a business, and what people can do after the session.
-          </p>
-        </header>
+        <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
+          <header className="flex flex-col justify-center">
+            <SectionMark>Proof</SectionMark>
+            <h2
+              id="proof-in-practice-heading"
+              className="mt-6 max-w-3xl text-balance text-fg"
+              style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}
+            >
+              One lead process, made visible.
+            </h2>
+          </header>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
-          {proofCards.map((card) => (
-            <article key={card.eyebrow} className="flex min-h-[32rem] flex-col border border-white/10 bg-surface-dark-2 p-6 sm:p-8">
-              <p className={`font-display text-label font-bold uppercase tracking-[var(--tracking-label)] ${card.placeholder ? "text-fg-muted-dark" : "text-green"}`}>
-                {card.eyebrow}
-              </p>
-              <h3 className="mt-6 max-w-lg font-display font-semibold tracking-[var(--tracking-display)] text-fg-on-dark" style={{ fontSize: "var(--text-h3)", lineHeight: 1.12 }}>
-                {card.title}
-              </h3>
-              <p className="mt-5 max-w-xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.55 }}>
-                {card.description}
-              </p>
+          <div className="flex flex-col justify-center">
+            <p
+              className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald"
+            >
+              Our solution
+            </p>
+            <p
+              className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
+              style={{ fontSize: "var(--text-card)", lineHeight: 1.05 }}
+            >
+              We built one lead queue from enquiry to qualified conversation.
+            </p>
+            <p className="mt-6 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+              Course interest, timing, location, and intent are captured before a counsellor calls. The team sees the next action, while a human remains in the loop before any response leaves.
+            </p>
+          </div>
+        </div>
 
-              <div className={`mt-8 flex flex-1 flex-col justify-end border-t p-5 sm:p-6 ${card.placeholder ? "border-white/10 bg-black/10" : "border-green/25 bg-green/[0.06]"}`}>
-                <p className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-fg-muted-dark">
-                  {card.placeholder ? "Awaiting approved case study" : "From the session"}
-                </p>
-                <blockquote className="mt-4 max-w-xl font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.35 }}>
-                  “{card.quote}”
-                </blockquote>
-                <p className="mt-5 text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
-                  {card.attribution}
-                </p>
-              </div>
+        <div className="mt-16 grid border-y border-emerald/20 lg:grid-cols-3">
+          {proofStats.map((stat, index) => (
+            <article
+              key={stat.label}
+              className={[
+                "py-8 sm:py-9 lg:px-8 lg:py-10",
+                index > 0 ? "border-t border-emerald/20 lg:border-l lg:border-t-0" : "",
+              ].join(" ")}
+            >
+              <p
+                className="font-display font-semibold tracking-[var(--tracking-stat)] text-emerald"
+                style={{ fontSize: "var(--text-proof-number)", lineHeight: 0.9 }}
+              >
+                {stat.value}
+              </p>
+              <p className="mt-5 font-display font-bold uppercase tracking-[var(--tracking-label)] text-fg">
+                {stat.label}
+              </p>
+              <p className="mt-3 max-w-xs text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}>
+                {stat.detail}
+              </p>
             </article>
           ))}
+        </div>
+
+        <div className="mt-14 grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:gap-20">
+          <div>
+            <p className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">
+              Client feedback
+            </p>
+            <blockquote
+              className="mt-5 max-w-2xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
+              style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}
+            >
+              “Approved client feedback will replace this sample once the implementation is ready to publish.”
+            </blockquote>
+            <p className="mt-5 text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+              EdTech lead qualification · sample case study
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start gap-6 lg:items-end">
+            <p className="max-w-xl text-fg-2 lg:text-right" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+              The full case study will carry the complete implementation story and approved evidence.
+            </p>
+            <BrandButton href="/services#proof" variant="metal" tone="emerald">
+              See the full case study
+            </BrandButton>
+          </div>
         </div>
       </div>
     </section>
