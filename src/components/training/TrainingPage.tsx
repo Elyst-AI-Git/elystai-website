@@ -10,6 +10,7 @@ import SessionInputs from "@/components/training/SessionInputs";
 import TrainingProcessSteps, { type TrainingStep } from "@/components/training/TrainingProcessSteps";
 import ArvindSessionSection from "@/components/training/ArvindSessionSection";
 import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
+import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 
 const trainingSteps: TrainingStep[] = [
   {
@@ -286,6 +287,21 @@ export default function TrainingPage() {
       <ArvindSessionSection />
 
       <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />
+      <TrainingRoutingStrip
+        heading="Ready to build around the work?"
+        body="We map the workflow, build what helps, and hand it over to your team."
+        stickerValue="3"
+        stickerLabel={
+          <>
+            stages to a
+            <br />
+            working system.
+          </>
+        }
+        href="/services"
+        linkLabel="Explore services"
+        headingId="services-routing-heading"
+      />
       <ClosingCta
         heading="Tell us what your team is stuck on. We will build the session around it."
         sub={null}

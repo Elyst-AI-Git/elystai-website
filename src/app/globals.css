@@ -116,10 +116,10 @@
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
   --tracking-display: -0.0462em;
-  --tracking-body: -0.0117612em;
-  --tracking-wide: 0.0551124em;
-  --tracking-label: 0.104976em;
-  --tracking-stat: -0.068607em;
+  --tracking-body: -0.01058508em;
+  --tracking-wide: 0.04960116em;
+  --tracking-label: 0.0944784em;
+  --tracking-stat: -0.0617463em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);

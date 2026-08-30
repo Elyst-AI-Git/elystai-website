@@ -1,6 +1,20 @@
 "use client";
 
-import { GripVertical } from "lucide-react";
+import {
+  BarChart3,
+  ClipboardCheck,
+  Clock3,
+  DollarSign,
+  FileText,
+  GripVertical,
+  ListChecks,
+  MessageSquare,
+  Send,
+  Sparkles,
+  UserCheck,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 
@@ -104,6 +118,21 @@ const systemComparisonData: { sectors: readonly Sector[] } = {
   ],
 };
 
+const stepIcons: Record<string, LucideIcon> = {
+  Enquiry: MessageSquare,
+  Qualify: UserCheck,
+  Respond: Send,
+  "Follow up": Clock3,
+  Request: FileText,
+  Price: DollarSign,
+  Build: Wrench,
+  "Send & chase": Send,
+  Kickoff: ClipboardCheck,
+  Requirements: ListChecks,
+  Delivery: Wrench,
+  Reporting: BarChart3,
+};
+
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;",
@@ -128,7 +157,7 @@ function noScriptFallbackMarkup() {
     ].join("")).join("");
 
     return [
-      '<article class="rounded-md border border-emerald/20 bg-surface-light p-5 sm:p-7">',
+      '<article class="rounded-[var(--radius)] border border-emerald/20 bg-surface-light p-5 sm:p-7">',
       '<p class="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">',
       escapeHtml(sector.label),
       "</p>",
@@ -149,34 +178,58 @@ function noScriptFallbackMarkup() {
   return '<div class="mx-auto mt-12 max-w-7xl space-y-4">' + cards + "</div>";
 }
 
-function WorkflowColumns({
-  steps,
-  tone,
-}: {
-  steps: readonly WorkflowStep[];
-  tone: StateId;
-}) {
+function WorkflowIcon({ step, tone }: { step: WorkflowStep; tone: StateId }) {
+  const Icon = stepIcons[step.title] ?? Sparkles;
   const isTool = tone === "tool";
-  const titleClass = isTool ? "text-fg-2" : "text-fg";
-  const bodyClass = isTool ? "text-fg-3" : "text-fg-2";
+
+  return (
+    <div
+      className={["relative flex size-16 items-center justify-center rounded-full border", isTool ? "border-[#a78e63]/25 text-[#78603a]" : "border-emerald/15 text-emerald"].join(" ")}
+      style={{
+        background: isTool
+          ? "color-mix(in srgb, var(--surface-muted) 72%, #f0dfc4)"
+          : "color-mix(in srgb, var(--surface-accent-soft) 48%, var(--surface-light))",
+      }}
+    >
+      <Icon aria-hidden className="size-7" strokeWidth={1.7} />
+      <span
+        className={["absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border bg-surface-light font-display text-[0.62rem] font-bold", isTool ? "border-[#a78e63]/30 text-[#78603a]" : "border-emerald/25 text-emerald"].join(" ")}
+      >
+        {step.n}
+      </span>
+    </div>
+  );
+}
+
+function WorkflowColumns({ steps, tone }: { steps: readonly WorkflowStep[]; tone: StateId }) {
+  const isTool = tone === "tool";
 
   return (
     <ol
       className={[
-        "grid min-h-[29rem] grid-cols-2 gap-x-5 gap-y-8 p-5 sm:min-h-[25rem] sm:grid-cols-4 sm:gap-6 sm:p-7 lg:min-h-[23rem] lg:gap-8 lg:p-9",
-        isTool ? "bg-surface-muted" : "bg-surface-light",
+        "grid min-h-[33rem] grid-cols-2 gap-y-8 px-4 py-8 sm:min-h-[28rem] sm:gap-x-4 sm:px-6 sm:py-9 lg:min-h-[25rem] lg:grid-cols-4 lg:gap-y-0 lg:px-6 lg:py-10",
+        isTool ? "text-[#463a2b]" : "text-emerald",
       ].join(" ")}
+      style={{
+        background: isTool
+          ? "color-mix(in srgb, var(--surface-muted) 68%, #f0dfc4)"
+          : "color-mix(in srgb, var(--surface-accent-soft) 34%, var(--surface-light))",
+      }}
     >
-      {steps.map((step) => (
-        <li key={step.n} className="min-w-0 text-left">
+      {steps.map((step, index) => (
+        <li
+          key={step.n}
+          className={["flex min-w-0 flex-col items-center px-3 text-center sm:px-5 lg:px-6", index > 0 ? "lg:border-l lg:border-emerald/10" : ""].join(" ")}
+        >
+          <WorkflowIcon step={step} tone={tone} />
           <p
-            className={["font-display font-semibold tracking-[var(--tracking-display)]", titleClass].join(" ")}
-            style={{ fontSize: "var(--text-card)", lineHeight: 1.04 }}
+            className="mt-5 font-display font-semibold tracking-[var(--tracking-display)]"
+            style={{ fontSize: "var(--text-card)", lineHeight: 1.02 }}
           >
             {step.title}
           </p>
           <p
-            className={["mt-4", bodyClass].join(" ")}
+            className={["mt-4 max-w-[18ch]", isTool ? "text-[#665846]" : "text-fg-2"].join(" ")}
             style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}
           >
             {step.body}
@@ -279,13 +332,19 @@ export default function SystemActuallyIs() {
       className="relative overflow-hidden bg-bg"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
+      <div aria-hidden className="pointer-events-none absolute left-[8%] top-24 size-36 rounded-full border border-emerald/10" />
+      <div aria-hidden className="pointer-events-none absolute bottom-28 right-[7%] size-52 rounded-full border border-emerald/10" />
+
       <div className="relative z-10 mx-auto max-w-7xl">
-        <header className="mx-auto max-w-4xl text-center">
+        <header className="mx-auto max-w-5xl text-center">
           <SectionMark>WHAT AN AI SYSTEM ACTUALLY IS</SectionMark>
-          <h2 id="what-an-ai-system-is-heading" className="mx-auto mt-6 max-w-4xl text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.08 }}>
+          <h2 id="what-an-ai-system-is-heading" className="mx-auto mt-6 max-w-5xl text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.08 }}>
             <span className="block">A tool gives your team answers.</span>
             <span className="block">A system does the work.</span>
           </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+            Drag to compare the same workflow with and without a system.
+          </p>
         </header>
 
         <div className="mt-12 sm:mt-14">
@@ -308,7 +367,7 @@ export default function SystemActuallyIs() {
                     onClick={() => selectSector(sector)}
                     onKeyDown={(event) => handleSectorKeyDown(event, index)}
                     className={[
-                      "min-h-11 rounded-md border px-5 font-display text-small font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none",
+                      "min-h-11 rounded-[var(--radius)] border px-5 font-display text-small font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none",
                       isActive ? "border-emerald bg-emerald text-fg-on-dark" : "border-border bg-transparent text-fg-2 hover:border-emerald/50 hover:text-emerald",
                     ].join(" ")}
                   >
@@ -332,54 +391,62 @@ export default function SystemActuallyIs() {
             tabIndex={0}
             className="mt-8 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald focus-visible:outline-offset-4"
           >
-            <div className="mb-4 grid grid-cols-2 gap-x-4 gap-y-2 px-1 font-display text-label font-bold uppercase tracking-[var(--tracking-label)] sm:flex sm:items-center sm:justify-between">
-              <span className="text-fg-3 sm:order-1">Without an AI system</span>
-              <span className="col-span-2 row-start-2 text-center text-emerald sm:order-2">Drag to compare</span>
-              <span className="col-start-2 row-start-1 text-right text-emerald sm:order-3">With an AI system</span>
-            </div>
-
-            <div
-              ref={comparisonRef}
-              className="relative touch-none overflow-hidden rounded-md border border-emerald/20 bg-surface-light"
-              onPointerMove={handleComparisonPointerMove}
-              onPointerUp={() => setIsDragging(false)}
-              onPointerCancel={() => setIsDragging(false)}
-            >
-              <WorkflowColumns steps={activeSector.states.system.steps} tone="system" />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 overflow-hidden"
-                style={{ clipPath: "inset(0 " + (100 - inset) + "% 0 0)" }}
-              >
-                <WorkflowColumns steps={activeSector.states.tool.steps} tone="tool" />
+            <div className="relative overflow-hidden rounded-[var(--radius)] border border-emerald/20 bg-surface-light shadow-card">
+              <div className="relative z-30 grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-emerald/15 px-5 py-5 sm:px-8">
+                <span className="font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-fg-3">Without an AI system</span>
+                <span className="flex items-center gap-2 font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">
+                  <span className="hidden h-px w-8 bg-emerald/25 sm:block" />
+                  <span className="whitespace-nowrap">Drag to compare</span>
+                  <span className="hidden h-px w-8 bg-emerald/25 sm:block" />
+                </span>
+                <span className="text-right font-display text-label font-bold uppercase tracking-[var(--tracking-label)] text-emerald">With an AI system</span>
               </div>
 
               <div
-                className="pointer-events-none absolute inset-y-0 z-20 w-px -translate-x-1/2 bg-emerald shadow-[0_0_0_1px_rgba(3,98,76,0.08)]"
-                style={{ left: inset + "%" }}
+                ref={comparisonRef}
+                className="relative touch-none overflow-hidden"
+                onPointerMove={handleComparisonPointerMove}
+                onPointerUp={() => setIsDragging(false)}
+                onPointerCancel={() => setIsDragging(false)}
               >
-                <button
-                  type="button"
-                  role="slider"
-                  aria-label="Compare the workflow without an AI system and with an AI system"
-                  aria-orientation="vertical"
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={Math.round(inset)}
-                  aria-valuetext={Math.round(inset) + " percent without an AI system shown"}
-                  className="pointer-events-auto absolute left-1/2 top-1/2 flex h-12 w-7 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-sm border border-emerald bg-emerald text-fg-on-dark shadow-[0_5px_15px_rgba(0,0,0,0.2)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none touch-none"
-                  onPointerDown={startDragging}
-                  onPointerMove={moveDragging}
-                  onPointerUp={stopDragging}
-                  onPointerCancel={stopDragging}
-                  onKeyDown={handleSeparatorKeyDown}
+                <WorkflowColumns steps={activeSector.states.system.steps} tone="system" />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 overflow-hidden"
+                  style={{ clipPath: "inset(0 " + (100 - inset) + "% 0 0)" }}
                 >
-                  <GripVertical aria-hidden className="size-4" />
-                </button>
+                  <WorkflowColumns steps={activeSector.states.tool.steps} tone="tool" />
+                </div>
+
+                <div
+                  className="pointer-events-none absolute inset-y-0 z-40 w-px -translate-x-1/2 bg-emerald/80 shadow-[0_0_0_1px_rgba(3,98,76,0.08)]"
+                  style={{ left: inset + "%" }}
+                >
+                  <button
+                    type="button"
+                    role="slider"
+                    aria-label="Compare the workflow without an AI system and with an AI system"
+                    aria-orientation="vertical"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(inset)}
+                    aria-valuetext={Math.round(inset) + " percent without an AI system shown"}
+                    className="pointer-events-auto absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-emerald/20 bg-surface-light text-emerald shadow-[0_10px_28px_rgba(3,98,76,0.18)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none touch-none"
+                    onPointerDown={startDragging}
+                    onPointerMove={moveDragging}
+                    onPointerUp={stopDragging}
+                    onPointerCancel={stopDragging}
+                    onKeyDown={handleSeparatorKeyDown}
+                  >
+                    <span className="flex size-10 items-center justify-center rounded-full border border-emerald/20 bg-surface-light">
+                      <GripVertical aria-hidden className="size-5" />
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="relative mx-auto mt-7 min-h-[4.5rem] max-w-4xl text-center">
+            <div className="relative mx-auto mt-8 min-h-[4.5rem] max-w-4xl text-center">
               <p
                 aria-hidden={inset >= 50}
                 className="font-display font-semibold tracking-[var(--tracking-body)] text-fg transition-opacity duration-200 motion-reduce:transition-none"

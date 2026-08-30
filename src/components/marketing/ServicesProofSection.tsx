@@ -1,22 +1,5 @@
 import { SectionMark } from "@/components/ui/section-mark";
-
-function StageMarker({ activeIndex, label }: { activeIndex: number; label: string }) {
-  return (
-    <div className="flex items-center gap-3 font-display text-emerald">
-      <span aria-hidden className="flex items-center gap-1.5">
-        {[0, 1, 2, 3].map((dot) => (
-          <span
-            key={dot}
-            className={`size-1.5 rounded-full ${dot === activeIndex ? "bg-emerald" : "bg-emerald/25"}`}
-          />
-        ))}
-      </span>
-      <span className="text-[0.8rem] font-semibold uppercase tracking-[var(--tracking-label)]">
-        {label}
-      </span>
-    </div>
-  );
-}
+import ProofStageMarker from "@/components/marketing/ProofStageMarker";
 
 function ResultsDiagram() {
   return (
@@ -80,7 +63,7 @@ export default function ServicesProofSection() {
             </header>
 
             <article className="flex flex-col justify-end lg:col-span-2 lg:col-start-3 lg:row-start-1 p-2 sm:p-6 lg:p-8">
-              <StageMarker activeIndex={0} label="The Challenge" />
+              <ProofStageMarker activeIndex={0} label="The Challenge" />
               <p
                 className="mt-5 max-w-2xl font-display text-fg"
                 style={{ fontSize: "clamp(1.2rem, 2vw, 1.55rem)", lineHeight: 1.2 }}
@@ -90,7 +73,7 @@ export default function ServicesProofSection() {
             </article>
 
             <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-1 lg:row-start-2 p-2 sm:p-6 lg:p-8">
-              <StageMarker activeIndex={1} label="Our Solution" />
+              <ProofStageMarker activeIndex={1} label="Our Solution" />
               <h3
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
                 style={{ fontSize: "clamp(2.1rem, 4.2vw, 4.25rem)", lineHeight: 1.02 }}
@@ -103,7 +86,7 @@ export default function ServicesProofSection() {
             </article>
 
             <article className="flex flex-col justify-start lg:col-span-2 lg:col-start-3 lg:row-start-3 p-2 sm:p-6 lg:p-8 lg:pt-10">
-              <StageMarker activeIndex={2} label="The Results" />
+              <ProofStageMarker activeIndex={2} label="The Results" />
               <ResultsDiagram />
             </article>
 
@@ -124,7 +107,7 @@ export default function ServicesProofSection() {
             </div>
 
             <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-3 lg:row-start-4 p-2 sm:p-6 lg:p-8">
-              <StageMarker activeIndex={3} label="Client Feedback" />
+              <ProofStageMarker activeIndex={3} label="Client Feedback" />
               <p
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
                 style={{ fontSize: "clamp(1.55rem, 2.6vw, 2.7rem)", lineHeight: 1.08 }}

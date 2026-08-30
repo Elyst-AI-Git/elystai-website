@@ -142,7 +142,7 @@ function ArchitecturalPrincipleCard({
         ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-[#f3f2ef]"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.039204em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.0352836em" }}
         >
           {principle.title}
         </h3>
@@ -191,7 +191,7 @@ export function ShaderPrincipleCard({
         ) : null}
         <h3
           className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.039204em" }}
+          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.0352836em" }}
         >
           {principle.title}
         </h3>
