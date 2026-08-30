@@ -7,7 +7,7 @@ import { CometCard } from "@/components/ui/comet-card";
 export default function Hero() {
   return (
     <section style={{ padding: "clamp(40px, 5vw, 72px) var(--section-px)" }}>
-      <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[3fr_2fr]">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[3fr_2fr]">
         <div>
           <h1
             className="text-fg"
@@ -18,7 +18,7 @@ export default function Hero() {
             }}
           >
             <span className="block">Don&apos;t just use AI,</span>
-            <span className="block">
+            <span className="block md:whitespace-nowrap">
               we <span className="hero-accent-word">change</span> how your
             </span>
             <span className="block">team works with it.</span>
@@ -32,9 +32,13 @@ export default function Hero() {
               letterSpacing: "-0.029229255em",
             }}
           >
-            We understand how your company works, identify where AI can elevate
-            the business, build the right AI system, and train your team to run
-            it.
+            <span className="block">
+              We understand how your company works, identify where
+            </span>
+            <span className="block">
+              AI can elevate the business, build the right AI system
+            </span>
+            <span className="block">and train your team to run it.</span>
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">

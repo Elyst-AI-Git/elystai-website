@@ -2,11 +2,11 @@
 
 import {
   BarChart3,
+  ChevronsLeftRight,
   ClipboardCheck,
   Clock3,
   DollarSign,
   FileText,
-  GripVertical,
   ListChecks,
   MessageSquare,
   Send,
@@ -428,16 +428,14 @@ export default function SystemActuallyIs() {
                     aria-valuemax={100}
                     aria-valuenow={Math.round(inset)}
                     aria-valuetext={Math.round(inset) + " percent without an AI system shown"}
-                    className="pointer-events-auto absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-emerald/20 bg-surface-light text-emerald shadow-[0_10px_28px_rgba(3,98,76,0.18)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none touch-none"
+                    className="pointer-events-auto absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-md border-2 border-emerald/25 bg-surface-light text-emerald shadow-[0_10px_28px_rgba(3,98,76,0.18)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-2 motion-reduce:transition-none touch-none"
                     onPointerDown={startDragging}
                     onPointerMove={moveDragging}
                     onPointerUp={stopDragging}
                     onPointerCancel={stopDragging}
                     onKeyDown={handleSeparatorKeyDown}
                   >
-                    <span className="flex size-10 items-center justify-center rounded-full border border-emerald/20 bg-surface-light">
-                      <GripVertical aria-hidden className="size-5" />
-                    </span>
+                    <ChevronsLeftRight aria-hidden className="size-7" strokeWidth={2} />
                   </button>
                 </div>
               </div>
