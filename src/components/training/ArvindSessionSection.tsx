@@ -17,13 +17,13 @@ export const arvindSession = {
 
 function ArvindWordmark() {
   return (
-    <div aria-label={arvindSession.company} className="flex min-h-32 items-center border border-emerald/15 bg-white px-4 py-6 sm:px-6">
+    <div aria-label={arvindSession.company} className="flex min-h-32 items-center border border-emerald/15 bg-white px-2 py-6 sm:px-3">
       <Image
         src="/brands/arvind-fashions-wordmark-tight.png"
         alt="Arvind Fashions"
         width={660}
         height={180}
-        className="h-auto w-full max-w-[24rem] object-contain"
+        className="h-auto w-full max-w-[32rem] object-contain"
       />
     </div>
   );
@@ -31,7 +31,7 @@ function ArvindWordmark() {
 
 export default function ArvindSessionSection() {
   return (
-    <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px) clamp(88px, 8vw, 112px)" }}>
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-end lg:gap-20">
           <header>
@@ -43,7 +43,7 @@ export default function ArvindSessionSection() {
 
           <div className="relative overflow-hidden rounded-md border-2 border-emerald/20 bg-surface-accent-soft p-6 shadow-card sm:p-8 lg:p-10">
             <div aria-hidden className="pointer-events-none absolute right-0 top-0 h-full w-1/4 bg-[radial-gradient(circle_at_center,rgba(3,98,76,0.24)_0_1px,transparent_1px)] [background-size:8px_8px]" />
-            <div className="relative z-10 grid gap-9 md:grid-cols-[0.62fr_1.38fr] md:gap-12">
+            <div className="relative z-10 grid gap-9 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
               <div>
                 <ArvindWordmark />
                 <p className="mt-7 max-w-sm text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>

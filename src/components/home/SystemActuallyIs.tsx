@@ -207,7 +207,7 @@ function WorkflowColumns({ steps, tone }: { steps: readonly WorkflowStep[]; tone
   return (
     <ol
       className={[
-        "grid min-h-[33rem] grid-cols-2 gap-y-8 px-4 py-8 sm:min-h-[28rem] sm:gap-x-4 sm:px-6 sm:py-9 lg:min-h-[25rem] lg:grid-cols-4 lg:gap-y-0 lg:px-6 lg:py-10",
+        "grid min-h-[33rem] grid-cols-1 gap-y-8 px-4 py-8 sm:min-h-[28rem] sm:grid-cols-2 sm:gap-x-4 sm:px-6 sm:py-9 lg:min-h-[25rem] lg:grid-cols-4 lg:gap-y-0 lg:px-6 lg:py-10",
         isTool ? "text-[#463a2b]" : "text-emerald",
       ].join(" ")}
       style={{
@@ -219,7 +219,12 @@ function WorkflowColumns({ steps, tone }: { steps: readonly WorkflowStep[]; tone
       {steps.map((step, index) => (
         <li
           key={step.n}
-          className={["flex min-w-0 flex-col items-center px-3 text-center sm:px-5 lg:px-6", index > 0 ? "lg:border-l lg:border-emerald/10" : ""].join(" ")}
+          className={[
+            "flex min-w-0 flex-col items-center px-3 text-center sm:px-5 lg:px-6",
+            index > 0 ? "border-t border-emerald/10 pt-8 sm:border-t-0 sm:pt-0 lg:border-l" : "",
+            index % 2 === 1 ? "sm:border-l sm:border-emerald/10" : "",
+            index > 1 ? "sm:border-t sm:border-emerald/10 sm:pt-8 lg:border-t-0 lg:pt-0" : "",
+          ].join(" ")}
         >
           <WorkflowIcon step={step} tone={tone} />
           <p
@@ -332,9 +337,6 @@ export default function SystemActuallyIs() {
       className="relative overflow-hidden bg-bg"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <div aria-hidden className="pointer-events-none absolute left-[8%] top-24 size-36 rounded-full border border-emerald/10" />
-      <div aria-hidden className="pointer-events-none absolute bottom-28 right-[7%] size-52 rounded-full border border-emerald/10" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <header className="mx-auto max-w-5xl text-center">
           <SectionMark>What is an AI system?</SectionMark>

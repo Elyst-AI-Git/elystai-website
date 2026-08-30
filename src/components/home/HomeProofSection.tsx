@@ -20,8 +20,8 @@ export default function HomeProofSection() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="relative grid gap-12 lg:grid-cols-4 lg:grid-rows-[minmax(16rem,0.65fr)_minmax(19rem,0.8fr)_minmax(16rem,0.6fr)] lg:gap-0">
-          <header className="flex flex-col justify-start p-2 sm:p-6 lg:col-span-2 lg:row-start-1 lg:p-8">
+        <div className="relative grid gap-12 lg:grid-cols-4 lg:grid-rows-[auto_auto_auto] lg:gap-0">
+          <header className="flex flex-col justify-start p-2 sm:p-6 lg:col-span-2 lg:row-start-1 lg:p-8 lg:pb-0">
             <SectionMark>Proof</SectionMark>
             <h2
               id="proof-in-practice-heading"
@@ -32,7 +32,7 @@ export default function HomeProofSection() {
             </h2>
           </header>
 
-          <article className="flex flex-col justify-start p-2 sm:p-6 lg:col-span-2 lg:col-start-3 lg:row-start-2 lg:p-8 lg:pt-10">
+          <article className="flex flex-col justify-start p-2 sm:p-6 lg:col-span-2 lg:col-start-3 lg:row-start-2 lg:p-8 lg:pt-0">
             <ProofStageMarker activeIndex={0} total={2} label="Our solution" />
             <p
               className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
@@ -56,12 +56,13 @@ export default function HomeProofSection() {
                 Operations lead, EdTech team · sample testimonial
               </cite>
             </blockquote>
-            <div className="mt-7 flex justify-center">
-              <BrandButton href="/services#proof" variant="metal" tone="emerald" className="shrink-0">
-                See the full case study
-              </BrandButton>
-            </div>
           </article>
+        </div>
+
+        <div className="mt-10 flex justify-center lg:mt-8">
+          <BrandButton href="/services#proof" variant="metal" tone="emerald" className="shrink-0">
+            See the full case study
+          </BrandButton>
         </div>
       </div>
     </section>

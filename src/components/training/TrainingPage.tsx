@@ -134,7 +134,13 @@ function TrainingProof() {
 export default function TrainingPage() {
   return (
     <main id="main" className="flex-1 pt-24">
-      <section className="relative overflow-hidden bg-surface-dark" style={{ padding: "clamp(76px, 10vw, 148px) var(--section-px) clamp(64px, 8vw, 104px)" }}>
+      <section
+        className="relative overflow-hidden"
+        style={{
+          padding: "clamp(76px, 10vw, 148px) var(--section-px) clamp(64px, 8vw, 104px)",
+          background: "linear-gradient(to bottom, var(--surface-dark) 0%, var(--surface-dark) 62%, color-mix(in srgb, var(--surface-dark) 72%, var(--surface-accent-soft)) 82%, var(--surface-accent-soft) 100%)",
+        }}
+      >
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-64 opacity-60 [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_78%,transparent_100%)]">
           <CanvasRevealEffect
             colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}

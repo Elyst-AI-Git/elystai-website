@@ -72,7 +72,7 @@ export default function ServicesProofSection() {
               </p>
             </article>
 
-            <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-1 lg:row-start-2 p-2 sm:p-6 lg:p-8">
+            <article className="flex flex-col justify-start lg:col-span-2 lg:col-start-1 lg:row-start-2 p-2 sm:p-6 lg:p-8 lg:pt-0">
               <ProofStageMarker activeIndex={1} label="Our Solution" />
               <h3
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"

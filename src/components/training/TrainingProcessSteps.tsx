@@ -67,7 +67,7 @@ export default function TrainingProcessSteps({ steps }: { steps: readonly Traini
                   0{index + 1}
                 </span>
                 <span className="min-w-0">
-                  <span className="block h-[2.9rem] overflow-hidden sm:h-[3.4rem]">
+                  <span className={isActive ? "block overflow-visible" : "block h-[2.9rem] overflow-hidden sm:h-[3.4rem]"}>
                     <span
                       className={[
                         "block translate-y-[0.08em] font-display font-semibold leading-[0.68] tracking-[var(--tracking-display)] transition-colors duration-300 motion-reduce:transition-none",
