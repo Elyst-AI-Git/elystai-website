@@ -17,12 +17,12 @@ export const arvindSession = {
 
 function ArvindWordmark() {
   return (
-    <div aria-label={arvindSession.company} className="flex min-h-32 items-center border border-emerald/15 bg-white px-2 py-6 sm:px-3">
+    <div aria-label={arvindSession.company} className="flex min-h-32 items-center px-2 py-6 sm:px-3">
       <Image
-        src="/brands/arvind-fashions-wordmark-tight.png"
+        src="/brands/arvind-fashions-wordmark-red.png"
         alt="Arvind Fashions"
-        width={660}
-        height={180}
+        width={555}
+        height={67}
         className="h-auto w-full max-w-[32rem] object-contain"
       />
     </div>

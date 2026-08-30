@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { SectionMark } from "@/components/ui/section-mark";
 
 const outcomes = [
@@ -26,19 +27,15 @@ const outcomes = [
 
 function SessionPhoto() {
   return (
-    <div className="flex items-start justify-center px-2 py-2 sm:px-4 sm:py-4 lg:justify-start" role="img" aria-label="A team training session in action">
-      <div className="w-full max-w-[16rem] rounded-card border-2 border-emerald/20 bg-surface-muted p-3 shadow-card sm:max-w-[18rem]">
-        <div className="relative aspect-[9/16] overflow-hidden rounded-sm bg-emerald/5">
-          <Image
-            src="/images/training/arvind-session.webp"
-            alt="A team training session in action"
-            fill
-            sizes="(min-width: 1024px) 18rem, 70vw"
-            className="object-cover"
-          />
-        </div>
-      </div>
-    </div>
+    <figure className="relative aspect-[9/16] min-h-0 overflow-hidden bg-surface-muted lg:aspect-auto lg:min-h-[42rem]">
+      <Image
+        src="/images/training/arvind-session.webp"
+        alt="A team training session in action"
+        fill
+        sizes="(min-width: 1024px) 30vw, 100vw"
+        className="object-cover"
+      />
+    </figure>
   );
 }
 
@@ -53,28 +50,40 @@ export default function WhatYouGetSection() {
           </h2>
         </header>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(15rem,0.42fr)_minmax(0,1.58fr)] lg:mt-16 lg:gap-14">
+        <div className="mt-12 overflow-hidden rounded-md border-2 border-emerald/20 bg-surface-light sm:mt-14 lg:mt-16 lg:grid lg:grid-cols-[minmax(16rem,0.45fr)_minmax(0,1.55fr)] lg:items-stretch">
           <SessionPhoto />
-          <ol className="grid border-y border-emerald/15 sm:grid-cols-2 lg:border-l">
+          <ol className="grid sm:grid-cols-2 lg:border-l-2 lg:border-emerald/20">
             {outcomes.map((outcome, index) => (
               <li
                 key={outcome.eyebrow}
-                className={`flex min-h-64 flex-col justify-center border-b border-emerald/15 p-7 sm:p-9 lg:min-h-72 ${
-                  index % 2 === 0 ? "sm:border-r" : ""
-                } ${index > 1 ? "sm:border-b-0" : ""}`}
+                className={[
+                  "group relative flex min-h-64 flex-col justify-center overflow-hidden border-t border-emerald/15 bg-surface-light p-7 sm:p-9 lg:min-h-[21rem] lg:border-t-0",
+                  index % 2 === 0 ? "sm:border-r sm:border-emerald/15" : "",
+                  index > 1 ? "sm:border-t sm:border-emerald/15" : "",
+                ].join(" ")}
               >
-                <span className="font-display font-bold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                  {outcome.eyebrow}
-                </span>
-                <h3 className="mt-5 max-w-[22ch] font-display font-semibold text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.08 }}>
-                  {outcome.title}
-                </h3>
-                <p className="mt-5 max-w-[34ch] text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-                  {outcome.body}
-                </p>
-                <span aria-hidden className="mt-7 font-display text-fg-3" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-stat)" }}>
-                  0{index + 1}
-                </span>
+                <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-36 opacity-45 [mask-image:linear-gradient(to_top,black_0%,black_48%,transparent_100%)]">
+                  <CanvasRevealEffect
+                    colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
+                    containerClassName="absolute inset-0 !bg-transparent"
+                    dotSize={2}
+                    showGradient={false}
+                  />
+                </div>
+                <div className="relative z-10">
+                  <span className="font-display font-bold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+                    {outcome.eyebrow}
+                  </span>
+                  <h3 className="mt-5 max-w-[22ch] font-display font-semibold text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.08 }}>
+                    {outcome.title}
+                  </h3>
+                  <p className="mt-5 max-w-[34ch] text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+                    {outcome.body}
+                  </p>
+                  <span aria-hidden className="mt-7 block font-display text-fg-3" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-stat)" }}>
+                    0{index + 1}
+                  </span>
+                </div>
               </li>
             ))}
           </ol>
