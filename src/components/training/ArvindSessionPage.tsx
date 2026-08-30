@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BrandButton } from "@/components/ui/brand-button";
 import { SectionMark } from "@/components/ui/section-mark";
+import Wordmark from "@/components/site/Wordmark";
 import { arvindSession } from "@/components/training/ArvindSessionSection";
 
 const sessionModules = [
@@ -12,29 +14,31 @@ const sessionModules = [
 
 export default function ArvindSessionPage() {
   return (
-    <main id="main" className="flex-1 pt-24">
-      <section className="bg-surface-dark" style={{ padding: "clamp(76px, 10vw, 148px) var(--section-px) clamp(72px, 9vw, 128px)" }}>
+    <main id="main" className="flex-1 bg-bg pt-24">
+      <section className="bg-surface-dark" style={{ padding: "clamp(64px, 9vw, 124px) var(--section-px) clamp(64px, 8vw, 112px)" }}>
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            <SectionMark tone="dark">Session snapshot</SectionMark>
-            <div className="border border-white/15 bg-white px-5 py-3">
-              <Image
-                src="/brands/arvind-fashions-wordmark-tight.png"
-                alt="Arvind Fashions"
-                width={660}
-                height={180}
-                className="h-auto w-56 object-contain"
-              />
-            </div>
+          <SectionMark tone="dark">Recent session</SectionMark>
+
+          <div className="mt-7 flex items-center justify-between gap-8 border-b border-white/15 pb-7">
+            <Link href="/" aria-label="Elyst AI home">
+              <Wordmark className="h-8 w-auto text-fg-on-dark sm:h-9" />
+            </Link>
+            <Image
+              src="/brands/arvind-fashions-wordmark-tight.png"
+              alt="Arvind Fashions"
+              width={660}
+              height={180}
+              className="h-auto w-44 object-contain sm:w-60"
+            />
           </div>
 
-          <div className="mt-12 border-t border-white/15 pt-8 sm:mt-16 sm:pt-10">
-            <p className="font-display font-bold uppercase text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-              A working training case study
-            </p>
-            <h1 className="mt-6 max-w-4xl text-balance text-fg-on-dark" style={{ fontSize: "var(--text-hero)", lineHeight: 0.98 }}>
+          <div className="mt-12 max-w-4xl sm:mt-16">
+            <h1 className="text-balance text-fg-on-dark" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
               AI training in the room, not just on the slide.
             </h1>
+            <p className="mt-7 font-display uppercase text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+              Arvind Fashions · Team training · Session snapshot
+            </p>
             <p className="mt-8 max-w-3xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
               {arvindSession.intro}
             </p>
@@ -42,91 +46,64 @@ export default function ArvindSessionPage() {
         </div>
       </section>
 
-      <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <article className="mx-auto max-w-5xl">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] lg:gap-16">
-            <div>
-              <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                The brief
-              </p>
-            </div>
-            <div>
-              <h2 className="text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
-                A practical session shaped around the work already in the room.
-              </h2>
-              <p className="mt-8 max-w-3xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.48 }}>
-                {arvindSession.brief}
-              </p>
-              <p className="mt-7 max-w-3xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.55 }}>
-                This page records the working structure of the session. Approved agenda detail, impact evidence, and direct attendee feedback will replace the sample material as it becomes available.
-              </p>
-            </div>
+      <section className="bg-bg" style={{ padding: "clamp(72px, 10vw, 140px) var(--section-px)" }}>
+        <article className="mx-auto max-w-3xl">
+          <p className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+            {arvindSession.brief}
+          </p>
+
+          <div className="my-12 border-y border-border py-10 sm:my-16 sm:py-12">
+            <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
+              A training session works when it starts from the work already in the room. The aim here was not to demonstrate every possible tool. It was to make a few useful patterns visible, then practise them with the people who would carry them forward.
+            </p>
           </div>
-        </article>
-      </section>
 
-      <section className="bg-surface-accent-soft" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto max-w-5xl">
-          <SectionMark>What the session covered</SectionMark>
-          <h2 className="mt-6 max-w-3xl text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
-            Practical work, built in a clear sequence.
+          <h2 className="text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.04 }}>
+            What the session covered
           </h2>
+          <p className="mt-7 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
+            The room moved from context to practice, with each exercise connected to a role, a tool, or a task the team already understood.
+          </p>
 
-          <ol className="mt-12 grid gap-y-8 border-t border-emerald/20 pt-8 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-x-8">
+          <ol className="mt-10 grid gap-8 border-t border-border pt-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10">
             {sessionModules.map((module, index) => (
-              <li key={module} className="min-w-0">
+              <li key={module}>
                 <p className="font-display font-bold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
                   0{index + 1}
                 </p>
-                <p className="mt-4 max-w-[18ch] font-display font-semibold text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.06 }}>
+                <p className="mt-4 font-display font-semibold text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.1 }}>
                   {module}
                 </p>
               </li>
             ))}
           </ol>
-        </div>
-      </section>
 
-      <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <article className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] lg:gap-16">
-          <div>
+          <div className="my-14 border-y border-border py-10 sm:my-20 sm:py-12">
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               What we pulled off
             </p>
+            <ul className="mt-7 grid gap-5 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+              {arvindSession.pulledOff.map((item) => <li key={item}>{item}</li>)}
+            </ul>
           </div>
-          <div className="grid gap-10">
-            {arvindSession.pulledOff.map((item, index) => (
-              <div key={item}>
-                <span className="font-display font-bold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                  0{index + 1}
-                </span>
-                <p className="mt-3 max-w-3xl font-display font-semibold text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.2 }}>
-                  {item}
-                </p>
-              </div>
-            ))}
-          </div>
-        </article>
-      </section>
 
-      <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto max-w-5xl">
-          <SectionMark tone="dark">Attendee feedback</SectionMark>
-          <blockquote className="mt-8 max-w-4xl font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-h2)", lineHeight: 1.08 }}>
-            “{arvindSession.testimonial}”
-            <cite className="mt-6 block font-sans not-italic text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+          <blockquote className="border-l-2 border-emerald bg-surface-accent-soft px-6 py-7 sm:px-8 sm:py-9">
+            <p className="font-display font-semibold text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}>
+              “{arvindSession.testimonial}”
+            </p>
+            <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
               Sample attendee feedback · wording to be replaced with an approved quote
             </cite>
           </blockquote>
-        </div>
+        </article>
       </section>
 
-      <section className="bg-bg" style={{ padding: "clamp(64px, 8vw, 104px) var(--section-px)" }}>
-        <div className="mx-auto flex max-w-5xl flex-col items-start gap-7">
-          <p className="max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+      <section className="bg-surface-accent-soft" style={{ padding: "clamp(64px, 8vw, 104px) var(--section-px)" }}>
+        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          <h2 className="text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.05 }}>
             Looking for a training session shaped around your team&apos;s work?
-          </p>
-          <BrandButton href="/training" variant="outline" tone="emerald">
+          </h2>
+          <BrandButton href="/training" variant="metal" tone="emerald" className="mt-8">
             Back to training
           </BrandButton>
         </div>

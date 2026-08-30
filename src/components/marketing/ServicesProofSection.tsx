@@ -50,7 +50,7 @@ export default function ServicesProofSection() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="relative">
-          <div className="relative grid gap-16 lg:grid-cols-4 lg:grid-rows-[minmax(17rem,0.75fr)_minmax(18rem,0.85fr)_minmax(23rem,1fr)] lg:gap-0">
+          <div className="relative grid gap-16 lg:grid-cols-4 lg:grid-rows-[minmax(17rem,0.75fr)_minmax(18rem,0.85fr)_minmax(23rem,1fr)_minmax(17rem,0.7fr)] lg:gap-0">
             <header className="lg:col-span-2 lg:row-start-1 flex flex-col justify-center p-2 sm:p-6 lg:p-8">
               <SectionMark>Proof</SectionMark>
               <h2
@@ -90,7 +90,7 @@ export default function ServicesProofSection() {
               <ResultsDiagram />
             </article>
 
-            <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-1 lg:row-start-3 p-2 sm:p-6 lg:p-8">
+            <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-1 lg:row-start-4 p-2 sm:p-6 lg:p-8 lg:pt-10">
               <ProofStageMarker activeIndex={3} label="Client Feedback" />
               <blockquote
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"

@@ -11,17 +11,17 @@ type SessionInput = {
 const sessionInputs: SessionInput[] = [
   {
     number: "01",
-    label: "Your role",
+    label: "Your Role",
     detail: "We start with the people who will use the session.",
   },
   {
     number: "02",
-    label: "Your tools",
+    label: "Your Tools",
     detail: "We work inside the tools your team already runs.",
   },
   {
     number: "03",
-    label: "Your real work",
+    label: "Your Work",
     detail: "We practise on the tasks that matter in the room.",
   },
 ];
@@ -49,8 +49,8 @@ export default function SessionInputs({ className = "" }: { className?: string }
 
   return (
     <aside
-      aria-label="Every session starts with your role, your tools, and your real work"
-      className={`relative w-full overflow-hidden ${className}`}
+      aria-label="Every session starts with your role, your tools, and your work"
+      className={`relative w-full ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -67,7 +67,7 @@ export default function SessionInputs({ className = "" }: { className?: string }
       <div
         role="tablist"
         aria-label="The inputs for each training session"
-        className="overflow-hidden border-y border-white/15"
+        className="flex min-h-[24rem] flex-col gap-3 md:h-[25rem] md:flex-row"
       >
         {sessionInputs.map((input, index) => {
           const isActive = index === activeIndex;
@@ -85,64 +85,49 @@ export default function SessionInputs({ className = "" }: { className?: string }
               onFocus={() => moveTo(index)}
               onMouseEnter={() => moveTo(index)}
               onKeyDown={(event) => {
-                if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-                  event.preventDefault();
-                  const nextIndex = (index + 1) % sessionInputs.length;
-                  moveTo(nextIndex);
-                  document.getElementById(`training-input-${sessionInputs[nextIndex].number}`)?.focus();
-                }
-                if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-                  event.preventDefault();
-                  const nextIndex = (index - 1 + sessionInputs.length) % sessionInputs.length;
-                  moveTo(nextIndex);
-                  document.getElementById(`training-input-${sessionInputs[nextIndex].number}`)?.focus();
-                }
+                if (!["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key)) return;
+
+                event.preventDefault();
+                const nextIndex = event.key === "ArrowDown" || event.key === "ArrowRight"
+                  ? (index + 1) % sessionInputs.length
+                  : (index - 1 + sessionInputs.length) % sessionInputs.length;
+                moveTo(nextIndex);
+                document.getElementById(`training-input-${sessionInputs[nextIndex].number}`)?.focus();
               }}
-              className={`group relative grid w-full grid-cols-[3.2rem_minmax(0,1fr)] gap-x-4 border-b border-white/15 text-left last:border-b-0 outline-none transition-[padding,background-color] duration-300 motion-reduce:transition-none ${
-                isActive ? "bg-white/[0.045] px-4 py-7 sm:px-6 sm:py-8" : "px-4 py-5 sm:px-6 sm:py-6"
-              } focus-visible:bg-white/[0.08]`}
+              className={`group relative min-w-0 overflow-hidden rounded-md border-2 bg-white text-left outline-none transition-[flex,border-color,box-shadow] duration-500 motion-reduce:transition-none md:min-h-0 ${
+                isActive
+                  ? "min-h-56 flex-1 border-green shadow-[0_14px_34px_rgba(0,0,0,0.16)]"
+                  : "min-h-20 flex-[0_0_5rem] border-white/20 hover:border-green/65"
+              } focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-dark)]`}
             >
               {isActive ? (
                 <span
                   aria-hidden
-                  className="training-input-progress absolute bottom-0 left-0 top-0 w-1 bg-green"
+                  className="absolute bottom-0 left-0 top-0 w-1 origin-top bg-emerald"
                   style={{ animation: `training-input-progress ${AUTO_ADVANCE_MS}ms linear` }}
                 />
               ) : null}
               <span
-                aria-hidden
-                className={`font-display font-semibold transition-colors duration-300 motion-reduce:transition-none ${
-                  isActive ? "text-green" : "text-fg-muted-dark group-hover:text-green"
-                }`}
-                style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1.1, letterSpacing: "var(--tracking-stat)" }}
+                className={`absolute left-5 top-5 font-display font-bold ${isActive ? "text-emerald" : "text-fg-3"}`}
+                style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1, letterSpacing: "var(--tracking-stat)" }}
               >
                 {input.number}
               </span>
-              <span className="min-w-0">
-                <span className="block h-[2.9rem] overflow-hidden sm:h-[4rem]">
-                  <span
-                    className={`block translate-y-[0.08em] whitespace-nowrap font-display font-semibold leading-[0.76] tracking-[var(--tracking-display)] transition-colors duration-300 motion-reduce:transition-none ${
-                      isActive ? "text-fg-on-dark" : "text-fg-muted-dark group-hover:text-fg-on-dark"
-                    }`}
-                    style={{
-                      fontSize:
-                        input.label.length > 10
-                          ? "clamp(1.8rem, 3.4vw, 3.5rem)"
-                          : "clamp(2.2rem, 4.1vw, 4.2rem)",
-                    }}
-                  >
+
+              {isActive ? (
+                <span className="absolute inset-x-6 bottom-6 flex flex-col items-start">
+                  <span className="max-w-[18ch] font-sans text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.4 }}>
+                    {input.detail}
+                  </span>
+                  <span className="mt-4 font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "clamp(1.8rem, 3vw, 3rem)", lineHeight: 0.95 }}>
                     {input.label}
                   </span>
                 </span>
-                {isActive ? (
-                  <span
-                    className="mt-3 block max-w-sm font-sans font-normal text-fg-muted-dark transition-opacity duration-200 motion-reduce:transition-none"
-                    style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}
-                  >
-                    {input.detail}
-                  </span>
-                ) : null}
-              </span>
+              ) : (
+                <span className="absolute bottom-24 left-1/2 -translate-x-1/2 rotate-90 whitespace-nowrap font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "clamp(1.25rem, 2vw, 1.8rem)", lineHeight: 1 }}>
+                  {input.label}
+                </span>
+              )}
             </button>
           );
         })}

@@ -1,17 +1,17 @@
 import BookingButton from "@/components/marketing/BookingButton";
 import { SectionMark } from "@/components/ui/section-mark";
-import { TextGradientScroll } from "@/components/ui/text-gradient-scroll";
 import ClosingCta from "@/components/marketing/ClosingCta";
 import FaqSection from "@/components/marketing/FaqSection";
 import ProgramsHistory from "@/components/training/ProgramsHistory";
-import { AudienceVisual, OutcomeVisual, type OutcomeVisualId } from "@/components/training/TrainingVisuals";
-import { VisualCard } from "@/components/ui/visual-card";
+import { AudienceVisual } from "@/components/training/TrainingVisuals";
 import SessionInputs from "@/components/training/SessionInputs";
 import TrainingProcessSteps, { type TrainingStep } from "@/components/training/TrainingProcessSteps";
 import ArvindSessionSection from "@/components/training/ArvindSessionSection";
 import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
 import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 import { NumbersBand, type NumberBandItem } from "@/components/home/NumbersSection";
+import WhatYouGetSection from "@/components/training/WhatYouGetSection";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 
 const trainingSteps: TrainingStep[] = [
   {
@@ -35,12 +35,6 @@ const trainingFaqs = [
   { q: "Suitable for beginners?", a: "Yes. Sessions are built around the room." },
   { q: "On site or remote?", a: "Both." },
   { q: "What do you need from us?", a: "Real work examples and your tool list." },
-];
-
-const trainingOutcomes: { title: string; visual: OutcomeVisualId }[] = [
-  { title: "A realistic view of what AI can and cannot do", visual: "reality" },
-  { title: "Better habits with the tools you already pay for", visual: "habits" },
-  { title: "Role-specific workflows practised in the room", visual: "workflows" },
 ];
 
 const trainingStats: readonly NumberBandItem[] = [
@@ -133,39 +127,6 @@ function TrainingInvestmentSection() {
   );
 }
 
-function OutcomesBoard() {
-  return (
-    <ol className="grid gap-4 md:grid-cols-3">
-      {trainingOutcomes.map((outcome, index) => (
-        <li key={outcome.title}>
-          <VisualCard decorated={false} className="flex min-h-80 h-full flex-col p-6 sm:p-7">
-            <div className="flex h-32 items-center justify-center">
-              <OutcomeVisual id={outcome.visual} className="max-w-[14rem]" />
-            </div>
-            <span className="mt-6 font-display font-semibold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-              0{index + 1}
-            </span>
-            <h3 className="mt-3 max-w-sm text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.2 }}>
-              {outcome.title}
-            </h3>
-          </VisualCard>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-function TrainingHonesty() {
-  const className = "mx-auto max-w-5xl justify-center text-center font-display font-bold text-[length:calc(var(--text-card)+2px)] leading-[1.15] tracking-[var(--tracking-display)]";
-
-  return (
-    <div className="training-honesty-gradient mx-auto mt-12 max-w-5xl text-center sm:mt-14 lg:col-span-2">
-      <TextGradientScroll text="Anyone promising you a percentage" className={className} />
-      <TextGradientScroll text="After one session is guessing." className={`${className} mt-2`} />
-    </div>
-  );
-}
-
 function TrainingProof() {
   return <NumbersBand heading="Training by the numbers" numbers={trainingStats} />;
 }
@@ -174,7 +135,16 @@ export default function TrainingPage() {
   return (
     <main id="main" className="flex-1 pt-24">
       <section className="relative overflow-hidden bg-surface-dark" style={{ padding: "clamp(76px, 10vw, 148px) var(--section-px) clamp(64px, 8vw, 104px)" }}>
-        <div className="mx-auto grid max-w-7xl gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.62fr)] xl:items-center xl:gap-16">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-64 opacity-60 [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_78%,transparent_100%)]">
+          <CanvasRevealEffect
+            colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
+            containerClassName="absolute inset-0 !bg-transparent"
+            dotSize={2}
+            showGradient={false}
+          />
+        </div>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-[var(--surface-accent-soft)] opacity-25" />
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.62fr)] xl:items-center xl:gap-16">
           <div className="max-w-3xl">
             <SectionMark tone="dark">Training</SectionMark>
             <h1 className="training-hero-title mt-6 text-fg-on-dark" style={{ lineHeight: 1.04 }}>
@@ -222,25 +192,10 @@ export default function TrainingPage() {
         </div>
       </section>
 
+      <WhatYouGetSection />
       <TrainingProof />
-
-      <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16">
-            <div>
-              <SectionMark>What you get</SectionMark>
-              <h2 className="mt-6 max-w-lg text-fg" style={{ fontSize: "var(--text-h2)" }}>
-                What your team walks out with.
-              </h2>
-            </div>
-            <OutcomesBoard />
-          </div>
-          <TrainingHonesty />
-        </div>
-      </section>
-
-      <ProgramsHistory />
       <ArvindSessionSection />
+      <ProgramsHistory />
 
       <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />
       <TrainingRoutingStrip

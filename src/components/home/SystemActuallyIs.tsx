@@ -386,7 +386,7 @@ export default function SystemActuallyIs() {
             role="tabpanel"
             aria-labelledby={"system-sector-" + activeSector.id}
             tabIndex={0}
-            className="mt-8 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald focus-visible:outline-offset-4"
+            className="mt-12 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald focus-visible:outline-offset-4 sm:mt-16"
           >
             <div className="relative overflow-hidden rounded-md border-4 border-emerald/65 bg-surface-light shadow-card">
               <div className="relative z-30 grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-emerald/15 px-5 py-5 sm:px-8">
@@ -443,7 +443,7 @@ export default function SystemActuallyIs() {
               </div>
             </div>
 
-            <div className="relative mx-auto mt-8 min-h-[4.5rem] max-w-4xl text-center">
+            <div className="relative mx-auto mt-12 min-h-[4.5rem] max-w-4xl text-center sm:mt-14">
               <p
                 aria-hidden={inset >= 50}
                 className="font-display font-semibold tracking-[var(--tracking-body)] text-fg transition-opacity duration-200 motion-reduce:transition-none"
