@@ -11,15 +11,15 @@ import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 import JsonLd from "@/components/seo/JsonLd";
 
 const SERVICES_DESCRIPTION =
-  "We understand how your team works, build the right AI system, and train your team to run it.";
+  "From workflow diagnosis to tested implementation and handover, Elyst AI builds around the tools your team already uses.";
 
 export const metadata = {
   ...pageMeta({
     path: "/services",
-    title: "How We Build AI Into Your Business",
+    title: "How Elyst AI Builds Systems Your Team Owns",
     description: SERVICES_DESCRIPTION,
   }),
-  title: { absolute: "How We Build AI Into Your Business | Elyst AI" },
+  title: { absolute: "How Elyst AI Builds Systems Your Team Owns | Elyst AI" },
   robots: { index: true, follow: true },
 };
 
@@ -66,18 +66,6 @@ const serviceFaqs = [
   {
     q: "How is it priced?",
     a: "Per project, paid in phases. Never one upfront sum.",
-  },
-  {
-    q: "How are scope changes handled?",
-    a: "Written down and agreed before anything changes. Nothing moves on a verbal note.",
-  },
-  {
-    q: "How do we share credentials?",
-    a: "Through secure channels only. Never by email or web form.",
-  },
-  {
-    q: "Can you guarantee a result?",
-    a: "No. We do not promise an outcome before discovery and testing. We promise what the system will do, not what it will earn you.",
   },
 ];
 
@@ -209,14 +197,9 @@ export default function ServicesPage() {
       <TrainingRoutingStrip />
 
       <ClosingCta
-        heading={
-          <>
-            Pick the task your team complains about most.
-            <span className="block">That is where we start.</span>
-          </>
-        }
-        sub=""
-        buttonLabel="See how we work"
+        heading="Bring us one workflow that is not working."
+        sub="Bring tasks that take too long and we will tell you if AI is the answer."
+        buttonLabel="Book a Call"
         intent="identify"
         href="/services#our-process"
       />

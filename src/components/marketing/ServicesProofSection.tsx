@@ -1,11 +1,11 @@
 import { SectionMark } from "@/components/ui/section-mark";
 import ProofStageMarker from "@/components/marketing/ProofStageMarker";
 
-function ResultsDiagram() {
+function ResponseTimeDiagram() {
   return (
-    <div className="mt-10 grid gap-8 sm:grid-cols-[minmax(0,1fr)_minmax(13rem,0.7fr)] sm:items-end">
-      <div aria-hidden className="flex h-36 items-end gap-1 border-b border-emerald/30 pb-0">
-        {[20, 24, 26, 30, 34, 39, 44, 50, 58, 67, 78, 92, 100].map((height, index) => (
+    <div className="mt-8 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+      <div aria-hidden className="flex h-32 items-end gap-1 border-b border-emerald/30 pb-0">
+        {[100, 92, 82, 73, 64, 56, 48, 40, 33, 27, 22, 18, 14].map((height, index) => (
           <span
             key={height}
             className="w-full max-w-3 bg-emerald"
@@ -13,20 +13,26 @@ function ResultsDiagram() {
           />
         ))}
       </div>
-      <div className="grid gap-5 font-display text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
-        <p>
-          <span className="mb-2 block h-px w-10 bg-emerald" />
-          Context captured at intake.
-        </p>
-        <p>
-          <span className="mb-2 block h-px w-10 bg-emerald/60" />
-          The next action is visible.
-        </p>
-        <p>
-          <span className="mb-2 block h-px w-10 bg-emerald/35" />
-          Follow-up has a defined path.
-        </p>
+      <p className="font-display text-right text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
+        <span className="block font-display font-semibold text-emerald" style={{ fontSize: "var(--text-lead)" }}>3 hours → 30 seconds</span>
+        Average first response
+      </p>
+    </div>
+  );
+}
+
+function ConversionDiagram() {
+  return (
+    <div className="mt-8 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+      <div aria-hidden className="flex h-32 items-end gap-1 border-b border-emerald/30 pb-0">
+        {[25, 31, 29, 37, 42, 46, 53, 57, 63, 68, 74, 82, 88].map((height, index) => (
+          <span key={height} className="w-full max-w-3 bg-emerald" style={{ height: `${height}%`, opacity: 0.35 + index / 26 }} />
+        ))}
       </div>
+      <p className="font-display text-right text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
+        <span className="block font-display font-semibold text-emerald" style={{ fontSize: "var(--text-lead)" }}>+40%</span>
+        Conversion within 60 days
+      </p>
     </div>
   );
 }
@@ -68,7 +74,7 @@ export default function ServicesProofSection() {
                 className="mt-5 max-w-2xl font-display text-fg"
                 style={{ fontSize: "clamp(1.2rem, 2vw, 1.55rem)", lineHeight: 1.2 }}
               >
-                An EdTech team receives leads from ads, forms, WhatsApp, and referrals. Counsellors sort them by hand, response depends on who sees the enquiry first, and follow-up disappears into personal inboxes.
+                An EdTech team receives leads from ads, forms, WhatsApp. Enquiries arrived in multiple languages and covered a wide range of questions. Counsellors sorted them by hand, response depended on who saw the enquiry first and follow-up was very difficult.
               </p>
             </article>
 
@@ -78,16 +84,17 @@ export default function ServicesProofSection() {
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
                 style={{ fontSize: "clamp(2.1rem, 4.2vw, 4.25rem)", lineHeight: 1.02 }}
               >
-                We built one lead queue from enquiry to qualified conversation.
+                We built an AI Sales agent that takes a lead queue from enquiry to a qualified conversation.
               </h3>
               <p className="mt-7 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-                Course interest, timing, location, and intent are captured before a counsellor calls. The team sees the next action, while a human remains in the loop before any response leaves.
+                We built a custom AI agent for the inbound WhatsApp channel. It responds in multiple languages, answers the lead&apos;s actual question first, and gathers the information a sales person needs before taking over.
               </p>
             </article>
 
             <article className="flex flex-col justify-start lg:col-span-2 lg:col-start-3 lg:row-start-3 p-2 sm:p-6 lg:p-8 lg:pt-10">
               <ProofStageMarker activeIndex={2} label="The Results" />
-              <ResultsDiagram />
+              <ResponseTimeDiagram />
+              <ConversionDiagram />
             </article>
 
             <article className="flex flex-col justify-center lg:col-span-2 lg:col-start-1 lg:row-start-4 p-2 sm:p-6 lg:p-8 lg:pt-10">
@@ -96,9 +103,9 @@ export default function ServicesProofSection() {
                 className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
                 style={{ fontSize: "clamp(1.55rem, 2.6vw, 2.7rem)", lineHeight: 1.08 }}
               >
-                “The team can finally see the next action without chasing a lead across personal inboxes.”
+                “This system changed how the team works, the AI handles so much of the process now and the team now focuses more on their core work.”
                 <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
-                  EdTech operations lead · sample testimonial
+                  Marketing Lead, EdTech team.
                 </cite>
               </blockquote>
             </article>

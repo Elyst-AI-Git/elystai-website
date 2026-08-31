@@ -27,7 +27,7 @@ const processSteps: ProcessStep[] = [
     number: "1",
     title: "Identify",
     lead: "We understand how your team operates, find where AI can help, and share that with you before we start building.",
-    closing: "Not every audit ends in a build. Sometimes the answer is a process fix — and we'll say so.",
+    closing: "The goal is to understand the process and understand if and how the right AI system can help.",
     groups: [
       {
         title: "What we look at",
@@ -83,7 +83,7 @@ const processSteps: ProcessStep[] = [
     number: "3",
     title: "Handover",
     lead: "We train your team, document it, and step back.",
-    closing: "We build it so you don't need us. We can stick around if the system needs maintenance.",
+    closing: "We build the system so you don't need us but we can also stick around if the system needs improvements moving forward.",
     groups: [
       {
         title: "What you get",

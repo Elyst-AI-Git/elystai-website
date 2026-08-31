@@ -51,10 +51,7 @@ export default function HomeProofSection() {
               className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
               style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}
             >
-              “The team can now see what needs attention and what was already handled, without chasing it across four places.”
-              <span className="mt-5 block font-sans text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-                This system changed how the team works, the AI handles so much of the process now and the team now focuses more on their core work.
-              </span>
+              “This system changed how the team works, the AI handles so much of the process now and the team now focuses more on their core work.”
               <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
                 Marketing Lead, EdTech team.
               </cite>
