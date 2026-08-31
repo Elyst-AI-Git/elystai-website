@@ -16,8 +16,13 @@ const links = [
 ];
 
 function Logo({ onClick }: { onClick?: () => void }) {
+  const handleClick = () => {
+    onClick?.();
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  };
+
   return (
-    <Link href="/" onClick={onClick} aria-label="Elyst AI">
+    <Link href="/" onClick={handleClick} aria-label="Elyst AI">
       <Wordmark className="h-7 w-auto text-fg-on-dark" />
     </Link>
   );

@@ -163,9 +163,9 @@ export default function TrainingPage() {
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.62fr)] xl:items-center xl:gap-16">
           <div className="max-w-3xl">
             <SectionMark tone="dark">Training</SectionMark>
-            <h1 className="training-hero-title mt-6 text-fg-on-dark" style={{ lineHeight: 1.04 }}>
-              <span className="block">AI training built around the</span>
-              <span className="block">work your team already does.</span>
+            <h1 className="training-hero-title mt-6 text-balance text-fg-on-dark" style={{ lineHeight: 1.04 }}>
+              AI training built around the<br className="hidden md:block" />{" "}
+              work your team already does.
             </h1>
             <p className="mt-7 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
               We build a training session around your roles, your tools, and the work your team actually does.

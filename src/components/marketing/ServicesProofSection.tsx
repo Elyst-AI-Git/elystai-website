@@ -3,7 +3,7 @@ import ProofStageMarker from "@/components/marketing/ProofStageMarker";
 
 function ResponseTimeDiagram() {
   return (
-    <div className="mt-8 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+    <div className="mt-8 ml-auto grid max-w-[18rem] gap-4 sm:ml-0 sm:max-w-none sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
       <div aria-hidden className="flex h-32 items-end gap-1 border-b border-emerald/30 pb-0">
         {[100, 92, 82, 73, 64, 56, 48, 40, 33, 27, 22, 18, 14].map((height, index) => (
           <span
@@ -23,13 +23,13 @@ function ResponseTimeDiagram() {
 
 function ConversionDiagram() {
   return (
-    <div className="mt-8 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+    <div className="mt-8 mr-auto grid max-w-[18rem] gap-4 sm:mr-0 sm:max-w-none sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
       <div aria-hidden className="flex h-32 items-end gap-1 border-b border-emerald/30 pb-0">
         {[25, 31, 29, 37, 42, 46, 53, 57, 63, 68, 74, 82, 88].map((height, index) => (
           <span key={height} className="w-full max-w-3 bg-emerald" style={{ height: `${height}%`, opacity: 0.35 + index / 26 }} />
         ))}
       </div>
-      <p className="font-display text-right text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
+      <p className="font-display text-left text-fg-2 sm:text-right" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
         <span className="block font-display font-semibold text-emerald" style={{ fontSize: "var(--text-lead)" }}>+40%</span>
         Conversion within 60 days
       </p>

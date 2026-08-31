@@ -10,18 +10,16 @@ export default function Hero() {
       <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[3fr_2fr]">
         <div>
           <h1
-            className="text-fg"
+            className="text-balance text-fg"
             style={{
               fontSize: "clamp(2.52rem, 5.4vw, 4.95rem)",
               lineHeight: 1.08,
               letterSpacing: "var(--tracking-display)",
             }}
           >
-            <span className="block">Don&apos;t just use AI,</span>
-            <span className="block md:whitespace-nowrap">
-              we <span className="hero-accent-word">change</span> how your
-            </span>
-            <span className="block">team works with it.</span>
+            Don&apos;t just use AI,<br className="hidden md:block" />{" "}
+            we <span className="hero-accent-word">change</span> how your<br className="hidden md:block" />{" "}
+            team works with it.
           </h1>
 
           <p

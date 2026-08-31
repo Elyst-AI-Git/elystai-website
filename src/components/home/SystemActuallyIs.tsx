@@ -234,7 +234,7 @@ function WorkflowColumns({ steps, tone }: { steps: readonly WorkflowStep[]; tone
             {step.title}
           </p>
           <p
-            className={["mt-4 max-w-[18ch]", isTool ? "text-[#665846]" : "text-fg-2"].join(" ")}
+            className={["mt-4 max-w-[34ch] sm:max-w-[18ch]", isTool ? "text-[#665846]" : "text-fg-2"].join(" ")}
             style={{ fontSize: "var(--text-small)", lineHeight: 1.45 }}
           >
             {step.body}

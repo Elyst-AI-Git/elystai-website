@@ -5,6 +5,7 @@ import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 import { OG_IMAGE } from "@/lib/seo";
 import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
+import ScrollToTop from "@/components/site/ScrollToTop";
 
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
@@ -68,6 +69,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Nav />
+        <ScrollToTop />
         {children}
         <PreFooter />
         <Footer />

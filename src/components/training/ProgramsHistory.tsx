@@ -72,7 +72,7 @@ function ProgramCard({ program }: { program: (typeof programs)[number] }) {
 
 export default function ProgramsHistory() {
   return (
-    <section id="programs" className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section id="programs" className="bg-bg" style={{ padding: "clamp(44px, 5vw, 72px) var(--section-px) var(--section-py)" }}>
       <div className="mx-auto max-w-7xl">
         <SectionMark>History</SectionMark>
         <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>

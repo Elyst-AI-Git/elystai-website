@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BrandButton } from "@/components/ui/brand-button";
+import ClosingCta from "@/components/marketing/ClosingCta";
 import { SectionMark } from "@/components/ui/section-mark";
 import Wordmark from "@/components/site/Wordmark";
 import { arvindSession } from "@/components/training/ArvindSessionSection";
@@ -25,16 +25,16 @@ export default function ArvindSessionPage() {
         <div className="mx-auto max-w-5xl">
           <SectionMark tone="dark">Latest session</SectionMark>
 
-          <div className="mt-7 flex items-center justify-between gap-4 border-b border-white/15 pb-7 sm:gap-8">
-            <Link href="/" aria-label="Elyst AI home">
-              <Wordmark className="h-6 w-auto text-fg-on-dark sm:h-8" />
+          <div className="mt-7 flex min-h-8 items-center justify-between gap-5 border-b border-white/15 pb-7 sm:gap-8">
+            <Link href="/" aria-label="Elyst AI home" className="flex shrink-0 items-center">
+              <Wordmark className="h-7 w-auto text-fg-on-dark sm:h-8" />
             </Link>
             <Image
               src="/brands/arvind-fashions-wordmark-white.png"
               alt="Arvind Fashions"
               width={555}
               height={67}
-              className="h-6 w-auto object-contain sm:h-8"
+              className="h-7 w-auto max-w-[11rem] object-contain sm:h-8 sm:max-w-[16rem]"
             />
           </div>
 
@@ -58,7 +58,7 @@ export default function ArvindSessionPage() {
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               The brief
             </p>
-            <h2 id="arvind-brief-heading" className="mt-5 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.04 }}>
+            <h2 id="arvind-brief-heading" className="mt-5 text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.08 }}>
               {arvindSession.briefHeading}
             </h2>
             <p className="mt-7 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
@@ -76,7 +76,7 @@ export default function ArvindSessionPage() {
             <p className="mt-6 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
               {arvindSession.whatWeRanBody}
             </p>
-            <ol className="mt-9 grid gap-7 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-9">
+            <ol className="mt-9 grid gap-7">
               {arvindSession.whatWeRanItems.map((item, index) => (
                 <li key={item}>
                   <p className="font-display font-bold text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
@@ -99,7 +99,7 @@ export default function ArvindSessionPage() {
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               The room
             </p>
-            <h2 id="arvind-room-heading" className="mt-5 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.04 }}>
+            <h2 id="arvind-room-heading" className="mt-5 text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.08 }}>
               {arvindSession.roomHeading}
             </h2>
             <div className="mt-7 grid gap-6 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
@@ -113,7 +113,7 @@ export default function ArvindSessionPage() {
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               What they left with
             </p>
-            <h2 id="arvind-left-with-heading" className="mt-5 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.04 }}>
+            <h2 id="arvind-left-with-heading" className="mt-5 text-fg" style={{ fontSize: "var(--text-card)", lineHeight: 1.08 }}>
               {arvindSession.leftWithHeading}
             </h2>
             <ul className="mt-7 grid gap-4 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
@@ -126,16 +126,17 @@ export default function ArvindSessionPage() {
         </article>
       </section>
 
-      <section className="bg-surface-accent-soft" style={{ padding: "clamp(64px, 8vw, 104px) var(--section-px)" }}>
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <h2 className="text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.05 }}>
-            Looking for a training session shaped around your team&apos;s work?
-          </h2>
-          <BrandButton href="/training" variant="metal" tone="emerald" className="mt-8">
-            Back to training
-          </BrandButton>
-        </div>
-      </section>
+      <ClosingCta
+        heading={
+          <>
+            <span className="block">Tell us what your team is stuck on.</span>
+            <span className="block">We will build the session around it.</span>
+          </>
+        }
+        sub={null}
+        buttonLabel="Plan a team session"
+        intent="training"
+      />
     </main>
   );
 }

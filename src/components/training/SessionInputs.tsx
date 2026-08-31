@@ -97,7 +97,7 @@ export default function SessionInputs({ className = "" }: { className?: string }
               className={`group relative min-w-0 overflow-hidden rounded-md border-2 bg-white text-left outline-none transition-[flex,border-color,box-shadow] duration-500 motion-reduce:transition-none md:min-h-0 ${
                 isActive
                   ? "min-h-56 flex-1 border-green shadow-[0_14px_34px_rgba(0,0,0,0.16)]"
-                  : "min-h-20 flex-[0_0_5rem] border-white/20 hover:border-green/65"
+                  : "min-h-16 flex-[0_0_4.5rem] border-white/20 hover:border-green/65"
               } focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-dark)]`}
             >
               {isActive ? (
@@ -124,7 +124,7 @@ export default function SessionInputs({ className = "" }: { className?: string }
                   </span>
                 </span>
               ) : (
-                <span className="absolute bottom-24 left-1/2 -translate-x-1/2 rotate-90 whitespace-nowrap font-display font-semibold tracking-[var(--tracking-display)] text-fg" style={{ fontSize: "clamp(1.25rem, 2vw, 1.8rem)", lineHeight: 1 }}>
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 whitespace-nowrap font-display font-semibold tracking-[var(--tracking-display)] text-fg md:bottom-24 md:left-1/2 md:top-auto md:-translate-x-1/2 md:translate-y-0 md:rotate-90" style={{ fontSize: "clamp(1.25rem, 2vw, 1.8rem)", lineHeight: 1 }}>
                   {input.label}
                 </span>
               )}

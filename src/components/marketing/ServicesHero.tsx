@@ -27,7 +27,7 @@ export default function ServicesHero() {
               className="mt-6 text-left text-fg"
               style={{ fontSize: "clamp(2.35rem, 4.3vw, 3.55rem)", lineHeight: 1.1 }}
             >
-              Go from a workflow problem to an AI system your team owns.
+              Go from a workflow problem to an <span className="hero-accent-word">AI system</span> your team owns.
             </h1>
           </div>
 
