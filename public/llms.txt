@@ -1,0 +1,33 @@
+# Elyst AI
+
+> Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.
+
+## Direct answers
+
+### What problem does Elyst AI solve?
+
+Elyst AI helps companies move from a workflow that takes too long, loses leads, or relies on scattered manual work to a practical AI system their team can run.
+
+### What does Elyst build?
+
+Elyst AI maps the work, decides what is worth changing, builds the smallest useful system around the team's existing tools, and documents how it works.
+
+### What stays human?
+
+People keep ownership of judgement, approvals, and exceptions. Elyst AI designs clear human review into the workflow instead of treating automation as a black box.
+
+### Who owns it after handover?
+
+The client does. Accounts and access transfer at handover. Elyst AI can continue improving the system when ongoing support is needed.
+
+## What Elyst AI offers
+
+- AI workflow identification and implementation: map a costly process, build the right bounded system, test it on real work, and hand it over.
+- Team training: role-specific sessions built around approved tools, real work, human review, and practical follow-through.
+
+## Key pages
+
+- [Services](https://elystai.com/services): workflow diagnosis, implementation, training, documentation, and handover.
+- [Training](https://elystai.com/training): practical AI training for companies and institutions.
+- [Arvind Fashions session](https://elystai.com/training/arvind-fashions): a first-hand session record showing the brief, work practised, participant feedback, and what the room left with.
+- [About Elyst AI](https://elystai.com/about): the team and company approach.

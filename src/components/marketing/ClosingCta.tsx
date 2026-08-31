@@ -1,8 +1,13 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import BookingButton from "@/components/marketing/BookingButton";
-import MarkDither from "@/components/site/MarkDither";
 import { BrandButton } from "@/components/ui/brand-button";
 import type { BookingIntent } from "@/lib/booking";
+
+const Dithering = lazy(() =>
+  import("@paper-design/shaders-react").then((mod) => ({ default: mod.Dithering }))
+);
 
 const CTA_BUTTON_CLASS =
   "min-h-[40px]! bg-[#eef0ee]! px-5! text-[length:calc(var(--text-small)+1px)]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
@@ -46,6 +51,17 @@ export default function ClosingCta({
   intent?: BookingIntent;
   href?: string;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px) and (hover: hover)");
+    const update = () => setIsDesktop(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   return (
     <section
       className="relative w-full overflow-hidden bg-bg"
@@ -53,14 +69,25 @@ export default function ClosingCta({
     >
       <div
         className="relative z-10 mx-auto w-full max-w-7xl overflow-hidden rounded-md border border-emerald/15"
+        onMouseEnter={() => isDesktop && setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div className="relative flex min-h-[450px] flex-col items-center justify-center overflow-hidden bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[450px]">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-45 mix-blend-screen"
-          >
-            <MarkDither colorFront="#00DF82" colorBack="#172c25" pixelSize={6} staticFrame />
-          </div>
+          {isDesktop ? (
+            <Suspense fallback={<div className="absolute inset-0 bg-white/[0.03]" />}>
+              <div className="pointer-events-none absolute inset-0 z-0 opacity-40 mix-blend-screen">
+                <Dithering
+                  colorBack="#00000000"
+                  colorFront="#00DF82"
+                  shape="warp"
+                  type="4x4"
+                  speed={isHovered ? 0.6 : 0.2}
+                  className="size-full"
+                  minPixelRatio={1}
+                />
+              </div>
+            </Suspense>
+          ) : null}
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--surface-dark-2)]/35" />
 
           <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">

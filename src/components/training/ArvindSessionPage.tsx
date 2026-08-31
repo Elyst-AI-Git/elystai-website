@@ -20,9 +20,9 @@ function FeedbackQuote({ quote }: { quote: string }) {
 
 export default function ArvindSessionPage() {
   return (
-    <main id="main" className="flex-1 bg-bg pt-24">
+    <main id="main" className="flex-1 bg-bg pt-24" itemScope itemType="https://schema.org/CreativeWork">
       <section className="bg-surface-dark" style={{ padding: "clamp(64px, 9vw, 124px) var(--section-px) clamp(64px, 8vw, 112px)" }}>
-        <div className="mx-auto max-w-5xl">
+        <header className="mx-auto max-w-5xl">
           <SectionMark tone="dark">Latest session</SectionMark>
 
           <div className="mt-7 flex min-h-8 items-center justify-between gap-5 border-b border-white/15 pb-7 sm:gap-8">
@@ -42,19 +42,19 @@ export default function ArvindSessionPage() {
             <h1 className="text-balance text-fg-on-dark" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
               A full day of AI practice at Arvind Fashions.
             </h1>
-            <p className="mt-7 text-center font-display text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+            <time dateTime="2026-08-20" className="mt-7 block text-center font-display text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               August 20, 2026
-            </p>
-            <p className="mx-auto mt-8 max-w-3xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+            </time>
+            <p itemProp="description" className="mx-auto mt-8 max-w-3xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
               {arvindSession.intro}
             </p>
           </div>
-        </div>
+        </header>
       </section>
 
       <section className="bg-bg" style={{ padding: "clamp(72px, 10vw, 140px) var(--section-px)" }}>
-        <article className="mx-auto max-w-3xl">
-          <section aria-labelledby="arvind-brief-heading">
+        <article className="mx-auto max-w-3xl" aria-label="Arvind Fashions session case study">
+          <section id="brief" aria-labelledby="arvind-brief-heading">
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               The brief
             </p>
@@ -66,7 +66,7 @@ export default function ArvindSessionPage() {
             </p>
           </section>
 
-          <section className="my-14 border-y border-border py-10 sm:my-20 sm:py-12" aria-labelledby="arvind-what-we-ran-heading">
+          <section id="what-we-ran" className="my-14 border-y border-border py-10 sm:my-20 sm:py-12" aria-labelledby="arvind-what-we-ran-heading">
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               What we ran
             </p>
@@ -95,7 +95,7 @@ export default function ArvindSessionPage() {
 
           <FeedbackQuote quote={arvindSession.testimonials[0]} />
 
-          <section aria-labelledby="arvind-room-heading">
+          <section id="room" aria-labelledby="arvind-room-heading">
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               The room
             </p>
@@ -109,7 +109,7 @@ export default function ArvindSessionPage() {
 
           <FeedbackQuote quote={arvindSession.testimonials[1]} />
 
-          <section aria-labelledby="arvind-left-with-heading">
+          <section id="what-they-left-with" aria-labelledby="arvind-left-with-heading">
             <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
               What they left with
             </p>

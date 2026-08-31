@@ -252,17 +252,20 @@ export default function SystemActuallyIs() {
   const [isDragging, setIsDragging] = useState(false);
   const comparisonRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const tabScrollerRef = useRef<HTMLDivElement>(null);
   const activeSector = sectors.find((sector) => sector.id === activeSectorId) ?? sectors[0];
 
   useEffect(() => {
     const activeTab = tabRefs.current[activeSectorId];
-    if (!activeTab) return;
+    const tabScroller = tabScrollerRef.current;
+    if (!activeTab || !tabScroller) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    activeTab.scrollIntoView({
+    const maxScrollLeft = tabScroller.scrollWidth - tabScroller.clientWidth;
+    const centeredLeft = activeTab.offsetLeft - (tabScroller.clientWidth - activeTab.offsetWidth) / 2;
+    tabScroller.scrollTo({
+      left: Math.min(maxScrollLeft, Math.max(0, centeredLeft)),
       behavior: reducedMotion ? "auto" : "smooth",
-      block: "nearest",
-      inline: "center",
     });
   }, [activeSectorId]);
 
@@ -347,7 +350,7 @@ export default function SystemActuallyIs() {
         </header>
 
         <div className="mt-12 sm:mt-14">
-          <div className="-mx-1 overflow-x-auto px-1 pb-2">
+          <div ref={tabScrollerRef} className="-mx-1 overflow-x-auto px-1 pb-2">
             <div role="tablist" aria-label="Choose an industry" aria-orientation="horizontal" className="flex min-w-max justify-center gap-2">
               {sectors.map((sector, index) => {
                 const isActive = activeSector.id === sector.id;
