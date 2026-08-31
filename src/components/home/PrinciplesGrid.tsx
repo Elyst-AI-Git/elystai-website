@@ -88,22 +88,22 @@ function RealWorkVisual() {
 const principles: Principle[] = [
   {
     title: "Custom by design",
-    description: "We build the system to work around your team, not around another AI tool.",
+    description: "We build the system to work around your team and systems.",
     visual: CustomVisual,
   },
   {
     title: "Secure by default",
-    description: "Data, access, and limits are agreed before we build.",
+    description: "Data, access, and limits are agreed before we build anything.",
     visual: SecureVisual,
   },
   {
     title: "Built around your tools",
-    description: "We fit the system into the tools your team already runs.",
+    description: "We fit the system into the tools your team already use.",
     visual: ToolsVisual,
   },
   {
     title: "Tested on real work",
-    description: "We test against the work the system is meant to improve, and iterate before it goes live.",
+    description: "We test the system, find improvements, and iterate on them.",
     visual: RealWorkVisual,
   },
 ];
@@ -139,6 +139,7 @@ export function ShaderPrincipleCard({
             </div>
           </div>
         ) : null}
+        <div className="mt-auto">
         <h3
           className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
           style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.03175524em" }}
@@ -151,6 +152,7 @@ export function ShaderPrincipleCard({
         >
           {principle.description}
         </p>
+        </div>
         {!visualFirst ? (
           <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
             <div className={visualScale}>

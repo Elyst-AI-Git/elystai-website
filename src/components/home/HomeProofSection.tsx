@@ -28,7 +28,7 @@ export default function HomeProofSection() {
               className="mt-6 max-w-3xl text-balance text-fg"
               style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}
             >
-              One lead process, made visible.
+              From a WhatsApp message to a qualified handover.
             </h2>
           </header>
 
@@ -38,10 +38,10 @@ export default function HomeProofSection() {
               className="mt-6 max-w-3xl font-display font-semibold tracking-[var(--tracking-display)] text-fg"
               style={{ fontSize: "var(--text-card)", lineHeight: 1.05 }}
             >
-              We built one lead queue from enquiry to qualified conversation.
+              A multilingual AI sales agent that handles the whole lead qualification process by itself 24/7.
             </p>
             <p className="mt-7 max-w-2xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-              <span className="font-display font-semibold text-emerald">4</span> lead sources — ads, forms, WhatsApp, and referrals — are brought into one view. Every enquiry moves through <span className="font-display font-semibold text-emerald">1</span> shared queue, with <span className="font-display font-semibold text-emerald">1</span> human approval point before a response leaves.
+              The average first response fell from around <span className="font-display font-semibold text-emerald">three hours</span> to under <span className="font-display font-semibold text-emerald">30 seconds</span>. The company reported conversions increased by around <span className="font-display font-semibold text-emerald">40%</span> within the first <span className="font-display font-semibold text-emerald">60 days</span>.
             </p>
           </article>
 
@@ -52,8 +52,11 @@ export default function HomeProofSection() {
               style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}
             >
               “The team can now see what needs attention and what was already handled, without chasing it across four places.”
+              <span className="mt-5 block font-sans text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
+                This system changed how the team works, the AI handles so much of the process now and the team now focuses more on their core work.
+              </span>
               <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
-                Operations lead, EdTech team · sample testimonial
+                Marketing Lead, EdTech team.
               </cite>
             </blockquote>
           </article>

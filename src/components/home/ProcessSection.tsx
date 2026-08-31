@@ -19,8 +19,8 @@ const homepageProcess: HomepageProcessStep[] = [
   {
     number: "01",
     label: "Identify",
-    headline: "Find the one area worth doing first.",
-    description: "We understand the workflow, the friction, and the cost before anything gets built.",
+    headline: "We find the one area worth handing over to AI.",
+    description: "We understand the current workflow, the friction and the cost before anything gets built.",
     href: "/services#identify",
     symbol: "identify",
   },
@@ -35,8 +35,8 @@ const homepageProcess: HomepageProcessStep[] = [
   {
     number: "03",
     label: "Handover",
-    headline: "Leave with a system your team can own.",
-    description: "We train your team, document the limits, and hand the system over.",
+    headline: "Leave with a system your team can handle.",
+    description: "We train your team, document the limits and hand the system over to your team.",
     href: "/services#handover",
     symbol: "handover",
   },

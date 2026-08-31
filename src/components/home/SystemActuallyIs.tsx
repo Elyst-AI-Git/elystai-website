@@ -47,19 +47,19 @@ const systemComparisonData: { sectors: readonly Sector[] } = {
       states: {
         tool: {
           steps: [
-            { n: "01", title: "Enquiry", body: "It lands in a portal inbox, a WhatsApp, or an email. Whoever sees it first owns it." },
-            { n: "02", title: "Qualify", body: "An agent calls to find out budget, area and timeline. Some get called. Some don't." },
-            { n: "03", title: "Respond", body: "The agent opens ChatGPT, pastes the enquiry, and rewrites the reply it gives back." },
-            { n: "04", title: "Follow up", body: "Whenever someone remembers. Nothing records what was already asked." },
+            { n: "01", title: "Enquiry", body: "A lead gets your reply when you see it, which could mean the difference between landing and losing that lead." },
+            { n: "02", title: "Qualify", body: "The human takes time to find out budget, area, and timeline. Some get called. Some do not." },
+            { n: "03", title: "Respond", body: "The human has to understand which leads are worth handling and prepare for them before reaching out." },
+            { n: "04", title: "Follow up", body: "Follow-up happens rarely when an agent remembers and the conversation history stays scattered." },
           ],
           closing: "The tool made writing the reply faster. It didn't change who gets replied to.",
         },
         system: {
           steps: [
-            { n: "01", title: "Enquiry", body: "Every enquiry, every portal and channel, lands in one place the moment it arrives." },
-            { n: "02", title: "Qualify", body: "Budget, area, timeline and intent captured before an agent touches it." },
-            { n: "03", title: "Respond", body: "The agent opens a briefed lead, not a phone number, and calls the ones worth calling." },
-            { n: "04", title: "Follow up", body: "Sequenced and logged automatically. A human is pulled in when a reply needs one." },
+            { n: "01", title: "Enquiry", body: "The AI agent handles any enquiry 24/7, the lead gets exactly what they were looking for in their language too." },
+            { n: "02", title: "Qualify", body: "Budget, area, timeline and intent are all captured before a human takes over for further steps." },
+            { n: "03", title: "Respond", body: "The human already has all the information they need from the AI agent and knows who to be in touch with." },
+            { n: "04", title: "Follow up", body: "Follow-ups are sequenced and logged by the AI agent and a human steps in when a reply needs one." },
           ],
           closing: "Your agents spend the day on the five leads worth a call, not the fifty that aren't.",
         },
@@ -75,16 +75,16 @@ const systemComparisonData: { sectors: readonly Sector[] } = {
             { n: "01", title: "Request", body: "An RFQ arrives as an email, a PDF, or a photo of a list on WhatsApp." },
             { n: "02", title: "Price", body: "Someone digs through old quotes and supplier sheets to find what you charged last time." },
             { n: "03", title: "Build", body: "The quote gets rebuilt in Excel. Two people quoting the same item quote it differently." },
-            { n: "04", title: "Send & chase", body: "Sent a day or two later. Chased if anyone remembers." },
+            { n: "04", title: "Send & chase", body: "Sent a day or two later. Chased only if anyone remembers about it." },
           ],
           closing: "AI helped write the covering email. The two days were never the email.",
         },
         system: {
           steps: [
-            { n: "01", title: "Request", body: "The RFQ is read on arrival, whatever format it came in, and its line items pulled out." },
-            { n: "02", title: "Price", body: "Each item matched to your catalogue and what you last quoted for it." },
+            { n: "01", title: "Request", body: "The RFQ is read on arrival, whatever format it came in, and its line items are pulled out." },
+            { n: "02", title: "Price", body: "Each item is matched to your catalogue and what you last quoted for it." },
             { n: "03", title: "Build", body: "A draft quote in your format, in minutes. A human checks and approves before anything leaves." },
-            { n: "04", title: "Send & chase", body: "Sent same day. Follow-ups run on schedule and stop the moment they reply." },
+            { n: "04", title: "Send & chase", body: "Sent the same day. Follow-ups run on schedule and stop when the customer replies." },
           ],
           closing: "Quotes go out the same day, at consistent prices, without your senior person doing the typing.",
         },
@@ -443,22 +443,12 @@ export default function SystemActuallyIs() {
               </div>
             </div>
 
-            <div className="relative mx-auto mt-12 min-h-[4.5rem] max-w-4xl text-center sm:mt-14">
-              <p
-                aria-hidden={inset >= 50}
-                className="font-display font-semibold tracking-[var(--tracking-body)] text-fg transition-opacity duration-200 motion-reduce:transition-none"
-                style={{ fontSize: "var(--text-lead)", lineHeight: 1.25, opacity: inset < 50 ? 1 : 0 }}
-              >
-                {activeSector.states.tool.closing}
-              </p>
-              <p
-                aria-hidden={inset < 50}
-                className="absolute inset-x-0 top-0 font-display font-semibold tracking-[var(--tracking-body)] text-fg transition-opacity duration-200 motion-reduce:transition-none"
-                style={{ fontSize: "var(--text-lead)", lineHeight: 1.25, opacity: inset >= 50 ? 1 : 0 }}
-              >
-                {activeSector.states.system.closing}
-              </p>
-            </div>
+            <p
+              className="mx-auto mt-12 max-w-4xl text-center font-display font-semibold tracking-[var(--tracking-body)] text-fg sm:mt-14"
+              style={{ fontSize: "var(--text-lead)", lineHeight: 1.25 }}
+            >
+              The examples are just representative. We start with the work your team actually repeats.
+            </p>
 
             <p className="sr-only" aria-live="polite">
               {inset < 50 ? "Showing more of the workflow without an AI system." : "Showing more of the workflow with an AI system."}

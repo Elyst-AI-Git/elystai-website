@@ -13,12 +13,12 @@ const numbers: readonly NumberBandItem[] = [
   {
     label: "People trained",
     value: "3,000+",
-    description: "Founders and functional leads across India and the Middle East.",
+    description: "Founders and functional leads across India and the GCC.",
   },
   {
     label: "Industries",
     value: "4+",
-    description: "Different operating contexts, one practical approach.",
+    description: "Different operating contexts but one practical approach.",
   },
 ] as const;
 

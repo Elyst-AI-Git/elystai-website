@@ -32,13 +32,7 @@ export default function Hero() {
               letterSpacing: "-0.029229255em",
             }}
           >
-            <span className="block">
-              We understand how your company works, identify where
-            </span>
-            <span className="block">
-              AI can elevate the business, build the right AI system
-            </span>
-            <span className="block">and train your team to run it.</span>
+            We map the work, decide what is worth changing, build the smallest useful system, and train your team to run it.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -50,7 +44,7 @@ export default function Hero() {
                 className="border-2! bg-white! text-emerald! hover:bg-emerald/5!"
               >
                 <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>
-                  See how we work
+                  See how it works
                 </span>
               </BrandButton>
             </span>
@@ -58,7 +52,7 @@ export default function Hero() {
               href="/services"
               className="inline-flex min-h-12 items-center px-1 font-semibold text-emerald underline decoration-emerald/35 underline-offset-4 hover:text-emerald-light md:hidden"
             >
-              See how we work →
+              See how it works →
             </Link>
           </div>
         </div>

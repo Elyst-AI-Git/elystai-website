@@ -14,15 +14,16 @@ import ClosingCta from "@/components/marketing/ClosingCta";
 import FaqSection from "@/components/marketing/FaqSection";
 
 const homeFaqs = [
-  { q: "How is it priced?", a: "Per project, paid in phases." },
-  { q: "How long does it take?", a: "We commit to a timeline after the audit, not before." },
-  { q: "What if AI isn't the answer?", a: "We say so, and tell you what would help instead." },
-  { q: "Who owns it afterwards?", a: "You do. Accounts and access transfer at handover." },
+  { q: "How long does it take?", a: "We commit to a timeline once we understand your problems and the solutions that must be built. It can take around a few weeks to a few months according to the AI system." },
+  { q: "How is it priced?", a: "Per project, paid in phases upon completion of the specific milestones." },
+  { q: "What happens on the first call?", a: "We map the task, owner, inputs, friction, and useful next measure. The answer can be a process fix, an existing tool, a bounded build, or not yet." },
+  { q: "What if AI isn't the answer?", a: "We say so, and tell you what would help instead. Trying to integrate AI if it isn't the answer is not worth it." },
+  { q: "Who owns it afterwards?", a: "You do. Accounts and access transfer at handover. If continued support and improvement is needed, we stick around constantly improving your systems." },
 ];
 
-const HOME_TITLE = "Elyst AI | AI Strategy, Implementation & Custom AI Development.";
+const HOME_TITLE = "AI Strategy, Implementation & Custom AI Development. | Elyst AI";
 const HOME_DESCRIPTION =
-  "We understand how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
+  "Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
