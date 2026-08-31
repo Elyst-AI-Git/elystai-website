@@ -22,7 +22,6 @@ const programs = [
     name: "Elyst AI Circle",
     who: "For professionals who want to stay ahead of AI",
     image: "/images/programs/circle.webp",
-    href: "/circle",
     surface: "bg-emerald",
     dark: true,
   },
@@ -68,7 +67,7 @@ function ProgramCard({ program }: { program: (typeof programs)[number] }) {
     </article>
   );
 
-  return "href" in program ? <Link href={program.href} className="block">{card}</Link> : card;
+  return "href" in program && typeof program.href === "string" ? <Link href={program.href} className="block">{card}</Link> : card;
 }
 
 export default function ProgramsHistory() {

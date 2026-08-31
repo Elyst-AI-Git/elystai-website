@@ -4,15 +4,15 @@ import ArvindSessionPage from "@/components/training/ArvindSessionPage";
 import { breadcrumbSchema } from "@/lib/schema";
 import { pageMeta } from "@/lib/seo";
 
-const DESCRIPTION = "A practical AI training session snapshot for Arvind Fashions, built around real work.";
+const DESCRIPTION = "A practical AI session built around the work people do daily.";
 
 export const metadata: Metadata = {
   ...pageMeta({
     path: "/training/arvind-fashions",
-    title: "Arvind Fashions AI Training Session",
+    title: "A full day of AI practice at Arvind Fashions",
     description: DESCRIPTION,
   }),
-  title: { absolute: "Arvind Fashions AI Training Session | Elyst AI" },
+  title: { absolute: "A full day of AI practice at Arvind Fashions | Elyst AI" },
 };
 
 export default function ArvindFashionsPage() {

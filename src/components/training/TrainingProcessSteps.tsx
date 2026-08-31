@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export type TrainingStep = {
   label: string;
-  description: readonly [string, string];
+  description: string;
 };
 
 const AUTO_ADVANCE_MS = 6800;
@@ -83,8 +83,7 @@ export default function TrainingProcessSteps({ steps }: { steps: readonly Traini
                       className="mt-5 block max-w-[40rem] text-fg-2 transition-opacity duration-200 motion-reduce:transition-none"
                       style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}
                     >
-                      <span className="block">{step.description[0]}</span>
-                      <span className="block">{step.description[1]}</span>
+                      {step.description}
                     </span>
                   ) : null}
                 </span>
@@ -94,7 +93,7 @@ export default function TrainingProcessSteps({ steps }: { steps: readonly Traini
         })}
       </ol>
       <div id="training-process-panel" role="tabpanel" aria-labelledby={`training-process-${activeStep.label.toLowerCase()}`} className="sr-only">
-        {activeStep.description.join(" ")}
+        {activeStep.description}
       </div>
     </div>
   );

@@ -4,15 +4,15 @@ import TrainingPage from "@/components/training/TrainingPage";
 import JsonLd from "@/components/seo/JsonLd";
 
 const TRAINING_DESCRIPTION =
-  "Role-specific AI training for businesses and institutions, built around real work.";
+  "Role-specific AI training for companies and institutions, designed around approved tools, real work, human review, and practical follow-through.";
 
 export const metadata = {
   ...pageMeta({
     path: "/training",
-    title: "AI Training Built Around Your Team's Actual Work",
+    title: "AI Training Built Around Your Team's Work",
     description: TRAINING_DESCRIPTION,
   }),
-  title: { absolute: "AI Training Built Around Your Team's Actual Work | Elyst AI" },
+  title: { absolute: "AI Training Built Around Your Team's Work | Elyst AI" },
   robots: { index: true, follow: true },
 };
 

@@ -50,14 +50,14 @@ export default function WhatYouGetSection() {
           </h2>
         </header>
 
-        <div className="mt-12 overflow-hidden rounded-md border-2 border-emerald/20 bg-surface-light sm:mt-14 lg:mt-16 lg:grid lg:grid-cols-[minmax(16rem,0.45fr)_minmax(0,1.55fr)] lg:items-stretch">
+        <div className="mt-12 overflow-hidden rounded-md border-2 border-emerald/20 bg-surface-accent-soft sm:mt-14 lg:mt-16 lg:grid lg:grid-cols-[minmax(16rem,0.45fr)_minmax(0,1.55fr)] lg:items-stretch">
           <SessionPhoto />
-          <ol className="grid sm:grid-cols-2 lg:border-l-2 lg:border-emerald/20">
+          <ol className="grid bg-surface-accent-soft sm:grid-cols-2 lg:border-l-2 lg:border-emerald/20">
             {outcomes.map((outcome, index) => (
               <li
                 key={outcome.eyebrow}
                 className={[
-                  "group relative flex min-h-64 flex-col justify-center overflow-hidden border-t border-emerald/15 bg-surface-light p-7 sm:p-9 lg:min-h-[21rem] lg:border-t-0",
+                  "group relative flex min-h-64 flex-col justify-center overflow-hidden border-t border-emerald/15 bg-surface-accent-soft p-7 sm:p-9 lg:min-h-[21rem] lg:border-t-0",
                   index % 2 === 0 ? "sm:border-r sm:border-emerald/15" : "",
                   index > 1 ? "sm:border-t sm:border-emerald/15" : "",
                 ].join(" ")}
@@ -80,7 +80,7 @@ export default function WhatYouGetSection() {
                   <p className="mt-5 max-w-[34ch] text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
                     {outcome.body}
                   </p>
-                  <span aria-hidden className="mt-7 block font-display text-fg-3" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-stat)" }}>
+                  <span aria-hidden className="mt-7 block font-display font-bold text-fg-3" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
                     0{index + 1}
                   </span>
                 </div>

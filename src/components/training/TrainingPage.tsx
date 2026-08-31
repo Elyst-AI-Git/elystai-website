@@ -12,19 +12,20 @@ import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 import { NumbersBand, type NumberBandItem } from "@/components/home/NumbersSection";
 import WhatYouGetSection from "@/components/training/WhatYouGetSection";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
+import TrainingRatingStrip from "@/components/training/TrainingRatingStrip";
 
 const trainingSteps: TrainingStep[] = [
   {
     label: "Discover",
-    description: ["We learn the roles, the tools", "and the tasks that matter."],
+    description: "We learn the roles, the tools and the tasks that matter.",
   },
   {
     label: "Design",
-    description: ["A small set of concepts and", "tailor-made hands-on exercises."],
+    description: "A small set of concepts and tailor-made hands-on exercises.",
   },
   {
     label: "Deliver",
-    description: ["Practice on real work with a", "clear view of what AI can do."],
+    description: "Practice on real work with a clear view of what AI can do.",
   },
 ];
 
@@ -41,7 +42,7 @@ const trainingStats: readonly NumberBandItem[] = [
   {
     value: "3,000+",
     label: "People trained",
-    description: "Founders and functional leads across India and the Middle East.",
+    description: "Founders and functional leads across India and the GCC.",
   },
   {
     value: "50+",
@@ -88,7 +89,16 @@ function AudiencePanel() {
           visual: () => <AudienceVisual kind={audience.kind} className="max-w-[14rem]" />,
         };
 
-        return <ShaderPrincipleCard key={audience.title} principle={principle} visualFirst />;
+        return (
+          <ShaderPrincipleCard
+            key={audience.title}
+            principle={principle}
+            visualFirst
+            visualScale="scale-[0.96]"
+            showDescription={false}
+            compact
+          />
+        );
       })}
     </div>
   );
@@ -175,7 +185,7 @@ export default function TrainingPage() {
       <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
         <div className="mx-auto max-w-7xl">
           <header className="mx-auto max-w-4xl text-center">
-            <SectionMark>Who it is for</SectionMark>
+            <SectionMark>FIT</SectionMark>
             <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
               Who it is for.
             </h2>
@@ -201,6 +211,7 @@ export default function TrainingPage() {
       <WhatYouGetSection />
       <TrainingProof />
       <ArvindSessionSection />
+      <TrainingRatingStrip />
       <ProgramsHistory />
 
       <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />

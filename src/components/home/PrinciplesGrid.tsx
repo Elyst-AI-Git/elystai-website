@@ -112,17 +112,22 @@ export function ShaderPrincipleCard({
   principle,
   visualFirst,
   visualScale = "scale-[0.8]",
+  showDescription = true,
+  compact = false,
 }: {
   principle: Principle;
   visualFirst: boolean;
   visualScale?: string;
+  showDescription?: boolean;
+  compact?: boolean;
 }) {
   const Visual = principle.visual;
 
   return (
     <article
       className={cn(
-        "principle-card-shader group relative flex h-full min-h-[24rem] flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
+        "principle-card-shader group relative flex h-full flex-col overflow-hidden border border-emerald/35 bg-[var(--surface-dark)] text-fg-on-dark transition-colors duration-500 hover:border-green/65 motion-reduce:transition-none",
+        compact ? "min-h-[18rem] sm:min-h-[20rem]" : "min-h-[24rem]",
       )}
     >
       <CanvasRevealEffect
@@ -139,19 +144,21 @@ export function ShaderPrincipleCard({
             </div>
           </div>
         ) : null}
-        <div className="mt-auto">
-        <h3
-          className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
-          style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.03175524em" }}
-        >
-          {principle.title}
-        </h3>
-        <p
-          className="mt-4 max-w-2xl text-fg-muted-dark"
-          style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
-        >
-          {principle.description}
-        </p>
+        <div className={showDescription ? "mt-auto" : ""}>
+          <h3
+            className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
+            style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.03175524em" }}
+          >
+            {principle.title}
+          </h3>
+          {showDescription ? (
+            <p
+              className="mt-4 max-w-2xl text-fg-muted-dark"
+              style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}
+            >
+              {principle.description}
+            </p>
+          ) : null}
         </div>
         {!visualFirst ? (
           <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
