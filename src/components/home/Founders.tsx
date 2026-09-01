@@ -38,7 +38,7 @@ export const founders: Founder[] = [
     linkedin: "https://www.linkedin.com/in/fathimashirin-p/",
     instagram: "https://www.instagram.com/fathimashirin.ai/",
     description:
-      "Fathima Shirin P is Co-founder and CEO of Elyst AI. Her focus for over six years has been the same: turning AI from an abstract idea into a practical skill for people who aren't technical, from founders to functional leads across India and the Middle East. She has trained more than 2,000 people through 50+ live sessions, and now leads discovery, training, and adoption for every client Elyst works with.",
+      "Fathima Shirin P is Co-founder and CEO of Elyst AI. Her focus for over six years has been the same: turning AI from an abstract idea into a practical skill for people who aren't technical, from founders to functional leads across India and the Middle East. She has trained 3,000+ people through 50+ live sessions across 4+ industries and now leads discovery, training, and adoption for every client Elyst AI works with.",
     identitySide: "right",
     fill: "var(--elyst-green)",
   },
@@ -93,10 +93,10 @@ function FounderStrip({ founder }: { founder: Founder }) {
       />
       <div className={`pointer-events-none absolute inset-0 flex flex-col justify-between p-5 md:p-9 ${identityOnRight ? "items-end text-right" : "items-start text-left"}`}>
         <div className={`flex flex-col gap-1 ${identityOnRight ? "items-end" : "items-start"}`}>
-          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.08em] text-fg-2">
+          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.038263752em] text-fg-2">
             {founder.role}
           </span>
-          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.08em] text-fg-2">
+          <span className="inline-block bg-bg px-2 py-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-[0.038263752em] text-fg-2">
             {founder.title}
           </span>
         </div>

@@ -49,8 +49,8 @@ export default function AboutPage() {
             Your AI partner
           </h1>
 
-          <p className="mt-7 max-w-4xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5 }}>
-            {ABOUT_HERO_COPY} <strong className="font-bold text-fg">That is the part we do.</strong>
+          <p className="mt-7 max-w-4xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5, letterSpacing: "-0.029229255em" }}>
+            {ABOUT_HERO_COPY} <strong className="hero-accent-word">That is the part we do.</strong>
           </p>
         </div>
       </section>

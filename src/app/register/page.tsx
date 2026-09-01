@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import Link from "next/link";
+import { BrandButton } from "@/components/ui/brand-button";
 
 export const metadata: Metadata = {
   ...pageMeta({
@@ -18,7 +18,7 @@ export default function RegisterPage() {
       <div className="text-center flex flex-col items-center gap-6 max-w-md">
         <span
           className="inline-block rounded-full px-4 py-1.5 font-bold uppercase"
-          style={{ background: "var(--surface-muted)", color: "var(--fg-3)", fontSize: "var(--text-label)", letterSpacing: "0.06em" }}
+          style={{ background: "var(--surface-muted)", color: "var(--fg-3)", fontSize: "var(--text-label)", letterSpacing: "0.028697814em" }}
         >
           Enrollment Closed
         </span>
@@ -30,13 +30,9 @@ export default function RegisterPage() {
         <p className="text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}>
           We have closed registrations for this cohort. The next batch will open in a few weeks — stay tuned.
         </p>
-        <Link
-          href="/training"
-          className="inline-block font-bold rounded-full px-6 py-3"
-          style={{ background: "var(--elyst-emerald)", color: "#fff", fontSize: "var(--text-body)" }}
-        >
+        <BrandButton href="/training" tone="emerald" className="text-[length:var(--text-body)]">
           Explore Training
-        </Link>
+        </BrandButton>
       </div>
     </main>
   );

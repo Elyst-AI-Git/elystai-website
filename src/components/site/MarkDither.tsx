@@ -55,6 +55,7 @@ type Props = {
   colorBack?: string;
   pixelSize?: number;
   className?: string;
+  staticFrame?: boolean;
 };
 
 export default function MarkDither({
@@ -62,6 +63,7 @@ export default function MarkDither({
   colorBack = "#F5F8F6",
   pixelSize = 5,
   className,
+  staticFrame = false,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -80,6 +82,7 @@ export default function MarkDither({
     // thread on weak hardware, so we draw the formed mark once and stop.
     // Capable desktops with a real pointer keep the live effect.
     const reduce =
+      staticFrame ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       window.matchMedia("(hover: none)").matches ||
       isLowPerfDevice();
@@ -238,7 +241,7 @@ export default function MarkDither({
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
     };
-  }, [colorFront, colorBack, pixelSize]);
+  }, [colorFront, colorBack, pixelSize, staticFrame]);
 
   return (
     <canvas

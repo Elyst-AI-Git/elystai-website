@@ -17,6 +17,7 @@ type ProcessStep = {
   number: string;
   title: string;
   lead: string;
+  closing: string;
   groups: ProcessGroup[];
 };
 
@@ -26,6 +27,7 @@ const processSteps: ProcessStep[] = [
     number: "1",
     title: "Identify",
     lead: "We understand how your team operates, find where AI can help, and share that with you before we start building.",
+    closing: "The goal is to understand the process and understand if and how the right AI system can help.",
     groups: [
       {
         title: "What we look at",
@@ -53,6 +55,7 @@ const processSteps: ProcessStep[] = [
     number: "2",
     title: "Build",
     lead: "We build the chosen system around the tools you already run.",
+    closing: "You will know what's in scope, what isn't, and what each phase costs before we start.",
     groups: [
       {
         title: "What we do",
@@ -80,6 +83,7 @@ const processSteps: ProcessStep[] = [
     number: "3",
     title: "Handover",
     lead: "We train your team, document it, and step back.",
+    closing: "We build the system so you don't need us but we can also stick around if the system needs improvements moving forward.",
     groups: [
       {
         title: "What you get",
@@ -87,7 +91,14 @@ const processSteps: ProcessStep[] = [
           "Training for the people who use it",
           "A runbook and a named owner",
           "Known limits and an escalation path",
-          "Transfer of accounts and access",
+        ],
+      },
+      {
+        title: "What that means",
+        items: [
+          "You are not locked in",
+          "Your team can run it without us",
+          "Support continues only if you want it",
         ],
       },
     ],
@@ -104,13 +115,13 @@ function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" 
   return (
     <div className="flex min-w-0 flex-col justify-center">
       <p
-        className={`max-w-3xl ${isLight ? "text-fg" : "text-fg-on-dark/90"}`}
+        className={`max-w-3xl font-semibold ${isLight ? "text-fg" : "text-fg-on-dark/90"}`}
         style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}
       >
         {step.lead}
       </p>
 
-      <div className={`mt-8 grid gap-8 ${step.groups.length > 1 ? "sm:grid-cols-2" : "max-w-2xl"}`}>
+      <div className={`mt-11 grid gap-10 ${step.groups.length > 1 ? "sm:grid-cols-2" : "max-w-2xl"}`}>
         {step.groups.map((group) => (
           <div key={group.title}>
             <h3
@@ -133,14 +144,21 @@ function ProcessDetails({ step, surface }: { step: ProcessStep; surface: "dark" 
           </div>
         ))}
       </div>
+
+      <p
+        className={`mt-11 border-t pt-5 text-center font-display font-semibold ${isLight ? "border-emerald/25 text-emerald" : "border-green/25 text-green"}`}
+        style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}
+      >
+        {step.closing}
+      </p>
     </div>
   );
 }
 
 function ProcessPanel({ step, surface = "dark" }: { step: ProcessStep; surface?: "dark" | "light" }) {
   return (
-    <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[0.68fr_1.32fr] lg:items-center lg:gap-12 lg:p-12">
-      <ProcessSymbol id={step.id} surface={surface} />
+    <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[0.56fr_1.44fr] lg:items-center lg:gap-8 lg:px-8 lg:py-12">
+      <ProcessSymbol id={step.id} size="large" surface={surface} />
       <ProcessDetails step={step} surface={surface} />
     </div>
   );

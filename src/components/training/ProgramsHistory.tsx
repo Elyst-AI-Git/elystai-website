@@ -22,7 +22,6 @@ const programs = [
     name: "Elyst AI Circle",
     who: "For professionals who want to stay ahead of AI",
     image: "/images/programs/circle.webp",
-    href: "/circle",
     surface: "bg-emerald",
     dark: true,
   },
@@ -68,12 +67,12 @@ function ProgramCard({ program }: { program: (typeof programs)[number] }) {
     </article>
   );
 
-  return "href" in program ? <Link href={program.href} className="block">{card}</Link> : card;
+  return "href" in program && typeof program.href === "string" ? <Link href={program.href} className="block">{card}</Link> : card;
 }
 
 export default function ProgramsHistory() {
   return (
-    <section id="programs" className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+    <section id="programs" className="bg-bg" style={{ padding: "clamp(44px, 5vw, 72px) var(--section-px) var(--section-py)" }}>
       <div className="mx-auto max-w-7xl">
         <SectionMark>History</SectionMark>
         <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>

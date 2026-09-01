@@ -2,8 +2,6 @@ import Image from "next/image";
 import { BrandButton } from "@/components/ui/brand-button";
 import { SectionMark } from "@/components/ui/section-mark";
 
-const CYCLE_WORDS = ["automations.", "chatbots.", "subscriptions."] as const;
-
 export default function ServicesHero() {
   return (
     <section
@@ -27,19 +25,9 @@ export default function ServicesHero() {
             <SectionMark>Services</SectionMark>
             <h1
               className="mt-6 text-left text-fg"
-              style={{ fontSize: "clamp(2.35rem, 4.3vw, 3.55rem)", lineHeight: 1.1 }}
+              style={{ fontSize: "var(--text-h1)", lineHeight: 1.05 }}
             >
-              <span>We don&apos;t sell AI </span>
-              <span className="relative inline-grid whitespace-nowrap align-baseline">
-                <span className="invisible" aria-hidden>subscriptions.</span>
-                <span className="service-cycle absolute inset-0" aria-hidden>
-                  {CYCLE_WORDS.map((word) => <span key={word}>{word}</span>)}
-                </span>
-                <span className="sr-only">automations.</span>
-              </span>
-              <span className="block">
-                We make your team <span className="lg:block">AI-Native.</span>
-              </span>
+              Go from a workflow problem to an <span className="hero-accent-word">AI system</span> your team owns.
             </h1>
           </div>
 
@@ -48,11 +36,11 @@ export default function ServicesHero() {
               className="max-w-xl text-fg"
               style={{ fontSize: "calc(var(--text-body) + 2px)", lineHeight: 1.6 }}
             >
-              We work out what is worth building, build it, then teach your team to run it.
+              We audit the work, build the smallest useful system, and hand it over with training, documentation and clear limits.
             </p>
             <div className="mt-8">
               <BrandButton href="/services#our-process" variant="metal" tone="light" preset="silver">
-                See how we work
+                See our process
               </BrandButton>
             </div>
           </div>
