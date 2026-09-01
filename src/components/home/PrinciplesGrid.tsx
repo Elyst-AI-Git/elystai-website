@@ -138,7 +138,7 @@ export function ShaderPrincipleCard({
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--surface-dark)]/35 via-transparent to-[var(--surface-dark)]/90" />
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         {visualFirst ? (
-          <div className="mb-7 flex h-28 shrink-0 items-center justify-center px-1">
+          <div className="mb-4 flex h-40 shrink-0 items-center justify-center px-1 sm:mb-7 sm:h-32">
             <div className={visualScale}>
               <Visual />
             </div>
@@ -177,7 +177,7 @@ function PrincipleCard({ principle, index }: { principle: Principle; index: numb
     <ShaderPrincipleCard
       principle={principle}
       visualFirst
-      visualScale={index === 0 ? "w-full max-w-[18rem] scale-100 sm:max-w-none" : "w-full max-w-[18rem] scale-100 sm:max-w-none sm:scale-[0.8]"}
+      visualScale={index === 0 ? "w-full max-w-[19rem] scale-110 sm:max-w-none sm:scale-100" : "w-full max-w-[16rem] scale-100 sm:max-w-none sm:scale-[0.8]"}
     />
   );
 }

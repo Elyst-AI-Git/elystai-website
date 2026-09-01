@@ -108,7 +108,7 @@ export default function SessionInputs({ className = "" }: { className?: string }
                 />
               ) : null}
               <span
-                className={`absolute left-5 top-5 font-display font-bold ${isActive ? "text-emerald" : "text-fg-3"}`}
+                className={`absolute font-display font-bold ${isActive ? "left-5 top-5 text-emerald" : "left-5 top-1/2 -translate-y-1/2 text-fg-3 md:top-5 md:translate-y-0"}`}
                 style={{ fontSize: "calc(var(--text-small) + 2px)", lineHeight: 1, letterSpacing: "var(--tracking-stat)" }}
               >
                 {input.number}
@@ -124,7 +124,7 @@ export default function SessionInputs({ className = "" }: { className?: string }
                   </span>
                 </span>
               ) : (
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 whitespace-nowrap font-display font-semibold tracking-[var(--tracking-display)] text-fg md:bottom-24 md:left-1/2 md:top-auto md:-translate-x-1/2 md:translate-y-0 md:rotate-90" style={{ fontSize: "clamp(1.25rem, 2vw, 1.8rem)", lineHeight: 1 }}>
+                <span className="absolute left-16 top-1/2 -translate-y-1/2 whitespace-nowrap font-display font-semibold tracking-[var(--tracking-display)] text-fg md:bottom-24 md:left-1/2 md:top-auto md:-translate-x-1/2 md:translate-y-0 md:rotate-90" style={{ fontSize: "clamp(1.25rem, 2vw, 1.8rem)", lineHeight: 1 }}>
                   {input.label}
                 </span>
               )}

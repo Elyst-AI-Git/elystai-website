@@ -350,7 +350,7 @@
   }
 
   .training-hero-title {
-    font-size: var(--text-display);
+    font-size: var(--text-h1);
   }
 
   .problem-sequence-line {
@@ -376,7 +376,7 @@
     }
 
     .training-hero-title {
-      font-size: calc(var(--text-display) + 2px);
+      font-size: var(--text-h1);
     }
 
     .problem-sequence-line {

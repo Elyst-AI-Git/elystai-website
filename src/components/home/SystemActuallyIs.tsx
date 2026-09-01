@@ -220,7 +220,7 @@ function WorkflowColumns({ steps, tone }: { steps: readonly WorkflowStep[]; tone
         <li
           key={step.n}
           className={[
-            "flex min-w-0 flex-col items-center px-3 text-center sm:px-5 lg:px-6",
+            "flex h-[21rem] min-w-0 flex-col items-center px-3 text-center sm:h-auto sm:px-5 lg:px-6",
             index > 0 ? "border-t border-emerald/10 pt-8 sm:border-t-0 sm:pt-0 lg:border-l" : "",
             index % 2 === 1 ? "sm:border-l sm:border-emerald/10" : "",
             index > 1 ? "sm:border-t sm:border-emerald/10 sm:pt-8 lg:border-t-0 lg:pt-0" : "",
