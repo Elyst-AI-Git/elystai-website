@@ -11,6 +11,7 @@ export const metadata = {
     path: "/training",
     title: "AI Training Built Around Your Team's Work",
     description: TRAINING_DESCRIPTION,
+    image: "/training/opengraph-image",
   }),
   title: { absolute: "AI Training Built Around Your Team's Work | Elyst AI" },
   robots: { index: true, follow: true },

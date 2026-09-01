@@ -3,11 +3,10 @@ import * as React from "react";
 /**
  * CtaBanner — a self-contained, horizontal call-to-action card: a bright
  * brand-green panel with a headline + supporting line on the left and the
- * action(s) on the right, over a soft wave texture. Shared across the AIOS,
- * Accelerator and AI-for-Work closes so every arm of the site ends on the
- * same confident note.
+ * action(s) on the right, over a soft wave texture. Shared across the current
+ * commercial pages so every route ends on the same confident note.
  *
- * - `sharp` removes the corner radius (the AIOS page's sharp-edged language).
+ * - `sharp` removes the corner radius when a page needs a flush edge.
  * - `actions` is the button slot (kept as a prop so each page supplies its own
  *   BrandButton tones without this component depending on routing).
  */
@@ -19,13 +18,12 @@ type CtaBannerProps = {
   actions: React.ReactNode;
   sharp?: boolean;
   /** "light" = bright-green panel, dark text (default). "dark" = deep
-   *  dark-green panel, light text — used on the AIOS close. */
+   *  dark-green panel, light text. */
   tone?: CtaTone;
   /** Override the corner radius (defaults to --radius-card). Pass the navbar's
    *  pill radius (--radius) to match a page that wants a tighter curve. */
   radius?: string;
-  /** Adds the same subtle ring used on the homepage's Learn AI program cards
-   *  (ring-1 ring-black/25) — an outline rather than relying on the glow alone. */
+  /** Adds a subtle ring so the edge remains visible without relying on glow. */
   bordered?: boolean;
   /** Gives the heading column more width (max-w-2xl vs max-w-xl) — used when the
    *  action slot is a narrow stacked column. */

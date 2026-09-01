@@ -6,8 +6,7 @@
  * rule–label–rule mark instead — closer to a technical drawing's callout than
  * a marketing badge, which fits the brand's engineered/blueprint register.
  *
- * Used on every page (Home, AIOS, Learn, Circle) so the eyebrow treatment is
- * consistent throughout.
+ * Used across the commercial pages so the eyebrow treatment stays consistent.
  */
 
 export function SectionMark({

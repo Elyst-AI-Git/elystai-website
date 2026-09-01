@@ -18,6 +18,7 @@ export const metadata = {
     path: "/services",
     title: "How Elyst AI Builds Systems Your Team Owns",
     description: SERVICES_DESCRIPTION,
+    image: "/services/opengraph-image",
   }),
   title: { absolute: "How Elyst AI Builds Systems Your Team Owns | Elyst AI" },
   robots: { index: true, follow: true },
@@ -68,21 +69,6 @@ const serviceFaqs = [
     a: "Per project, paid in phases. Never one upfront sum.",
   },
 ];
-
-const bringLists = {
-  you: [
-    "A decision owner",
-    "Access to the workflow",
-    "Honest answers about what has already failed",
-    "Time from the people who actually do the work",
-  ],
-  we: [
-    "Discovery and mapping",
-    "The build",
-    "Training and documentation",
-    "A named owner at handover",
-  ],
-};
 
 export default function ServicesPage() {
   return (
@@ -144,50 +130,6 @@ export default function ServicesPage() {
 
         </div>
       </section>
-
-      {/* Working together is intentionally held out of the page for now. */}
-      {false && (
-      <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-center lg:gap-16">
-          <div>
-            <SectionMark>Working together</SectionMark>
-            <h2 className="mt-6 max-w-md text-fg" style={{ fontSize: "var(--text-h2)" }}>
-              What we need from you.
-            </h2>
-          </div>
-
-          <div className="overflow-hidden rounded-md border border-emerald/20 bg-surface-dark shadow-card">
-            <div className="grid md:grid-cols-2">
-              <div className="p-6 sm:p-8">
-                <span className="font-display font-bold uppercase text-fg-muted-dark" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                  You bring
-                </span>
-                <ul className="mt-5 list-none divide-y divide-white/10 border-t border-white/10 p-0">
-                  {bringLists.you.map((item) => (
-                    <li key={item} className="py-4 text-fg-on-dark/85" style={{ fontSize: "var(--text-body)", lineHeight: 1.35 }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="border-t-2 border-green p-6 sm:p-8 md:border-l md:border-t-0">
-                <span className="font-display font-bold uppercase text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                  We bring
-                </span>
-                <ul className="mt-5 list-none divide-y divide-white/10 border-t border-white/10 p-0">
-                  {bringLists.we.map((item) => (
-                    <li key={item} className="py-4 text-fg-on-dark/85" style={{ fontSize: "var(--text-body)", lineHeight: 1.35 }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
 
       <FaqSection
         faqs={serviceFaqs}

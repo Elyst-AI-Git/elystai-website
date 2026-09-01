@@ -8,7 +8,7 @@ import {
   isBookingIntent,
 } from "../src/lib/booking.ts";
 
-test("services and training use separate booking funnels", () => {
+test("services and training use separate booking intents and campaigns", () => {
   assert.ok(CALENDAR_URLS.identify.startsWith("https://cal.com/"));
   assert.ok(CALENDAR_URLS.training.startsWith("https://cal.com/"));
   assert.equal(bookingPageHref("identify"), "/book/identify");

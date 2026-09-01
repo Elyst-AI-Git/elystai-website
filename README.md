@@ -8,7 +8,7 @@ Marketing site for Elyst AI's workflow identification, implementation, custom AI
 - Tailwind CSS v4
 - Self-hosted DM Sans and Manrope fonts
 - Vercel Analytics
-- Framer Motion only for the homepage scroll sequence and the existing Circle page
+- Framer Motion only for the homepage and training scroll sequences
 
 ## Local development
 
@@ -37,16 +37,19 @@ The preview runs at [http://localhost:3000](http://localhost:3000).
 | `/services` | Identify, build, and handover | Index |
 | `/training` | Team training and program history | Index |
 | `/about` | Company and founders | Index |
-| `/circle` | Paid Elyst AI Circle | Index |
-| `/register` | Closed legacy cohort notice | Noindex |
 | `/book/identify` | Identify scheduler | Noindex |
 | `/book/training` | Training scheduler | Noindex |
+| `/booking-complete` | Booking confirmation | Noindex |
+| `/privacy` | Privacy policy | Noindex |
+| `/terms` | Website terms | Noindex |
+| `/robots.txt` | Crawler rules | N/A |
+| `/sitemap.xml` | Four canonical commercial pages | N/A |
 
-Retired routes redirect directly to their current destination in `next.config.ts`.
+Retired routes, including `/circle` and `/register`, redirect directly to their current destination in `next.config.ts`.
 
 ## Booking configuration
 
-The known live Cal.com event is retained as the safe fallback. Once the two dedicated Cal events exist, set:
+The known live Cal.com event is retained as a local fallback. Production should set two dedicated events so service and training conversions remain separate:
 
 ```bash
 NEXT_PUBLIC_CAL_IDENTIFY_URL=https://cal.com/elyst-ai/your-identify-event

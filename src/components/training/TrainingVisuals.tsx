@@ -3,7 +3,6 @@ type VisualProps = {
 };
 
 export type OutcomeVisualId = "reality" | "habits" | "workflows";
-export type ArchiveVisualId = "circle" | "work" | "yathra" | "juniors";
 
 export function AudienceVisual({ kind, className = "" }: VisualProps & { kind: "team" | "department" }) {
   if (kind === "team") {
@@ -57,47 +56,6 @@ export function OutcomeVisual({ id, className = "" }: VisualProps & { id: Outcom
       <rect x="86" y="34" width="48" height="52" rx="13" stroke="currentColor" strokeWidth="7" className="text-fg-3" />
       <rect x="148" y="34" width="48" height="52" rx="13" stroke="currentColor" strokeWidth="7" className="text-fg-3" />
       <path d="M42 60H178" stroke="currentColor" strokeWidth="7" strokeLinecap="round" className="text-green" />
-    </svg>
-  );
-}
-
-export function ArchiveVisual({ id, className = "" }: VisualProps & { id: ArchiveVisualId }) {
-  if (id === "circle") {
-    return (
-      <svg viewBox="0 0 180 100" fill="none" className={`h-auto w-full ${className}`} aria-hidden>
-        <circle cx="58" cy="50" r="27" stroke="currentColor" strokeWidth="7" className="text-fg-3" />
-        <circle cx="90" cy="50" r="27" stroke="currentColor" strokeWidth="7" className="text-fg-3" />
-        <circle cx="122" cy="50" r="27" stroke="currentColor" strokeWidth="7" className="text-green" />
-      </svg>
-    );
-  }
-
-  if (id === "work") {
-    return (
-      <svg viewBox="0 0 180 100" fill="none" className={`h-auto w-full ${className}`} aria-hidden>
-        <path d="M30 76V28" stroke="currentColor" strokeWidth="12" strokeLinecap="round" className="text-fg-3" />
-        <path d="M72 76V47" stroke="currentColor" strokeWidth="12" strokeLinecap="round" className="text-fg-3" />
-        <path d="M114 76V36" stroke="currentColor" strokeWidth="12" strokeLinecap="round" className="text-fg-3" />
-        <path d="M156 76V20" stroke="currentColor" strokeWidth="12" strokeLinecap="round" className="text-green" />
-      </svg>
-    );
-  }
-
-  if (id === "yathra") {
-    return (
-      <svg viewBox="0 0 180 100" fill="none" className={`h-auto w-full ${className}`} aria-hidden>
-        <path d="M18 66C38 66 42 34 62 34C82 34 86 66 106 66C126 66 130 34 150 34" stroke="currentColor" strokeWidth="8" strokeLinecap="round" className="text-fg-3" />
-        <circle cx="162" cy="34" r="14" fill="currentColor" className="text-green" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 180 100" fill="none" className={`h-auto w-full ${className}`} aria-hidden>
-      <circle cx="32" cy="30" r="8" fill="currentColor" className="text-fg-3" />
-      <circle cx="74" cy="54" r="11" fill="currentColor" className="text-fg-3" />
-      <circle cx="116" cy="28" r="9" fill="currentColor" className="text-fg-3" />
-      <circle cx="150" cy="68" r="15" fill="currentColor" className="text-green" />
     </svg>
   );
 }

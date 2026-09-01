@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { OG_IMAGE } from "@/lib/seo";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/home/Hero";
@@ -21,9 +20,10 @@ const homeFaqs = [
   { q: "Who owns it afterwards?", a: "You do. Accounts and access transfer at handover. If continued support and improvement is needed, we stick around constantly improving your systems." },
 ];
 
-const HOME_TITLE = "AI Strategy, Implementation & Custom AI Development. | Elyst AI";
+const HOME_TITLE = "AI Strategy, Implementation & Development | Elyst AI";
 const HOME_DESCRIPTION =
   "Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.";
+const HOME_OG_IMAGE = "/opengraph-image";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     locale: "en_US",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Elyst AI" }],
+    images: [{ url: HOME_OG_IMAGE, width: 1200, height: 630, alt: "Elyst AI strategy, implementation, and custom AI development" }],
   },
   twitter: {
     card: "summary_large_image",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
-    images: [OG_IMAGE],
+    images: [HOME_OG_IMAGE],
   },
 };
 
