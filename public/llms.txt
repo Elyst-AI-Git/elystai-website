@@ -1,0 +1,63 @@
+# Elyst AI
+
+> Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.
+
+## Direct answers
+
+### What problem does Elyst AI solve?
+
+Elyst AI helps companies move from a workflow that takes too long, loses leads, or relies on scattered manual work to a practical AI system their team can run.
+
+### What does Elyst build?
+
+Elyst AI maps the work, decides what is worth changing, builds the smallest useful system around the team's existing tools, and documents how it works.
+
+### What stays human?
+
+People keep ownership of judgement, approvals, and exceptions. Elyst AI designs clear human review into the workflow instead of treating automation as a black box.
+
+### Who owns it after handover?
+
+The client does. Accounts and access transfer at handover. Elyst AI can continue improving the system when ongoing support is needed.
+
+## What Elyst AI offers
+
+- AI workflow identification and implementation: map a costly process, build the right bounded system, test it on real work, and hand it over.
+- Team training: role-specific sessions built around approved tools, real work, human review, and practical follow-through.
+
+## When to use Elyst AI
+
+Use Elyst AI when a specific workflow is taking too long, losing leads, creating repeated manual work, or relying on information scattered across tools. A useful starting point has a clear owner, recognisable inputs, and a result the team can review.
+
+Do not use Elyst AI to add AI without a defined workflow, remove human accountability, or automate a process nobody owns. Not every audit ends in a build; the right answer can be a process change or an existing tool.
+
+## How implementation works
+
+1. Identify: map the current workflow, friction, owner, inputs, and cost.
+2. Build: create the smallest useful system around the tools the team already uses.
+3. Test: run it on real work, define limits, and keep human review where judgement or approval matters.
+4. Handover: train the team, document the system, and transfer accounts and access.
+
+## Training
+
+Training is built around the participants' roles, approved tools, and everyday work. Sessions move from shared fundamentals to role-specific practice and clear next steps. The aim is repeatable working knowledge, not a collection of generic demonstrations.
+
+## Evidence and claims
+
+- The EdTech case study describes a multilingual inbound sales agent. The client reported average first response falling from about three hours to under 30 seconds and conversions increasing by about 40% within the first 60 days.
+- The Arvind Fashions page is a session record. It describes the brief, exercises, participant feedback, and work completed in the room; it does not claim a measured productivity return.
+- Training feedback collected by Elyst AI averages 4.8 out of five across more than 50 sessions.
+
+## Key pages
+
+- [Services](https://elystai.com/services): workflow diagnosis, implementation, training, documentation, and handover.
+- [Training](https://elystai.com/training): practical AI training for companies and institutions.
+- [Arvind Fashions session](https://elystai.com/training/arvind-fashions): a first-hand session record showing the brief, work practised, participant feedback, and what the room left with.
+- [About Elyst AI](https://elystai.com/about): the team and company approach.
+
+## Contact
+
+- Website: https://elystai.com
+- Book a call: https://cal.com/elyst-ai/30min
+- Privacy: https://elystai.com/privacy
+- Terms: https://elystai.com/terms

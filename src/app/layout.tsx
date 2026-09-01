@@ -5,11 +5,12 @@ import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
 import { OG_IMAGE } from "@/lib/seo";
 import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
+import ScrollToTop from "@/components/site/ScrollToTop";
 
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "We understand how your company works, identify where AI can elevate the business, build the right AI system, and train your team to run it.";
+  "Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -68,6 +69,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Nav />
+        <ScrollToTop />
         {children}
         <PreFooter />
         <Footer />

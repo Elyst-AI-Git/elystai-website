@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from "lucide-react";
 import { SectionMark } from "@/components/ui/section-mark";
-import JsonLd from "@/components/seo/JsonLd";
 
 export type Faq = { q: string; a: string };
 
@@ -22,25 +21,32 @@ export default function FaqSection({
   };
 
   return (
-    <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <JsonLd data={jsonLd} />
+    <section
+      className="relative overflow-hidden bg-surface-dark"
+      style={{ padding: "var(--section-py) var(--section-px)" }}
+    >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-14">
-        <div className="md:self-start">
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-white/10" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <header className="mx-auto max-w-4xl text-center">
           <SectionMark tone="dark">FAQ</SectionMark>
-          <h2 className="mt-6 text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
+          <h2 className="mx-auto mt-6 max-w-4xl text-balance text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
             {heading}
           </h2>
-        </div>
+        </header>
 
-        <div className="overflow-hidden rounded-md bg-surface-dark-2 px-2">
-          {faqs.map((faq, index) => (
+        <div className="mx-auto mt-12 border-y border-white/10">
+          {faqs.map((faq) => (
             <details
               key={faq.q}
-              className="group px-5 open:bg-white/[0.025]"
-              style={{ borderTop: index === 0 ? undefined : "1px solid rgb(255 255 255 / 8%)" }}
+              className="group border-b border-white/10 last:border-b-0 open:bg-white/[0.025]"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-5 text-left text-fg-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-6 text-left text-fg-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green sm:px-7 [&::-webkit-details-marker]:hidden">
                 <span
                   className="font-display font-bold group-open:text-green"
                   style={{ fontSize: "var(--text-body)" }}
@@ -53,7 +59,7 @@ export default function FaqSection({
                 />
               </summary>
               <p
-                className="max-w-2xl pb-5 text-fg-muted-dark"
+                className="max-w-3xl px-5 pb-6 text-fg-muted-dark sm:px-7"
                 style={{ fontSize: "var(--text-body)", lineHeight: 1.65 }}
               >
                 {faq.a}

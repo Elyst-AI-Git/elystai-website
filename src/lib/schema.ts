@@ -104,3 +104,25 @@ export function personSchema({
     worksFor: { "@id": ORG_ID },
   };
 }
+
+export function creativeWorkSchema({
+  path,
+  name,
+  description,
+}: {
+  path: string;
+  name: string;
+  description: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${SITE_URL}${path}#case-study`,
+    name,
+    description,
+    url: `${SITE_URL}${path}`,
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+  };
+}

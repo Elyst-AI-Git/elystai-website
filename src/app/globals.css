@@ -93,7 +93,7 @@
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);
   --text-h1: clamp(2.2rem, 4.5vw, 3.8rem);
-  --text-h2: clamp(1.85rem, 3.4vw, 2.7rem);
+  --text-h2: clamp(2.22rem, 4.08vw, 3.24rem);
   --text-h3: clamp(1.225rem, 2.1vw, 1.525rem);
   --text-body: clamp(1.15rem, 1.45vw, 1.25rem);
   --text-small: 1rem;
@@ -102,7 +102,7 @@
   --text-label: 0.875rem;
   --text-micro: 0.75rem;
   --text-lead: clamp(1.3rem, 2vw, 1.65rem);
-  --text-card: clamp(1.35rem, 2.2vw, 1.8rem);
+  --text-card: clamp(1.6875rem, 2.75vw, 2.25rem);
   --text-process-tab: clamp(1.15rem, 4.8vw, 3rem);
   --text-display: clamp(1.8rem, 3.5vw, 3.2rem);
   --text-stat: clamp(3rem, 6vw, 5rem);
@@ -112,13 +112,14 @@
   --text-proof-number: clamp(2.8rem, 5vw, 4.5rem);
   --text-prefooter: clamp(1.5rem, 3.75vw, 3rem);
   --text-founder: clamp(1.45rem, 2.8vw, 2.35rem);
+  --text-cta: clamp(2.4rem, 4.5vw, 4.8rem);
 
   /* tracking (utilities: tracking-display, tracking-body, tracking-wide) */
-  --tracking-display: -0.042em;
-  --tracking-body: -0.012em;
-  --tracking-wide: 0.084em;
-  --tracking-label: 0.16em;
-  --tracking-stat: -0.07em;
+  --tracking-display: -0.0462em;
+  --tracking-body: -0.0085739148em;
+  --tracking-wide: 0.0401769396em;
+  --tracking-label: 0.076527504em;
+  --tracking-stat: -0.050014503em;
 
   /* radii (utilities: rounded-card, rounded-pill) */
   --radius-card: var(--radius);
@@ -197,7 +198,7 @@
   position: relative;
   isolation: isolate;
   padding: 1px;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) / 2);
   background: conic-gradient(
     from var(--metal-angle),
     var(--metal-edge-base) 0 20%,
@@ -215,7 +216,7 @@
 }
 
 .metal-button-shell > * {
-  border-radius: calc(var(--radius) - 1px);
+  border-radius: calc(var(--radius) / 2 - 1px);
 }
 
 @keyframes metal-edge-spin {
@@ -227,6 +228,10 @@
 @media (prefers-reduced-motion: reduce) {
   .metal-button-shell {
     animation: none;
+  }
+
+  .training-input-progress {
+    animation: none !important;
   }
 }
 
@@ -292,6 +297,29 @@
     filter: drop-shadow(0 2px 10px rgba(0, 223, 130, 0.28));
   }
 
+  .hero-accent-word-red {
+    background-image: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--elyst-red-muted) 78%, var(--fg)) 0%,
+      var(--elyst-red-muted) 35%,
+      color-mix(in srgb, var(--elyst-red-muted) 58%, #ff9c8e) 50%,
+      var(--elyst-red-muted) 65%,
+      color-mix(in srgb, var(--elyst-red-muted) 78%, var(--fg)) 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    display: inline-block;
+    line-height: 1.16;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    vertical-align: baseline;
+    animation: wordmark-shift 5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 10px rgba(174, 78, 71, 0.28));
+  }
+
   .text-gradient-scroll {
     color: var(--elyst-emerald);
   }
@@ -309,7 +337,12 @@
   }
 
   .problem-sequence-gradient {
-    gap: clamp(24px, 3vw, 46px);
+    gap: clamp(29px, 3.6vw, 55px);
+  }
+
+  @keyframes training-input-progress {
+    from { transform: scaleY(0); transform-origin: top; }
+    to { transform: scaleY(1); transform-origin: top; }
   }
 
   .home-hero-title {
@@ -317,11 +350,11 @@
   }
 
   .training-hero-title {
-    font-size: var(--text-display);
+    font-size: var(--text-h1);
   }
 
   .problem-sequence-line {
-    font-size: var(--text-lead);
+    font-size: clamp(1.6445rem, 2.53vw, 2.08725rem);
   }
 
   .homepage-process-card-title {
@@ -343,11 +376,11 @@
     }
 
     .training-hero-title {
-      font-size: calc(var(--text-display) + 2px);
+      font-size: var(--text-h1);
     }
 
     .problem-sequence-line {
-      font-size: calc(var(--text-lead) + 2px);
+      font-size: calc(var(--text-lead) * 1.1 + 2px);
     }
 
     .homepage-process-card-title {
@@ -361,7 +394,7 @@
 
   @media (min-width: 1024px) {
     .problem-sequence-line {
-      font-size: var(--text-display);
+      font-size: calc(var(--text-display) * 1.1);
     }
   }
 
@@ -415,6 +448,16 @@
     transform: rotate(0deg);
   }
 
+  .operating-model-progress {
+    transform-origin: top;
+    animation: operating-model-progress 7.2s linear forwards;
+  }
+
+  @keyframes operating-model-progress {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
   @keyframes border-beam {
     to {
       offset-distance: 100%;
@@ -430,7 +473,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-accent-word {
+    .hero-accent-word,
+    .hero-accent-word-red {
       animation: none;
     }
 
@@ -443,6 +487,11 @@
     .services-fit-strip:focus-visible {
       transform: none;
       transition: none;
+    }
+
+    .operating-model-progress {
+      animation: none;
+      transform: scaleY(1);
     }
 
     .border-beam-motion {
@@ -463,7 +512,8 @@
   /* On touch devices the shifting gradient is just a continuous repaint
      nobody can interact with — render the accent as flat solid emerald. */
   @media (hover: none) {
-    .hero-accent-word {
+    .hero-accent-word,
+    .hero-accent-word-red {
       animation: none;
       background: none;
       -webkit-background-clip: initial;
@@ -471,6 +521,11 @@
       -webkit-text-fill-color: var(--elyst-emerald);
       color: var(--elyst-emerald);
       filter: none;
+    }
+
+    .hero-accent-word-red {
+      -webkit-text-fill-color: var(--elyst-red-muted);
+      color: var(--elyst-red-muted);
     }
   }
 
