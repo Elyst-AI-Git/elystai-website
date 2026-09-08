@@ -61,10 +61,10 @@ function AutobahnWordmark() {
   return (
     <div className="flex h-48 items-center justify-center bg-surface-dark px-2 sm:h-64 sm:px-3">
       <Image
-        src="/brands/autobahn-group-wordmark-tight.png"
+        src="/brands/autobahn-group-wordmark.png"
         alt="Autobahn Group logo"
-        width={162}
-        height={87}
+        width={299}
+        height={172}
         className="h-auto w-full max-w-[26rem] object-contain"
       />
     </div>

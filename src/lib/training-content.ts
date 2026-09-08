@@ -69,7 +69,7 @@ export const trainingFormats = [
   },
   {
     id: "multi-session",
-    title: "Multi-day program",
+    title: "Multi-day\nprogram",
     description:
       "A programme for teams that want to build capability over time rather than treat AI training as a one-time.",
   },

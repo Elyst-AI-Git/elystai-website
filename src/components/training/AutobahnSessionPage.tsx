@@ -40,10 +40,10 @@ function FeedbackQuote({
 function AutobahnLogo() {
   return (
     <Image
-      src="/brands/autobahn-corp-wordmark.png"
+      src="/brands/autobahn-group-wordmark.png"
       alt="Autobahn Group"
-      width={180}
-      height={110}
+      width={299}
+      height={172}
       className="h-auto w-[9rem] max-w-[48%] object-contain sm:w-[12rem]"
     />
   );
