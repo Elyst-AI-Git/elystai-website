@@ -1,28 +1,30 @@
 import Image from "next/image";
-import { BrandButton } from "@/components/ui/brand-button";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { SectionMark } from "@/components/ui/section-mark";
 
 export const arvindSession = {
   company: "Arvind Fashions",
   intro: "A practical AI session built around the work people do daily.",
-  brief:
-    "A working session on AI at one of India's biggest company in the fashion and retail segment, exploring where AI can make their everyday work clearer, faster, and easier to repeat across different teams.",
-  briefHeading: "They wanted more from the work already happening.",
-  whatWeRanHeading: "Start with the basics. Practise on the work.",
-  whatWeRanBody:
-    "We started with fundamentals, then moved into function-specific application. Participants practised on their own real work alongside exercises we set.",
-  whatWeRanItems: [
-    "Fundamentals first — establish a shared starting point.",
-    "Function-specific application — show what AI could do across the work represented in the room.",
-    "Own work — practise on tasks participants brought from their roles.",
-    "Set exercises — practise alongside exercises designed for the session.",
+  caseSummary:
+    "In August, Elyst AI delivered an in-person corporate AI training session for Arvind Fashions in Bengaluru.",
+  contextHeading: "Useful corporate training begins with context.",
+  contextParagraphs: [
+    "The way a team applies AI depends on its work, responsibilities and existing level of familiarity.",
+    "Elyst AI tailored the session for Arvind Fashions so that the experience was relevant to the people attending. The programme prioritised active participation and workplace relevance over a standard presentation.",
+    "A generic introduction can create awareness, but organisations need more than a list of tools or demonstrations. Teams need a structured way to understand where AI fits, how to approach it and how to make better decisions about its use.",
+    "This is why Elyst AI starts with the organisation and audience before finalising a corporate session.",
   ],
-  mixedRoom:
-    "Assistant managers and senior directors worked in the same room across marketing, design, finance, support, and other functions.",
+  approachItems: [
+    "Understand the organisation and participating audience",
+    "Tailor the session around their context",
+    "Deliver an in-person, participatory experience",
+    "Keep training practical and relevant to work",
+  ],
   roomHeading: "Exposure is not working knowledge.",
   roomParagraphs: [
-    "The room started with exposure, questions, and no shared working knowledge. The session had to meet assistant managers and senior directors across different functions at the same time.",
-    "Afterwards, one participant rang to say that something covered during the day had changed how she looked at her work. Several participants stayed back to build something their team could actually use.",
+    "People knew enough about AI to have seen its possibilities, but not enough to apply it consistently to their own work. That gave the day a clear starting point: fundamentals first, then practice.",
+    "One participant called after the session and told us that something covered during the day had changed how she looked at her work. Several others stayed back because they wanted to build a working thing for their team, not watch another demo.",
   ],
   leftWithHeading: "What the room left with",
   leftWithItems: [
@@ -33,11 +35,6 @@ export const arvindSession = {
   ],
   honestyLine:
     "We did not measure productivity after the session. This page shows what the day was like, not a return figure.",
-  pulledOff: [
-    "Role-specific exercises where they see the difference instead of generic demos",
-    "Hands-on practice with real work patterns",
-    "A clearer next step for using AI effectively at their work after the session",
-  ],
   testimonial:
     "This session changed how I looked at my work and how I used AI, I have lots of ideas in mind right now that I want to try out in my work",
   testimonials: [
@@ -48,67 +45,113 @@ export const arvindSession = {
 
 function ArvindWordmark() {
   return (
-    <div aria-label={arvindSession.company} className="flex min-h-32 items-center px-2 py-6 sm:px-3">
+    <div aria-label={arvindSession.company} className="flex h-48 items-center justify-center px-2 sm:h-64 sm:px-3">
       <Image
-        src="/brands/arvind-fashions-wordmark-red.png"
+        src="/brands/arvind-fashions-wordmark-white-tight.png"
         alt="Arvind Fashions"
-        width={555}
-        height={67}
-        className="h-auto w-full max-w-[32rem] object-contain"
+        width={543}
+        height={61}
+        className="h-auto w-full max-w-[26rem] object-contain"
       />
     </div>
   );
 }
 
+function AutobahnWordmark() {
+  return (
+    <div className="flex h-48 items-center justify-center bg-surface-dark px-2 sm:h-64 sm:px-3">
+      <Image
+        src="/brands/autobahn-group-wordmark-tight.png"
+        alt="Autobahn Group logo"
+        width={162}
+        height={87}
+        className="h-auto w-full max-w-[26rem] object-contain"
+      />
+    </div>
+  );
+}
+
+function SessionCard({
+  href,
+  company,
+  location,
+  children,
+}: {
+  href: string;
+  company: string;
+  location: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group relative block h-full overflow-hidden rounded-md border-2 border-emerald/35 bg-surface-dark p-6 text-fg-on-dark shadow-card transition-shadow hover:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald focus-visible:ring-offset-4 sm:p-8 lg:p-10"
+      aria-label={`Read the ${company} corporate AI training case study`}
+    >
+      <div className="relative z-10 flex h-full flex-col">
+        {children}
+        <div className="mt-8 flex items-end justify-between gap-5 border-t border-white/15 pt-6">
+          <div>
+            <p className="font-display font-bold uppercase text-green" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+              {company}
+            </p>
+            <p className="mt-2 text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+              {location}
+            </p>
+          </div>
+          <span className="shrink-0 font-display font-semibold text-green underline decoration-green/35 underline-offset-4 transition-colors group-hover:text-fg-on-dark" style={{ fontSize: "var(--text-small)" }}>
+            Read case page
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function ArvindSessionSection() {
   return (
-    <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px) clamp(88px, 8vw, 112px)" }}>
+    <section id="past-sessions" className="bg-bg" style={{ padding: "var(--section-py) var(--section-px) clamp(88px, 8vw, 112px)" }}>
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-end lg:gap-20">
-          <header>
-            <SectionMark>Latest session</SectionMark>
-            <h2 className="mt-6 max-w-xl text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
-              A practical team session, built around everyday work.
+        <header className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:items-end lg:gap-12">
+          <div>
+            <SectionMark>Past sessions</SectionMark>
+            <h2 className="mt-6 text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
+              Our most recent AI corporate training work
             </h2>
-          </header>
-
-          <div className="relative overflow-hidden rounded-md border-2 border-emerald/20 bg-surface-accent-soft p-6 shadow-card sm:p-8 lg:p-10">
-            <div aria-hidden className="pointer-events-none absolute right-0 top-0 h-full w-1/4 bg-[radial-gradient(circle_at_center,rgba(3,98,76,0.24)_0_1px,transparent_1px)] [background-size:8px_8px]" />
-            <div className="relative z-10">
-              <ArvindWordmark />
-              <div className="mt-8 grid gap-9 md:grid-cols-[0.9fr_1.1fr] md:gap-12">
-                <div>
-                  <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                    Brief
-                  </p>
-                  <p className="mt-4 max-w-sm text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
-                    {arvindSession.brief}
-                  </p>
-                </div>
-                <div>
-                  <p className="font-display font-bold uppercase text-emerald" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
-                    What we pulled off
-                  </p>
-                  <ul className="mt-4 grid gap-3 text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.4 }}>
-                    {arvindSession.pulledOff.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                </div>
-              </div>
-
-              <blockquote className="mt-10 border-t border-emerald/20 pt-7 font-display font-semibold text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.2 }}>
-                “{arvindSession.testimonial}”
-                <cite className="mt-4 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
-                  Participant from the session
-                </cite>
-              </blockquote>
-
-              <div className="mt-9 border-t border-emerald/20 pt-7">
-                <BrandButton href="/training/arvind-fashions" tone="emerald">
-                  See the Arvind Fashions session
-                </BrandButton>
-              </div>
-            </div>
           </div>
+          <p className="mt-6 max-w-3xl text-fg-2 lg:col-start-2 lg:mt-0 lg:justify-self-end lg:pb-1" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+            Read how Elyst AI delivers tailored, in-person corporate AI training for organisations and their teams.
+          </p>
+        </header>
+
+        <div className="mt-12 grid gap-5 md:grid-cols-2 sm:mt-14">
+          <SessionCard
+            href="/training/arvind-fashions"
+            company="Arvind Fashions"
+            location="Bengaluru · August · In person"
+          >
+            <ArvindWordmark />
+            <p className="mt-7 max-w-xl font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.2 }}>
+              {arvindSession.intro}
+            </p>
+            <p className="mt-5 max-w-xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+              {arvindSession.caseSummary}
+            </p>
+          </SessionCard>
+
+          <SessionCard
+            href="/training/autobahn-group"
+            company="Autobahn Group"
+            location="Kochi · September · In person"
+          >
+            <AutobahnWordmark />
+            <p className="mt-7 max-w-xl font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.2 }}>
+              Tailored corporate AI training for an organisation and its participating teams.
+            </p>
+            <p className="mt-5 max-w-xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+              In September, Elyst AI delivered an in-person corporate AI training session for Autobahn Group in Kochi.
+            </p>
+          </SessionCard>
         </div>
       </div>
     </section>

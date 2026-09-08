@@ -1,19 +1,20 @@
 import { pageMeta } from "@/lib/seo";
-import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqPageSchema, serviceSchema } from "@/lib/schema";
 import TrainingPage from "@/components/training/TrainingPage";
 import JsonLd from "@/components/seo/JsonLd";
+import { trainingFaqs } from "@/lib/training-content";
 
 const TRAINING_DESCRIPTION =
-  "Role-specific AI training for companies and institutions, designed around approved tools, real work, human review, and practical follow-through.";
+  "Practical, in-person corporate AI training tailored to your team’s work. Available across Kerala, Bengaluru, the UAE, Saudi Arabia and Qatar.";
 
 export const metadata = {
   ...pageMeta({
     path: "/training",
-    title: "AI Training Built Around Your Team's Work",
+    title: "Corporate AI Training for Teams",
     description: TRAINING_DESCRIPTION,
     image: "/training/opengraph-image",
   }),
-  title: { absolute: "AI Training Built Around Your Team's Work | Elyst AI" },
+  title: { absolute: "Corporate AI Training for Teams | Elyst AI" },
   robots: { index: true, follow: true },
 };
 
@@ -24,13 +25,14 @@ export default function TrainingPageRoute() {
         data={[
           serviceSchema({
             path: "/training",
-            name: "AI training built around your team's actual work",
+            name: "Corporate AI training for teams",
             description: TRAINING_DESCRIPTION,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Training", path: "/training" },
           ]),
+          faqPageSchema(trainingFaqs),
         ]}
       />
       <TrainingPage />

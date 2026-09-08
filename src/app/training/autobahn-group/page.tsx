@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/seo/JsonLd";
-import ArvindSessionPage from "@/components/training/ArvindSessionPage";
+import AutobahnSessionPage from "@/components/training/AutobahnSessionPage";
 import { breadcrumbSchema, creativeWorkSchema, faqPageSchema } from "@/lib/schema";
 import { pageMeta } from "@/lib/seo";
-import { arvindFaqs } from "@/lib/training-content";
+import { autobahnFaqs } from "@/lib/training-content";
 
-const DESCRIPTION = "How Elyst AI delivered a tailored, full-day corporate AI training programme for 35 cross-functional managers at Arvind Fashions.";
-const PATH = "/training/arvind-fashions";
-const TITLE = "Corporate AI Training at Arvind Fashions";
+const DESCRIPTION = "How Elyst AI delivered a tailored, full-day corporate AI training programme for 40 HR professionals at Autobahn Group in Kochi.";
+const PATH = "/training/autobahn-group";
+const TITLE = "Corporate AI Training for Autobahn Group";
 
 export const metadata: Metadata = {
   ...pageMeta({
@@ -19,21 +19,21 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function ArvindFashionsPage() {
+export default function AutobahnGroupPage() {
   return (
     <>
       <JsonLd
         data={[
           creativeWorkSchema({ path: PATH, name: TITLE, description: DESCRIPTION }),
-          faqPageSchema(arvindFaqs, PATH),
+          faqPageSchema(autobahnFaqs, PATH),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Training", path: "/training" },
-            { name: "Arvind Fashions", path: PATH },
+            { name: "Autobahn Group", path: PATH },
           ]),
         ]}
       />
-      <ArvindSessionPage />
+      <AutobahnSessionPage />
     </>
   );
 }

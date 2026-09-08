@@ -20,7 +20,7 @@ const homeFaqs = [
   { q: "Who owns it afterwards?", a: "You do. Accounts and access transfer at handover. If continued support and improvement is needed, we stick around constantly improving your systems." },
 ];
 
-const HOME_TITLE = "AI Strategy, Implementation & Development | Elyst AI";
+const HOME_TITLE = "AI Strategy & Implementation Company | Elyst AI";
 const HOME_DESCRIPTION =
   "Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.";
 const HOME_OG_IMAGE = "/opengraph-image";
@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     description: HOME_DESCRIPTION,
     images: [HOME_OG_IMAGE],
   },
+  robots: { index: true, follow: true },
 };
 
 export default function Home() {

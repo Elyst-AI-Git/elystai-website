@@ -10,6 +10,5 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Claude-SearchBot", allow: "/" },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
   };
 }

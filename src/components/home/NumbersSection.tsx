@@ -25,9 +25,11 @@ const numbers: readonly NumberBandItem[] = [
 export function NumbersBand({
   numbers: items,
   heading = "Elyst AI by the numbers",
+  align = "left",
 }: {
   numbers: readonly NumberBandItem[];
   heading?: string;
+  align?: "left" | "center";
 }) {
   return (
     <section
@@ -41,11 +43,11 @@ export function NumbersBand({
         <h2 id="numbers-heading" className="sr-only">
           {heading}
         </h2>
-        <div className="grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={items.length === 2 ? "grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-2" : "grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-3"}>
           {items.map((number, index) => (
             <article
               key={number.label}
-              className={`px-5 py-7 sm:px-7 lg:px-8 lg:py-8 ${index > 0 ? "border-t border-white/10 sm:border-l sm:border-t-0" : ""}`}
+              className={`px-5 py-7 sm:px-7 lg:px-8 lg:py-8 ${align === "center" ? "text-center" : "text-left"} ${index > 0 ? "border-t border-white/10 sm:border-l sm:border-t-0" : ""}`}
             >
               <p
                 className="font-display font-bold uppercase text-green"
@@ -56,7 +58,7 @@ export function NumbersBand({
               <p className="mt-4 font-display font-semibold text-fg-on-dark" style={{ fontSize: "var(--text-stat-compact)", lineHeight: 0.95 }}>
                 {number.value}
               </p>
-              <p className="mt-4 max-w-xs text-fg-muted-dark" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+              <p className={`mt-4 max-w-xs text-fg-muted-dark ${align === "center" ? "mx-auto" : ""}`} style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
                 {number.description}
               </p>
             </article>

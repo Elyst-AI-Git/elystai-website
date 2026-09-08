@@ -3,8 +3,30 @@
  * authored content can never break out of the <script> tag (e.g. a stray
  * "</script>" in a description). Server component — no client JS shipped.
  */
-export default function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }) {
-  const json = JSON.stringify(data).replace(/</g, "\\u003c");
+type JsonLdRecord = Record<string, unknown>;
+
+function toPayload(data: JsonLdRecord | JsonLdRecord[]): JsonLdRecord {
+  if (!Array.isArray(data)) return data;
+
+  const graph = data.flatMap((item) => {
+    if (Array.isArray(item["@graph"])) {
+      return item["@graph"] as JsonLdRecord[];
+    }
+
+    const node = { ...item };
+    delete node["@context"];
+    delete node["@graph"];
+    return [node];
+  });
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": graph,
+  };
+}
+
+export default function JsonLd({ data }: { data: JsonLdRecord | JsonLdRecord[] }) {
+  const json = JSON.stringify(toPayload(data)).replace(/</g, "\\u003c");
   return (
     <script
       type="application/ld+json"

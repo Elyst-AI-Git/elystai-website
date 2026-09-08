@@ -136,7 +136,10 @@ export default function ServicesPage() {
         heading="Questions clients ask before they start."
       />
 
-      <TrainingRoutingStrip />
+      <TrainingRoutingStrip
+        heading="Need to train your team on AI first?"
+        body="Elyst AI delivers corporate AI training tailored for your team and their day-to-day work."
+      />
 
       <ClosingCta
         heading="Bring us one workflow that is not working."
