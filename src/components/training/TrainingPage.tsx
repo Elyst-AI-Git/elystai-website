@@ -1,58 +1,45 @@
 import BookingButton from "@/components/marketing/BookingButton";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { SectionMark } from "@/components/ui/section-mark";
 import ClosingCta from "@/components/marketing/ClosingCta";
 import FaqSection from "@/components/marketing/FaqSection";
 import ProgramsHistory from "@/components/training/ProgramsHistory";
-import { AudienceVisual } from "@/components/training/TrainingVisuals";
+import { FormatVisual } from "@/components/training/TrainingVisuals";
 import SessionInputs from "@/components/training/SessionInputs";
 import TrainingProcessSteps, { type TrainingStep } from "@/components/training/TrainingProcessSteps";
 import ArvindSessionSection from "@/components/training/ArvindSessionSection";
-import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
 import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
 import { NumbersBand, type NumberBandItem } from "@/components/home/NumbersSection";
+import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
 import WhatYouGetSection from "@/components/training/WhatYouGetSection";
-import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import TrainingRatingStrip from "@/components/training/TrainingRatingStrip";
+import { trainingFaqs, trainingFormats } from "@/lib/training-content";
 
 const trainingSteps: TrainingStep[] = [
   {
     label: "Discover",
-    description: "We learn the roles, the tools and the tasks that matter.",
+    description: "We first understand the company, the participating teams and what they need from the programme.",
   },
   {
     label: "Design",
-    description: "A small set of concepts and tailor-made hands-on exercises.",
+    description: "The format and examples are tailored around the audience instead of being copied from a fixed public syllabus.",
   },
   {
     label: "Deliver",
-    description: "Practice on real work with a clear view of what AI can do.",
+    description: "The session is designed for active participation and practical understanding.",
   },
-];
-
-const trainingFaqs = [
-  { q: "Can it be customised?", a: "Yes. That happens before we design anything." },
-  { q: "Can you use our tools?", a: "Yes, and we prefer it." },
-  { q: "How many people?", a: "Confirmed in the proposal, based on format." },
-  { q: "Suitable for beginners?", a: "Yes. Sessions are built around the room." },
-  { q: "On site or remote?", a: "Both." },
-  { q: "What do you need from us?", a: "Real work examples and your tool list." },
 ];
 
 const trainingStats: readonly NumberBandItem[] = [
   {
     value: "3,000+",
-    label: "People trained",
-    description: "Founders and functional leads across India and the GCC.",
+    label: "Professionals trained",
+    description: "More than 3,000 professionals trained by the Elyst AI team.",
   },
   {
     value: "50+",
-    label: "Live sessions",
-    description: "Practical sessions built around roles, tools, and real work.",
-  },
-  {
-    value: "4+",
-    label: "Industries",
-    description: "Different operating contexts, one practical way to learn.",
+    label: "Sessions delivered",
+    description: "More than 50 sessions delivered by the Elyst AI team.",
   },
 ];
 
@@ -74,45 +61,25 @@ const investmentStats = [
   },
 ] as const;
 
-const audiences = [
-  { title: "Companies rolling out AI tools to a team", kind: "team" as const },
-  { title: "Departments needing role-specific workflows", kind: "department" as const },
-];
-
-function AudiencePanel() {
-  return (
-    <div className="grid gap-5 md:grid-cols-2">
-      {audiences.map((audience) => {
-        const principle: Principle = {
-          title: audience.title,
-          description: "Built around the roles, tools, and real work already inside the team.",
-          visual: () => <AudienceVisual kind={audience.kind} className="max-w-[14rem]" />,
-        };
-
-        return (
-          <ShaderPrincipleCard
-            key={audience.title}
-            principle={principle}
-            visualFirst
-            visualScale="scale-[0.96]"
-            showDescription={false}
-            compact
-          />
-        );
-      })}
-    </div>
-  );
+function TrainingProof() {
+  return <NumbersBand heading="Training by the numbers" numbers={trainingStats} align="center" />;
 }
 
 function TrainingInvestmentSection() {
   return (
-    <section className="bg-surface-accent-soft" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div className="mx-auto max-w-7xl">
+    <section
+      className="relative overflow-hidden"
+      style={{
+        padding: "var(--section-py) var(--section-px)",
+        background: "linear-gradient(to bottom, var(--surface-accent-soft) 0%, var(--surface-accent-soft) 76%, color-mix(in srgb, var(--surface-accent-soft) 72%, var(--bg)) 90%, var(--bg) 100%)",
+      }}
+    >
+      <div className="relative z-10 mx-auto max-w-7xl">
         <header className="max-w-6xl">
-          <h2 className="text-balance text-fg" style={{ fontSize: "var(--text-h1)", lineHeight: 1.02 }}>
+          <h2 className="text-balance text-fg" style={{ fontSize: "clamp(2.8rem, 6.2vw, 6rem)", lineHeight: 0.98 }}>
             The AI investment has <span className="hero-accent-word-red">not worked</span> for most companies.
           </h2>
-          <p className="mt-8 max-w-6xl text-fg-2" style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+          <p className="mt-8 max-w-6xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
             Enterprises are spending heavily on AI technology, but outcomes remain inconsistent. Most AI initiatives stall at experimentation, with limited adoption, unclear ownership, and little measurable return.
           </p>
         </header>
@@ -137,8 +104,37 @@ function TrainingInvestmentSection() {
   );
 }
 
-function TrainingProof() {
-  return <NumbersBand heading="Training by the numbers" numbers={trainingStats} />;
+const formatPrinciples: readonly Principle[] = trainingFormats.map((format) => ({
+  title: format.title,
+  description: format.description,
+  visual: () => <FormatVisual id={format.id} className="max-w-[16rem]" />,
+}));
+
+function TrainingFormats() {
+  return (
+    <section id="formats" className="relative overflow-hidden bg-bg" aria-labelledby="training-formats-heading" style={{ padding: "var(--section-py) var(--section-px)" }}>
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/15" />
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <header className="mx-auto max-w-4xl text-center">
+          <SectionMark>Format</SectionMark>
+          <h2 id="training-formats-heading" className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
+            Training formats
+          </h2>
+        </header>
+
+        <div className="mt-12 grid gap-4 md:grid-cols-3 sm:mt-14">
+          {formatPrinciples.map((principle, index) => (
+            <ShaderPrincipleCard
+              key={principle.title}
+              principle={principle}
+              visualFirst
+              visualScale={index === 0 ? "w-full max-w-[19rem] scale-110 sm:max-w-none sm:scale-100" : "w-full max-w-[16rem] scale-100 sm:max-w-none sm:scale-[0.9]"}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default function TrainingPage() {
@@ -164,11 +160,10 @@ export default function TrainingPage() {
           <div className="max-w-3xl">
             <SectionMark tone="dark">Training</SectionMark>
             <h1 className="training-hero-title mt-6 text-balance text-fg-on-dark" style={{ lineHeight: 1.04 }}>
-              AI training built around the<br className="hidden md:block" />{" "}
-              work your team already does.
+              Corporate AI training built around your team’s real work
             </h1>
             <p className="mt-7 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
-              We build a training session around your roles, your tools, and the work your team actually does.
+              Elyst AI delivers practical, in-person AI training for organisations that want their teams to use AI more effectively at work.
             </p>
             <div className="mt-8">
               <BookingButton intent="training" variant="solid" tone="green">
@@ -181,20 +176,7 @@ export default function TrainingPage() {
       </section>
 
       <TrainingInvestmentSection />
-
-      <section className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto max-w-7xl">
-          <header className="mx-auto max-w-4xl text-center">
-            <SectionMark>FIT</SectionMark>
-            <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
-              Who it is for.
-            </h2>
-          </header>
-          <div className="mx-auto mt-12 max-w-5xl sm:mt-14">
-            <AudiencePanel />
-          </div>
-        </div>
-      </section>
+      <TrainingFormats />
 
       <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16">
@@ -214,7 +196,7 @@ export default function TrainingPage() {
       <TrainingRatingStrip />
       <ProgramsHistory />
 
-      <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />
+      <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." includeStructuredData={false} />
       <TrainingRoutingStrip
         heading="Ready to build around the work?"
         body="We map the workflow, build what helps, and hand it over to your team."

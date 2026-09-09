@@ -77,6 +77,22 @@ export function serviceSchema({
   };
 }
 
+export function faqPageSchema(
+  faqs: readonly { q: string; a: string }[],
+  path = "/training",
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SITE_URL}${path}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
+}
+
 export function personSchema({
   id,
   name,

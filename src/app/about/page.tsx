@@ -1,5 +1,6 @@
 import { pageMeta } from "@/lib/seo";
-import { breadcrumbSchema, organizationSchema, personSchema } from "@/lib/schema";
+import Link from "next/link";
+import { breadcrumbSchema, personSchema } from "@/lib/schema";
 import { SectionMark } from "@/components/ui/section-mark";
 import JsonLd from "@/components/seo/JsonLd";
 import Founders, { founders } from "@/components/home/Founders";
@@ -43,7 +44,7 @@ const aboutBreadcrumbs = breadcrumbSchema([
 export default function AboutPage() {
   return (
     <main id="main" className="flex-1 pt-24">
-      <JsonLd data={[organizationSchema, ...aboutPeople, aboutBreadcrumbs]} />
+      <JsonLd data={[...aboutPeople, aboutBreadcrumbs]} />
 
       <section className="bg-bg" style={{ padding: "clamp(76px, 10vw, 148px) var(--section-px) clamp(64px, 8vw, 104px)" }}>
         <div className="mx-auto max-w-7xl">
@@ -65,9 +66,12 @@ export default function AboutPage() {
           <div>
             <SectionMark>Company</SectionMark>
           </div>
-          <p className="max-w-4xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5 }}>
-            {COMPANY_COPY}
-          </p>
+          <div className="max-w-4xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5 }}>
+            <p>{COMPANY_COPY}</p>
+            <p className="mt-6">
+              We also deliver <Link href="/training" className="font-semibold text-emerald underline decoration-emerald/35 underline-offset-4">corporate AI training for teams</Link> in person, shaped around the organisation and its people.
+            </p>
+          </div>
         </div>
       </section>
 

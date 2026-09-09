@@ -2,18 +2,24 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
-const expectedIndexablePaths = ["/", "/services", "/training", "/about"];
+const expectedIndexablePaths = [
+  "/",
+  "/services",
+  "/training",
+  "/training/arvind-fashions",
+  "/training/autobahn-group",
+  "/about",
+];
 
 test("sitemap contains only canonical commercial pages", () => {
   const source = readFileSync(
     new URL("../src/app/sitemap.ts", import.meta.url),
     "utf8",
   );
-  const paths = Array.from(source.matchAll(/\{ path: "([^"]+)"/g), (match) => match[1]);
-  assert.deepEqual(
-    paths,
-    expectedIndexablePaths,
-  );
+  const paths = Array.from(source.matchAll(/^\s+"(\/[^"]*)",$/gm), (match) => match[1]);
+  assert.deepEqual(paths, expectedIndexablePaths);
+  assert.match(source, /lastModified/);
+  assert.doesNotMatch(source, /changeFrequency|priority/);
 });
 
 test("legal pages remain accessible but explicitly noindex", () => {

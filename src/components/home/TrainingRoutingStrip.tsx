@@ -23,7 +23,7 @@ export default function TrainingRoutingStrip({
     </>
   ),
   href = "/training",
-  linkLabel = "Explore training",
+  linkLabel = "Explore corporate AI training",
   headingId = "training-routing-heading",
 }: TrainingRoutingStripProps = {}) {
   return (

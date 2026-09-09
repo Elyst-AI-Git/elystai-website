@@ -6,9 +6,11 @@ export type Faq = { q: string; a: string };
 export default function FaqSection({
   faqs,
   heading,
+  includeStructuredData = true,
 }: {
-  faqs: Faq[];
+  faqs: readonly Faq[];
   heading: string;
+  includeStructuredData?: boolean;
 }) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -25,10 +27,12 @@ export default function FaqSection({
       className="relative overflow-hidden bg-surface-dark"
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {includeStructuredData ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ) : null}
 
       <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-white/10" />
 

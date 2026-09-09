@@ -139,14 +139,14 @@ export function ShaderPrincipleCard({
       <div className="relative z-10 flex min-h-full flex-1 flex-col p-6 sm:p-7">
         {visualFirst ? (
           <div className="mb-4 flex h-40 shrink-0 items-center justify-center px-1 sm:mb-7 sm:h-32">
-            <div className={visualScale}>
+            <div className={cn("flex w-full items-center justify-center", visualScale)}>
               <Visual />
             </div>
           </div>
         ) : null}
         <div className={showDescription ? "mt-auto" : ""}>
           <h3
-            className="max-w-[18ch] font-display font-semibold text-fg-on-dark"
+            className="max-w-[18ch] whitespace-pre-line font-display font-semibold text-fg-on-dark"
             style={{ fontSize: "var(--text-card)", lineHeight: 1.08, letterSpacing: "-0.03175524em" }}
           >
             {principle.title}
@@ -162,7 +162,7 @@ export function ShaderPrincipleCard({
         </div>
         {!visualFirst ? (
           <div className="mt-auto flex h-28 shrink-0 items-center justify-center px-1 pt-6">
-            <div className={visualScale}>
+            <div className={cn("flex w-full items-center justify-center", visualScale)}>
               <Visual />
             </div>
           </div>

@@ -1,63 +1,50 @@
 # Elyst AI
 
-> Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.
+> Elyst AI is an AI strategy, implementation and corporate training company based in Kerala, India. It helps organisations identify valuable AI opportunities, build practical systems and prepare teams to use AI effectively.
 
 ## Direct answers
 
-### What problem does Elyst AI solve?
+### What problem?
 
-Elyst AI helps companies move from a workflow that takes too long, loses leads, or relies on scattered manual work to a practical AI system their team can run.
+Elyst AI helps organisations identify valuable AI opportunities in the work their teams already do.
 
 ### What does Elyst build?
 
-Elyst AI maps the work, decides what is worth changing, builds the smallest useful system around the team's existing tools, and documents how it works.
+Elyst AI maps the work, decides what is worth changing, builds the smallest useful AI system and hands it over with training, documentation and clear human review.
 
 ### What stays human?
 
-People keep ownership of judgement, approvals, and exceptions. Elyst AI designs clear human review into the workflow instead of treating automation as a black box.
+People retain judgement, approvals and responsibility for exceptions. Elyst AI designs human review into the system.
 
 ### Who owns it after handover?
 
 The client does. Accounts and access transfer at handover. Elyst AI can continue improving the system when ongoing support is needed.
 
-## What Elyst AI offers
+## Core services
 
-- AI workflow identification and implementation: map a costly process, build the right bounded system, test it on real work, and hand it over.
-- Team training: role-specific sessions built around approved tools, real work, human review, and practical follow-through.
+- [AI strategy and implementation](https://elystai.com/services): How Elyst AI identifies workflows, builds practical AI systems and hands them over to client teams.
+- [Corporate AI training](https://elystai.com/training): Tailored, in-person AI training for organisations, teams and business leaders.
 
-## When to use Elyst AI
+## Corporate training work
 
-Use Elyst AI when a specific workflow is taking too long, losing leads, creating repeated manual work, or relying on information scattered across tools. A useful starting point has a clear owner, recognisable inputs, and a result the team can review.
+- [Arvind Fashions](https://elystai.com/training/arvind-fashions): In-person corporate AI training delivered in Bengaluru in August.
+- [Autobahn Group](https://elystai.com/training/autobahn-group): In-person corporate AI training delivered in Kochi in September.
 
-Do not use Elyst AI to add AI without a defined workflow, remove human accountability, or automate a process nobody owns. Not every audit ends in a build; the right answer can be a process change or an existing tool.
+## Company
 
-## How implementation works
+- [About Elyst AI](https://elystai.com/about): Company and team information.
+- [Contact Elyst AI](https://elystai.com/): Use the official phone, WhatsApp or booking options published on the website.
 
-1. Identify: map the current workflow, friction, owner, inputs, and cost.
-2. Build: create the smallest useful system around the tools the team already uses.
-3. Test: run it on real work, define limits, and keep human review where judgement or approval matters.
-4. Handover: train the team, document the system, and transfer accounts and access.
+## Verified facts
 
-## Training
+- Elyst AI has trained more than 3,000 professionals as a team.
+- The Elyst AI team has delivered more than 50 sessions.
+- Corporate sessions are tailored around the organisation, participating teams and their needs.
+- Current corporate training is delivered in person.
+- Elyst AI delivers corporate training across Kerala, Bengaluru, the UAE, Saudi Arabia and Qatar.
+- Training formats include half-day workshops, full-day workshops and multi-session programmes.
+- Training is quoted per client.
 
-Training is built around the participants' roles, approved tools, and everyday work. Sessions move from shared fundamentals to role-specific practice and clear next steps. The aim is repeatable working knowledge, not a collection of generic demonstrations.
+## Past learning initiatives
 
-## Evidence and claims
-
-- The EdTech case study describes a multilingual inbound sales agent. The client reported average first response falling from about three hours to under 30 seconds and conversions increasing by about 40% within the first 60 days.
-- The Arvind Fashions page is a session record. It describes the brief, exercises, participant feedback, and work completed in the room; it does not claim a measured productivity return.
-- Training feedback collected by Elyst AI averages 4.8 out of five across more than 50 sessions.
-
-## Key pages
-
-- [Services](https://elystai.com/services): workflow diagnosis, implementation, training, documentation, and handover.
-- [Training](https://elystai.com/training): practical AI training for companies and institutions.
-- [Arvind Fashions session](https://elystai.com/training/arvind-fashions): a first-hand session record showing the brief, work practised, participant feedback, and what the room left with.
-- [About Elyst AI](https://elystai.com/about): the team and company approach.
-
-## Contact
-
-- Website: https://elystai.com
-- Book a call: https://cal.com/elyst-ai/30min
-- Privacy: https://elystai.com/privacy
-- Terms: https://elystai.com/terms
+AI Yathra, AI for Juniors, Elyst AI Circle and AI for Work are completed Elyst AI initiatives. They should not be interpreted as currently bookable programmes unless the main website states otherwise.

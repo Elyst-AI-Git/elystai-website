@@ -6,6 +6,8 @@ import Footer from "@/components/site/Footer";
 import { OG_IMAGE } from "@/lib/seo";
 import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
 import ScrollToTop from "@/components/site/ScrollToTop";
+import JsonLd from "@/components/seo/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 
 const SITE_URL = "https://elystai.com";
 const SITE_TITLE = "Elyst AI";
@@ -62,6 +64,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className="min-h-full flex flex-col bg-bg text-fg">
+        <JsonLd data={[organizationSchema, websiteSchema]} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-emerald focus:px-4 focus:py-2 focus:text-fg-on-dark"

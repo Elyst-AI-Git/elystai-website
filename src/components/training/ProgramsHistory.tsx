@@ -4,17 +4,17 @@ import { SectionMark } from "@/components/ui/section-mark";
 
 const programs = [
   {
-    name: "AI Yathra",
-    who: "For working professionals and career switchers",
-    image: "/images/programs/ai-yathra.webp",
-    surface: "bg-surface-accent-soft",
-    dark: false,
-  },
-  {
     name: "AI for Juniors",
     who: "For school students, Classes 5 to 10",
     image: "/images/programs/ai-junior.webp",
     surface: "bg-surface-light",
+    dark: false,
+  },
+  {
+    name: "AI Yathra",
+    who: "For working professionals and career switchers",
+    image: "/images/programs/ai-yathra.webp",
+    surface: "bg-surface-accent-soft",
     dark: false,
   },
   {
@@ -71,7 +71,7 @@ export default function ProgramsHistory() {
   return (
     <section id="programs" className="bg-bg" style={{ padding: "clamp(44px, 5vw, 72px) var(--section-px) var(--section-py)" }}>
       <div className="mx-auto max-w-7xl">
-        <SectionMark>History</SectionMark>
+        <SectionMark>Past initiatives</SectionMark>
         <h2 className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)" }}>
           Programs we have run.
         </h2>

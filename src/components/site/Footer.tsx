@@ -36,7 +36,7 @@ const socials = [
 const footerNav = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Training", href: "/training" },
+  { label: "Corporate AI training", href: "/training" },
 ];
 
 export default function Footer() {
