@@ -6,9 +6,7 @@ import { BrandButton } from "@/components/ui/brand-button";
 
 export const AUDIT_CAL_URL =
   process.env.NEXT_PUBLIC_AUDIT_CAL_URL ?? "https://cal.com/elyst-ai/30min";
-export const TRAINING_CAL_URL =
-  process.env.NEXT_PUBLIC_TRAINING_CAL_URL ??
-  "https://cal.com/elyst-ai/training-session";
+export const TRAINING_CAL_URL = AUDIT_CAL_URL;
 
 const UTM_KEYS = [
   "utm_source",
