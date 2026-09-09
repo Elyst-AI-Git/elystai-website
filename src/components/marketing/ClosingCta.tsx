@@ -1,7 +1,7 @@
 "use client";
 
 import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
-import BookingButton from "@/components/marketing/BookingButton";
+import TrackedCta from "@/components/marketing/TrackedCta";
 import { BrandButton } from "@/components/ui/brand-button";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import type { BookingIntent } from "@/lib/booking";
@@ -26,9 +26,7 @@ function CtaButton({
 
   if (intent === "training") {
     return (
-      <BookingButton intent={intent} variant="metal" tone="light" className={CTA_BUTTON_CLASS}>
-        {content}
-      </BookingButton>
+      <TrackedCta label={buttonLabel} intent="training" variant="metal" tone="light" className={CTA_BUTTON_CLASS} />
     );
   }
 

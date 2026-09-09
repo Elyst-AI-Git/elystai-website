@@ -1,4 +1,4 @@
-import BookingButton from "@/components/marketing/BookingButton";
+import TrackedCta from "@/components/marketing/TrackedCta";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { SectionMark } from "@/components/ui/section-mark";
 import ClosingCta from "@/components/marketing/ClosingCta";
@@ -166,9 +166,7 @@ export default function TrainingPage() {
               Elyst AI delivers practical, in-person AI training for organisations that want their teams to use AI more effectively at work.
             </p>
             <div className="mt-8">
-              <BookingButton intent="training" variant="solid" tone="green">
-                Plan a team session
-              </BookingButton>
+              <TrackedCta label="Plan a team session" intent="training" tone="green" />
             </div>
           </div>
           <SessionInputs />
