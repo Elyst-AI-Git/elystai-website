@@ -42,8 +42,8 @@ function AutobahnLogo() {
     <Image
       src="/brands/autobahn-group-wordmark.png"
       alt="Autobahn Group"
-      width={299}
-      height={172}
+      width={264}
+      height={135}
       className="h-auto w-[9rem] max-w-[48%] object-contain sm:w-[12rem]"
     />
   );

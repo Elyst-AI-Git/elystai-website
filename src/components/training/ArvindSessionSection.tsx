@@ -63,8 +63,8 @@ function AutobahnWordmark() {
       <Image
         src="/brands/autobahn-group-wordmark.png"
         alt="Autobahn Group logo"
-        width={299}
-        height={172}
+        width={264}
+        height={135}
         className="h-auto w-full max-w-[26rem] object-contain"
       />
     </div>
