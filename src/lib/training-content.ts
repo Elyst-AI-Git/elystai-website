@@ -77,14 +77,15 @@ export const trainingFormats = [
 
 export const arvindAdditionalFeedback = {
   quote: "Really helpful session, got a lot of clarity on how to implement these in my work.",
-  attribution: "Participant",
+  attribution: "Participant from the session",
 } as const;
 
 export const autobahnFeedback = [
   {
     quote:
       "Attending the AI training made me realise the potential of different AI tools in day to day office tasks and in personal life too.",
-    attribution: "Ejas (HR-Autobahn)",
+    attribution: "Ejas",
+    role: "HR",
   },
   {
     quote: "A section with lot of impressive AI knowledge sharing. Will highly recommended.",

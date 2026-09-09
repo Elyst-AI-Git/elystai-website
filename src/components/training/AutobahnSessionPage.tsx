@@ -98,6 +98,7 @@ export default function AutobahnSessionPage() {
           <FeedbackQuote
             quote={autobahnFeedback[0].quote}
             attribution={autobahnFeedback[0].attribution}
+            role={autobahnFeedback[0].role}
           />
 
           <section id="programme" className="mt-16 sm:mt-24" aria-labelledby="autobahn-programme-heading">

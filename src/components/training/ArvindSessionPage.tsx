@@ -22,7 +22,7 @@ function FeedbackQuote({
           “{quote}”
         </p>
         <cite className="mt-5 block font-sans not-italic text-fg-2" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
-          {attribution}
+          <strong className="font-semibold text-fg">{attribution}</strong>
         </cite>
       </blockquote>
     </section>
