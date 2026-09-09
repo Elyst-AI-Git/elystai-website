@@ -65,7 +65,7 @@ function AutobahnWordmark() {
         alt="Autobahn Group logo"
         width={264}
         height={135}
-        className="h-auto w-full max-w-[26rem] object-contain"
+        className="h-auto w-full max-w-[26rem] scale-[0.8] object-contain"
       />
     </div>
   );

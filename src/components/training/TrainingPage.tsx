@@ -67,8 +67,14 @@ function TrainingProof() {
 
 function TrainingInvestmentSection() {
   return (
-    <section className="bg-surface-muted" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div className="mx-auto max-w-7xl">
+    <section
+      className="relative overflow-hidden"
+      style={{
+        padding: "var(--section-py) var(--section-px)",
+        background: "linear-gradient(to bottom, var(--surface-accent-soft) 0%, var(--surface-accent-soft) 76%, color-mix(in srgb, var(--surface-accent-soft) 72%, var(--bg)) 90%, var(--bg) 100%)",
+      }}
+    >
+      <div className="relative z-10 mx-auto max-w-7xl">
         <header className="max-w-6xl">
           <h2 className="text-balance text-fg" style={{ fontSize: "clamp(2.8rem, 6.2vw, 6rem)", lineHeight: 0.98 }}>
             The AI investment has <span className="hero-accent-word-red">not worked</span> for most companies.
