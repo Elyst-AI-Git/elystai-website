@@ -9,6 +9,7 @@ type MetalFxTheme = "dark" | "light";
 
 type MetalButtonProps = {
   href?: string;
+  download?: string | boolean;
   children: ReactNode;
   className?: string;
   full?: boolean;
@@ -24,6 +25,7 @@ const buttonClassName =
 
 export function MetalButton({
   href,
+  download,
   children,
   className,
   full = false,
@@ -37,7 +39,18 @@ export function MetalButton({
   const dataAttributes = dataBookingIntent ? { "data-booking-intent": dataBookingIntent } : {};
 
   const inner = href ? (
-    /^(?:https?:|mailto:|tel:|#)/.test(href) ? (
+    download !== undefined ? (
+      <a
+        href={disabled ? undefined : href}
+        download={download === true ? "" : download}
+        onClick={(event) => onClick?.(event)}
+        className={classes}
+        aria-disabled={disabled}
+        {...dataAttributes}
+      >
+        {children}
+      </a>
+    ) : /^(?:https?:|mailto:|tel:|#)/.test(href) ? (
       <a href={disabled ? undefined : href} onClick={(event) => onClick?.(event)} className={classes} aria-disabled={disabled} {...dataAttributes}>
         {children}
       </a>

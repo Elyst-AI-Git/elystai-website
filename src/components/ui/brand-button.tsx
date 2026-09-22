@@ -9,6 +9,7 @@ export type BrandTone = "emerald" | "light" | "green";
 
 export type BrandButtonProps = {
   href?: string;
+  download?: string | boolean;
   variant?: BrandVariant;
   tone?: BrandTone;
   className?: string;
@@ -34,6 +35,7 @@ const outlineClasses: Record<BrandTone, string> = {
 
 export function BrandButton({
   href,
+  download,
   variant = "metal",
   tone = "emerald",
   className,
@@ -47,6 +49,7 @@ export function BrandButton({
   return (
     <MetalButton
       href={href}
+      download={download}
       full={full}
       disabled={disabled}
       onClick={onClick}
