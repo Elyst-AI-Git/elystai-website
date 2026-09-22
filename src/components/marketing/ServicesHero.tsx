@@ -38,9 +38,12 @@ export default function ServicesHero() {
             >
               We audit the work, build the smallest useful system, and hand it over with training, documentation and clear limits.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <BrandButton href="/services#our-process" variant="metal" tone="light" preset="silver">
                 See our process
+              </BrandButton>
+              <BrandButton href="/playbook.pdf" download="elyst-ai-playbook.pdf" variant="metal" tone="emerald" preset="silver">
+                Download the playbook
               </BrandButton>
             </div>
           </div>

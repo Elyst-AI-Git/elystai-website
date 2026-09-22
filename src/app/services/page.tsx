@@ -8,6 +8,7 @@ import { ServicesFitStrip } from "@/components/marketing/ServicesFitStrip";
 import ServicesProcess from "@/components/marketing/ServicesProcess";
 import ServicesProofSection from "@/components/marketing/ServicesProofSection";
 import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
+import ServicesPlaybookStrip from "@/components/marketing/ServicesPlaybookStrip";
 import JsonLd from "@/components/seo/JsonLd";
 
 const SERVICES_DESCRIPTION =
@@ -130,6 +131,8 @@ export default function ServicesPage() {
 
         </div>
       </section>
+
+      <ServicesPlaybookStrip />
 
       <FaqSection
         faqs={serviceFaqs}
