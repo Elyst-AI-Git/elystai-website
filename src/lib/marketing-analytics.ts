@@ -1,7 +1,5 @@
 "use client";
 
-import { track } from "@vercel/analytics";
-import type { BookingIntent } from "@/lib/booking";
 
 const UTM_KEYS = [
   "utm_source",
@@ -57,30 +55,6 @@ export function captureArrivalUtm(): void {
   } catch {
     // Campaign metadata must never affect navigation.
   }
-}
-
-export function appendStoredUtm(href: string): string {
-  const url = new URL(href, window.location.origin);
-
-  for (const [key, value] of Object.entries(readStoredUtm())) {
-    url.searchParams.set(key, value);
-  }
-
-  return url.toString();
-}
-
-export function trackBookingCta(intent: BookingIntent): void {
-  track(intent === "identify" ? "identify_cta_click" : "training_cta_click", {
-    booking_type: intent,
-  });
-}
-
-export function trackSchedulerView(intent: BookingIntent): void {
-  track("scheduler_view", { booking_type: intent });
-}
-
-export function trackBookingComplete(intent: BookingIntent): void {
-  track("booking_complete", { booking_type: intent });
 }
 
 export function captureInternalTrafficMarker(): void {
