@@ -26,7 +26,7 @@ export default function TermsPage() {
             <section>
               <h2 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>Using this website</h2>
               <p className="mt-3">
-                This website explains Elyst AI and provides ways to contact us or book a call. You may use it for lawful purposes. Do not attempt to disrupt the site, gain unauthorised access, or misuse its content or booking facilities.
+                This website explains Elyst AI and provides ways to contact us. You may use it for lawful purposes. Do not attempt to disrupt the site, gain unauthorised access, or misuse its content or contact forms.
               </p>
             </section>
 
@@ -40,7 +40,7 @@ export default function TermsPage() {
             <section>
               <h2 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>Bookings</h2>
               <p className="mt-3">
-                A calendar booking creates a meeting request, not a services agreement. We may need to reschedule or decline a meeting. Any work begins only after scope and commercial terms have been agreed in writing.
+                A message sent through the website is an enquiry, not a services agreement. We may need to decline an enquiry. Any work begins only after scope and commercial terms have been agreed in writing.
               </p>
             </section>
 

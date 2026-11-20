@@ -32,25 +32,25 @@ export type Founder = {
 export const founders: Founder[] = [
   {
     name: "Fathima Shirin P",
-    photo: "/images/founders/shirin-v2.webp",
+    photo: "/images/founders/shirin-final.webp",
     role: "Co-founder",
     title: "CEO",
     linkedin: "https://www.linkedin.com/in/fathimashirin-p/",
     instagram: "https://www.instagram.com/fathimashirin.ai/",
     description:
-      "Fathima Shirin P is Co-founder and CEO of Elyst AI. Her focus for over six years has been the same: turning AI from an abstract idea into a practical skill for people who aren't technical, from founders to functional leads across India and the Middle East. She has trained 3,000+ people through 50+ live sessions across 4+ industries and now leads discovery, training, and adoption for every client Elyst AI works with.",
+      "Fathima Shirin P is the Co-founder and CEO of Elyst AI. Her focus for over six years has been the same: turning AI from an abstract idea into a practical skill for people who aren't technical. She now leads discovery, training, and adoption for every client Elyst AI works with.",
     identitySide: "right",
     fill: "var(--elyst-green)",
   },
   {
     name: "Nihal Anas",
-    photo: "/images/founders/nihal-v2.webp",
+    photo: "/images/founders/nihal-new.webp",
     role: "Co-founder",
     title: "Chief AI Officer",
     linkedin: "https://www.linkedin.com/in/nihalanas/",
     instagram: "https://www.instagram.com/nihalanas.ai/",
     description:
-      "Nihal Anas is Co-founder and Chief AI Officer of Elyst AI, where he leads the entire AI transformation journey. One of the first AI engineers in Kerala, he has worked across five disciplines in AI, from machine learning and computer vision to natural language processing, generative AI and AI automations. Nihal is focused on building systems that survive handover, so a client's team can run what was built without us.",
+      "Nihal Anas is the Co-founder and Chief AI Officer of Elyst AI, where he leads the AI transformation journey. One of the first AI engineers out of Kerala, Nihal is focused on building systems that survive handover, so a client's team can run what was built without the team.",
     identitySide: "left",
     fill: "var(--elyst-emerald)",
   },

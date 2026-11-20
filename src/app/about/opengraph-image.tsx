@@ -9,7 +9,7 @@ export default function Image() {
   return new ImageResponse(
     <BrandedOpenGraph
       eyebrow="About"
-      headline="Your AI implementation partner."
+      headline="We started Elyst AI because businesses struggle to get value out of AI."
       supporting="The team helping businesses build practical AI systems they can own."
     />,
     size,
