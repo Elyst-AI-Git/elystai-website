@@ -145,7 +145,7 @@ export default function TrainingPage() {
           <div className="max-w-3xl">
             <SectionMark tone="dark">AI Kickstart</SectionMark>
             <h1 className="training-hero-title mt-6 text-balance text-fg-on-dark" style={{ lineHeight: 1.04 }}>
-              AI training built on <span className="hero-accent-word">your</span> team’s work.
+              AI training built on <span className="hero-accent-word hero-accent-word-neon">your</span> team’s work.
             </h1>
             <p className="mt-7 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5 }}>
               One day, or two half days.

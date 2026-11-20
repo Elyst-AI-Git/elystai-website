@@ -262,6 +262,12 @@
     filter: drop-shadow(0 2px 10px rgba(0, 223, 130, 0.28));
   }
 
+  /* Same accent on dark hero sections, in the neon green of the "Get in touch" button. */
+  .hero-accent-word-neon {
+    background-image: linear-gradient(100deg, var(--elyst-green) 0%, #6dffbf 50%, var(--elyst-green) 100%);
+    filter: drop-shadow(0 2px 14px rgba(0, 223, 130, 0.35));
+  }
+
   .hero-accent-word-red {
     background-image: linear-gradient(
       100deg,
@@ -287,6 +293,8 @@
 
   .text-gradient-scroll {
     color: var(--elyst-emerald);
+    /* Even line lengths, so a lone last word never sits on its own line. */
+    text-wrap: balance;
   }
 
   .text-gradient-scroll--enhanced {
@@ -445,6 +453,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-accent-word,
+    .hero-accent-word-neon,
     .hero-accent-word-red {
       animation: none;
     }
@@ -484,6 +493,7 @@
      nobody can interact with — render the accent as flat solid emerald. */
   @media (hover: none) {
     .hero-accent-word,
+    .hero-accent-word-neon,
     .hero-accent-word-red {
       animation: none;
       background: none;
@@ -494,7 +504,13 @@
       filter: none;
     }
 
-    .hero-accent-word-red {
+    /* Same accent on dark hero sections, in the neon green of the "Get in touch" button. */
+  .hero-accent-word-neon {
+    background-image: linear-gradient(100deg, var(--elyst-green) 0%, #6dffbf 50%, var(--elyst-green) 100%);
+    filter: drop-shadow(0 2px 14px rgba(0, 223, 130, 0.35));
+  }
+
+  .hero-accent-word-red {
       -webkit-text-fill-color: var(--elyst-red-muted);
       color: var(--elyst-red-muted);
     }

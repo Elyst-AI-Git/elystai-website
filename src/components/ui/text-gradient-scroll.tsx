@@ -78,18 +78,18 @@ function TextGradientScroll({ text, className, type = "letter", textOpacity = "s
   }, []);
 
   return (
-    <p ref={ref} className={cn("text-gradient-scroll relative m-0 flex flex-wrap justify-center", className)}>
+    <p ref={ref} className={cn("text-gradient-scroll relative m-0 text-center", className)}>
       {words.map((word, index) => {
         const start = index / words.length;
         const end = start + 1 / words.length;
 
         return type === "word" ? (
-          <span key={`${word}-${index}`} className="relative mt-2 me-2 inline-block">
+          <span key={`${word}-${index}`} className="relative mt-2 me-2 inline-block last:me-0">
             <span>{word}</span>
             <span aria-hidden data-char={word} data-range={`${start},${end}`} className="text-gradient-scroll__active absolute inset-0" style={{ opacity: 0 }} />
           </span>
         ) : (
-          <span key={`${word}-${index}`} className="relative mt-2 me-2 inline-block">
+          <span key={`${word}-${index}`} className="relative mt-2 me-2 inline-block last:me-0">
             {word.split("").map((char, charIndex) => {
               const step = (end - start) / word.length;
               return (

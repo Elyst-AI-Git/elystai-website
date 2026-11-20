@@ -93,11 +93,13 @@ export default function SystemActuallyIs() {
                   const repeat = group.kind === "repeat";
                   const grow = repeat ? (on ? 1.5 : 5) : on ? 8.5 : 4;
                   return (
-                    <div key={group.kind} className="min-w-0 transition-[flex-grow] duration-700 ease-out" style={{ flexGrow: grow, flexBasis: 0 }}>
-                      <div className={["mb-2 flex items-center gap-1.5 whitespace-nowrap font-display font-bold", repeat ? (on ? "text-emerald" : "text-fg-3") : "text-emerald"].join(" ")} style={{ fontSize: "var(--text-label)" }}>
+                    <div key={group.kind} className="@container min-w-0 transition-[flex-grow] duration-700 ease-out" style={{ flexGrow: grow, flexBasis: 0 }}>
+                      <div className={["mb-2 flex items-center gap-1.5 overflow-hidden whitespace-nowrap font-display font-bold", repeat ? (on ? "text-emerald" : "text-fg-3") : "text-emerald"].join(" ")} style={{ fontSize: "var(--text-label)" }}>
                         {repeat && on ? (
                           <>
-                            <span>Done by AI</span>
+                            {/* Full label only when the column is wide enough for it; otherwise "AI". */}
+                            <span className="hidden @[6.5rem]:inline">Done by AI</span>
+                            <span className="@[6.5rem]:hidden">AI</span>
                             <ArrowRight className="size-4" strokeWidth={2.4} />
                           </>
                         ) : (
