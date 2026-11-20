@@ -1,10 +1,9 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
-import TrackedCta from "@/components/marketing/TrackedCta";
-import { BrandButton } from "@/components/ui/brand-button";
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import { isLowPerfDevice } from "@/lib/performance";
+import ContactCta from "@/components/marketing/ContactCta";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
-import type { BookingIntent } from "@/lib/booking";
 
 const Dithering = lazy(() =>
   import("@paper-design/shaders-react").then((mod) => ({ default: mod.Dithering }))
@@ -13,53 +12,42 @@ const Dithering = lazy(() =>
 const CTA_BUTTON_CLASS =
   "min-h-[40px]! bg-[#eef0ee]! px-5! text-[length:calc(var(--text-small)+1px)]! text-[#0a0a0a]! hover:bg-[#e3e6e2]!";
 
-function CtaButton({
-  intent,
-  href,
-  buttonLabel,
-}: {
-  intent: BookingIntent;
-  href: string;
-  buttonLabel: string;
-}) {
-  const content = <span>{buttonLabel}</span>;
-
-  if (intent === "training") {
-    return (
-      <TrackedCta label={buttonLabel} intent="training" variant="metal" tone="light" className={CTA_BUTTON_CLASS} />
-    );
-  }
-
-  return (
-    <BrandButton href={href} variant="metal" tone="light" className={CTA_BUTTON_CLASS}>
-      {content}
-    </BrandButton>
-  );
-}
-
 export default function ClosingCta({
-  heading = "Change how your team uses AI at work.",
-  sub = "Bring tasks that take too long and we will tell you if AI is the answer.",
-  buttonLabel = "See how we work",
-  intent = "identify",
-  href = "/services",
+  heading = "Let's change the way your team works in the AI era",
+  sub = null,
 }: {
   heading?: ReactNode;
   sub?: ReactNode;
-  buttonLabel?: string;
-  intent?: BookingIntent;
-  href?: string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  // The WebGL shader is decoration: only wide screens with a mouse and a
+  // capable device get it, and only once the card is about to be seen.
   const [isDesktop, setIsDesktop] = useState(false);
+  const [nearView, setNearView] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 768px)");
-    const update = () => setIsDesktop(media.matches);
+    const media = window.matchMedia("(min-width: 1024px) and (hover: hover)");
+    const update = () => setIsDesktop(media.matches && !isLowPerfDevice());
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el || !isDesktop) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setOnScreen(entry.isIntersecting);
+        if (entry.isIntersecting) setNearView(true);
+      },
+      { rootMargin: "600px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isDesktop]);
 
   return (
     <section
@@ -67,6 +55,7 @@ export default function ClosingCta({
       style={{ padding: "var(--section-py) var(--section-px)" }}
     >
       <div
+        ref={cardRef}
         className="relative z-10 mx-auto w-full max-w-7xl overflow-hidden rounded-md border border-emerald/15"
         onMouseEnter={() => isDesktop && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -74,11 +63,11 @@ export default function ClosingCta({
         <div className="relative flex min-h-[450px] flex-col items-center justify-center overflow-hidden bg-[var(--surface-dark-2)] shadow-sm duration-500 md:min-h-[450px]">
           <CanvasRevealEffect
             colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
-            containerClassName="pointer-events-none absolute inset-0 !bg-transparent opacity-45 [mask-image:radial-gradient(ellipse_at_center,black_8%,transparent_74%)] md:hidden"
+            containerClassName="pointer-events-none absolute inset-0 !bg-transparent opacity-45 [mask-image:radial-gradient(ellipse_at_center,black_8%,transparent_74%)] [@media(min-width:1024px)_and_(hover:hover)]:hidden"
             dotSize={2}
             showGradient={false}
           />
-          {isDesktop ? (
+          {isDesktop && nearView ? (
             <Suspense fallback={<div className="pointer-events-none absolute inset-0 bg-white/[0.03]" />}>
               <div className="pointer-events-none absolute inset-0 z-0 opacity-40 mix-blend-screen">
                 <Dithering
@@ -86,7 +75,7 @@ export default function ClosingCta({
                   colorFront="#00DF82"
                   shape="warp"
                   type="4x4"
-                  speed={isHovered ? 0.6 : 0.2}
+                  speed={!onScreen ? 0 : isHovered ? 0.6 : 0.2}
                   className="size-full"
                   minPixelRatio={1}
                 />
@@ -106,7 +95,7 @@ export default function ClosingCta({
               </p>
             ) : null}
 
-            <CtaButton intent={intent} href={href} buttonLabel={buttonLabel} />
+            <ContactCta variant="metal" tone="light" className={CTA_BUTTON_CLASS} />
           </div>
         </div>
       </div>

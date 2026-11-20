@@ -1,18 +1,35 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import Nav from "@/components/site/Nav";
 import PreFooter from "@/components/site/PreFooter";
 import Footer from "@/components/site/Footer";
-import { OG_IMAGE } from "@/lib/seo";
+import { OG_IMAGE as DEFAULT_OG_IMAGE, ogImage } from "@/lib/seo";
 import MarketingAnalytics from "@/components/marketing/MarketingAnalytics";
 import ScrollToTop from "@/components/site/ScrollToTop";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 
 const SITE_URL = "https://elystai.com";
+const OG_IMAGE = ogImage("home", DEFAULT_OG_IMAGE);
 const SITE_TITLE = "Elyst AI";
 const SITE_DESCRIPTION =
-  "Elyst AI finds one costly workflow, builds the smallest useful AI system, and hands it over with training, documentation, and clear human review.";
+  "Elyst AI finds the work AI can do in your business, builds the AI system, and trains your team to use it. For growing businesses across India and the GCC.";
+
+const dmSans = localFont({
+  src: [{ path: "../../public/fonts/dm-sans/DM-Sans-Latin.woff2", weight: "400 700", style: "normal" }],
+  variable: "--nf-dm-sans",
+  display: "swap",
+});
+
+const manrope = localFont({
+  src: [
+    { path: "../../public/fonts/manrope/Manrope-SemiBold.woff2", weight: "600", style: "normal" },
+    { path: "../../public/fonts/manrope/Manrope-Bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--nf-manrope",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,13 +73,15 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+export const viewport: Viewport = { themeColor: "#03624c" };
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${dmSans.variable} ${manrope.variable}`}>
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <a

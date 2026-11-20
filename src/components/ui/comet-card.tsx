@@ -1,74 +1,49 @@
 "use client";
 
 import React, { useRef } from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsTouch } from "@/lib/use-touch";
 
+/**
+ * A card that tilts toward the pointer and shows a glare. Pointer movement
+ * only writes four CSS variables; the tilt, lift and glare are CSS. Touch
+ * devices get a plain card.
+ */
 export const CometCard = ({
-  rotateDepth = 17.5,
-  translateDepth = 20,
   className,
   children,
 }: {
-  rotateDepth?: number;
-  translateDepth?: number;
   className?: string;
   children: React.ReactNode;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(
-    mouseYSpring,
-    [-0.5, 0.5],
-    [`-${rotateDepth}deg`, `${rotateDepth}deg`],
-  );
-  const rotateY = useTransform(
-    mouseXSpring,
-    [-0.5, 0.5],
-    [`${rotateDepth}deg`, `-${rotateDepth}deg`],
-  );
-
-  const translateX = useTransform(
-    mouseXSpring,
-    [-0.5, 0.5],
-    [`-${translateDepth}px`, `${translateDepth}px`],
-  );
-  const translateY = useTransform(
-    mouseYSpring,
-    [-0.5, 0.5],
-    [`${translateDepth}px`, `-${translateDepth}px`],
-  );
-
-  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], [0, 100]);
-  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], [0, 100]);
-  const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%)`;
-
+  const frame = useRef(0);
   const isTouch = useIsTouch();
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-
-    const rect = ref.current.getBoundingClientRect();
-    x.set((event.clientX - rect.left) / rect.width - 0.5);
-    y.set((event.clientY - rect.top) / rect.height - 0.5);
+  const set = (x: number, y: number) => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.setProperty("--mx", String(x));
+    el.style.setProperty("--my", String(y));
+    el.style.setProperty("--gx", `${(x + 0.5) * 100}%`);
+    el.style.setProperty("--gy", `${(y + 0.5) * 100}%`);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+  const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el || frame.current) return;
+    const { clientX, clientY } = event;
+    frame.current = requestAnimationFrame(() => {
+      frame.current = 0;
+      const rect = el.getBoundingClientRect();
+      set((clientX - rect.left) / rect.width - 0.5, (clientY - rect.top) / rect.height - 0.5);
+    });
+  };
+
+  const onLeave = () => {
+    if (frame.current) cancelAnimationFrame(frame.current);
+    frame.current = 0;
+    set(0, 0);
   };
 
   if (isTouch) {
@@ -81,36 +56,10 @@ export const CometCard = ({
 
   return (
     <div className={cn("perspective-distant transform-3d", className)}>
-      <motion.div
-        ref={ref}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          translateX,
-          translateY,
-          boxShadow:
-            "rgba(0, 0, 0, 0.01) 0px 520px 146px 0px, rgba(0, 0, 0, 0.04) 0px 333px 133px 0px, rgba(0, 0, 0, 0.26) 0px 83px 83px 0px, rgba(0, 0, 0, 0.29) 0px 21px 46px 0px",
-        }}
-        initial={{ scale: 1, z: 0 }}
-        whileHover={{
-          scale: 1.05,
-          z: 50,
-          transition: { duration: 0.2 },
-        }}
-        className="relative rounded-2xl"
-      >
+      <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} className="comet-card relative rounded-2xl">
         {children}
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-50 h-full w-full rounded-[16px] mix-blend-overlay"
-          style={{
-            background: glareBackground,
-            opacity: 0.6,
-          }}
-          transition={{ duration: 0.2 }}
-        />
-      </motion.div>
+        <div aria-hidden className="comet-card__glare pointer-events-none absolute inset-0 z-50 h-full w-full rounded-[16px] mix-blend-overlay" />
+      </div>
     </div>
   );
 };
