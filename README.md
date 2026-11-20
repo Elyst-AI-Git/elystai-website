@@ -1,14 +1,14 @@
 # Elyst AI website
 
-Marketing site for Elyst AI's workflow identification, implementation, custom AI development, and team training services.
+Marketing site for Elyst AI. Elyst AI finds the work AI can do for a business, builds the AI system, and trains the team to use it. Two services: AI Transformation and AI Kickstart.
 
 ## Stack
 
-- Next.js 16, React 19, and TypeScript
+- Next.js 16 (App Router), React 19, TypeScript
 - Tailwind CSS v4
-- Self-hosted DM Sans and Manrope fonts
+- Self-hosted DM Sans and Manrope (WOFF2, loaded with `next/font/local`)
 - Vercel Analytics
-- Framer Motion only for the homepage and training scroll sequences
+- No animation library: motion is CSS plus small React hooks
 
 ## Local development
 
@@ -17,7 +17,7 @@ npm install
 npm run dev
 ```
 
-The preview runs at [http://localhost:3000](http://localhost:3000).
+The preview runs at [http://localhost:3000](http://localhost:3000). Use Node 22.
 
 ## Checks
 
@@ -25,39 +25,41 @@ The preview runs at [http://localhost:3000](http://localhost:3000).
 | --- | --- |
 | `npm run lint` | Lint source and tests |
 | `npm run typecheck` | Regenerate route types and run TypeScript |
-| `npm test` | Run booking and redirect regression tests |
-| `npm run build` | Create the production build with webpack |
+| `npm test` | SEO, redirect and content regression tests |
+| `npm run build` | Production build with webpack |
 | `npm run check` | Run every check above |
 
-## Current routes
+## Routes
 
 | Path | Purpose | Indexing |
 | --- | --- | --- |
 | `/` | Company overview | Index |
-| `/services` | Identify, build, and handover | Index |
-| `/training` | Team training and program history | Index |
+| `/transformation` | AI Transformation | Index |
+| `/kickstart` | AI Kickstart (AI training) | Index |
+| `/work` and `/work/[slug]` | Case studies | Index |
 | `/about` | Company and founders | Index |
-| `/book/identify` | Identify scheduler | Noindex |
-| `/book/training` | Training scheduler | Noindex |
-| `/booking-complete` | Booking confirmation | Noindex |
-| `/privacy` | Privacy policy | Noindex |
-| `/terms` | Website terms | Noindex |
-| `/robots.txt` | Crawler rules | N/A |
-| `/sitemap.xml` | Four canonical commercial pages | N/A |
+| `/contact` | Contact form | Index |
+| `/privacy`, `/terms` | Legal | Noindex |
 
-Retired routes, including `/circle` and `/register`, redirect directly to their current destination in `next.config.ts`.
+Old routes redirect in `next.config.ts`.
 
-## Booking configuration
+## Forms and email
 
-The known live Cal.com event is retained as a local fallback. Production should set two dedicated events so service and training conversions remain separate:
+The contact form emails each enquiry to the team through [Resend](https://resend.com) with one `fetch` call (`src/lib/deliver.ts`). Set these environment variables (see `.env.example`):
 
-```bash
-NEXT_PUBLIC_CAL_IDENTIFY_URL=https://cal.com/elyst-ai/your-identify-event
-NEXT_PUBLIC_CAL_TRAINING_URL=https://cal.com/elyst-ai/your-training-event
-```
+| Variable | Purpose |
+| --- | --- |
+| `EMAIL_API_KEY` | Resend API key |
+| `LEADS_FROM` | Sender on a domain verified in Resend (SPF and DKIM), for example `Elyst AI <hello@elystai.com>` |
+| `LEADS_TO` | Where enquiries go. Defaults to `info@elystai.com` |
 
-Configure each Cal event's success redirect to `/booking-complete?intent=identify` or `/booking-complete?intent=training`. No other environment variables are required.
+Until `EMAIL_API_KEY` and `LEADS_FROM` are both set, the form does not accept input: the first keystroke opens a notice with the phone number and email. Set the variables, redeploy, and the form goes live. Submitted values are never logged.
 
-## Deployment
+Also set a rate limit for `POST /api/*` in the Vercel Firewall (for example 5 per minute per IP).
 
-Vercel runs the same `npm run build` command. Metadata, schema, robots, and sitemap logic live under `src/app`, `src/lib/seo.ts`, and `src/lib/schema.ts`.
+## Content
+
+- Page copy lives in `src/lib/site-content.ts`, `src/lib/training-content.ts` and `src/lib/work-content.ts`.
+- Case studies are added in `work-content.ts`. Add the slug to `src/app/sitemap.ts` and `public/llms.txt`; a test checks both.
+- The guide PDF is `public/downloads/elyst-ai-transformation-guide.pdf`; the "Get the guide" buttons download it directly (no page, no form).
+- Share previews (WhatsApp, LinkedIn): drop a 1200 x 630 image in `public/images/og/` (`.jpg` or `.png`) named `home`, `transformation`, `kickstart`, `about`, `works` or `contact`. It is used automatically; otherwise a generated card is shown. Keep each under 300 KB, or WhatsApp skips the preview.
