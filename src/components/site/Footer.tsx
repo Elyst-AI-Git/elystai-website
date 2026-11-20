@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { SVGProps } from "react";
 import Wordmark from "@/components/site/Wordmark";
 import FooterStarfield from "@/components/site/FooterStarfield";
+import { CONTACT } from "@/lib/site-content";
+import { WORK_CASES } from "@/lib/work-content";
 
 function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -30,13 +32,14 @@ function WhatsappIcon(props: SVGProps<SVGSVGElement>) {
 const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/elystai/", Icon: LinkedinIcon },
   { label: "Instagram", href: "https://www.instagram.com/elyst.ai/", Icon: InstagramIcon },
-  { label: "WhatsApp community", href: "https://wa.me/919633288931", Icon: WhatsappIcon },
+  { label: "WhatsApp", href: "https://wa.me/919633288931", Icon: WhatsappIcon },
 ];
 
 const footerNav = [
+  { label: "AI Transformation", href: "/transformation" },
+  { label: "AI Kickstart", href: "/kickstart" },
+  { label: "Works", href: "/work" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Corporate AI training", href: "/training" },
 ];
 
 export default function Footer() {
@@ -67,20 +70,22 @@ export default function Footer() {
                   title="Elyst AI"
                 />
                 <address className="not-italic text-small leading-relaxed text-fg-muted-dark">
-                  Kozhikode, Kerala, India
+                  Kozhikode, Kerala
+                  <br />
+                  Working across India and the GCC
                   <br />
                   <a
-                    href="mailto:info@elystai.com"
-                    className="transition-colors hover:text-green"
+                    href={`mailto:${CONTACT.email}`}
+                    className="mt-3 inline-flex min-h-8 items-center transition-colors hover:text-green"
                   >
-                    info@elystai.com
+                    {CONTACT.email}
                   </a>
                   <br />
                   <a
-                    href="tel:+919633288931"
-                    className="font-semibold text-green transition-colors hover:text-fg-on-dark"
+                    href={CONTACT.phoneHref}
+                    className="inline-flex min-h-8 items-center font-semibold text-green transition-colors hover:text-fg-on-dark"
                   >
-                    +91 96332 88931
+                    {CONTACT.phone}
                   </a>
                 </address>
               </div>
@@ -88,7 +93,7 @@ export default function Footer() {
               {/* On mobile these two sit side by side (Explore left, Follow us
                   right); on desktop the wrapper dissolves (sm:contents) so the
                   3-up justify-between row is preserved. */}
-              <div className="flex justify-between gap-8 sm:contents">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:contents">
                 {/* Middle — the current site links */}
                 <nav aria-label="Footer">
                   <h2 className="eyebrow mb-4 text-fg-muted-dark">Explore</h2>
@@ -97,7 +102,7 @@ export default function Footer() {
                       <li key={link.label}>
                         <Link
                           href={link.href}
-                          className="inline-flex items-center py-1 text-small text-fg-on-dark/80 transition-colors hover:text-green"
+                          className="inline-flex items-center py-1.5 text-small text-fg-on-dark/80 transition-colors hover:text-green"
                         >
                           {link.label}
                         </Link>
@@ -106,10 +111,27 @@ export default function Footer() {
                   </ul>
                 </nav>
 
+                {/* Case studies: its own column, to the right of Explore */}
+                <nav aria-label="Case studies">
+                  <h2 className="eyebrow mb-4 text-fg-muted-dark">Case studies</h2>
+                  <ul className="flex flex-col gap-1.5">
+                    {WORK_CASES.map((item) => (
+                      <li key={item.slug}>
+                        <Link
+                          href={`/work/${item.slug}`}
+                          className="inline-flex items-center py-1.5 text-small text-fg-on-dark/80 transition-colors hover:text-green"
+                        >
+                          {item.cardName}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+
                 {/* Right — follow us (right-aligned on mobile) */}
-                <div className="text-right sm:text-left">
+                <div className="col-span-2 text-left sm:col-span-1">
                   <h2 className="eyebrow mb-4 text-fg-muted-dark">Follow us</h2>
-                  <div className="flex justify-end gap-3 sm:justify-start">
+                  <div className="flex justify-start gap-3">
                     {socials.map(({ label, href, Icon }) => (
                       <a
                         key={label}
@@ -147,8 +169,8 @@ export default function Footer() {
           <div className="relative z-10 mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 pb-6 text-small text-fg-muted-dark">
             <p>© 2026 Elyst AI · All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <Link className="transition-colors hover:text-green" href="/privacy">Privacy</Link>
-              <Link className="transition-colors hover:text-green" href="/terms">Terms</Link>
+              <Link className="inline-flex min-h-8 items-center transition-colors hover:text-green" href="/privacy">Privacy</Link>
+              <Link className="inline-flex min-h-8 items-center transition-colors hover:text-green" href="/terms">Terms</Link>
             </div>
           </div>
         </div>

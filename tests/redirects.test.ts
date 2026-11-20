@@ -3,7 +3,7 @@ import test from "node:test";
 
 import nextConfig from "../next.config.ts";
 
-test("retired routes redirect directly to their current destination", async () => {
+test("old routes redirect directly to their current destination", async () => {
   assert.ok(nextConfig.redirects);
   const redirects = await nextConfig.redirects();
   const destinations = new Map(
@@ -13,26 +13,31 @@ test("retired routes redirect directly to their current destination", async () =
     ]),
   );
 
-  for (const source of ["/aios"]) {
-    assert.deepEqual(destinations.get(source), {
-      destination: "/services",
-      permanent: true,
-    });
-  }
+  const expected: Record<string, string> = {
+    "/services": "/transformation",
+    "/training": "/kickstart",
+    "/aios": "/transformation",
+    "/guide": "/transformation",
+    "/guide/thank-you": "/transformation",
+    "/training/arvind-fashions": "/work/arvind-fashions-ai-training",
+    "/training/autobahn-group": "/work/autobahn-ai-training-for-hr",
+    "/work/arvind-fashions": "/work/arvind-fashions-ai-training",
+    "/work/autobahn-mahindra": "/work/autobahn-ai-training-for-hr",
+    "/work/nalakath-holdings": "/work/nalakath-holdings-ai-content-system",
+    "/work/kalyan-tourism-travel": "/work/kalyan-ai-onboarding-system",
+    "/learn": "/kickstart",
+    "/ai-for-work": "/kickstart",
+    "/juniors": "/kickstart",
+    "/waitlist": "/kickstart",
+    "/circle": "/kickstart",
+    "/register": "/kickstart",
+    "/register/onboarding": "/kickstart",
+    "/register/confirmation": "/kickstart",
+    "/book/:intent": "/contact",
+    "/booking-complete": "/contact",
+  };
 
-  for (const source of [
-    "/learn",
-    "/ai-for-work",
-    "/juniors",
-    "/waitlist",
-    "/circle",
-    "/register",
-    "/register/onboarding",
-    "/register/confirmation",
-  ]) {
-    assert.deepEqual(destinations.get(source), {
-      destination: "/training",
-      permanent: true,
-    });
+  for (const [source, destination] of Object.entries(expected)) {
+    assert.deepEqual(destinations.get(source), { destination, permanent: true });
   }
 });

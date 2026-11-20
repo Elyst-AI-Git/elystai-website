@@ -1,8 +1,23 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://elystai.com";
-// Sitewide social preview. A page can override it through pageMeta().
-export const OG_IMAGE = "/images/og/site.png";
+// Sitewide social preview: generated from src/app/opengraph-image.tsx.
+export const OG_IMAGE = "/opengraph-image";
+
+/**
+ * Social preview for a page. If a designed image is in
+ * public/images/og/<name>.jpg (or .png) it is used; otherwise the generated one is.
+ * (WhatsApp skips previews over about 300 KB, so keep those files small.)
+ */
+export function ogImage(name: string, generated: string): string {
+  for (const ext of ["jpg", "png"]) {
+    const file = `/images/og/${name}.${ext}`;
+    if (existsSync(path.join(process.cwd(), "public", file))) return file;
+  }
+  return generated;
+}
 
 /**
  * Builds per-page metadata with a self-canonical, page-specific Open Graph +

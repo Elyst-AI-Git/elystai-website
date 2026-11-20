@@ -51,7 +51,7 @@ export default function NotFound() {
         <BrandButton href="/" variant="metal" tone="emerald">
           Go to Home
         </BrandButton>
-        <BrandButton href="/services" variant="outline" tone="emerald">
+        <BrandButton href="/transformation" variant="outline" tone="emerald">
           Explore Services
         </BrandButton>
       </div>

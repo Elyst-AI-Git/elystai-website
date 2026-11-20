@@ -18,7 +18,6 @@ const contentSecurityPolicy = [
   "font-src 'self' data:",
   "img-src 'self' data: blob:",
   "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
-  "frame-src 'self' https://cal.com",
   "worker-src 'self' blob:",
   "upgrade-insecure-requests",
 ].join("; ");
@@ -53,55 +52,50 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: securityHeaders,
       },
+      // The guide is for people who asked for it: keep the PDF out of search results.
+      {
+        source: "/downloads/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
     ];
   },
   async redirects() {
+    const permanent = (source: string, destination: string) => ({
+      source,
+      destination,
+      permanent: true,
+    });
+
     return [
-      {
-        source: "/aios",
-        destination: "/services",
-        permanent: true,
-      },
-      {
-        source: "/learn",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/ai-for-work",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/juniors",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/waitlist",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/circle",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/register",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/register/onboarding",
-        destination: "/training",
-        permanent: true,
-      },
-      {
-        source: "/register/confirmation",
-        destination: "/training",
-        permanent: true,
-      },
+      // Renamed service pages: old links and rankings carry over.
+      permanent("/services", "/transformation"),
+      permanent("/training", "/kickstart"),
+      permanent("/training/arvind-fashions", "/work/arvind-fashions-ai-training"),
+      permanent("/training/autobahn-group", "/work/autobahn-ai-training-for-hr"),
+
+      // Case study pages moved to keyword slugs.
+      permanent("/work/arvind-fashions", "/work/arvind-fashions-ai-training"),
+      permanent("/work/autobahn-mahindra", "/work/autobahn-ai-training-for-hr"),
+      permanent("/work/nalakath-holdings", "/work/nalakath-holdings-ai-content-system"),
+      permanent("/work/kalyan-tourism-travel", "/work/kalyan-ai-onboarding-system"),
+      permanent("/work/hal-management-academy", "/work"),
+
+      // Retired routes.
+      permanent("/guide", "/transformation"),
+      permanent("/guide/thank-you", "/transformation"),
+      permanent("/aios", "/transformation"),
+      permanent("/learn", "/kickstart"),
+      permanent("/ai-for-work", "/kickstart"),
+      permanent("/juniors", "/kickstart"),
+      permanent("/waitlist", "/kickstart"),
+      permanent("/circle", "/kickstart"),
+      permanent("/register", "/kickstart"),
+      permanent("/register/onboarding", "/kickstart"),
+      permanent("/register/confirmation", "/kickstart"),
+
+      // Booking is replaced by the contact form.
+      permanent("/book/:intent", "/contact"),
+      permanent("/booking-complete", "/contact"),
     ];
   },
 };

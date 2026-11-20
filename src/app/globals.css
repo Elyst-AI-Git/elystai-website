@@ -1,43 +1,8 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* DM Sans — self-hosted to keep builds and page loads independent of Google Fonts. */
-@font-face {
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url('/fonts/dm-sans/DM-Sans-Latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url('/fonts/dm-sans/DM-Sans-Latin-Ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* Manrope — self-hosted from public/fonts/manrope/ */
-@font-face {
-  font-family: 'Manrope';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/manrope/Manrope-Bold.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Manrope';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/manrope/Manrope-SemiBold.ttf') format('truetype');
-}
+/* Fonts are loaded with next/font/local in src/app/layout.tsx (preloaded, with a size-matched fallback). */
 
 /*
   Elyst AI — brand tokens wired from DESIGN.md (the locked constitution).
@@ -87,8 +52,8 @@
   --color-surface-dark-hover: var(--surface-dark-hover);
 
   /* fonts */
-  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-  --font-display: 'Manrope', system-ui, sans-serif;
+  --font-sans: var(--nf-dm-sans), system-ui, sans-serif;
+  --font-display: var(--nf-manrope), system-ui, sans-serif;
 
   /* type scale (utilities: text-hero, text-h1, …) */
   --text-hero: clamp(2.8rem, 6vw, 5.5rem);
@@ -138,7 +103,7 @@
   --elyst-green-mid: #2ec866;
   --elyst-red-muted: hsl(4 42% 48%);
   --elyst-ink: #060d09;
-  --font-dm-sans: 'DM Sans';
+  --font-dm-sans: var(--nf-dm-sans);
 
   /* Surfaces — light is default */
   --bg: hsl(140 18% 97%);
@@ -290,11 +255,17 @@
     font-weight: 800;
     display: inline-block;
     line-height: 1.16;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
+    padding: 0 0.1em 0.08em;
+    margin: 0 -0.1em -0.08em;
     vertical-align: baseline;
     animation: wordmark-shift 5s ease-in-out infinite;
     filter: drop-shadow(0 2px 10px rgba(0, 223, 130, 0.28));
+  }
+
+  /* Same accent on dark hero sections, in the neon green of the "Get in touch" button. */
+  .hero-accent-word-neon {
+    background-image: linear-gradient(100deg, var(--elyst-green) 0%, #6dffbf 50%, var(--elyst-green) 100%);
+    filter: drop-shadow(0 2px 14px rgba(0, 223, 130, 0.35));
   }
 
   .hero-accent-word-red {
@@ -322,6 +293,8 @@
 
   .text-gradient-scroll {
     color: var(--elyst-emerald);
+    /* Even line lengths, so a lone last word never sits on its own line. */
+    text-wrap: balance;
   }
 
   .text-gradient-scroll--enhanced {
@@ -334,6 +307,12 @@
 
   .text-gradient-scroll__active {
     color: var(--elyst-emerald);
+  }
+
+  /* The highlighted copy is drawn from a data attribute so the page text
+     exists once in the DOM (search engines and screen readers read one copy). */
+  .text-gradient-scroll__active::before {
+    content: attr(data-char);
   }
 
   .problem-sequence-gradient {
@@ -474,6 +453,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-accent-word,
+    .hero-accent-word-neon,
     .hero-accent-word-red {
       animation: none;
     }
@@ -513,6 +493,7 @@
      nobody can interact with — render the accent as flat solid emerald. */
   @media (hover: none) {
     .hero-accent-word,
+    .hero-accent-word-neon,
     .hero-accent-word-red {
       animation: none;
       background: none;
@@ -523,7 +504,13 @@
       filter: none;
     }
 
-    .hero-accent-word-red {
+    /* Same accent on dark hero sections, in the neon green of the "Get in touch" button. */
+  .hero-accent-word-neon {
+    background-image: linear-gradient(100deg, var(--elyst-green) 0%, #6dffbf 50%, var(--elyst-green) 100%);
+    filter: drop-shadow(0 2px 14px rgba(0, 223, 130, 0.35));
+  }
+
+  .hero-accent-word-red {
       -webkit-text-fill-color: var(--elyst-red-muted);
       color: var(--elyst-red-muted);
     }
@@ -539,4 +526,240 @@
     }
   }
 
+}
+
+/* ---- Workday visual (home hero, AI Transformation) ---------------------- */
+.wd-cell {
+  position: relative;
+  height: 3.25rem;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.wd-cell__off,
+.wd-cell__on {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+}
+.wd-cell__off {
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--fg-3) 22%, var(--bg)) 0 5px,
+    color-mix(in srgb, var(--fg-3) 10%, var(--bg)) 5px 10px
+  );
+}
+.wd-cell__on {
+  background: var(--elyst-emerald);
+  opacity: 0;
+}
+.wd-cell--matters {
+  background: color-mix(in srgb, var(--elyst-emerald) 12%, var(--surface-card));
+  border: 1px solid color-mix(in srgb, var(--elyst-emerald) 22%, transparent);
+}
+.wd-card {
+  border: 2px solid color-mix(in srgb, var(--fg-3) 30%, var(--bg));
+  background: var(--surface-card);
+  color: var(--fg-3);
+  transition: none;
+}
+.wd-card__tag {
+  color: var(--fg-3);
+}
+.wd-anim-cell .wd-cell__on {
+  animation: wd-on 10s ease-in-out infinite;
+  animation-delay: var(--wd-delay, 0s);
+}
+.wd-anim-cell .wd-cell__off {
+  animation: wd-off 10s ease-in-out infinite;
+  animation-delay: var(--wd-delay, 0s);
+}
+.wd-anim-card {
+  animation: wd-card 10s ease-in-out infinite;
+  animation-delay: var(--wd-delay, 0s);
+}
+.wd-anim-caption {
+  opacity: 0;
+  animation: wd-caption 10s ease-in-out infinite;
+  animation-delay: 3.4s;
+}
+@keyframes wd-on {
+  0% { opacity: 0; }
+  8%, 86% { opacity: 1; }
+  94%, 100% { opacity: 0; }
+}
+@keyframes wd-off {
+  0% { opacity: 1; }
+  8%, 86% { opacity: 0; }
+  94%, 100% { opacity: 1; }
+}
+@keyframes wd-card {
+  0% {
+    border-color: color-mix(in srgb, var(--fg-3) 30%, var(--bg));
+    color: var(--fg-3);
+    transform: translateY(0);
+  }
+  6%, 86% {
+    border-color: var(--elyst-green);
+    color: var(--fg);
+    transform: translateY(-4px);
+  }
+  94%, 100% {
+    border-color: color-mix(in srgb, var(--fg-3) 30%, var(--bg));
+    color: var(--fg-3);
+    transform: translateY(0);
+  }
+}
+@keyframes wd-caption {
+  0% { opacity: 0; transform: translateY(4px); }
+  8%, 56% { opacity: 1; transform: translateY(0); }
+  66%, 100% { opacity: 0; transform: translateY(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wd-anim-cell .wd-cell__on,
+  .wd-anim-card,
+  .wd-anim-caption {
+    animation: none;
+  }
+  .wd-anim-cell .wd-cell__off {
+    animation: none;
+    opacity: 0;
+  }
+  .wd-anim-cell .wd-cell__on {
+    opacity: 1;
+  }
+  .wd-anim-card {
+    border-color: var(--elyst-green);
+    color: var(--fg);
+  }
+  .wd-anim-caption {
+    opacity: 1;
+  }
+}
+
+/* ---- Home: six-step line ------------------------------------------------- */
+.step-dot {
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-dot {
+    transition: none;
+  }
+}
+
+/* Meter supercharge */
+.gauge--charged .gauge-arc { filter: drop-shadow(0 0 8px rgba(0, 223, 130, 0.85)) drop-shadow(0 0 22px rgba(0, 223, 130, 0.5)); }
+.gauge--charged::before {
+  content: "";
+  position: absolute;
+  inset: 8% -10% -6%;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 70%, rgba(0, 223, 130, 0.22), transparent 65%);
+  animation: gauge-glow 2.2s ease-in-out infinite;
+}
+.gauge-burst rect { transform-box: fill-box; transform-origin: center; animation: gauge-burst 1.4s ease-out infinite; }
+@keyframes gauge-burst {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
+}
+@keyframes gauge-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .gauge-burst rect, .gauge--charged::before { animation: none; }
+  .gauge-burst rect { opacity: 0.8; }
+}
+
+/* Meter supercharge */
+.gauge--charged .gauge-arc { filter: drop-shadow(0 0 8px rgba(0, 223, 130, 0.85)) drop-shadow(0 0 22px rgba(0, 223, 130, 0.5)); }
+.gauge--charged::before {
+  content: "";
+  position: absolute;
+  inset: 8% -10% -6%;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 70%, rgba(0, 223, 130, 0.22), transparent 65%);
+  animation: gauge-glow 2.2s ease-in-out infinite;
+}
+.gauge-burst rect { transform-box: fill-box; transform-origin: center; animation: gauge-burst 1.4s ease-out infinite; }
+@keyframes gauge-burst {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
+}
+@keyframes gauge-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .gauge-burst rect, .gauge--charged::before { animation: none; }
+  .gauge-burst rect { opacity: 0.8; }
+}
+
+/* Problem card pictures */
+.pc-fade { animation: pc-fade 3.2s ease-in-out infinite; }
+.pc-blink { animation: pc-blink 4s ease-in-out infinite; }
+.pc-sweep { animation: pc-sweep 3.6s ease-in-out infinite; }
+.pc-fill { transform-box: fill-box; transform-origin: left center; animation: pc-fill 5s ease-in-out infinite; }
+@keyframes pc-fade { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.35; } }
+@keyframes pc-blink { 0%, 55%, 100% { opacity: 1; } 75% { opacity: 0.15; } }
+@keyframes pc-sweep { 0%, 100% { opacity: 1; } 40% { opacity: 0.45; } }
+@keyframes pc-fill { 0% { transform: scaleX(0.05); } 85%, 100% { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .pc-fade, .pc-blink, .pc-sweep, .pc-fill { animation: none; }
+}
+
+/* Six steps: the line fills with --p; each dot pulses once when reached. */
+.six-line { transform-origin: left center; transform: scaleX(var(--p, 0)); }
+@media (max-width: 1023px) { .six-line { transform-origin: center top; transform: scaleY(var(--p, 0)); } }
+.six-done i { position: absolute; left: 50%; top: 50%; display: block; }
+.six-ring { width: 100%; height: 100%; margin: -50% 0 0 -50%; border-radius: 9999px; border: 2px solid #00df82; animation: six-ring 2s ease-out infinite; will-change: transform, opacity; }
+.six-px { width: 6px; height: 6px; margin: -3px; background: #7dffc4; border-radius: 1px; animation: six-px 1.6s ease-out infinite; will-change: transform, opacity; }
+@keyframes six-ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.1); opacity: 0; } }
+@keyframes six-px { 0% { transform: rotate(var(--a)) translateX(24px); opacity: 0; } 25% { opacity: 1; } 100% { transform: rotate(var(--a)) translateX(54px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .six-ring, .six-px { animation: none; } }
+
+.todo-progress { width: 45%; animation: todo-progress 1.8s ease-in-out infinite; }
+@keyframes todo-progress { 0% { transform: translateX(-100%); } 100% { transform: translateX(240%); } }
+@media (prefers-reduced-motion: reduce) { .todo-progress { animation: none; width: 60%; } }
+
+/* Hero visuals (transform and opacity only) */
+.hv-travel { animation: hv-travel 3.6s linear infinite; will-change: transform; }
+@keyframes hv-travel { 0% { transform: translateY(-100%); } 100% { transform: translateY(300%); } }
+.hv-lit { animation: hv-lit 6s ease-in-out infinite; will-change: opacity; }
+@keyframes hv-lit { 0%, 40%, 100% { opacity: 0; } 8%, 28% { opacity: 1; } }
+.hv-fill { transform-origin: left; animation: hv-fill 4.2s ease-in-out infinite; will-change: transform; }
+@keyframes hv-fill { 0% { transform: scaleX(0); } 30%, 85% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .hv-travel, .hv-lit, .hv-fill { animation: none; }
+  .hv-fill { transform: none; }
+  .hv-lit { opacity: 0; }
+}
+
+/* Mobile menu fade-in (replaces a JS animation library). */
+@keyframes menu-fade { from { opacity: 0; } to { opacity: 1; } }
+.menu-fade { animation: menu-fade 0.2s ease-out; }
+
+/* Typewriter caret: hard blink, same rhythm as before. */
+@keyframes caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+.typewriter-caret { animation: caret-blink 0.82s steps(1, end) infinite; }
+
+/* Pointer-tilt card (home hero). Variables are set from comet-card.tsx. */
+.comet-card {
+  --mx: 0;
+  --my: 0;
+  --gx: 50%;
+  --gy: 50%;
+  transform: translate3d(calc(var(--mx) * 40px), calc(var(--my) * -40px), 0) rotateX(calc(var(--my) * 35deg)) rotateY(calc(var(--mx) * -35deg));
+  transition: transform 0.18s ease-out;
+  box-shadow:
+    rgba(0, 0, 0, 0.01) 0px 520px 146px 0px,
+    rgba(0, 0, 0, 0.04) 0px 333px 133px 0px,
+    rgba(0, 0, 0, 0.26) 0px 83px 83px 0px,
+    rgba(0, 0, 0, 0.29) 0px 21px 46px 0px;
+}
+.comet-card:hover {
+  transform: translate3d(calc(var(--mx) * 40px), calc(var(--my) * -40px), 50px) rotateX(calc(var(--my) * 35deg)) rotateY(calc(var(--mx) * -35deg)) scale(1.05);
+}
+.comet-card__glare {
+  opacity: 0.6;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-fade, .typewriter-caret { animation: none; }
+  .comet-card, .comet-card:hover { transform: none; transition: none; }
 }

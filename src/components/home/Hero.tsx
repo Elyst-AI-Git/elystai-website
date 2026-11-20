@@ -1,13 +1,12 @@
-import Link from "next/link";
-import MarkDither from "@/components/site/MarkDither";
-import TrackedCta from "@/components/marketing/TrackedCta";
-import { BrandButton } from "@/components/ui/brand-button";
+import ContactCta from "@/components/marketing/ContactCta";
 import { CometCard } from "@/components/ui/comet-card";
+import HeroDither from "@/components/home/HeroDither";
+import { ONE_LINER } from "@/lib/site-content";
 
 export default function Hero() {
   return (
-    <section style={{ padding: "clamp(40px, 5vw, 72px) var(--section-px)" }}>
-      <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[3fr_2fr]">
+    <section className="flex lg:min-h-[calc(100svh-6rem)] lg:items-center" style={{ padding: "clamp(40px, 5vw, 72px) var(--section-px)" }}>
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[3fr_2fr]">
         <div>
           <h1
             className="text-balance text-fg"
@@ -17,61 +16,49 @@ export default function Hero() {
               letterSpacing: "var(--tracking-display)",
             }}
           >
-            Don&apos;t just use AI,<br className="hidden md:block" />{" "}
-            we <span className="hero-accent-word">change</span> how your<br className="hidden md:block" />{" "}
-            team works with it.
+            Put AI to <span className="hero-accent-word">work</span> in your business.
           </h1>
 
           <p
-            className="mt-5 max-w-md text-fg-2 md:max-w-none"
+            className="mt-5 max-w-xl text-fg-2"
             style={{
               fontSize: "calc(var(--text-body) + 2px)",
               lineHeight: 1.5,
               letterSpacing: "-0.029229255em",
             }}
           >
-            We map the work, decide what is worth changing, build the smallest useful system, and train your team to run it.
+            {ONE_LINER}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <TrackedCta label="Book a Call" intent="audit" tone="green" />
-            <span className="hidden md:inline-flex">
-              <BrandButton
-                href="/services"
-                variant="outline"
-                className="border-2! bg-white! text-emerald! hover:bg-emerald/5!"
-              >
-                <span style={{ fontSize: "calc(var(--text-small) + 2px)" }}>
-                  See how it works
-                </span>
-              </BrandButton>
-            </span>
-            <Link
-              href="/services"
-              className="inline-flex min-h-12 items-center px-1 font-semibold text-emerald underline decoration-emerald/35 underline-offset-4 hover:text-emerald-light md:hidden"
+            <ContactCta tone="green" />
+            <a
+              href="#how-it-works"
+              className="inline-flex min-h-12 items-center rounded-md border-2 border-emerald bg-white px-6 font-display font-semibold text-emerald"
+              style={{ fontSize: "var(--text-small)" }}
             >
-              See how it works →
-            </Link>
+              See how it works
+            </a>
           </div>
         </div>
 
-        <CometCard className="hidden self-stretch md:block">
+        <CometCard className="hidden self-stretch lg:block">
           <div
             className="relative overflow-hidden rounded-card"
             style={{ background: "#F5F8F6", height: "480px" }}
             aria-label="A workflow moves from messy input through a human review gate to an owned result."
           >
-            <MarkDither colorFront="#03624C" colorBack="#F5F8F6" />
+            <HeroDither variant="wide" />
           </div>
         </CometCard>
 
-        <CometCard className="md:hidden">
+        <CometCard className="lg:hidden">
           <div
-            className="relative h-[260px] overflow-hidden rounded-card"
+            className="relative h-[260px] overflow-hidden rounded-card md:h-[320px]"
             style={{ background: "#F5F8F6" }}
             aria-label="A workflow moves from messy input through a human review gate to an owned result."
           >
-            <MarkDither colorFront="#03624C" colorBack="#F5F8F6" pixelSize={4} />
+            <HeroDither variant="narrow" />
           </div>
         </CometCard>
       </div>

@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import TrackedCta from "@/components/marketing/TrackedCta";
+import ContactCta from "@/components/marketing/ContactCta";
 import Wordmark from "@/components/site/Wordmark";
 import { useIsTouch } from "@/lib/use-touch";
 
 const links = [
-  { label: "Services", href: "/services" },
-  { label: "Training", href: "/training" },
+  { label: "AI Transformation", href: "/transformation" },
+  { label: "AI Kickstart", href: "/kickstart" },
+  { label: "Works", href: "/work" },
   { label: "About", href: "/about" },
 ];
 
@@ -33,9 +33,6 @@ export default function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isTraining = pathname === "/training";
-  const ctaLabel = isTraining ? "Plan a team session" : "Book a Call";
-  const ctaIntent = isTraining ? "training" : "audit";
 
   useEffect(() => {
     if (isTouch) return;
@@ -54,7 +51,7 @@ export default function Nav() {
 
   const closeMobile = () => setMobileOpen(false);
   const linkClass =
-    "font-medium tracking-[calc(var(--tracking-body)*1.1)] text-fg-on-dark/85 transition-colors duration-200 hover:text-green";
+    "font-medium tracking-[calc(var(--tracking-body)*1.5)] text-fg-on-dark/85 transition-colors duration-200 hover:text-green";
   const linkStyle = { fontSize: "calc(var(--text-small) + 1px)" };
   const pillStyle = isTouch
     ? {
@@ -80,7 +77,7 @@ export default function Nav() {
       <nav
         aria-label="Primary"
         className="fixed left-1/2 top-5 z-50 -translate-x-1/2"
-        style={{ width: "min(900px, calc(100vw - 48px))" }}
+        style={{ width: "min(1000px, calc(100vw - 48px))" }}
       >
         <div
           className={`relative flex h-14 items-center justify-between rounded-md px-3 ${isTouch ? "" : "transition-all duration-300"}`}
@@ -88,23 +85,21 @@ export default function Nav() {
         >
           <Logo />
 
-          <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden items-center gap-5 md:flex lg:gap-7">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={linkClass}
-                aria-current={pathname === link.href ? "page" : undefined}
+                aria-current={pathname.startsWith(link.href) ? "page" : undefined}
                 style={linkStyle}
               >
                 {link.label}
               </Link>
             ))}
-            <TrackedCta
-              label={ctaLabel}
-              intent={ctaIntent}
+            <ContactCta
               tone="light"
-              className="min-h-[40px]! px-5! text-[length:calc(var(--text-small)+1px)] tracking-[calc(var(--tracking-body)*1.1)]"
+              className="min-h-[40px]! px-5! text-[length:calc(var(--text-small)+1px)] tracking-[calc(var(--tracking-body)*1.5)]"
             />
           </div>
 
@@ -119,14 +114,9 @@ export default function Nav() {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] flex flex-col md:hidden"
+      {mobileOpen && (
+          <div
+            className="menu-fade fixed inset-0 z-[60] flex flex-col md:hidden"
             style={{ background: "var(--surface-dark)" }}
           >
             <div className="relative flex items-center justify-between px-6 py-5">
@@ -148,7 +138,7 @@ export default function Nav() {
                   href={link.href}
                   onClick={closeMobile}
                   aria-current={pathname === link.href ? "page" : undefined}
-                  className={`font-display tracking-[calc(var(--tracking-body)*1.1)] text-h3 font-semibold ${pathname === link.href ? "text-green" : "text-fg-on-dark"}`}
+                  className={`font-display tracking-[calc(var(--tracking-body)*1.5)] text-h3 font-semibold ${pathname === link.href ? "text-green" : "text-fg-on-dark"}`}
                 >
                   {link.label}
                 </Link>
@@ -156,18 +146,15 @@ export default function Nav() {
             </div>
 
             <div className="px-6 pb-10">
-              <TrackedCta
-                label={ctaLabel}
-                intent={ctaIntent}
+              <ContactCta
                 tone="green"
                 full
-                className="tracking-[calc(var(--tracking-body)*1.1)]"
+                className="tracking-[calc(var(--tracking-body)*1.5)]"
                 onClick={closeMobile}
               />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </>
   );
 }

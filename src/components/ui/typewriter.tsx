@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface TypewriterProps {
@@ -15,10 +14,6 @@ interface TypewriterProps {
   showCursor?: boolean;
   hideCursorOnType?: boolean;
   cursorChar?: string | React.ReactNode;
-  cursorAnimationVariants?: {
-    initial: Variants["initial"];
-    animate: Variants["animate"];
-  };
   cursorClassName?: string;
 }
 
@@ -34,13 +29,6 @@ export function Typewriter({
   hideCursorOnType = false,
   cursorChar = "|",
   cursorClassName = "ml-1",
-  cursorAnimationVariants = {
-    initial: { opacity: 0 },
-    animate: {
-      opacity: 1,
-      transition: { duration: 0.01, repeat: Infinity, repeatDelay: 0.4, repeatType: "reverse" },
-    },
-  },
 }: TypewriterProps) {
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -85,14 +73,12 @@ export function Typewriter({
     <span className={cn("inline whitespace-pre-wrap tracking-[-0.0146146275em]", className)}>
       <span>{displayText}</span>
       {showCursor ? (
-        <motion.span
-          variants={cursorAnimationVariants}
-          className={cn(cursorClassName, hideCursorOnType && (currentIndex < texts[currentTextIndex].length || isDeleting) ? "hidden" : "")}
-          initial="initial"
-          animate="animate"
+        <span
+          aria-hidden
+          className={cn("typewriter-caret", cursorClassName, hideCursorOnType && (currentIndex < texts[currentTextIndex].length || isDeleting) ? "hidden" : "")}
         >
           {cursorChar}
-        </motion.span>
+        </span>
       ) : null}
     </span>
   );

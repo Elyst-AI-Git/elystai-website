@@ -8,11 +8,11 @@ export function ServicesFitStrip({
   rotation,
   kind,
 }: {
-  children: string;
+  children: React.ReactNode;
   rotation: number;
-  kind: "no" | "yes";
+  kind: "no" | "yes" | "plain";
 }) {
-  const isYes = kind === "yes";
+  const isYes = kind !== "no";
   const style = {
     "--services-fit-rotation": `${rotation}deg`,
     borderColor: isYes
@@ -26,7 +26,7 @@ export function ServicesFitStrip({
 
   return (
     <div
-      className="services-fit-strip relative flex min-h-20 w-full items-center gap-4 overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card"
+      className={`services-fit-strip relative flex min-h-20 w-full items-center gap-4 ${kind === "plain" ? "justify-center text-center" : ""} overflow-hidden rounded-md border px-5 py-5 text-fg-2 shadow-card`}
       style={style}
     >
       <CanvasRevealEffect
@@ -47,12 +47,12 @@ export function ServicesFitStrip({
         colorFrom={isYes ? "var(--elyst-green)" : "var(--elyst-red-muted)"}
         colorTo={isYes ? "var(--elyst-green)" : "var(--elyst-red-muted)"}
       />
-      {isYes ? (
+      {kind === "plain" ? null : isYes ? (
         <Check className="relative z-10 size-5 shrink-0 text-emerald" strokeWidth={2.2} aria-hidden />
       ) : (
         <X className="relative z-10 size-5 shrink-0" style={{ color: "var(--elyst-red-muted)" }} strokeWidth={2.2} aria-hidden />
       )}
-      <span className="relative z-10" style={{ fontSize: "var(--text-body)", lineHeight: 1.35 }}>&ldquo;{children}&rdquo;</span>
+      <span className="relative z-10" style={{ fontSize: "var(--text-body)", lineHeight: 1.35 }}>{children}</span>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>What we collect</h2>
               <p className="mt-3">
-                When you browse this website, we receive basic technical and usage information such as pages viewed, referral source, device type, and approximate location. If you book a call, Cal.com collects the details you provide in the booking form. If you contact us directly, we receive the information contained in your message.
+                When you browse this website, we receive basic technical and usage information such as pages viewed, referral source, device type, and approximate location. If you fill in our contact form, we receive the details you provide (such as your name, company, work email, phone number and team size). If you contact us directly, we receive the information contained in your message.
               </p>
             </section>
 
@@ -40,18 +40,17 @@ export default function PrivacyPage() {
             <section>
               <h2 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>Analytics and campaign information</h2>
               <p className="mt-3">
-                The site uses Vercel Analytics. Campaign parameters from your arrival URL may be stored in your browser session and carried into the booking page so we can understand how a booking reached us. An internal-traffic marker may be stored locally when our team deliberately enables it.
+                The site uses Vercel Analytics. Campaign parameters from your arrival URL may be stored in your browser session so we can understand how an enquiry reached us. An internal-traffic marker may be stored locally when our team deliberately enables it.
               </p>
             </section>
 
             <section>
               <h2 className="font-display font-bold text-fg" style={{ fontSize: "var(--text-h3)" }}>Service providers</h2>
               <p className="mt-3">
-                The website is hosted by Vercel and booking calendars are provided by Cal.com. Their handling of information is governed by their own privacy notices. We only use providers needed to operate the website and booking flow.
+                The website is hosted by Vercel. Their handling of information is governed by their own privacy notice. We only use providers needed to operate the website and respond to enquiries.
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5">
                 <li><a className="text-emerald underline" href="https://vercel.com/legal/privacy-notice">Vercel privacy notice</a></li>
-                <li><a className="text-emerald underline" href="https://cal.com/privacy">Cal.com privacy policy</a></li>
               </ul>
             </section>
 

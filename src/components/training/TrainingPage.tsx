@@ -1,106 +1,124 @@
-import TrackedCta from "@/components/marketing/TrackedCta";
+import { KickstartPromptVisual } from "@/components/site/HeroVisuals";
+import { ArrowRight, ArrowUp, Check, ClipboardList, Loader2, PhoneCall, Wrench } from "lucide-react";
+import ContactCta from "@/components/marketing/ContactCta";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { SectionMark } from "@/components/ui/section-mark";
+import ProofBlock from "@/components/marketing/ProofBlock";
+import GuideBand from "@/components/marketing/GuideBand";
 import ClosingCta from "@/components/marketing/ClosingCta";
+import ProblemSequence from "@/components/home/ProblemSequence";
 import FaqSection from "@/components/marketing/FaqSection";
-import ProgramsHistory from "@/components/training/ProgramsHistory";
 import { FormatVisual } from "@/components/training/TrainingVisuals";
-import SessionInputs from "@/components/training/SessionInputs";
-import TrainingProcessSteps, { type TrainingStep } from "@/components/training/TrainingProcessSteps";
-import ArvindSessionSection from "@/components/training/ArvindSessionSection";
-import TrainingRoutingStrip from "@/components/home/TrainingRoutingStrip";
-import { NumbersBand, type NumberBandItem } from "@/components/home/NumbersSection";
 import { ShaderPrincipleCard, type Principle } from "@/components/home/PrinciplesGrid";
 import WhatYouGetSection from "@/components/training/WhatYouGetSection";
-import TrainingRatingStrip from "@/components/training/TrainingRatingStrip";
 import { trainingFaqs, trainingFormats } from "@/lib/training-content";
 
-const trainingSteps: TrainingStep[] = [
+const phases = [
   {
-    label: "Discover",
-    description: "We first understand the company, the participating teams and what they need from the programme.",
+    label: "Before",
+    title: "We prepare for your team",
+    body: "A call with the team to understand how work flows today.",
+    Icon: ClipboardList,
+    card: "border-emerald/20 bg-[#eef7f1] text-fg",
+    tag: "text-emerald",
+    sub: "text-fg-2",
+    bar: "bg-emerald/20",
+    fill: "bg-emerald",
+    chip: "bg-emerald/10 text-emerald",
+    step: 1,
   },
   {
-    label: "Design",
-    description: "The format and examples are tailored around the audience instead of being copied from a fixed public syllabus.",
+    label: "During",
+    title: "Hands-on, on real tasks",
+    body: "People practise on the work they do every day, not on demos.",
+    Icon: Wrench,
+    card: "border-emerald/30 text-fg",
+    tag: "text-emerald",
+    sub: "text-fg",
+    bar: "bg-emerald/25",
+    fill: "bg-emerald",
+    chip: "bg-white/50 text-emerald",
+    step: 2,
+    style: { background: "linear-gradient(160deg,#c6ead7,#7fcba6)" },
   },
   {
-    label: "Deliver",
-    description: "The session is designed for active participation and practical understanding.",
-  },
-];
-
-const trainingStats: readonly NumberBandItem[] = [
-  {
-    value: "3,000+",
-    label: "Professionals trained",
-    description: "More than 3,000 professionals trained by the Elyst AI team.",
-  },
-  {
-    value: "50+",
-    label: "Sessions delivered",
-    description: "More than 50 sessions delivered by the Elyst AI team.",
-  },
-];
-
-const investmentStats = [
-  {
-    value: "7%",
-    copy: "of AI spend goes to the workforce. 93% goes to technology.",
-    source: "Source: Deloitte, 2025",
-  },
-  {
-    value: "12%",
-    copy: "of employees say they get enough AI training to actually benefit from it.",
-    source: "Source: EY, 2025",
-  },
-  {
-    value: "88%",
-    copy: "use AI, but mostly for basic tasks like search and summarising.",
-    source: "Source: EY, 2025",
+    label: "After",
+    title: "A call with the founder",
+    body: "We walk you through the best opportunities we saw.",
+    Icon: PhoneCall,
+    card: "border-emerald/40 bg-surface-dark text-fg-on-dark",
+    tag: "text-green",
+    sub: "text-fg-muted-dark",
+    bar: "bg-white/15",
+    fill: "bg-green",
+    chip: "bg-green/15 text-green",
+    step: 3,
   },
 ] as const;
 
-function TrainingProof() {
-  return <NumbersBand heading="Training by the numbers" numbers={trainingStats} align="center" />;
-}
-
-function TrainingInvestmentSection() {
+function SearchVsTodo() {
+  const todo = ["Reply to this week's enquiries", "Prepare the weekly report", "Send the follow-ups"];
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{
-        padding: "var(--section-py) var(--section-px)",
-        background: "linear-gradient(to bottom, var(--surface-accent-soft) 0%, var(--surface-accent-soft) 76%, color-mix(in srgb, var(--surface-accent-soft) 72%, var(--bg)) 90%, var(--bg) 100%)",
-      }}
-    >
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <header className="max-w-6xl">
-          <h2 className="text-balance text-fg" style={{ fontSize: "clamp(2.8rem, 6.2vw, 6rem)", lineHeight: 0.98 }}>
-            The AI investment has <span className="hero-accent-word-red">not worked</span> for most companies.
-          </h2>
-          <p className="mt-8 max-w-6xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
-            Enterprises are spending heavily on AI technology, but outcomes remain inconsistent. Most AI initiatives stall at experimentation, with limited adoption, unclear ownership, and little measurable return.
+    <div className="grid gap-5 md:grid-cols-2" role="img" aria-label="On the left, a team asks an AI tool a single question. On the right, a to-do list where the AI has done two steps and is working on the third.">
+      <div aria-hidden className="flex min-h-[24rem] flex-col rounded-md border border-emerald/20 bg-surface-light p-6 shadow-card">
+        <p className="font-display font-bold uppercase text-fg-3" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-label)" }}>
+          Most teams ask AI a question
+        </p>
+        <div className="flex flex-1 items-center justify-end">
+          <p className="max-w-[88%] rounded-2xl rounded-br-sm bg-[#e9ece9] px-4 py-3 text-fg" style={{ fontSize: "var(--text-small)", lineHeight: 1.4 }}>
+            Write a polite follow-up email to a customer who has not replied to our quote.
           </p>
-        </header>
-
-        <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-16 lg:gap-12">
-          {investmentStats.map((stat) => (
-            <article key={stat.value}>
-              <p className="font-display font-bold text-[var(--elyst-red-muted)]" style={{ fontSize: "var(--text-stat)", lineHeight: 0.9 }}>
-                {stat.value}
-              </p>
-              <p className="mt-6 max-w-sm text-fg" style={{ fontSize: "var(--text-body)", lineHeight: 1.45 }}>
-                {stat.copy}
-              </p>
-              <p className="mt-4 font-display text-fg-3" style={{ fontSize: "var(--text-small)", lineHeight: 1.35 }}>
-                {stat.source}
-              </p>
-            </article>
-          ))}
         </div>
+        <div className="flex items-center gap-3 rounded-full border border-fg-3/30 bg-white px-5 py-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.06)]">
+          <span className="flex-1 truncate text-fg-3" style={{ fontSize: "var(--text-small)" }}>
+            Ask anything
+            <span className="ml-0.5 inline-block h-4 w-px translate-y-0.5 animate-pulse bg-fg-2 motion-reduce:animate-none" />
+          </span>
+          <span className="flex size-8 items-center justify-center rounded-full bg-fg text-white">
+            <ArrowUp className="size-4" strokeWidth={2.4} />
+          </span>
+        </div>
+        <p className="mt-4 text-fg-2" style={{ fontSize: "var(--text-small)" }}>
+          AI used like a search bar.
+        </p>
       </div>
-    </section>
+
+      <div aria-hidden className="flex min-h-[24rem] flex-col rounded-md border-2 border-emerald bg-surface-dark p-6 text-fg-on-dark shadow-card">
+        <p className="font-display font-bold uppercase text-green" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-label)" }}>
+          Teams that use an AI system
+        </p>
+        <ul className="flex flex-1 flex-col justify-center gap-4">
+          {todo.map((item, index) => {
+            const done = index < 2;
+            return (
+              <li key={item}>
+                <div className="flex items-center gap-3">
+                  <span className={`flex size-7 shrink-0 items-center justify-center rounded-md border-2 ${done ? "border-green bg-green text-[#06140e]" : "border-green/70 bg-surface-dark text-green"}`}>
+                    {done ? <Check className="size-4" strokeWidth={3} /> : <Loader2 className="size-4 animate-spin motion-reduce:animate-none" strokeWidth={2.6} />}
+                  </span>
+                  <span className={done ? "text-fg-muted-dark line-through decoration-green/50" : "font-semibold text-fg-on-dark"} style={{ fontSize: "var(--text-body)" }}>
+                    {item}
+                  </span>
+                </div>
+                {!done ? (
+                  <div className="ml-10 mt-2">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-white/15">
+                      <div className="todo-progress h-full rounded-full bg-green" />
+                    </div>
+                    <p className="mt-1 font-display font-bold uppercase text-green" style={{ fontSize: "var(--text-micro)", letterSpacing: "var(--tracking-label)" }}>
+                      AI is working on this
+                    </p>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
+        </ul>
+        <p className="mt-4 text-fg-muted-dark" style={{ fontSize: "var(--text-small)" }}>
+          AI used on the work in front of them.
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -109,33 +127,6 @@ const formatPrinciples: readonly Principle[] = trainingFormats.map((format) => (
   description: format.description,
   visual: () => <FormatVisual id={format.id} className="max-w-[16rem]" />,
 }));
-
-function TrainingFormats() {
-  return (
-    <section id="formats" className="relative overflow-hidden bg-bg" aria-labelledby="training-formats-heading" style={{ padding: "var(--section-py) var(--section-px)" }}>
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/15" />
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <header className="mx-auto max-w-4xl text-center">
-          <SectionMark>Format</SectionMark>
-          <h2 id="training-formats-heading" className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
-            Training formats
-          </h2>
-        </header>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-3 sm:mt-14">
-          {formatPrinciples.map((principle, index) => (
-            <ShaderPrincipleCard
-              key={principle.title}
-              principle={principle}
-              visualFirst
-              visualScale={index === 0 ? "w-full max-w-[19rem] scale-110 sm:max-w-none sm:scale-100" : "w-full max-w-[16rem] scale-100 sm:max-w-none sm:scale-[0.9]"}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function TrainingPage() {
   return (
@@ -148,79 +139,130 @@ export default function TrainingPage() {
         }}
       >
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-64 opacity-60 [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_78%,transparent_100%)]">
-          <CanvasRevealEffect
-            colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]}
-            containerClassName="absolute inset-0 !bg-transparent"
-            dotSize={2}
-            showGradient={false}
-          />
+          <CanvasRevealEffect colors={[[0, 223, 130], [3, 98, 76], [255, 255, 255]]} containerClassName="absolute inset-0 !bg-transparent" dotSize={2} showGradient={false} />
         </div>
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-[var(--surface-accent-soft)] opacity-25" />
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.62fr)] xl:items-center xl:gap-16">
           <div className="max-w-3xl">
-            <SectionMark tone="dark">Training</SectionMark>
+            <SectionMark tone="dark">AI Kickstart</SectionMark>
             <h1 className="training-hero-title mt-6 text-balance text-fg-on-dark" style={{ lineHeight: 1.04 }}>
-              Corporate AI training built around your team’s real work
+              AI training built on <span className="hero-accent-word hero-accent-word-neon">your</span> team’s work.
             </h1>
-            <p className="mt-7 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-body)", lineHeight: 1.6 }}>
-              Elyst AI delivers practical, in-person AI training for organisations that want their teams to use AI more effectively at work.
+            <p className="mt-7 max-w-2xl text-fg-muted-dark" style={{ fontSize: "var(--text-lead)", lineHeight: 1.5 }}>
+              One day, or two half days.
             </p>
             <div className="mt-8">
-              <TrackedCta label="Plan a team session" intent="training" tone="green" />
+              <ContactCta tone="green" />
             </div>
           </div>
-          <SessionInputs />
+          <KickstartPromptVisual />
         </div>
       </section>
 
-      <TrainingInvestmentSection />
-      <TrainingFormats />
-
-      <section className="bg-surface-dark" style={{ padding: "var(--section-py) var(--section-px)" }}>
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16">
-          <div>
-            <SectionMark tone="dark">How it works</SectionMark>
-            <h2 className="mt-6 max-w-lg text-fg-on-dark" style={{ fontSize: "var(--text-h2)" }}>
-              How we build your session.
+      <section className="bg-surface-accent-soft" aria-labelledby="not-stick-heading" style={{ padding: "var(--section-py) var(--section-px)" }}>
+        <div className="mx-auto max-w-7xl">
+          <header className="max-w-5xl">
+            <SectionMark>Why it matters</SectionMark>
+            <h2 id="not-stick-heading" className="mt-6 text-balance text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.05 }}>
+              Why most AI training does not stick.
             </h2>
+            <p className="mt-6 max-w-3xl text-fg-2" style={{ fontSize: "var(--text-lead)", lineHeight: 1.45 }}>
+              Most teams use AI like a search bar.
+            </p>
+          </header>
+          <div className="mt-12">
+            <SearchVsTodo />
           </div>
-          <TrainingProcessSteps steps={trainingSteps} />
+          {/* TODO(proof): the Deloitte and EY figures return only with a visible link to each source. */}
+        </div>
+      </section>
+
+      <ProblemSequence
+        linesOnly
+        label="Training built around how your team works"
+        lines={[
+          "Not another generic AI training.",
+          "Built around how your team works,",
+          "to get the most out of AI.",
+        ]}
+      />
+
+      <section aria-labelledby="phases-heading" className="bg-bg" style={{ padding: "var(--section-py) var(--section-px)" }}>
+        <div className="mx-auto max-w-7xl">
+          <header className="mx-auto max-w-4xl text-center">
+            <SectionMark>How it works</SectionMark>
+            <h2 id="phases-heading" className="mt-6 text-balance text-fg" style={{ fontSize: "var(--text-h2)" }}>
+              <span className="block">Prepared for your team,</span>
+              <span className="block">not borrowed from a template.</span>
+            </h2>
+          </header>
+          <ol className="mt-12 grid items-stretch gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
+            {phases.map((phase, index) => (
+              <li key={phase.label} className="contents">
+                <div
+                  className={`relative flex min-h-[22rem] flex-col overflow-hidden rounded-md border-2 p-7 shadow-card ${phase.card}`}
+                  style={"style" in phase ? phase.style : undefined}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className={`inline-flex size-12 items-center justify-center rounded-md ${phase.chip}`}>
+                      <phase.Icon aria-hidden className="size-6" strokeWidth={1.7} />
+                    </span>
+                    <span className={`font-display font-bold uppercase ${phase.tag}`} style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)" }}>
+                      {phase.label}
+                    </span>
+                  </div>
+                  <h3 className="mt-10 font-display font-semibold" style={{ fontSize: "var(--text-card)", lineHeight: 1.08 }}>
+                    {phase.title}
+                  </h3>
+                  <p className={`mt-7 ${phase.sub}`} style={{ fontSize: "var(--text-body)", lineHeight: 1.5 }}>
+                    {phase.body}
+                  </p>
+                  <div className="mt-auto flex gap-1.5 pt-8" aria-hidden>
+                    {[1, 2, 3].map((n) => (
+                      <span key={n} className={`h-1.5 flex-1 rounded-full ${n <= phase.step ? phase.fill : phase.bar}`} />
+                    ))}
+                  </div>
+                </div>
+                {index < phases.length - 1 ? (
+                  <ArrowRight aria-hidden className="hidden size-7 self-center text-emerald md:block" strokeWidth={1.8} />
+                ) : null}
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
       <WhatYouGetSection />
-      <TrainingProof />
-      <ArvindSessionSection />
-      <TrainingRatingStrip />
-      <ProgramsHistory />
 
-      <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." includeStructuredData={false} />
-      <TrainingRoutingStrip
-        heading="Ready to build around the work?"
-        body="We map the workflow, build what helps, and hand it over to your team."
-        stickerValue="3"
-        stickerLabel={
-          <>
-            stages to a
-            <br />
-            working system.
-          </>
-        }
-        href="/services"
-        linkLabel="Explore services"
-        headingId="services-routing-heading"
-      />
-      <ClosingCta
-        heading={
-          <>
-            <span className="block">Tell us what your team is stuck on.</span>
-            <span className="block">We will build the session around it.</span>
-          </>
-        }
-        sub={null}
-        buttonLabel="Plan a team session"
-        intent="training"
-      />
+      <section id="formats" className="relative overflow-hidden bg-bg" aria-labelledby="training-formats-heading" style={{ padding: "var(--section-py) var(--section-px)" }}>
+        <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[var(--section-px)] right-[var(--section-px)] border-x border-emerald/15" />
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <header className="mx-auto max-w-4xl text-center">
+            <SectionMark>Formats</SectionMark>
+            <h2 id="training-formats-heading" className="mt-6 text-fg" style={{ fontSize: "var(--text-h2)", lineHeight: 1.02 }}>
+              Choose the format that fits your team.
+            </h2>
+          </header>
+          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-3">
+            {formatPrinciples.map((principle, index) => (
+              <ShaderPrincipleCard
+                key={principle.title}
+                principle={principle}
+                visualFirst
+                visualScale={index === 0 ? "w-full max-w-[19rem] scale-110 sm:max-w-none sm:scale-100" : "w-full max-w-[16rem] scale-100 sm:max-w-none sm:scale-[0.9]"}
+              />
+            ))}
+          </div>
+          <p className="mx-auto mt-10 max-w-3xl text-center font-display font-semibold text-fg" style={{ fontSize: "var(--text-lead)", lineHeight: 1.3 }}>
+            In person in Kerala, Bengaluru and the UAE.
+          </p>
+        </div>
+      </section>
+
+      <ProofBlock headingId="kickstart-proof-heading" />
+      <FaqSection faqs={trainingFaqs} heading="Questions teams ask before they plan a session." />
+      <GuideBand />
+
+      <ClosingCta />
     </main>
   );
 }
