@@ -1,50 +1,50 @@
 # Elyst AI
 
-> Elyst AI is an AI strategy, implementation and corporate training company based in Kerala, India. It helps organisations identify valuable AI opportunities, build practical systems and prepare teams to use AI effectively.
+> Elyst AI finds the work AI can do for a business, builds the AI system, and trains the team to use it. Based in Kozhikode, Kerala. Works with businesses across India and the GCC: in person in Kerala, Bengaluru and the UAE, online elsewhere.
 
 ## Direct answers
 
-### What problem?
+### What does Elyst AI do?
 
-Elyst AI helps organisations identify valuable AI opportunities in the work their teams already do.
+We find the work AI can do for you, build it, and train your people to use it.
 
-### What does Elyst build?
+### What is an AI system?
 
-Elyst AI maps the work, decides what is worth changing, builds the smallest useful AI system and hands it over with training, documentation and clear human review.
+An AI system is software built around one repeat task in a business, such as drafting replies, checking documents or preparing reports. It does the repeat work, and the team checks the result and decides.
 
-### What stays human?
+### Who owns the system afterwards?
 
-People retain judgement, approvals and responsibility for exceptions. Elyst AI designs human review into the system.
+The client does. Accounts and admin transfer at handover, so there is no lock-in.
 
-### Who owns it after handover?
+### Where does Elyst AI work?
 
-The client does. Accounts and access transfer at handover. Elyst AI can continue improving the system when ongoing support is needed.
+Across India and the GCC. Training is delivered in person in Kerala, Bengaluru and the UAE, and online when location is an issue.
 
-## Core services
+## Services
 
-- [AI strategy and implementation](https://elystai.com/services): How Elyst AI identifies workflows, builds practical AI systems and hands them over to client teams.
-- [Corporate AI training](https://elystai.com/training): Tailored, in-person AI training for organisations, teams and business leaders.
+- [AI Transformation](https://elystai.com/transformation): Six steps from first conversation to a trained team: we start with you, write a proposal, sit with the team, find where AI fits, build and test, then train the team. The client owns the system.
+- [AI Kickstart](https://elystai.com/kickstart): Hands-on AI training built on a team's own work. One day, two half days, or a longer program. In person in Kerala, Bengaluru and the UAE, or online.
 
-## Corporate training work
+## Who it is for
 
-- [Arvind Fashions](https://elystai.com/training/arvind-fashions): In-person corporate AI training delivered in Bengaluru in August.
-- [Autobahn Group](https://elystai.com/training/autobahn-group): In-person corporate AI training delivered in Kochi in September.
+- Growing businesses of roughly 10 to 30 people where one task costs time or leads and one person owns the change.
+- For training: functional teams, managers, department heads, business leaders, and HR and L&D teams.
+
+## Case studies
+
+- [Nalakath Holdings](https://elystai.com/work/nalakath-holdings-ai-content-system): An AI content system for four group companies in Kerala. AI Transformation.
+- [Arvind Fashions](https://elystai.com/work/arvind-fashions-ai-training): Full-day AI training for about 50 people in Bengaluru. AI Kickstart.
+- [Kalyan Tourism and Travel](https://elystai.com/work/kalyan-ai-onboarding-system): An AI onboarding system, built in Dubai, that replaced manual document checks. AI Transformation.
+- [Autobahn Corp](https://elystai.com/work/autobahn-ai-training-for-hr): Full-day AI training for about 40 HR professionals in Kochi. AI Kickstart.
 
 ## Company
 
-- [About Elyst AI](https://elystai.com/about): Company and team information.
-- [Contact Elyst AI](https://elystai.com/): Use the official phone, WhatsApp or booking options published on the website.
+- [About Elyst AI](https://elystai.com/about): Founders Nihal Anas and Fathima Shirin P.
+- [The guide (PDF)](https://elystai.com/downloads/elyst-ai-transformation-guide.pdf): How AI Transformation works, step by step.
+- [Contact](https://elystai.com/contact): Phone +91 96332 88931, info@elystai.com, WhatsApp.
 
 ## Verified facts
 
-- Elyst AI has trained more than 3,000 professionals as a team.
-- The Elyst AI team has delivered more than 50 sessions.
-- Corporate sessions are tailored around the organisation, participating teams and their needs.
-- Current corporate training is delivered in person.
-- Elyst AI delivers corporate training across Kerala, Bengaluru, the UAE, Saudi Arabia and Qatar.
-- Training formats include half-day workshops, full-day workshops and multi-session programmes.
-- Training is quoted per client.
-
-## Past learning initiatives
-
-AI Yathra, AI for Juniors, Elyst AI Circle and AI for Work are completed Elyst AI initiatives. They should not be interpreted as currently bookable programmes unless the main website states otherwise.
+- More than 3,000 people have attended Elyst AI sessions.
+- The Elyst AI team has delivered more than 75 sessions.
+- Elyst AI has worked with more than 15 businesses.

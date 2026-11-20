@@ -1,7 +1,7 @@
 {
   "name": "Elyst AI",
   "short_name": "Elyst AI",
-  "description": "AI strategy, implementation, custom development, and role-specific team training.",
+  "description": "We find the work AI can do for you, build it, and train your people to use it.",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#03624c",
